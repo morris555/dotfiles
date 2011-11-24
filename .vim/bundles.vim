@@ -4,7 +4,7 @@ filetype off
 if has('vim_starting')
   set runtimepath+=~/.vim/neobundle.git/
 
-  call neobundle#rc(expand('~/.bundle'))
+  call neobundle#rc(expand('~/.vim/bundle'))
 endif
 
 " color-scheme
@@ -14,6 +14,15 @@ NeoBundle 'git://github.com/vim-scripts/mrkn256.vim.git'
 " lib
 NeoBundle 'mattn/webapi-vim'
 NeoBundle 'thinca/vim-openbuf'
+
+" textobj,operator
+NeoBundle 'kana/vim-textobj-user'
+NeoBundle 'kana/vim-operator-user'
+NeoBundle 'kana/vim-textobj-entire'
+NeoBundle 'kana/vim-textobj-indent'
+NeoBundle 'kana/vim-operator-replace'
+NeoBundle 'tyru/operator-camelize.vim'
+NeoBundle 'emonkak/vim-operator-comment'
 
 " 擬似capslock
 NeoBundle 'git://github.com/vim-scripts/capslock.vim.git'
@@ -112,6 +121,9 @@ NeoBundle 'kana/vim-altr'
 
 " git
 NeoBundle 'tpope/vim-fugitive'
+
+" markdown
+NeoBundle 'tpope/vim-markdown'
 
 " scouter
 NeoBundle 'thinca/vim-scouter.git'

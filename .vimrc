@@ -50,7 +50,8 @@ set nomodeline
 set modelines=0
 
 " 行数を表示
-set number
+" set number
+set relativenumber
 
 " バックアップはとらない
 set nobackup
@@ -199,20 +200,18 @@ noremap ; :
 " 最後に編集したところを選択
 nnoremap gc `[v`]
 
+map R <Plug>(operator-replace)
+
 " ペーストしたテキストを再選択
 nnoremap <expr> gp '`[' . strpart(getregtype(), 0, 1) . '`]'
 
 " ESC2度押しで検索ハイライトを消す
 nnoremap <ESC><ESC> :<C-u>nohlsearch<CR>
 
-" vvで全選択
-nmap VV ggVG
-nmap vv ^v$h
-
-nmap <buffer> ( ,mf(
-nmap <buffer> ) ,mF(
-nmap <buffer> { ,mf{
-nmap <buffer> } ,mF{
+nmap ( ,mf(
+nmap ) ,mF(
+nmap { ,mf{
+nmap } ,mF{
 
 " 分割画面移動
 nnoremap <silent> <space>wj <C-w>j
@@ -597,12 +596,12 @@ command! -nargs=1 Google :OpenBrowserSearch <args>
 " メモを作成する
 command! -nargs=0 MemoWrite call s:open_memo_file()
 function! s:open_memo_file()
-    let l:memo_dir = $HOME . '/Dropbox/Memo'. strftime('/%Y/%m/%d')
+    let l:memo_dir = $HOME . '/Dropbox/Memo'. strftime('/%Y/%m')
     if !isdirectory(l:memo_dir)
         call mkdir(l:memo_dir, 'p')
     endif
 
-    let l:filename = input('File Name: ', l:memo_dir.strftime('/%H%M%S_'))
+    let l:filename = input('File Name: ', l:memo_dir.strftime('/%d%H%M%S_'))
     if l:filename != ''
         execute 'edit ' . l:filename
     endif
