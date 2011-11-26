@@ -27,6 +27,9 @@ NeoBundle 'emonkak/vim-operator-comment'
 " 擬似capslock
 NeoBundle 'git://github.com/vim-scripts/capslock.vim.git'
 
+" ネタステータスライン
+NeoBundle 'https://github.com/mattn/hahhah-vim.git'
+
 " lingr
 NeoBundle 'tsukkee/lingr-vim'
 
@@ -141,6 +144,7 @@ NeoBundle 'tyru/vice.vim'
 
 " matrix
 NeoBundle 'git://github.com/vim-scripts/matrix.vim--Yang.git'
+NeoBundle 'git://github.com/vim-scripts/matrix.vim.git'
 
 " gundo
 NeoBundle 'sjl/gundo.vim'

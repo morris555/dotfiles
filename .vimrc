@@ -520,7 +520,7 @@ vmap <Leader>c <Plug>NERDCommenterToggle
 command! -nargs=1 Alc :Ref alc2 <args>
 
 " vimref用のphpmanualのパス
-let g:ref_phpmanual_path = $HOME . '/.vim/phpmanual'
+let g:ref_phpmanual_path = $HOME . '/dotfiles/.vim/phpmanual/'
 
 " neocomplcache設定
 
@@ -673,7 +673,8 @@ set statusline+=\ %F
 set statusline+=\ %7(%m\ %r%)----
 set statusline+=%{&fileencoding}\ %{&fileformat}\ %{&filetype}
 set statusline+=%=\ (%l,%c)
-set statusline+=%=\ \ \ [%b,0x%B]
+set statusline+=%=\ \ \ [%b,0x%B]\ \ \ 
+set statusline+=%=%{g:HahHah()}
 
 autocmd BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$") | exe "normal g`\"" | endif
 
