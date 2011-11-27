@@ -32,10 +32,6 @@ command! Rg source ~/dotfiles/.gvimrc
 command! Eb edit ~/dotfiles/.vim/bundles.vim
 command! -bang Rb :Unite neobundle/install:<bang>
 
-" 一時ファイル
-command! Tmp edit ~/Dropbox/tmp.txt
-command! Temp edit ~/Dropbox/tmp.txt
-
 "変更されたときに自動読み込み
 set autoread
 
@@ -373,6 +369,12 @@ Arpeggio inoremap jk <Esc>
 Arpeggio onoremap jk <Esc>
 Arpeggio vnoremap jk <Esc>
 
+Arpeggio inoremap xj ()<Esc>i
+Arpeggio inoremap xk []<Esc>i
+Arpeggio inoremap xl {}<Esc>i
+Arpeggio inoremap x' ''<Esc>i
+Arpeggio inoremap x" ""<Esc>i
+
 " smartchr.vim
 " inoremap <buffer><expr> = smartchr#one_of(' = ', ' == ', ' === ', '=')
 " inoremap <buffer><expr> , smartchr#one_of(', ', ',')
@@ -381,10 +383,7 @@ Arpeggio vnoremap jk <Esc>
 vnoremap <Leader>a :Alignta 
 
 " コマンド展開
-" if (exists("*ambicmd#expand"))
 cnoremap <expr> <Space> ambicmd#expand("\<Space>")
-" cnoremap <expr> <CR>    ambicmd#expand("\<CR>")
-" endif
 
 " vim-ref
 nmap <Leader>k <Plug>(ref-keyword)
@@ -434,6 +433,7 @@ let g:surround_custom_mapping.php= {
             \'{': "{\r}",
             \'f': "\1name: \r..*\r&\1(\r)",
             \'a': "['\r']",
+            \'A': "array(\r);",
             \'v': "v(\r);",
             \'s': "self::\r"
             \}
@@ -520,7 +520,7 @@ vmap <Leader>c <Plug>NERDCommenterToggle
 command! -nargs=1 Alc :Ref alc2 <args>
 
 " vimref用のphpmanualのパス
-let g:ref_phpmanual_path = $HOME . '/dotfiles/.vim/phpmanual/'
+let g:ref_phpmanual_path = '~/dotfiles/.vim/phpmanual/'
 
 " neocomplcache設定
 
@@ -609,6 +609,10 @@ endfunction augroup END
 " メモ一覧をUniteで呼び出すコマンド
 command! -nargs=0 MemoRead :Unite file_rec:~/Dropbox/Memo/ -buffer-name=file -auto-preview
 
+" 一時ファイル
+command! Tmp edit ~/Dropbox/tmp.txt
+command! Temp edit ~/Dropbox/tmp.txt
+
 " patemodeにF2でトグル
 set pastetoggle=<F2>
 
@@ -674,7 +678,6 @@ set statusline+=\ %7(%m\ %r%)----
 set statusline+=%{&fileencoding}\ %{&fileformat}\ %{&filetype}
 set statusline+=%=\ (%l,%c)
 set statusline+=%=\ \ \ [%b,0x%B]\ \ \ 
-set statusline+=%=%{g:HahHah()}
 
 autocmd BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$") | exe "normal g`\"" | endif
 
