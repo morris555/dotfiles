@@ -10,6 +10,7 @@ endif
 " color-scheme
 NeoBundle 'altercation/vim-colors-solarized'
 NeoBundle 'git://github.com/vim-scripts/mrkn256.vim.git'
+NeoBundle 'tomasr/molokai'
 
 " lib
 NeoBundle 'mattn/webapi-vim'
