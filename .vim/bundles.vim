@@ -28,7 +28,7 @@ NeoBundle 'emonkak/vim-operator-comment'
 NeoBundle 'git://github.com/vim-scripts/capslock.vim.git'
 
 " ネタステータスライン
-NeoBundle 'https://github.com/mattn/hahhah-vim.git'
+NeoBundle 'git://github.com/mattn/hahhah-vim.git'
 
 " lingr
 NeoBundle 'tsukkee/lingr-vim'
@@ -174,7 +174,7 @@ NeoBundle 'tpope/vim-abolish'
 NeoBundle 'ujihisa/camelcasemotion'
 
 " Vim script doc
-NeoBundle 'https://github.com/mattn/learn-vimscript.git'
+NeoBundle 'git://github.com/mattn/learn-vimscript.git'
 
 " Game
 NeoBundle 'mattn/invader-vim'
