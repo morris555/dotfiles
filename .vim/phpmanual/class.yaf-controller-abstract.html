@@ -1,0 +1,344 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+ <head>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <title>The Yaf_Controller_Abstract class</title>
+
+ </head>
+ <body><div class="manualnavbar" style="text-align: center;">
+ <div class="prev" style="text-align: left; float: left;"><a href="yaf-config-simple.valid.html">Yaf_Config_Simple::valid</a></div>
+ <div class="next" style="text-align: right; float: right;"><a href="yaf-controller-abstract.clone.html">Yaf_Controller_Abstract::__clone</a></div>
+ <div class="up"><a href="book.yaf.html">Yaf</a></div>
+ <div class="home"><a href="index.html">PHP Manual</a></div>
+</div><hr /><div id="class.yaf-controller-abstract" class="reference">
+
+ <h1 class="title">The Yaf_Controller_Abstract class</h1>
+ 
+
+ <div class="partintro">
+
+
+  <div class="section" id="yaf-controller-abstract.intro">
+   <h2 class="title">導入</h2>
+   <p class="para">
+
+   </p>
+  </div>
+
+
+  <div class="section" id="yaf-controller-abstract.synopsis">
+   <h2 class="title">クラス概要</h2>
+
+
+   <div class="classsynopsis">
+    <div class="ooclass"></div>
+
+
+    <div class="classsynopsisinfo">
+     <span class="ooclass">
+      <b class="classname">Yaf_Controller_Abstract</b>
+     </span>
+     {</div>
+
+    <div class="classsynopsisinfo classsynopsisinfo_comment">/* プロパティ */</div>
+    <div class="fieldsynopsis">
+     <span class="modifier">public</span>
+      <var class="varname"><a href="class.yaf-controller-abstract.html#yaf-controller-abstract.props.actions">$<var class="varname">Yaf_Controller_Abstract-&gt;actions</var></a></var>
+    ;</div>
+
+    <div class="fieldsynopsis">
+     <span class="modifier">protected</span>
+      <var class="varname"><a href="class.yaf-controller-abstract.html#yaf-controller-abstract.props.module">$<var class="varname">_module</var></a></var>
+    ;</div>
+
+    <div class="fieldsynopsis">
+     <span class="modifier">protected</span>
+      <var class="varname"><a href="class.yaf-controller-abstract.html#yaf-controller-abstract.props.name">$<var class="varname">_name</var></a></var>
+    ;</div>
+
+    <div class="fieldsynopsis">
+     <span class="modifier">protected</span>
+      <var class="varname"><a href="class.yaf-controller-abstract.html#yaf-controller-abstract.props.request">$<var class="varname">_request</var></a></var>
+    ;</div>
+
+    <div class="fieldsynopsis">
+     <span class="modifier">protected</span>
+      <var class="varname"><a href="class.yaf-controller-abstract.html#yaf-controller-abstract.props.response">$<var class="varname">_response</var></a></var>
+    ;</div>
+
+    <div class="fieldsynopsis">
+     <span class="modifier">protected</span>
+      <var class="varname"><a href="class.yaf-controller-abstract.html#yaf-controller-abstract.props.invoke-args">$<var class="varname">_invoke_args</var></a></var>
+    ;</div>
+
+    <div class="fieldsynopsis">
+     <span class="modifier">protected</span>
+      <var class="varname"><a href="class.yaf-controller-abstract.html#yaf-controller-abstract.props.view">$<var class="varname">_view</var></a></var>
+    ;</div>
+
+
+    
+    <div class="classsynopsisinfo classsynopsisinfo_comment">/* メソッド */</div>
+    <div class="methodsynopsis dc-description">
+   <span class="modifier">final</span> <span class="modifier">private</span> <span class="type">void</span> <span class="methodname"><a href="yaf-controller-abstract.clone.html" class="methodname">Yaf_Controller_Abstract::__clone</a></span>
+    ( <span class="methodparam">void</span>
+   )</div>
+<div class="methodsynopsis dc-description">
+   <span class="modifier">final</span> <span class="modifier">private</span>  <span class="methodname"><a href="yaf-controller-abstract.construct.html" class="methodname">Yaf_Controller_Abstract::__construct</a></span>
+    ( <span class="methodparam">void</span>
+   )</div>
+<div class="methodsynopsis dc-description">
+   <span class="modifier">final</span> <span class="modifier">protected</span> <span class="type">void</span> <span class="methodname"><a href="yaf-controller-abstract.display.html" class="methodname">Yaf_Controller_Abstract::display</a></span>
+    ( <span class="methodparam"><span class="type">string</span> <tt class="parameter">$tpl</tt></span>
+   [, <span class="methodparam"><span class="type">array</span> <tt class="parameter">$parameters</tt></span>
+  ] )</div>
+<div class="methodsynopsis dc-description">
+   <span class="modifier">final</span> <span class="modifier">public</span> <span class="type">void</span> <span class="methodname"><a href="yaf-controller-abstract.forward.html" class="methodname">Yaf_Controller_Abstract::forward</a></span>
+    ( <span class="methodparam"><span class="type">string</span> <tt class="parameter">$module</tt></span>
+   [, <span class="methodparam"><span class="type">string</span> <tt class="parameter">$controller</tt></span>
+   [, <span class="methodparam"><span class="type">string</span> <tt class="parameter">$action</tt></span>
+   [, <span class="methodparam"><span class="type">array</span> <tt class="parameter">$paramters</tt></span>
+  ]]] )</div>
+<div class="methodsynopsis dc-description">
+   <span class="modifier">final</span> <span class="modifier">public</span> <span class="type">void</span> <span class="methodname"><a href="yaf-controller-abstract.getinvokearg.html" class="methodname">Yaf_Controller_Abstract::getInvokeArg</a></span>
+    ( <span class="methodparam"><span class="type">string</span> <tt class="parameter">$name</tt></span>
+   )</div>
+<div class="methodsynopsis dc-description">
+   <span class="modifier">final</span> <span class="modifier">public</span> <span class="type">void</span> <span class="methodname"><a href="yaf-controller-abstract.getinvokeargs.html" class="methodname">Yaf_Controller_Abstract::getInvokeArgs</a></span>
+    ( <span class="methodparam">void</span>
+   )</div>
+<div class="methodsynopsis dc-description">
+   <span class="modifier">final</span> <span class="modifier">public</span> <span class="type">void</span> <span class="methodname"><a href="yaf-controller-abstract.getmodulename.html" class="methodname">Yaf_Controller_Abstract::getModuleName</a></span>
+    ( <span class="methodparam">void</span>
+   )</div>
+<div class="methodsynopsis dc-description">
+   <span class="modifier">final</span> <span class="modifier">public</span> <span class="type">void</span> <span class="methodname"><a href="yaf-controller-abstract.getrequest.html" class="methodname">Yaf_Controller_Abstract::getRequest</a></span>
+    ( <span class="methodparam">void</span>
+   )</div>
+<div class="methodsynopsis dc-description">
+   <span class="modifier">final</span> <span class="modifier">public</span> <span class="type">void</span> <span class="methodname"><a href="yaf-controller-abstract.getresponse.html" class="methodname">Yaf_Controller_Abstract::getResponse</a></span>
+    ( <span class="methodparam">void</span>
+   )</div>
+<div class="methodsynopsis dc-description">
+   <span class="modifier">final</span> <span class="modifier">public</span> <span class="type">void</span> <span class="methodname"><a href="yaf-controller-abstract.getview.html" class="methodname">Yaf_Controller_Abstract::getView</a></span>
+    ( <span class="methodparam">void</span>
+   )</div>
+<div class="methodsynopsis dc-description">
+   <span class="modifier">final</span> <span class="modifier">public</span> <span class="type">void</span> <span class="methodname"><a href="yaf-controller-abstract.getviewpath.html" class="methodname">Yaf_Controller_Abstract::getViewpath</a></span>
+    ( <span class="methodparam">void</span>
+   )</div>
+<div class="methodsynopsis dc-description">
+   <span class="modifier">final</span> <span class="modifier">public</span> <span class="type">void</span> <span class="methodname"><a href="yaf-controller-abstract.initview.html" class="methodname">Yaf_Controller_Abstract::initView</a></span>
+    ([ <span class="methodparam"><span class="type">array</span> <tt class="parameter">$options</tt></span>
+  ] )</div>
+<div class="methodsynopsis dc-description">
+   <span class="modifier">final</span> <span class="modifier">public</span> <span class="type">void</span> <span class="methodname"><a href="yaf-controller-abstract.redirect.html" class="methodname">Yaf_Controller_Abstract::redirect</a></span>
+    ( <span class="methodparam"><span class="type">string</span> <tt class="parameter">$url</tt></span>
+   )</div>
+<div class="methodsynopsis dc-description">
+   <span class="modifier">final</span> <span class="modifier">protected</span> <span class="type">void</span> <span class="methodname"><a href="yaf-controller-abstract.render.html" class="methodname">Yaf_Controller_Abstract::render</a></span>
+    ( <span class="methodparam"><span class="type">string</span> <tt class="parameter">$tpl</tt></span>
+   [, <span class="methodparam"><span class="type">array</span> <tt class="parameter">$parameters</tt></span>
+  ] )</div>
+<div class="methodsynopsis dc-description">
+   <span class="modifier">final</span> <span class="modifier">public</span> <span class="type">void</span> <span class="methodname"><a href="yaf-controller-abstract.setviewpath.html" class="methodname">Yaf_Controller_Abstract::setViewpath</a></span>
+    ( <span class="methodparam"><span class="type">string</span> <tt class="parameter">$view_directory</tt></span>
+   )</div>
+
+   }</div>
+
+
+  </div>
+
+  
+
+  <div class="section" id="yaf-controller-abstract.props">
+   <h2 class="title">プロパティ</h2>
+   <dl>
+
+    <dt id="yaf-controller-abstract.props.actions">
+     <span class="term"><var class="varname"><var class="varname">actions</var></var></span>
+     <dd>
+
+      <p class="para"/>
+     </dd>
+
+    </dt>
+
+    <dt id="yaf-controller-abstract.props.module">
+     <span class="term"><var class="varname"><var class="varname">_module</var></var></span>
+     <dd>
+
+      <p class="para"/>
+     </dd>
+
+    </dt>
+
+    <dt id="yaf-controller-abstract.props.name">
+     <span class="term"><var class="varname"><var class="varname">_name</var></var></span>
+     <dd>
+
+      <p class="para"/>
+     </dd>
+
+    </dt>
+
+    <dt id="yaf-controller-abstract.props.request">
+     <span class="term"><var class="varname"><var class="varname">_request</var></var></span>
+     <dd>
+
+      <p class="para"/>
+     </dd>
+
+    </dt>
+
+    <dt id="yaf-controller-abstract.props.response">
+     <span class="term"><var class="varname"><var class="varname">_response</var></var></span>
+     <dd>
+
+      <p class="para"/>
+     </dd>
+
+    </dt>
+
+    <dt id="yaf-controller-abstract.props.invoke-args">
+     <span class="term"><var class="varname"><var class="varname">_invoke_args</var></var></span>
+     <dd>
+
+      <p class="para"/>
+     </dd>
+
+    </dt>
+
+    <dt id="yaf-controller-abstract.props.view">
+     <span class="term"><var class="varname"><var class="varname">_view</var></var></span>
+     <dd>
+
+      <p class="para"/>
+     </dd>
+
+    </dt>
+
+   </dl>
+
+  </div>
+
+
+
+ </div>
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h2>目次</h2><ul class="chunklist chunklist_reference"><li><a href="yaf-controller-abstract.clone.html">Yaf_Controller_Abstract::__clone</a> — Yaf_Controller_Abstract can not be cloned</li><li><a href="yaf-controller-abstract.construct.html">Yaf_Controller_Abstract::__construct</a> — Yaf_Controller_Abstract constructor</li><li><a href="yaf-controller-abstract.display.html">Yaf_Controller_Abstract::display</a> — The display purpose</li><li><a href="yaf-controller-abstract.forward.html">Yaf_Controller_Abstract::forward</a> — The forward purpose</li><li><a href="yaf-controller-abstract.getinvokearg.html">Yaf_Controller_Abstract::getInvokeArg</a> — The getInvokeArg purpose</li><li><a href="yaf-controller-abstract.getinvokeargs.html">Yaf_Controller_Abstract::getInvokeArgs</a> — The getInvokeArgs purpose</li><li><a href="yaf-controller-abstract.getmodulename.html">Yaf_Controller_Abstract::getModuleName</a> — The getModuleName purpose</li><li><a href="yaf-controller-abstract.getrequest.html">Yaf_Controller_Abstract::getRequest</a> — The getRequest purpose</li><li><a href="yaf-controller-abstract.getresponse.html">Yaf_Controller_Abstract::getResponse</a> — The getResponse purpose</li><li><a href="yaf-controller-abstract.getview.html">Yaf_Controller_Abstract::getView</a> — The getView purpose</li><li><a href="yaf-controller-abstract.getviewpath.html">Yaf_Controller_Abstract::getViewpath</a> — The getViewpath purpose</li><li><a href="yaf-controller-abstract.initview.html">Yaf_Controller_Abstract::initView</a> — The initView purpose</li><li><a href="yaf-controller-abstract.redirect.html">Yaf_Controller_Abstract::redirect</a> — The redirect purpose</li><li><a href="yaf-controller-abstract.render.html">Yaf_Controller_Abstract::render</a> — The render purpose</li><li><a href="yaf-controller-abstract.setviewpath.html">Yaf_Controller_Abstract::setViewpath</a> — The setViewpath purpose</li></ul>
+</div>
+<hr /><div class="manualnavbar" style="text-align: center;">
+ <div class="prev" style="text-align: left; float: left;"><a href="yaf-config-simple.valid.html">Yaf_Config_Simple::valid</a></div>
+ <div class="next" style="text-align: right; float: right;"><a href="yaf-controller-abstract.clone.html">Yaf_Controller_Abstract::__clone</a></div>
+ <div class="up"><a href="book.yaf.html">Yaf</a></div>
+ <div class="home"><a href="index.html">PHP Manual</a></div>
+</div></body></html>

@@ -1,0 +1,271 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+ <head>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <title>実行時設定</title>
+
+ </head>
+ <body><div class="manualnavbar" style="text-align: center;">
+ <div class="prev" style="text-align: left; float: left;"><a href="yaf.installation.html">インストール手順</a></div>
+ <div class="next" style="text-align: right; float: right;"><a href="yaf.resources.html">リソース型</a></div>
+ <div class="up"><a href="yaf.setup.html">インストール/設定</a></div>
+ <div class="home"><a href="index.html">PHP Manual</a></div>
+</div><hr /><div id="yaf.configuration" class="section">
+ <h2 class="title">実行時設定</h2>
+ <p class="simpara">
+<var class="filename">php.ini</var> の設定により動作が変化します。
+</p>
+ <p class="para">
+  <table class="doctable table">
+   <caption><b>Yaf 設定オプション</b></caption>
+   
+    <thead valign="middle">
+     <tr valign="middle">
+      <th>名前</th>
+      <th>デフォルト</th>
+      <th>変更可能</th>
+      <th>変更履歴</th>
+     </tr>
+
+    </thead>
+
+    <tbody valign="middle" class="tbody">
+     <tr valign="middle">
+      <td align="left">yaf.library</td>
+      <td class="empty">&nbsp;</td>
+      <td align="left">its PHP_INI_ALL value</td>
+      <td align="left"></td>
+     </tr>
+
+     <tr valign="middle">
+      <td align="left">yaf.action_prefer</td>
+      <td align="left">0</td>
+      <td align="left">its PHP_INI_ALL value</td>
+      <td align="left"></td>
+     </tr>
+
+     <tr valign="middle">
+      <td align="left">yaf.lowcase_path</td>
+      <td align="left">0</td>
+      <td align="left">its PHP_INI_ALL value</td>
+      <td align="left"></td>
+     </tr>
+
+     <tr valign="middle">
+      <td align="left">yaf.use_spl_autoload</td>
+      <td align="left">0</td>
+      <td align="left">its PHP_INI_ALL value</td>
+      <td align="left"></td>
+     </tr>
+
+     <tr valign="middle">
+      <td align="left">yaf.forward_limit</td>
+      <td align="left">5</td>
+      <td align="left">its PHP_INI_ALL value</td>
+      <td align="left"></td>
+     </tr>
+
+     <tr valign="middle">
+      <td align="left">yaf.name_suffix</td>
+      <td align="left">1</td>
+      <td align="left">its PHP_INI_ALL value</td>
+      <td align="left"></td>
+     </tr>
+
+     <tr valign="middle">
+      <td align="left">yaf.name_separator</td>
+      <td class="empty">&nbsp;</td>
+      <td align="left">its PHP_INI_ALL value</td>
+      <td align="left"></td>
+     </tr>
+
+     <tr valign="middle">
+      <td align="left">yaf.cache_config</td>
+      <td align="left">0</td>
+      <td align="left">its PHP_INI_SYS value</td>
+      <td align="left"></td>
+     </tr>
+
+     <tr valign="middle">
+      <td align="left">yaf.st_compatible</td>
+      <td align="left">0</td>
+      <td align="left">its PHP_INI_ALL value</td>
+      <td align="left"></td>
+     </tr>
+
+     <tr valign="middle">
+      <td align="left">yaf.environ</td>
+      <td align="left">product</td>
+      <td align="left">its PHP_INI_ALL value</td>
+      <td align="left"></td>
+     </tr>
+
+     <tr valign="middle">
+      <td align="left">yaf.use_namespace</td>
+      <td align="left">0</td>
+      <td align="left">its PHP_INI_ALL value</td>
+      <td align="left"></td>
+     </tr>
+
+    </tbody>
+   
+  </table>
+
+ </p>
+
+ <p class="para">以下に設定ディレクティブに関する
+簡単な説明を示します。</p>
+
+ <p class="para">
+  <dl>
+
+   <dt id="ini.yaf.library">
+     <span class="term">
+      <i><tt class="parameter">yaf.library</tt></i>
+      <span class="type"><a href="language.types.string.html" class="type string">string</a></span>
+     </span>
+     <dd>
+
+      <p class="para">
+       
+      </p>
+     </dd>
+
+    </dt>
+
+    <dt id="ini.yaf.action-prefer">
+     <span class="term">
+      <i><tt class="parameter">yaf.action_prefer</tt></i>
+      <span class="type"><a href="language.types.integer.html" class="type integer">integer</a></span>
+     </span>
+     <dd>
+
+      <p class="para">
+       
+      </p>
+     </dd>
+
+    </dt>
+
+    <dt id="ini.yaf.lowcase-path">
+     <span class="term">
+      <i><tt class="parameter">yaf.lowcase_path</tt></i>
+      <span class="type"><a href="language.types.integer.html" class="type integer">integer</a></span>
+     </span>
+     <dd>
+
+      <p class="para">
+       
+      </p>
+     </dd>
+
+    </dt>
+
+    <dt id="ini.yaf.use-spl-autoload">
+     <span class="term">
+      <i><tt class="parameter">yaf.use_spl_autoload</tt></i>
+      <span class="type"><a href="language.types.integer.html" class="type integer">integer</a></span>
+     </span>
+     <dd>
+
+      <p class="para">
+       
+      </p>
+     </dd>
+
+    </dt>
+
+    <dt id="ini.yaf.forward-limit">
+     <span class="term">
+      <i><tt class="parameter">yaf.forward_limit</tt></i>
+      <span class="type"><a href="language.types.integer.html" class="type integer">integer</a></span>
+     </span>
+     <dd>
+
+      <p class="para">
+       
+      </p>
+     </dd>
+
+    </dt>
+
+    <dt id="ini.yaf.name-suffix">
+     <span class="term">
+      <i><tt class="parameter">yaf.name_suffix</tt></i>
+      <span class="type"><a href="language.types.integer.html" class="type integer">integer</a></span>
+     </span>
+     <dd>
+
+      <p class="para">
+       
+      </p>
+     </dd>
+
+    </dt>
+
+    <dt id="ini.yaf.name-separator">
+     <span class="term">
+      <i><tt class="parameter">yaf.name_separator</tt></i>
+      <span class="type"><a href="language.types.string.html" class="type string">string</a></span>
+     </span>
+     <dd>
+
+      <p class="para">
+       
+      </p>
+     </dd>
+
+    </dt>
+
+    <dt id="ini.yaf.cache-config">
+     <span class="term">
+      <i><tt class="parameter">yaf.cache_config</tt></i>
+      <span class="type"><a href="language.types.integer.html" class="type integer">integer</a></span>
+     </span>
+     <dd>
+
+      <p class="para">
+       
+      </p>
+     </dd>
+
+    </dt>
+
+    <dt id="ini.yaf.st-compatible">
+     <span class="term">
+      <i><tt class="parameter">yaf.st_compatible</tt></i>
+      <span class="type"><a href="language.types.integer.html" class="type integer">integer</a></span>
+     </span>
+     <dd>
+
+      <p class="para">
+       
+      </p>
+     </dd>
+
+    </dt>
+
+    <dt id="ini.yaf.environ">
+     <span class="term">
+      <i><tt class="parameter">yaf.environ</tt></i>
+      <span class="type"><a href="language.types.string.html" class="type string">string</a></span>
+     </span>
+     <dd>
+
+      <p class="para">
+       
+      </p>
+     </dd>
+
+    </dt>
+
+
+  </dl>
+
+ </p>
+</div><hr /><div class="manualnavbar" style="text-align: center;">
+ <div class="prev" style="text-align: left; float: left;"><a href="yaf.installation.html">インストール手順</a></div>
+ <div class="next" style="text-align: right; float: right;"><a href="yaf.resources.html">リソース型</a></div>
+ <div class="up"><a href="yaf.setup.html">インストール/設定</a></div>
+ <div class="home"><a href="index.html">PHP Manual</a></div>
+</div></body></html>
