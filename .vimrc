@@ -565,7 +565,11 @@ autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
 autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
 
 " vimproc
-let g:vimproc_dll_path = $HOME . '/.vim/autoload/proc.so'
+if has('mac')
+    let g:vimproc_dll_path = $HOME . '/.vim/autoload/mac_proc.so'
+else
+    let g:vimproc_dll_path = $HOME . '/.vim/autoload/proc.so'
+endif
 
 " textmanip
 " 選択したテキストの移動
@@ -610,8 +614,8 @@ endfunction augroup END
 command! -nargs=0 MemoRead :Unite file_rec:~/Dropbox/Memo/ -buffer-name=file -auto-preview
 
 " 一時ファイル
-command! Tmp edit ~/Dropbox/tmp.txt
-command! Temp edit ~/Dropbox/tmp.txt
+command! -nargs=1 -complete=filetype Tmp edit ~/Dropbox/tmp.<args>
+command! -nargs=1 -complete=filetype Temp edit ~/Dropbox/tmp.<args>
 
 " patemodeにF2でトグル
 set pastetoggle=<F2>

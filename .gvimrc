@@ -58,7 +58,7 @@ if has('gui_macvim')
         autocmd!
         if has('mac')
             autocmd FocusGained * set transparency=0
-            autocmd FocusLost * set transparency=40
+            autocmd FocusLost * set transparency=00
         endif
     augroup END
 else
