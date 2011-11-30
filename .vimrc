@@ -702,10 +702,12 @@ let php_htmlInStrings=1
 set laststatus=2
 set statusline=\ [%02n]
 set statusline+=\ %F
-set statusline+=\ %7(%m\ %r%)----
-set statusline+=%{&fileencoding}\ %{&fileformat}\ %{&filetype}
-set statusline+=%=\ (%l,%c)
-set statusline+=%=\ \ \ [%b,0x%B]\ \ \ 
+set statusline+=\ %(%m\ %r%)
+set statusline+=\ type=%{&filetype}
+let &statusline = &statusline . '       %{cfi#format("[%s()]", "no function")}'
+set statusline+=%=\ (%l/%L)
+set statusline+=%=\ %P
+set statusline+=%=\ \ 
 
 autocmd BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$") | exe "normal g`\"" | endif
 
