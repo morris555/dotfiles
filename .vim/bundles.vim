@@ -52,6 +52,9 @@ NeoBundle 'thinca/vim-ambicmd'
 " coffeescriptなどに使う
 NeoBundle 'ujihisa/shadow.vim'
 
+" srcexpl
+NeoBundle 'git://github.com/vim-scripts/Source-Explorer-srcexpl.vim.git'
+
 " unite関連
 NeoBundle 'Shougo/unite.vim'
 NeoBundle 'h1mesuke/unite-outline'

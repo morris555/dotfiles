@@ -282,13 +282,13 @@ nnoremap <CR><CR> :<C-u>call append(expand('.'), '')<Cr>j
 " tagまわり
 set tags=tags
 nnoremap <silent> <Space>tl :Tlist<CR>
-nnoremap <silent> <Space>te :TagExplorer<CR>
+nnoremap <silent> <Space>te :<C-u>SrcExplToggle<CR>
 nnoremap <silent> <Space>tt <C-]>
 nnoremap <silent> <Space>tn :tn<CR>
 nnoremap <silent> <Space>tp :tp<CR>
 nnoremap <silent> <Space>tg :<C-u>UniteWithCursorWord -immediately tag<CR>
 nnoremap <silent> <Space>tj <C-]>:<C-u>split<CR><C-o><C-o><C-w>j
-nnoremap <silent> <Space>tu :!ctags -R<CR>
+nnoremap <silent> <Space>tu :<C-u>!ctags --languages=PHP --sort=foldcase -R<CR>
 nnoremap <silent> <Space>tk <C-]>:<C-u>vsplit<CR><C-o><C-o><C-w>l
 
 " cscope
@@ -300,6 +300,13 @@ nnoremap <silent> <space>sd :<C-u>cscope find d <C-r><C-w><CR>
 nnoremap <silent> <space>st :<C-u>cscope find t <C-r><C-w><CR>
 nnoremap <silent> <space>sf :<C-u>cscope find f <C-r><C-w><CR>
 nnoremap <silent> <space>si :<C-u>cscope find i <C-r><C-w><CR>
+
+"自動でプレビューを表示する。
+let g:SrcExpl_RefreshTime = 1
+"プレビューウインドウの高さ
+let g:SrcExpl_WinHeight = 9
+"tagsは自動で作成する
+let g:SrcExpl_isUpdateTags = 0
 
 "---------------------------------------------------------
 " プラグイン設定
@@ -617,6 +624,23 @@ command! -nargs=0 MemoRead :Unite file_rec:~/Dropbox/Memo/ -buffer-name=file -au
 command! -nargs=1 -complete=filetype Tmp edit ~/Dropbox/tmp.<args>
 command! -nargs=1 -complete=filetype Temp edit ~/Dropbox/tmp.<args>
 
+command!
+\   TOhtmlAndBrowse
+\   call s:TOhtmlAndBrowse()
+function! s:TOhtmlAndBrowse()
+    TOhtml
+    saveas `=tempname()`
+    let save = g:openbrowser_open_filepath_in_vim
+    let g:openbrowser_open_filepath_in_vim = 0
+    try
+        OpenBrowser file://%
+    finally
+        let g:openbrowser_open_filepath_in_vim = save
+    endtry
+    sleep 1
+    call delete(expand('%'))
+endfunction
+
 " patemodeにF2でトグル
 set pastetoggle=<F2>
 
@@ -744,5 +768,5 @@ if has("gui_running")
 else
     " CUI版Vim用のコード
     set background=dark
-    colorscheme mrkn256
+    colorscheme evening
 endif
