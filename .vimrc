@@ -529,7 +529,7 @@ vmap <Leader>c <Plug>NERDCommenterToggle
 command! -nargs=1 Alc :Ref alc2 <args>
 
 " vimref用のphpmanualのパス
-let g:ref_phpmanual_path = '~/dotfiles/.vim/phpmanual/'
+let g:ref_phpmanual_path = $HOME. '/dotfiles/.vim/phpmanual/'
 
 " neocomplcache設定
 
