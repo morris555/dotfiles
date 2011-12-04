@@ -21,15 +21,14 @@ NeoBundle 'kana/vim-textobj-user'
 NeoBundle 'kana/vim-operator-user'
 NeoBundle 'kana/vim-textobj-entire'
 NeoBundle 'kana/vim-textobj-indent'
+NeoBundle 'git://github.com/thinca/vim-textobj-plugins.git'
+NeoBundle 'kana/vim-textobj-function'
 NeoBundle 'kana/vim-operator-replace'
 NeoBundle 'tyru/operator-camelize.vim'
 NeoBundle 'emonkak/vim-operator-comment'
 
 " 擬似capslock
 NeoBundle 'git://github.com/vim-scripts/capslock.vim.git'
-
-" ネタステータスライン
-NeoBundle 'git://github.com/mattn/hahhah-vim.git'
 
 " lingr
 NeoBundle 'tsukkee/lingr-vim'
