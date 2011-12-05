@@ -35,6 +35,9 @@ if has('gui_macvim')
     highlight ZenkakuSpace cterm=underline ctermfg=red guibg=red guifg=white
     match ZenkakuSpace /　/
 
+    " gVimでもテキストベースのタブページを使う
+    set guioptions-=e
+
     " visualmark
     if &bg == "dark"
         " highlight SignColor ctermfg=white ctermbg=blue guibg=#073672
