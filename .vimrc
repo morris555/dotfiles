@@ -313,6 +313,9 @@ let g:SrcExpl_isUpdateTags = 0
 "---------------------------------------------------------
 " プラグイン設定
 "---------------------------------------------------------
+"
+" sonictemplate
+let g:sonictemplate_vim_template_dir = $HOME. '/dotfiles/.vim/template'
 
 " TODO:大文字対応
 " mondayプラグインの設定例
@@ -464,9 +467,15 @@ let g:unite_source_history_yank_enable = 1
 let g:unite_source_history_yank_limit = 1000
 let g:unite_source_grep_max_candidates = 1000
 
+function! s:unite_project(...)
+  let opts = (a:0 ? join(a:000, ' ') : '')
+  let dir = unite#util#path2project_directory(expand('%'))
+  execute 'Unite' opts 'file_rec:' . dir
+endfunction
+
 " ファイル一覧
-" noremap <Leader>uf :<C-u>Unite file_rec/unite file async file -buffer-name=file<CR>
-noremap <Leader>uf :<C-u>Unite file_rec/async -buffer-name=file<CR>
+nnoremap <silent> <Leader>uf :<C-u>call <SID>unite_project('-start-insert')<CR>
+" noremap <Leader>uf :<C-u>Unite file_rec/async -buffer-name=file<CR>
 " バッファ一覧(bookmarkと被るので、とりあえずヒストリのhで妥協)
 noremap <Leader>uh :<C-u>Unite buffer -buffer-name=file<CR>
 " お気に入り
@@ -623,6 +632,9 @@ function! s:open_memo_file()
 endfunction augroup END
 " メモ一覧をUniteで呼び出すコマンド
 command! -nargs=0 MemoRead :Unite file_rec:~/Dropbox/Memo/ -buffer-name=file -auto-preview
+
+" temp_edit
+command! -nargs=0 TempEdit :Unite file_rec:~/.vim/template -buffer-name=file
 
 " 一時ファイル
 command! -nargs=1 -complete=filetype Tmp edit ~/Dropbox/tmp.<args>
