@@ -22,6 +22,7 @@ NeoBundle 'kana/vim-operator-user'
 NeoBundle 'kana/vim-textobj-entire'
 NeoBundle 'kana/vim-textobj-indent'
 NeoBundle 'git://github.com/thinca/vim-textobj-plugins.git'
+NeoBundle 'git://github.com/h1mesuke/textobj-wiw.git'
 NeoBundle 'kana/vim-textobj-function'
 NeoBundle 'kana/vim-operator-replace'
 NeoBundle 'tyru/operator-camelize.vim'
@@ -176,7 +177,7 @@ NeoBundle 'houtsnip/vim-emacscommandline'
 NeoBundle 'tpope/vim-abolish'
 
 " 変数名の規則に従って移動
-NeoBundle 'ujihisa/camelcasemotion'
+" NeoBundle 'ujihisa/camelcasemotion'
 
 " Vim script doc
 NeoBundle 'git://github.com/mattn/learn-vimscript.git'
