@@ -321,7 +321,7 @@ let g:sonictemplate_vim_template_dir = $HOME. '/dotfiles/.vim/template'
 " mondayプラグインの設定例
 let g:monday_patterns = [
             \["ASC", "DESC"],
-            \["asc", "desc"],
+            \["int", "bool", "array", "object"],
             \]
 
 " F3でGundoを開く
