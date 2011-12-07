@@ -3,7 +3,7 @@
  * @param	int		$hoge					ほげ
  * @return	bool							結果
  */
-function hoge()
+protected function hoge()
 {
     return $result;
 }
