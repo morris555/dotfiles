@@ -1,0 +1,1 @@
+$mqm = MemcacheQueryManager::singleton();

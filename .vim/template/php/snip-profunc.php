@@ -1,5 +1,5 @@
 /**
- * 関数の説明
+ * 説明
  * @param	int		$hoge					ほげ
  * @return	bool							結果
  */
