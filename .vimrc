@@ -331,7 +331,7 @@ if has('vim_starting')
     let g:eskk#large_dictionary = '~/.vim/skk/skk-jisyo.l'
     let g:eskk#egg_like_newline = 1
     let g:eskk#show_candidates_count = 3
-    let g:eskk#kakutei_when_unique_candidate = 1
+    " let g:eskk#kakutei_when_unique_candidate = 1
 endif
 
 " TODO: eskkとskkを両立できるようにする
