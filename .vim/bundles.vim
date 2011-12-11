@@ -34,6 +34,9 @@ NeoBundle 'git://github.com/vim-scripts/capslock.vim.git'
 " lingr
 NeoBundle 'tsukkee/lingr-vim'
 
+" ghc
+NeoBundle 'git://github.com/ujihisa/neco-ghc.git'
+
 " template
 NeoBundle 'git://github.com/mattn/sonictemplate-vim.git'
 

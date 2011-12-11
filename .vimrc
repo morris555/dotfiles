@@ -465,17 +465,20 @@ let g:unite_enable_start_insert=1
 let g:unite_source_file_mru_limit = 10000
 let g:unite_source_history_yank_enable = 1
 let g:unite_source_history_yank_limit = 1000
-let g:unite_source_grep_max_candidates = 1000
+let g:unite_source_grep_max_candidates = 10000
+let g:unite_source_session_enable_auto_save = 1     " セッション保存
+let g:unite_cursor_line_highlight = 'TabLineSel'
+let g:unite_abbr_highlight = 'TabLine'
 
 function! s:unite_project(...)
   let opts = (a:0 ? join(a:000, ' ') : '')
   let dir = unite#util#path2project_directory(expand('%'))
-  execute 'Unite' opts 'file_rec:' . dir
+  execute 'Unite' opts 'file_rec/async:' . dir
 endfunction
 
 " ファイル一覧
 nnoremap <silent> <Leader>uf :<C-u>call <SID>unite_project('-start-insert')<CR>
-" noremap <Leader>uf :<C-u>Unite file_rec/async -buffer-name=file<CR>
+nnoremap <silent> <Leader>uF :<C-u>Unite file<CR>
 " バッファ一覧(bookmarkと被るので、とりあえずヒストリのhで妥協)
 noremap <Leader>uh :<C-u>Unite buffer -buffer-name=file<CR>
 " お気に入り
@@ -543,6 +546,8 @@ command! -nargs=1 Alc :Ref alc2 <args>
 let g:ref_phpmanual_path = $HOME. '/dotfiles/.vim/phpmanual/'
 
 " neocomplcache設定
+
+let $PATH=$PATH . ":" . $HOME . "/.cabal/bin"
 
 " ファイル名補完
 inoremap <expr><C-x><C-f>  neocomplcache#manual_filename_complete()
