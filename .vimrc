@@ -190,8 +190,8 @@ vnoremap * "zy:let @/ = @z<CR>n
 "---------------------------------------------------------
 
 " コロンとセミコロンを入れ替え
-noremap : ;
-noremap ; :
+" noremap : ;
+" noremap ; :
 
 " 最後に編集したところを選択
 nnoremap gc `[v`]
@@ -816,6 +816,47 @@ unlet s:unite_project_file_source
 nnoremap <Leader>ip :<C-u>Unite project_file<CR>
 nnoremap <Leader>ic :<C-u>UniteProjectFileController<CR>
 nnoremap <Leader>il :<C-u>UniteProjectFileLib<CR>
+"============================================================================================================================================
+" No Command-line window by Shougo http://vim-users.jp/2010/07/hack161/ {{{
+nnoremap <sid>(command-line-enter) q:
+xnoremap <sid>(command-line-enter) q:
+nnoremap <sid>(command-line-norange) q:<C-u>
+
+nmap ;  <sid>(command-line-enter)
+xmap ;  <sid>(command-line-enter)
+
+" I added
+nnoremap q: q:<Esc>
+
+autocmd CmdwinEnter * call s:init_cmdwin()
+
+" MacVim is shit
+autocmd CmdwinEnter * nnoremap <buffer><expr> <Cr> CmdwinRun()
+autocmd CmdwinEnter * inoremap <buffer><expr> <Cr> CmdwinRun()
+function! CmdwinRun()
+    let a = getline(line('.'))
+    return "\<Esc>\<C-c>\<C-c>:" . a . "\<Cr>"
+endfunction
+
+function! s:init_cmdwin()
+    nnoremap <buffer> q :<C-u>quit<CR>
+    nnoremap <buffer> <TAB> :<C-u>quit<CR>
+    inoremap <buffer><expr><CR> pumvisible() ? "\<C-y>\<CR>" : "\<CR>"
+    inoremap <buffer><expr><C-h> pumvisible() ? "\<C-y>\<C-h>" : "\<C-h>"
+    "inoremap <buffer><expr><BS> pumvisible() ? "\<C-y>\<C-h>" : "\<C-h>"
+    "I added
+    inoremap <buffer><expr><BS> col('.') == 1 ? "\<ESC>:quit\<CR>" : pumvisible() ? "\<C-y>\<C-h>" : "\<C-h>"
+    inoremap <buffer><expr>: col('.') == 1 ? "VimProcBang " : ":"
+    inoremap <buffer><expr> \  smartchr#one_of('~/', '\')
+
+    " Completion.
+    inoremap <buffer><expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
+
+    startinsert!
+endfunction
+" }}}
+
+
 "============================================================================================================================================
 
 
