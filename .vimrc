@@ -225,8 +225,8 @@ nnoremap <silent> <space>ws :<C-u>sp<CR>
 nnoremap <silent> <space>wv :<C-u>vs<CR>
 
 " タブ移動
-nnoremap <Leader>n gt
-nnoremap <Leader>p gT
+" nnoremap <Leader>n gt
+" nnoremap <Leader>p gT
 
 " 行数表示変更
 function! s:toggle_nu()
@@ -498,7 +498,7 @@ noremap <Leader>uo :<C-u>Unite outline -no-quit -vertical -winwidth=30 -buffer-n
 " noremap <Leader>ut :<C-u>Unite tag -no-quit -vertical -winwidth=30 -buffer-name=side<CR>
 noremap <Leader>ut :<C-u>Unite buffer_tab -buffer-name=file<CR>
 " command
-noremap <Leader>uc :<C-u>Unite history/command<CR>
+noremap <Leader>uc :<C-u>Unite command<CR>
 " line
 noremap ? :<C-u>Unite -buffer-name=search line -start-insert<CR>
 " register
@@ -785,6 +785,37 @@ function! s:GetHighlight(hi)
   let hl = substitute(hl, 'xxx', '', '')
   return hl
 endfunction
+"============================================================================================================================================
+" 某プロジェクトの各ファイルにアクセスしやすくするコマンド
+" TODO 一時的に、別ディレクトリを見るように
+command! -nargs=0 UniteProjectFileController :Unite file_rec/async:.vim/bundle -buffer-name=file
+command! -nargs=0 UniteProjectFileLib :Unite file_rec/async:.vim/template -buffer-name=file
+
+" 某プロジェクトの各ファイルにアクセスしやすくするUnite source
+let s:unite_project_file_source = {
+\   'name': 'project_file',
+\ }
+function! s:unite_project_file_source.gather_candidates(args, context)
+    let lists = [{
+                \   "name" : "controller",
+                \   "command" : "UniteProjectFileController"
+                \}, {
+                \   "name" : "lib",
+                \   "command" : "UniteProjectFileLib"
+                \}]
+    return map(lists, '{
+                \   "word": v:val.name,
+                \   "kind": "command",
+                \   "action__command": v:val.command,
+                \ }')
+endfunction
+call unite#define_source(s:unite_project_file_source)
+unlet s:unite_project_file_source
+
+" 某プロジェクトの各ファイルにアクセスしやすくするマッピング
+nnoremap <Leader>ip :<C-u>Unite project_file<CR>
+nnoremap <Leader>ic :<C-u>UniteProjectFileController<CR>
+nnoremap <Leader>il :<C-u>UniteProjectFileLib<CR>
 "============================================================================================================================================
 
 
