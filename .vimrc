@@ -32,6 +32,8 @@ command! Rg source ~/dotfiles/.gvimrc
 command! Eb edit ~/dotfiles/.vim/bundles.vim
 command! -bang Rb :Unite neobundle/install:<bang>
 
+nnoremap <F5> :<C-u>tabnew ~/dotfiles/.vimrc<CR>:vsplit ~/dotfiles/.gvimrc<CR>:vsplit ~/dotfiles/.vim/bundles.vim<CR>
+
 "変更されたときに自動読み込み
 set autoread
 
