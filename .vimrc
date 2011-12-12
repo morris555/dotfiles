@@ -193,7 +193,7 @@ vnoremap * "zy:let @/ = @z<CR>n
 
 " コロンとセミコロンを入れ替え
 " noremap : ;
-" noremap ; :
+noremap ; :
 
 " 最後に編集したところを選択
 nnoremap gc `[v`]
@@ -384,6 +384,7 @@ call arpeggio#load()
 Arpeggio inoremap jk <Esc>
 Arpeggio onoremap jk <Esc>
 Arpeggio vnoremap jk <Esc>
+Arpeggio nnoremap df :<C-u>w<Cr>
 
 Arpeggio inoremap xj ()<Esc>i
 Arpeggio inoremap xk []<Esc>i
@@ -479,36 +480,36 @@ function! s:unite_project(...)
 endfunction
 
 " ファイル一覧
-nnoremap <silent> <Leader>uf :<C-u>call <SID>unite_project('-start-insert')<CR>
-nnoremap <silent> <Leader>uF :<C-u>Unite file<CR>
+nnoremap <silent> <Leader>uF :<C-u>call <SID>unite_project('-start-insert')<CR>
+nnoremap <silent> <Leader>uf :<C-u>Unite file_rec/async -buffer-name=file<CR>
 " バッファ一覧(bookmarkと被るので、とりあえずヒストリのhで妥協)
-noremap <Leader>uh :<C-u>Unite buffer -buffer-name=file<CR>
+nnoremap <Leader>uh :<C-u>Unite buffer -buffer-name=file<CR>
 " お気に入り
-noremap <Leader>ub :<C-u>Unite bookmark -default-action=cd<CR>
+nnoremap <Leader>ub :<C-u>Unite bookmark -default-action=cd<CR>
 " 最近使ったファイルの一覧
-noremap <Leader>um :<C-u>Unite file_mru -buffer-name=file<CR>
+nnoremap <Leader>um :<C-u>Unite file_mru -buffer-name=file<CR>
 " grep
-noremap <Leader>ug :<C-u>Unite grep -no-quit<CR>/*.
+nnoremap <Leader>ug :<C-u>Unite grep -no-quit<CR>/*.
 " grep
 " au FileType php noremap <buffer> <Leader>ug :<C-u>Unite grep -no-quit<CR>/*.php<CR>
 " ref
-au FileType php noremap <buffer> <Leader>ur :<C-u>Unite ref/phpmanual<CR>
-au FileType vim noremap <buffer> <Leader>ur :<C-u>Unite help<CR>
+au FileType php nnoremap <buffer> <Leader>ur :<C-u>Unite ref/phpmanual<CR>
+au FileType vim nnoremap <buffer> <Leader>ur :<C-u>Unite help<CR>
 " outline
-noremap <Leader>uo :<C-u>Unite outline -no-quit -vertical -winwidth=30 -buffer-name=side<CR>
+nnoremap <Leader>uo :<C-u>Unite outline -no-quit -vertical -winwidth=30 -buffer-name=side<CR>
 " tags
 " noremap <Leader>ut :<C-u>Unite tag -no-quit -vertical -winwidth=30 -buffer-name=side<CR>
-noremap <Leader>ut :<C-u>Unite buffer_tab -buffer-name=file<CR>
+nnoremap <Leader>ut :<C-u>Unite buffer_tab -buffer-name=file<CR>
 " command
-noremap <Leader>uc :<C-u>Unite command<CR>
+nnoremap <Leader>uc :<C-u>Unite command<CR>
 " line
-noremap ? :<C-u>Unite -buffer-name=search line -start-insert<CR>
+nnoremap ? :<C-u>Unite -buffer-name=search line -start-insert<CR>
 " register
-noremap <Leader>uy :<C-u>Unite history/yank<CR>
+nnoremap <Leader>uy :<C-u>Unite history/yank<CR>
 " source(sourceが増えてきたので、sourceのsourceを経由する方針にしてみる)
-noremap <Leader>uu :<C-u>Unite source<CR>
+nnoremap <Leader>uu :<C-u>Unite source<CR>
 " snippet
-noremap <Leader>us :<C-u>Unite snippet<CR>
+nnoremap <Leader>us :<C-u>Unite snippet<CR>
 
 " カラースキーム用コマンド
 command! UniteColorScheme :Unite colorscheme -auto-preview
@@ -790,8 +791,9 @@ endfunction
 "============================================================================================================================================
 " 某プロジェクトの各ファイルにアクセスしやすくするコマンド
 " TODO 一時的に、別ディレクトリを見るように
-command! -nargs=0 UniteProjectFileController :Unite file_rec/async:.vim/bundle -buffer-name=file
-command! -nargs=0 UniteProjectFileLib :Unite file_rec/async:.vim/template -buffer-name=file
+command! -nargs=0 UniteProjectFileController :Unite file_rec/async:server/application/controller -buffer-name=file
+command! -nargs=0 UniteProjectFileLib :Unite file_rec/async:server/application/lib -buffer-name=file
+command! -nargs=0 UniteProjectFileContract :Unite file_rec/async:contract -buffer-name=file
 
 " 某プロジェクトの各ファイルにアクセスしやすくするUnite source
 let s:unite_project_file_source = {
@@ -804,6 +806,9 @@ function! s:unite_project_file_source.gather_candidates(args, context)
                 \}, {
                 \   "name" : "lib",
                 \   "command" : "UniteProjectFileLib"
+                \}, {
+                \   "name" : "contract",
+                \   "command" : "UniteProjectFileContract"
                 \}]
     return map(lists, '{
                 \   "word": v:val.name,
@@ -815,17 +820,18 @@ call unite#define_source(s:unite_project_file_source)
 unlet s:unite_project_file_source
 
 " 某プロジェクトの各ファイルにアクセスしやすくするマッピング
-nnoremap <Leader>ip :<C-u>Unite project_file<CR>
+nnoremap <Leader>ii :<C-u>Unite project_file<CR>
 nnoremap <Leader>ic :<C-u>UniteProjectFileController<CR>
 nnoremap <Leader>il :<C-u>UniteProjectFileLib<CR>
+nnoremap <Leader>ix :<C-u>UniteProjectFileContract<CR>
 "============================================================================================================================================
 " No Command-line window by Shougo http://vim-users.jp/2010/07/hack161/ {{{
 nnoremap <sid>(command-line-enter) q:
 xnoremap <sid>(command-line-enter) q:
 nnoremap <sid>(command-line-norange) q:<C-u>
 
-nmap ;  <sid>(command-line-enter)
-xmap ;  <sid>(command-line-enter)
+nmap :  <sid>(command-line-enter)
+xmap :  <sid>(command-line-enter)
 
 " I added
 nnoremap q: q:<Esc>
