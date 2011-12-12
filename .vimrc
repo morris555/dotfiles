@@ -227,8 +227,8 @@ nnoremap <silent> <space>ws :<C-u>sp<CR>
 nnoremap <silent> <space>wv :<C-u>vs<CR>
 
 " タブ移動
-" nnoremap <Leader>n gt
-" nnoremap <Leader>p gT
+nnoremap <Leader>n gt
+nnoremap <Leader>p gT
 
 " 行数表示変更
 function! s:toggle_nu()
