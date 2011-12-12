@@ -727,8 +727,9 @@ let php_htmlInStrings=1
 
 " ステータスライン設定
 set laststatus=2
-set statusline=\ [%02n]
-set statusline+=\ %F
+" set statusline=\ [%02n]
+" set statusline+=\ %F
+set statusline=\ %F
 set statusline+=\ %(%m\ %r%)
 set statusline+=\ type=%{&filetype}
 let &statusline = &statusline . '       %{cfi#format("[%s()]", "no function")}'
