@@ -466,6 +466,8 @@ let g:surround_custom_mapping.smarty= {
 
 imap <C-k> <C-g>s
 
+imap <C-i>a array();
+
 " unite
 " 入力モードで開始する
 let g:unite_enable_start_insert=1
@@ -827,49 +829,6 @@ nnoremap <Leader>ii :<C-u>Unite project_file<CR>
 nnoremap <Leader>ic :<C-u>UniteProjectFileController<CR>
 nnoremap <Leader>il :<C-u>UniteProjectFileLib<CR>
 nnoremap <Leader>ix :<C-u>UniteProjectFileContract<CR>
-"============================================================================================================================================
-" No Command-line window by Shougo http://vim-users.jp/2010/07/hack161/ {{{
-nnoremap <sid>(command-line-enter) q:
-xnoremap <sid>(command-line-enter) q:
-nnoremap <sid>(command-line-norange) q:<C-u>
-
-nmap :  <sid>(command-line-enter)
-xmap :  <sid>(command-line-enter)
-
-" I added
-nnoremap q: q:<Esc>
-
-autocmd CmdwinEnter * call s:init_cmdwin()
-
-" MacVim is shit
-autocmd CmdwinEnter * nnoremap <buffer><expr> <Cr> CmdwinRun()
-autocmd CmdwinEnter * inoremap <buffer><expr> <Cr> CmdwinRun()
-function! CmdwinRun()
-    let a = getline(line('.'))
-    return "\<Esc>\<C-c>\<C-c>:" . a . "\<Cr>"
-endfunction
-
-function! s:init_cmdwin()
-    nnoremap <buffer> q :<C-u>quit<CR>
-    nnoremap <buffer> <TAB> :<C-u>quit<CR>
-    inoremap <buffer><expr><CR> pumvisible() ? "\<C-y>\<CR>" : "\<CR>"
-    inoremap <buffer><expr><C-h> pumvisible() ? "\<C-y>\<C-h>" : "\<C-h>"
-    "inoremap <buffer><expr><BS> pumvisible() ? "\<C-y>\<C-h>" : "\<C-h>"
-    "I added
-    inoremap <buffer><expr><BS> col('.') == 1 ? "\<ESC>:quit\<CR>" : pumvisible() ? "\<C-y>\<C-h>" : "\<C-h>"
-    inoremap <buffer><expr>: col('.') == 1 ? "VimProcBang " : ":"
-    inoremap <buffer><expr> \  smartchr#one_of('~/', '\')
-
-    " Completion.
-    inoremap <buffer><expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
-
-    startinsert!
-endfunction
-" }}}
-
-
-"============================================================================================================================================
-
 
 if has("gui_running")
     " gvimrcも読み込む
