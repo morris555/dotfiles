@@ -334,6 +334,10 @@ if has('vim_starting')
     let g:eskk#egg_like_newline = 1
     let g:eskk#show_candidates_count = 3
     " let g:eskk#kakutei_when_unique_candidate = 1
+
+    " あとで
+    " imap <C-j> <Plug>(eskk:enable)
+    " let g:eskk#directory = '~/Dropbox/eskk/'
 endif
 
 " TODO: eskkとskkを両立できるようにする
@@ -470,8 +474,6 @@ let g:unite_source_history_yank_enable = 1
 let g:unite_source_history_yank_limit = 1000
 let g:unite_source_grep_max_candidates = 10000
 let g:unite_source_session_enable_auto_save = 1     " セッション保存
-let g:unite_cursor_line_highlight = 'TabLineSel'
-let g:unite_abbr_highlight = 'TabLine'
 
 function! s:unite_project(...)
   let opts = (a:0 ? join(a:000, ' ') : '')

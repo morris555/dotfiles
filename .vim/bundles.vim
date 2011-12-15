@@ -71,6 +71,7 @@ NeoBundle 'thinca/vim-unite-history'
 NeoBundle 'ujihisa/unite-colorscheme'
 NeoBundle 'tsukkee/unite-tag'
 NeoBundle 'choplin/unite-vim_hacks'
+NeoBundle 'git://github.com/mattn/unite-advent_calendar.git'
 
 " 整形
 NeoBundle 'h1mesuke/vim-alignta'
