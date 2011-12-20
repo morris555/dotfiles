@@ -385,10 +385,18 @@ autocmd FileType objc nmap <Leader>r <d-r>
 let g:arpeggio_timeoutlen = 70
 call arpeggio#load()
 
-Arpeggio inoremap jk <Esc>
-Arpeggio onoremap jk <Esc>
-Arpeggio vnoremap jk <Esc>
-Arpeggio nnoremap df :<C-u>w<Cr>
+" 矯正のため、一時的にコメントアウト
+" Arpeggio inoremap jk <Esc>
+" Arpeggio onoremap jk <Esc>
+" Arpeggio vnoremap jk <Esc>
+" Arpeggio nnoremap df :<C-u>w<Cr>
+
+inoremap jk <Esc>
+inoremap kj <Esc>
+onoremap jk <Esc>
+onoremap kj <Esc>
+vnoremap jk <Esc>
+vnoremap kj <Esc>
 
 Arpeggio inoremap xj ()<Esc>i
 Arpeggio inoremap xk []<Esc>i
