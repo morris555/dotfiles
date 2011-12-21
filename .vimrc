@@ -385,28 +385,22 @@ autocmd FileType objc nmap <Leader>r <d-r>
 let g:arpeggio_timeoutlen = 70
 call arpeggio#load()
 
-" 矯正のため、一時的にコメントアウト
-" Arpeggio inoremap jk <Esc>
-" Arpeggio onoremap jk <Esc>
-" Arpeggio vnoremap jk <Esc>
-" Arpeggio nnoremap df :<C-u>w<Cr>
-
+" jkの同時押しで<Esc>
+Arpeggio vnoremap jk <Esc>
+Arpeggio cnoremap jk <Esc>
 inoremap jk <Esc>
 inoremap kj <Esc>
-onoremap jk <Esc>
-onoremap kj <Esc>
-vnoremap jk <Esc>
-vnoremap kj <Esc>
 
-Arpeggio inoremap xj ()<Esc>i
-Arpeggio inoremap xk []<Esc>i
-Arpeggio inoremap xl {}<Esc>i
-Arpeggio inoremap x' ''<Esc>i
-Arpeggio inoremap x" ""<Esc>i
+" いまいち
+" Arpeggio inoremap xj ()<Esc>i
+" Arpeggio inoremap xk []<Esc>i
+" Arpeggio inoremap xl {}<Esc>i
+" Arpeggio inoremap x' ''<Esc>i
+" Arpeggio inoremap x" ""<Esc>i
 
 " smartchr.vim
-" inoremap <buffer><expr> = smartchr#one_of(' = ', ' == ', ' === ', '=')
-" inoremap <buffer><expr> , smartchr#one_of(', ', ',')
+inoremap <buffer><expr> = smartchr#one_of(' = ', ' == ', ' === ', '=')
+inoremap <buffer><expr> , smartchr#one_of(', ', ',')
 
 " Alignta(仮設定)
 vnoremap <Leader>a :Alignta 
