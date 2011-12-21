@@ -48,7 +48,6 @@ set nomodeline
 set modelines=0
 
 " 行数を表示
-" set number
 set relativenumber
 
 " バックアップはとらない
@@ -87,9 +86,8 @@ set complete+=k            " 補完に辞書ファイル追加
 " インデント
 "---------------------------------------------------------
 set smartindent
-
-" set autoindent
-" set cindent
+set autoindent
+set cindent
 
 " タブ幅４
 set shiftwidth=4
@@ -192,7 +190,7 @@ vnoremap * "zy:let @/ = @z<CR>n
 "---------------------------------------------------------
 
 " コロンとセミコロンを入れ替え
-" noremap : ;
+noremap : ;
 noremap ; :
 
 " 最後に編集したところを選択
@@ -227,8 +225,9 @@ nnoremap <silent> <space>ws :<C-u>sp<CR>
 nnoremap <silent> <space>wv :<C-u>vs<CR>
 
 " タブ移動
-nnoremap <Leader>n gt
-nnoremap <Leader>p gT
+" 矯正のためコメントアウト
+" nnoremap <Leader>n gt
+" nnoremap <Leader>p gT
 
 " 行数表示変更
 function! s:toggle_nu()
@@ -243,7 +242,7 @@ function! s:toggle_nu()
         set norelativenumber
     endif
 endfunction
-" nnoremap <silent> <F3> :<C-u>call <SID>toggle_nu()<CR>
+nnoremap <silent> <F4> :<C-u>call <SID>toggle_nu()<CR>
 
 " 表示行移動
 nnoremap j gj
@@ -279,7 +278,8 @@ noremap <Space>v :vs<CR>
 nnoremap Q q
 
 " ノーマルモード時にエンター2回で改行
-nnoremap <CR><CR> :<C-u>call append(expand('.'), '')<Cr>j
+" nnoremap <CR><CR> :<C-u>call append(expand('.'), '')<Cr>j
+nnoremap <CR><CR> o<ESC>
 
 " tagまわり
 set tags=tags
@@ -361,10 +361,9 @@ let g:poslist_histsize = 10000
 
 " quickhl
 nmap <Leader>hh <Plug>(quickhl-toggle)
-xmap <Leader>hh <Plug>(quickhl-toggle)
 nmap <Leader>hr <Plug>(quickhl-reset)
-xmap <Leader>hr <Plug>(quickhl-reset)
 nmap <Leader>hm <Plug>(quickhl-match)
+xmap <Leader>h <Plug>(quickhl-toggle)
 
 let g:vimfiler_as_default_explorer = 1
 
@@ -468,7 +467,7 @@ let g:surround_custom_mapping.smarty= {
 
 imap <C-k> <C-g>s
 
-imap <C-i>a array();
+" imap <C-i>a array();
 
 " unite
 " 入力モードで開始する
@@ -562,7 +561,7 @@ let $PATH=$PATH . ":" . $HOME . "/.cabal/bin"
 inoremap <expr><C-x><C-f>  neocomplcache#manual_filename_complete()
 
 " omni補完
-inoremap <expr><C-x><C-o> &filetype == 'vim' ? "\<C-x><C-v><C-p>" : neocomplcache#manual_omni_complete()
+inoremap <expr> <C-x><C-o> &filetype == 'vim' ? "\<C-x><C-v><C-p>" : neocomplcache#manual_omni_complete()
 
 " <C-h>のときにポップアップを消す
 inoremap <expr><C-h> neocomplcache#smart_close_popup()."<C-h>"
@@ -582,7 +581,10 @@ let g:neocomplcache_enable_smart_case = 1 " 大文字打つまで、小文字大
 let g:neocomplcache_enable_underbar_completion = 1	" 区切り文字の補完を有効化
 let g:neocomplcache_caching_limit_file_size = 500000000 " キャッシュするファイルサイズを増やす
 let g:neocomplcache_min_syntax_length = 3
-let g:NeoComplCache_EnableInfo = 1
+let g:neoComplCache_EnableInfo = 1
+let g:neocomplcache_enable_cursor_hold_i = 1        " 候補の計算を|CursorHoldI|イベント時に行う
+let g:neocomplcache_enable_camel_case_completion = 1 " 大文字を入力したときに、それを単語の区切りとしてあいまい検索
+let g:neocomplcache_enable_underbar_completion = 1  " _を入力したときに、それを単語の区切りとしてあいまい検索
 let g:neocomplcache_dictionary_file_type_lists = {
             \'default' : '',
             \'php' : $HOME.'/.vim/dict/php.dict',
@@ -590,6 +592,12 @@ let g:neocomplcache_dictionary_file_type_lists = {
             \'vimshell' : $HOME.'/.vim/.vimshell_hist'
             \}
 let g:NeoComplCache_SnippetsDir = $HOME . '/.vim/snippets'
+
+" php omni
+if !exists('g:neocomplcache_omni_patterns')
+    let g:neocomplcache_omni_patterns = {}
+endif
+let g:neocomplcache_omni_patterns.php = '[^. \t]->\h\w*\|\h\w*::'
 
 " Enable omni completion.
 autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
@@ -707,9 +715,9 @@ command!
 autocmd BufNewFile *.pm 0r $HOME/.vim/template/perl.txt
 autocmd BufNewFile *.html 0r $HOME/.vim/template/html.txt
 
+" ファイルタイプ
 au BufNewFile,BufRead *.scala set filetype=scala
 au BufNewFile,BufRead *.ejs set filetype=html
-" au BufNewFile,BufRead *.js set filetype=coffee
 au BufNewFile,BufRead *.js set filetype=javascript
 au BufNewFile,BufRead *.html set filetype=smarty.html
 
@@ -750,23 +758,58 @@ set list
 set listchars=tab:>-,trail:-,nbsp:%,extends:>,precedes:<
 
 "============================================================================================================================================
+" ステータスライン。参考(http://d.hatena.ne.jp/thinca/20111204/1322932585)
+
+" 各タブページのカレントバッファ名+αを表示
+function! s:tabpage_label(n)
+  " t:title と言う変数があったらそれを使う
+  let title = gettabvar(a:n, 'title')
+  if title !=# ''
+    return title
+  endif
+
+  " タブページ内のバッファのリスト
+  let bufnrs = tabpagebuflist(a:n)
+
+  " カレントタブページかどうかでハイライトを切り替える
+  let hi = a:n is tabpagenr() ? '%#TabLineSel#' : '%#TabLine#'
+
+  " バッファが複数あったらバッファ数を表示
+  let no = len(bufnrs)
+  if no is 1
+    let no = ''
+  endif
+  " タブページ内に変更ありのバッファがあったら '+' を付ける
+  let mod = len(filter(copy(bufnrs), 'getbufvar(v:val, "&modified")')) ? '+' : ''
+  let sp = (no . mod) ==# '' ? '' : ' '  " 隙間空ける
+
+  " カレントバッファ
+  let curbufnr = bufnrs[tabpagewinnr(a:n) - 1]  " tabpagewinnr() は 1 origin
+  let fname = pathshorten(bufname(curbufnr))
+
+  let label = no . mod . sp . fname
+
+  return '%' . a:n . 'T' . hi . label . '%T%#TabLineFill#'
+endfunction
+
+function! MakeTabLine()
+  let titles = map(range(1, tabpagenr('$')), 's:tabpage_label(v:val)')
+  let sep = ' | '  " タブ間の区切り
+  let tabpages = join(titles, sep) . sep . '%#TabLineFill#%T'
+  let info = ''
+  let info .= fnamemodify(getcwd(), ":~") . ' '
+  return tabpages . '%=' . info  " タブリストを左に、情報を右に表示
+endfunction
+
+set tabline=%!MakeTabLine()
+"============================================================================================================================================
 
 " 挿入モード時、ステータスラインの色を変更
-"
-" このファイルの内容をそのまま.vimrc等に追加するか、
-" pluginフォルダへこのファイルをコピーします。
 
 " 挿入モード時の色指定
 if !exists('g:hi_insert')
   let g:hi_insert = 'highlight StatusLine guifg=darkblue guibg=darkyellow gui=none ctermfg=blue ctermbg=yellow cterm=none'
 endif
-
-" Linux等でESC後にすぐ反映されない場合、次行以降のコメントを解除してください
-" if has('unix') && !has('gui_running')
-"   " ESC後にすぐ反映されない場合
-"   inoremap <silent> <ESC> <ESC>
-"   inoremap <silent> <C-[> <ESC>
-" endif
 
 if has('syntax')
   augroup InsertHook
