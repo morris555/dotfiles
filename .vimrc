@@ -223,11 +223,8 @@ nnoremap <silent> <space>wp gT
 nnoremap <silent> <space>wt :<C-u>tabnew<CR>
 nnoremap <silent> <space>ws :<C-u>sp<CR>
 nnoremap <silent> <space>wv :<C-u>vs<CR>
-
-" タブ移動
-" 矯正のためコメントアウト
-" nnoremap <Leader>n gt
-" nnoremap <Leader>p gT
+nnoremap <Leader>n gt
+nnoremap <Leader>p gT
 
 " 行数表示変更
 function! s:toggle_nu()
@@ -387,8 +384,10 @@ call arpeggio#load()
 " jkの同時押しで<Esc>
 Arpeggio vnoremap jk <Esc>
 Arpeggio cnoremap jk <Esc>
-inoremap jk <Esc>
-inoremap kj <Esc>
+imap jk <Esc>
+imap kj <Esc>
+" inoremap jk <Esc>
+" inoremap kj <Esc>
 
 " いまいち
 " Arpeggio inoremap xj ()<Esc>i
@@ -659,8 +658,8 @@ command! -nargs=0 MemoRead :Unite file_rec:~/Dropbox/Memo/ -buffer-name=file -au
 command! -nargs=0 TempEdit :Unite file_rec:~/.vim/template -buffer-name=file
 
 " 一時ファイル
-command! -nargs=1 -complete=filetype Tmp edit ~/Dropbox/tmp.<args>
-command! -nargs=1 -complete=filetype Temp edit ~/Dropbox/tmp.<args>
+command! -nargs=1 -complete=filetype Tmp edit ~/Dropbox/tmp/tmp.<args>
+command! -nargs=1 -complete=filetype Temp edit ~/Dropbox/tmp/tmp.<args>
 
 " TODOファイル
 command! -complete=filetype Todo edit ~/Dropbox/todo.mkd
