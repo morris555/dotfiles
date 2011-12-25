@@ -16,6 +16,9 @@ NeoBundle 'tomasr/molokai'
 NeoBundle 'mattn/webapi-vim'
 NeoBundle 'thinca/vim-openbuf'
 
+" simplenote
+NeoBundle 'https://github.com/mattn/vimplenote-vim.git'
+
 " textobj,operator
 NeoBundle 'kana/vim-textobj-user'
 NeoBundle 'kana/vim-operator-user'

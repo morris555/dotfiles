@@ -8,6 +8,15 @@
 " endif
 
 "---------------------------------------------------------
+" 関数
+"---------------------------------------------------------
+" thinca's vimrc
+function! s:has_plugin(name)
+  return globpath(&runtimepath, 'plugin/' . a:name . '.vim') !=# ''
+  \   || globpath(&runtimepath, 'autoload/' . a:name . '.vim') !=# ''
+endfunction
+
+"---------------------------------------------------------
 " 基本設定
 "---------------------------------------------------------
 
@@ -416,7 +425,10 @@ inoremap <buffer><expr> , smartchr#one_of(', ', ',')
 vnoremap <Leader>a :Alignta 
 
 " コマンド展開
-cnoremap <expr> <Space> ambicmd#expand("\<Space>")
+if s:has_plugin('ambicmd')
+    cnoremap <expr> <Space> ambicmd#expand("\<Space>")
+    cnoremap <expr> <CR>    ambicmd#expand("\<CR>")
+endif
 
 " vim-ref
 nmap <Leader>k <Plug>(ref-keyword)
