@@ -1,6 +1,18 @@
+" Startup time.(by thinca)
+" if has('vim_starting') && has('reltime')
+  " let g:startuptime = reltime()
+  " augroup vimrc-startuptime
+    " autocmd! VimEnter * let g:startuptime = reltime(g:startuptime) | redraw
+    " \                 | echomsg 'startuptime: ' . reltimestr(g:startuptime)
+  " augroup END
+" endif
+
 "---------------------------------------------------------
 " 基本設定
 "---------------------------------------------------------
+
+" vital.vim(とりあえずロードだけ)
+" let g:V = vital#of('vial')
 
 " 自動コマンド削除
 autocmd!
