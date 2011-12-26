@@ -769,9 +769,11 @@ set laststatus=2
 set statusline=\ %F
 set statusline+=\ %(%m\ %r%)
 set statusline+=\ type=%{&filetype}
-let &statusline = &statusline . '       %{cfi#format("[%s()]", "no function")}'
-set statusline+=%=\ (%l/%L)
-set statusline+=%=\ %P
+" ↓タブラインに移行
+" let &statusline = &statusline . '       %{cfi#format("[%s()]", "no function")}'
+" set statusline+=%=\ (%l/%L)
+" set statusline+=%=\ %P
+set statusline+=%=\ [%l]
 set statusline+=%=\ \ 
 
 autocmd BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$") | exe "normal g`\"" | endif
@@ -820,11 +822,16 @@ function! MakeTabLine()
   let sep = ' | '  " タブ間の区切り
   let tabpages = join(titles, sep) . sep . '%#TabLineFill#%T'
   let info = ''
+  let info .= cfi#format("[%s()]", "no function")
+  let info .= '   '
+  let info .= '(%l/%L) %P'
+  let info .= '   '
   let info .= fnamemodify(getcwd(), ":~") . ' '
   return tabpages . '%=' . info  " タブリストを左に、情報を右に表示
 endfunction
 
-set tabline=%!MakeTabLine()
+" set tabline=%!MakeTabLine()
+autocmd CursorMoved * set tabline=%!MakeTabLine()
 "============================================================================================================================================
 
 " 挿入モード時、ステータスラインの色を変更
