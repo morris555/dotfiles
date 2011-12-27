@@ -207,6 +207,42 @@ set hlsearch
 vnoremap * "zy:let @/ = @z<CR>n
 
 "---------------------------------------------------------
+" folding
+"---------------------------------------------------------
+
+if s:has_plugin('foldCC')
+    set foldtext=FoldCCtext()
+    set foldcolumn=3
+    set fillchars=vert:\|
+endif
+
+" 作成
+noremap <Space>fm zf
+" 削除
+noremap <Space>fd zd
+" 開く
+noremap <Space>fo zo
+" 閉じる
+noremap <Space>fc zc
+" 全て開く
+noremap <Space>fO zO
+" 全て閉じる
+noremap <Space>fC zC
+" トグル
+noremap <Space>ff za
+" 移動
+noremap <Space>fj zj
+noremap <Space>fk zk
+noremap <Space>fn ]z
+noremap <Space>fp [z
+
+noremap <Space>fm zM
+noremap <Space>fi zMzv
+
+" むしろ、タブラインに出したい
+noremap <space>fg :echo FoldCCnavi()<CR>
+
+"---------------------------------------------------------
 " マッピング
 "---------------------------------------------------------
 
@@ -713,7 +749,8 @@ set pastetoggle=<F2>
 set clipboard=unnamed
 
 " 折り畳み関連
-set foldmethod=manual
+set foldmethod=marker
+set commentstring=%s
 
 " ファイルタイプのショートカットコマンド
 command! -nargs=1 Type :set filetype=<args>
@@ -760,7 +797,8 @@ noremap <Space>p :bp<CR>
 let php_sql_query=1
 "文字列中のSQLをハイライトする
 let php_htmlInStrings=1
-" let php_folding = 1
+let php_folding = 1
+let php_parent_error_close = 1
 
 " ステータスライン設定
 set laststatus=2
@@ -822,13 +860,15 @@ function! MakeTabLine()
   let sep = ' | '  " タブ間の区切り
   let tabpages = join(titles, sep) . sep . '%#TabLineFill#%T'
   let info = ''
-  let info .= cfi#format("[%s()]", "no function")
+  " let info .= cfi#format("[%s()]", "no function")
+  let info .= FoldCCnavi()
   let info .= '   '
   let info .= '(%l/%L) %P'
   let info .= '   '
   let info .= fnamemodify(getcwd(), ":~") . ' '
   return tabpages . '%=' . info  " タブリストを左に、情報を右に表示
 endfunction
+" noremap <space>fg :echo FoldCCnavi()<CR>
 
 " set tabline=%!MakeTabLine()
 autocmd CursorMoved * set tabline=%!MakeTabLine()

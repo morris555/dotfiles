@@ -19,6 +19,9 @@ NeoBundle 'thinca/vim-openbuf'
 " simplenote
 NeoBundle 'https://github.com/mattn/vimplenote-vim.git'
 
+" folding_function
+NeoBundle 'git://github.com/LeafCage/foldCC.git'
+
 " textobj,operator
 NeoBundle 'kana/vim-textobj-user'
 NeoBundle 'kana/vim-operator-user'
