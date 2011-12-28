@@ -750,7 +750,7 @@ set clipboard=unnamed
 
 " 折り畳み関連
 set foldmethod=marker
-set commentstring=%s
+" set commentstring=%s
 
 " ファイルタイプのショートカットコマンド
 command! -nargs=1 Type :set filetype=<args>
@@ -860,15 +860,16 @@ function! MakeTabLine()
   let sep = ' | '  " タブ間の区切り
   let tabpages = join(titles, sep) . sep . '%#TabLineFill#%T'
   let info = ''
-  " let info .= cfi#format("[%s()]", "no function")
-  let info .= FoldCCnavi()
+" let info = ''
+" let info .= FoldCCnavi()
+  let info .= ''
+  let info .= cfi#format("[%s()]", "no function")
   let info .= '   '
   let info .= '(%l/%L) %P'
   let info .= '   '
   let info .= fnamemodify(getcwd(), ":~") . ' '
   return tabpages . '%=' . info  " タブリストを左に、情報を右に表示
 endfunction
-" noremap <space>fg :echo FoldCCnavi()<CR>
 
 " set tabline=%!MakeTabLine()
 autocmd CursorMoved * set tabline=%!MakeTabLine()
