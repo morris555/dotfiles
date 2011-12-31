@@ -1,27 +1,6 @@
-" Startup time.(by thinca)
-" if has('vim_starting') && has('reltime')
-  " let g:startuptime = reltime()
-  " augroup vimrc-startuptime
-    " autocmd! VimEnter * let g:startuptime = reltime(g:startuptime) | redraw
-    " \                 | echomsg 'startuptime: ' . reltimestr(g:startuptime)
-  " augroup END
-" endif
-
-"---------------------------------------------------------
-" 関数
-"---------------------------------------------------------
-" thinca's vimrc
-function! s:has_plugin(name)
-  return globpath(&runtimepath, 'plugin/' . a:name . '.vim') !=# ''
-  \   || globpath(&runtimepath, 'autoload/' . a:name . '.vim') !=# ''
-endfunction
-
-"---------------------------------------------------------
-" 基本設定
-"---------------------------------------------------------
-
-" vital.vim(とりあえずロードだけ)
-" let g:V = vital#of('vial')
+" common setting {{{1
+"
+set nocompatible
 
 " 自動コマンド削除
 autocmd!
@@ -31,8 +10,6 @@ if filereadable(expand('~/.vim/bundles.vim'))
     source ~/.vim/bundles.vim
 endif
 
-set nocompatible
-
 set fileencodings=utf-8,cp932
 
 " シンタックス有効
@@ -41,21 +18,6 @@ syntax on
 " ファイルタイプ判定ON
 filetype plugin indent on
 
-" Ev/Rvでvimrcの編集と反映
-command! Ev edit ~/dotfiles/.vimrc
-command! Rv source ~/dotfiles/.vimrc
-
-" Eg/Rgでgvimrcの編集と反映
-command! Eg edit ~/dotfiles/.gvimrc
-command! Rg source ~/dotfiles/.gvimrc
-
-" Eb/RbでNeoBundleの編集と反映
-command! Eb edit ~/dotfiles/.vim/bundles.vim
-command! -bang Rb :Unite neobundle/install:<bang>
-
-nnoremap <F5> :<C-u>tabnew ~/dotfiles/.vimrc<CR>:vsplit ~/dotfiles/.gvimrc<CR>:vsplit ~/dotfiles/.vim/bundles.vim<CR>
-
-"変更されたときに自動読み込み
 set autoread
 
 " カーソルを中央行に
@@ -68,7 +30,7 @@ let mapleader = ","
 set nomodeline
 set modelines=0
 
-" 行数を表示
+" 相対行を表示
 set relativenumber
 
 " バックアップはとらない
@@ -82,18 +44,21 @@ set backspace=indent,eol,start
 " ペアとなる括弧の定義
 set matchpairs+=<:>
 
-" undoを記録
-" set undofile
-
 " 編集中もほかファイルを開けるように
 set hidden
 
 " koriya版に同梱されているプラグインを無効化する
 let plugin_dicwin_disable = 1
 
-"---------------------------------------------------------
-" コマンドライン
-"---------------------------------------------------------
+" function {{{1
+"
+" thinca's vimrc
+function! s:has_plugin(name)
+  return globpath(&runtimepath, 'plugin/' . a:name . '.vim') !=# ''
+  \   || globpath(&runtimepath, 'autoload/' . a:name . '.vim') !=# ''
+endfunction
+
+" command line {{{1
 
 set cmdheight=2            " コマンドラインは２行
 set showcmd                " コマンドを表示
@@ -103,9 +68,8 @@ set wildmode=list:full     " リスト表示，最長マッチ
 set history=1000           " コマンド・検索パターンの履歴数
 set complete+=k            " 補完に辞書ファイル追加
 
-"---------------------------------------------------------
-" インデント
-"---------------------------------------------------------
+" indent {{{1
+
 set smartindent
 set autoindent
 set cindent
@@ -116,24 +80,9 @@ set tabstop=4
 set softtabstop=4
 set expandtab
 
+" file encoding {{{1
+"
 set fileformats=unix,dos,mac
-
-"---------------------------------------------------------
-" カーソル行のハイライト
-"---------------------------------------------------------
-
-" カレントウィンドウにのみ罫線を引く
-augroup cch
-    autocmd! cch
-    autocmd WinLeave * set nocursorline
-    autocmd WinLeave * set nocursorcolumn
-    autocmd WinEnter,BufRead * set cursorline
-    autocmd WinEnter,BufRead * set cursorcolumn
-augroup END
-
-"---------------------------------------------------------
-" 文字コード関連
-"---------------------------------------------------------
 
 " 文字コードの自動認識
 if &encoding !=# 'utf-8'
@@ -193,9 +142,7 @@ if exists('&ambiwidth')
     set ambiwidth=double
 endif
 
-"---------------------------------------------------------
-" 検索
-"---------------------------------------------------------
+" searching {{{1
 
 set ignorecase
 set smartcase
@@ -206,9 +153,7 @@ set hlsearch
 " *でビジュアルモードで選んでる文字を検索
 vnoremap * "zy:let @/ = @z<CR>n
 
-"---------------------------------------------------------
-" folding
-"---------------------------------------------------------
+" folding {{{1
 
 if s:has_plugin('foldCC')
     set foldtext=FoldCCtext()
@@ -235,16 +180,45 @@ noremap <Space>fj zj
 noremap <Space>fk zk
 noremap <Space>fn ]z
 noremap <Space>fp [z
-
+" あとで調べる
 noremap <Space>fm zM
 noremap <Space>fi zMzv
-
+" 折り畳み位置を表示
 " むしろ、タブラインに出したい
 noremap <space>fg :echo FoldCCnavi()<CR>
 
-"---------------------------------------------------------
-" マッピング
-"---------------------------------------------------------
+" tag {{{1
+
+set tags=tags
+
+nnoremap <silent> <Space>tl :Tlist<CR>
+nnoremap <silent> <Space>te :<C-u>SrcExplToggle<CR>
+nnoremap <silent> <Space>tt <C-]>
+nnoremap <silent> <Space>tn :tn<CR>
+nnoremap <silent> <Space>tp :tp<CR>
+nnoremap <silent> <Space>tg :<C-u>UniteWithCursorWord -immediately tag<CR>
+nnoremap <silent> <Space>tj <C-]>:<C-u>split<CR><C-o><C-o><C-w>j
+nnoremap <silent> <Space>tu :<C-u>!ctags --sort=foldcase -R<CR>
+autocmd FileType php nnoremap <silent> <Space>tu :<C-u>!ctags --languages=PHP --sort=foldcase -R<CR>
+nnoremap <silent> <Space>tk <C-]>:<C-u>vsplit<CR><C-o><C-o><C-w>l
+
+" cscope
+nnoremap <silent> <space>sa :<C-u>cscope add cscope.out<CR>
+nnoremap <silent> <space>ss :<C-u>cscope find s <C-r><C-w><CR>
+nnoremap <silent> <space>sg :<C-u>cscope find g <C-r><C-w><CR>
+nnoremap <silent> <space>sc :<C-u>cscope find c <C-r><C-w><CR>
+nnoremap <silent> <space>sd :<C-u>cscope find d <C-r><C-w><CR>
+nnoremap <silent> <space>st :<C-u>cscope find t <C-r><C-w><CR>
+nnoremap <silent> <space>sf :<C-u>cscope find f <C-r><C-w><CR>
+nnoremap <silent> <space>si :<C-u>cscope find i <C-r><C-w><CR>
+
+"自動でプレビューを表示する。
+let g:SrcExpl_RefreshTime = 1
+"プレビューウインドウの高さ
+let g:SrcExpl_WinHeight = 9
+"tagsは自動で作成する
+let g:SrcExpl_isUpdateTags = 0
+" other mapping {{{1
 
 " コロンとセミコロンを入れ替え
 noremap : ;
@@ -259,7 +233,7 @@ map R <Plug>(operator-replace)
 nnoremap <expr> gp '`[' . strpart(getregtype(), 0, 1) . '`]'
 
 " ESC2度押しで検索ハイライトを消す
-nnoremap <ESC><ESC> :<C-u>nohlsearch<CR>
+" nnoremap <ESC><ESC> :<C-u>nohlsearch<CR>
 
 nmap ( ,mf(
 nmap ) ,mF(
@@ -324,56 +298,83 @@ noremap K 30k
 noremap L 10l
 noremap H 10h
 
-" 分割
-noremap <Space>s :sp<CR>
-noremap <Space>v :vs<CR>
-
 " キーボードマクロをQに降格
 nnoremap Q q
 
 " ノーマルモード時にエンター2回で改行
 " nnoremap <CR><CR> :<C-u>call append(expand('.'), '')<Cr>j
-nnoremap <CR><CR> o<ESC>
+" nnoremap <CR><CR> o<ESC>
 
-" tagまわり
-set tags=tags
-nnoremap <silent> <Space>tl :Tlist<CR>
-nnoremap <silent> <Space>te :<C-u>SrcExplToggle<CR>
-nnoremap <silent> <Space>tt <C-]>
-nnoremap <silent> <Space>tn :tn<CR>
-nnoremap <silent> <Space>tp :tp<CR>
-nnoremap <silent> <Space>tg :<C-u>UniteWithCursorWord -immediately tag<CR>
-nnoremap <silent> <Space>tj <C-]>:<C-u>split<CR><C-o><C-o><C-w>j
-" nnoremap <silent> <Space>tu :<C-u>!ctags --languages=PHP --sort=foldcase -R<CR>
-nnoremap <silent> <Space>tu :<C-u>!ctags --sort=foldcase -R<CR>
-autocmd FileType php nnoremap <silent> <Space>tu :<C-u>!ctags --languages=PHP --sort=foldcase -R<CR>
-nnoremap <silent> <Space>tk <C-]>:<C-u>vsplit<CR><C-o><C-o><C-w>l
+" status line {{{1
+set laststatus=2
+set statusline=\ %F
+set statusline+=\ %(%m\ %r%)
+set statusline+=\ type=%{&filetype}
+set statusline+=%=\ [%l]
+set statusline+=%=\ \ 
 
-" cscope
-nnoremap <silent> <space>sa :<C-u>cscope add cscope.out<CR>
-nnoremap <silent> <space>ss :<C-u>cscope find s <C-r><C-w><CR>
-nnoremap <silent> <space>sg :<C-u>cscope find g <C-r><C-w><CR>
-nnoremap <silent> <space>sc :<C-u>cscope find c <C-r><C-w><CR>
-nnoremap <silent> <space>sd :<C-u>cscope find d <C-r><C-w><CR>
-nnoremap <silent> <space>st :<C-u>cscope find t <C-r><C-w><CR>
-nnoremap <silent> <space>sf :<C-u>cscope find f <C-r><C-w><CR>
-nnoremap <silent> <space>si :<C-u>cscope find i <C-r><C-w><CR>
+" tab line {{{1
 
-"自動でプレビューを表示する。
-let g:SrcExpl_RefreshTime = 1
-"プレビューウインドウの高さ
-let g:SrcExpl_WinHeight = 9
-"tagsは自動で作成する
-let g:SrcExpl_isUpdateTags = 0
+" 参考(http://d.hatena.ne.jp/thinca/20111204/1322932585)
 
-"---------------------------------------------------------
-" プラグイン設定
-"---------------------------------------------------------
+" 各タブページのカレントバッファ名+αを表示
+function! s:tabpage_label(n)
+  " t:title と言う変数があったらそれを使う
+  let title = gettabvar(a:n, 'title')
+  if title !=# ''
+    return title
+  endif
+
+  " タブページ内のバッファのリスト
+  let bufnrs = tabpagebuflist(a:n)
+
+  " カレントタブページかどうかでハイライトを切り替える
+  let hi = a:n is tabpagenr() ? '%#TabLineSel#' : '%#TabLine#'
+
+  " バッファが複数あったらバッファ数を表示
+  let no = len(bufnrs)
+  if no is 1
+    let no = ''
+  endif
+  " タブページ内に変更ありのバッファがあったら '+' を付ける
+  let mod = len(filter(copy(bufnrs), 'getbufvar(v:val, "&modified")')) ? '+' : ''
+  let sp = (no . mod) ==# '' ? '' : ' '  " 隙間空ける
+
+  " カレントバッファ
+  let curbufnr = bufnrs[tabpagewinnr(a:n) - 1]  " tabpagewinnr() は 1 origin
+  let fname = pathshorten(bufname(curbufnr))
+
+  let label = no . mod . sp . fname
+
+  return '%' . a:n . 'T' . hi . label . '%T%#TabLineFill#'
+endfunction
+
+function! MakeTabLine()
+  let titles = map(range(1, tabpagenr('$')), 's:tabpage_label(v:val)')
+  let sep = ' | '  " タブ間の区切り
+  let tabpages = join(titles, sep) . sep . '%#TabLineFill#%T'
+  let info = ''
+" let info = ''
+" let info .= FoldCCnavi()
+  let info .= ''
+  let info .= cfi#format("[%s()]", "no function")
+  let info .= '   '
+  let info .= '(%l/%L) %P'
+  let info .= '   '
+  let info .= fnamemodify(getcwd(), ":~") . ' '
+  return tabpages . '%=' . info  " タブリストを左に、情報を右に表示
+endfunction
+
+" set tabline=%!MakeTabLine()
+autocmd CursorMoved * set tabline=%!MakeTabLine()
+
+" plugin {{{1
 "
 " sonictemplate
 let g:sonictemplate_vim_template_dir = $HOME. '/dotfiles/.vim/template'
 
 " TODO:大文字対応
+" むしろ、別のtoggle系のプラグインを入れるべき
 " mondayプラグインの設定例
 let g:monday_patterns = [
             \["ASC", "DESC"],
@@ -393,11 +394,6 @@ if has('vim_starting')
     " imap <C-j> <Plug>(eskk:enable)
     " let g:eskk#directory = '~/Dropbox/eskk/'
 endif
-
-" TODO: eskkとskkを両立できるようにする
-" let g:skk_large_jisyo = $home . '/.vim/skk/skk-jisyo.l'
-" let g:skk_auto_save_jisyo = 1
-" let g:skk_show_candidates_count = 2
 
 " lingr
 let g:lingr_vim_user = 'tek_koc'
@@ -690,226 +686,7 @@ nmap <Leader>o <Plug>(openbrowser-smart-search)
 vmap <Leader>o <Plug>(openbrowser-smart-search)
 command! -nargs=1 Google :OpenBrowserSearch <args>
 
-" フォントサイズ変更
-" noremap <UP> :<C-u>ZoomIn<CR>
-" noremap <DOWN> <C-u>:ZoomOut<CR>
-
-"---------------------------------------------------------
-" 未整理
-"---------------------------------------------------------
-
-" メモを作成する
-command! -nargs=0 MemoWrite call s:open_memo_file()
-function! s:open_memo_file()
-    let l:memo_dir = $HOME . '/Dropbox/Memo'. strftime('/%Y/%m')
-    if !isdirectory(l:memo_dir)
-        call mkdir(l:memo_dir, 'p')
-    endif
-
-    let l:filename = input('File Name: ', l:memo_dir.strftime('/%d%H%M%S_'))
-    if l:filename != ''
-        execute 'edit ' . l:filename
-    endif
-endfunction augroup END
-" メモ一覧をUniteで呼び出すコマンド
-command! -nargs=0 MemoRead :Unite file_rec:~/Dropbox/Memo/ -buffer-name=file -auto-preview
-
-" temp_edit
-command! -nargs=0 TempEdit :Unite file_rec:~/.vim/template -buffer-name=file
-
-" 一時ファイル
-command! -nargs=1 -complete=filetype Tmp edit ~/Dropbox/tmp/tmp.<args>
-command! -nargs=1 -complete=filetype Temp edit ~/Dropbox/tmp/tmp.<args>
-
-" TODOファイル
-command! -complete=filetype Todo edit ~/Dropbox/todo.mkd
-
-command!
-\   TOhtmlAndBrowse
-\   call s:TOhtmlAndBrowse()
-function! s:TOhtmlAndBrowse()
-    TOhtml
-    saveas `=tempname()`
-    let save = g:openbrowser_open_filepath_in_vim
-    let g:openbrowser_open_filepath_in_vim = 0
-    try
-        OpenBrowser file://%
-    finally
-        let g:openbrowser_open_filepath_in_vim = save
-    endtry
-    sleep 1
-    call delete(expand('%'))
-endfunction
-
-" patemodeにF2でトグル
-set pastetoggle=<F2>
-
-
-" ヤンクしたものをクリップボードにも
-set clipboard=unnamed
-
-" 折り畳み関連
-set foldmethod=marker
-" set commentstring=%s
-
-" ファイルタイプのショートカットコマンド
-command! -nargs=1 Type :set filetype=<args>
-
-function! PHPLint()
-    let result = system( &ft . ' -l ' . bufname(""))
-    echo result
-endfunction
-" autocmd BufWritePost *.php call PHPLint()
-au FileType php nnoremap <buffer> <Space>l :<C-u>call PHPLint()<CR>
-
-" iskeyword変更
-au FileType php setlocal iskeyword+=$
-
-" マッピングチェック
-command!
-            \   -nargs=* -complete=mapping
-            \   AllMaps
-            \   map <args> | map! <args> | lmap <args>
-
-" テンプレート設定
-autocmd BufNewFile *.pm 0r $HOME/.vim/template/perl.txt
-autocmd BufNewFile *.html 0r $HOME/.vim/template/html.txt
-
-" ファイルタイプ
-au BufNewFile,BufRead *.scala set filetype=scala
-au BufNewFile,BufRead *.ejs set filetype=html
-au BufNewFile,BufRead *.js set filetype=javascript
-au BufNewFile,BufRead *.html set filetype=smarty.html
-
-autocmd FileType php :set dictionary+=~/.vim/dict/php.dict
-autocmd FileType scala :set dictionary+=~/.vim/dict/scala.dict
-set complete+=k
-
-" バッファの戻る・進む
-noremap <Space>n :bn<CR>
-noremap <Space>p :bp<CR>
-
-" バッファを閉じる
-" noremap <Space>q :bd<CR>
-
-
-"php処理
-let php_sql_query=1
-"文字列中のSQLをハイライトする
-let php_htmlInStrings=1
-let php_folding = 1
-let php_parent_error_close = 1
-
-" ステータスライン設定
-set laststatus=2
-" set statusline=\ [%02n]
-" set statusline+=\ %F
-set statusline=\ %F
-set statusline+=\ %(%m\ %r%)
-set statusline+=\ type=%{&filetype}
-" ↓タブラインに移行
-" let &statusline = &statusline . '       %{cfi#format("[%s()]", "no function")}'
-" set statusline+=%=\ (%l/%L)
-" set statusline+=%=\ %P
-set statusline+=%=\ [%l]
-set statusline+=%=\ \ 
-
-autocmd BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$") | exe "normal g`\"" | endif
-
-" 改行文字などの表示
-set list
-set listchars=tab:>-,trail:-,nbsp:%,extends:>,precedes:<
-
-"============================================================================================================================================
-" ステータスライン。参考(http://d.hatena.ne.jp/thinca/20111204/1322932585)
-
-" 各タブページのカレントバッファ名+αを表示
-function! s:tabpage_label(n)
-  " t:title と言う変数があったらそれを使う
-  let title = gettabvar(a:n, 'title')
-  if title !=# ''
-    return title
-  endif
-
-  " タブページ内のバッファのリスト
-  let bufnrs = tabpagebuflist(a:n)
-
-  " カレントタブページかどうかでハイライトを切り替える
-  let hi = a:n is tabpagenr() ? '%#TabLineSel#' : '%#TabLine#'
-
-  " バッファが複数あったらバッファ数を表示
-  let no = len(bufnrs)
-  if no is 1
-    let no = ''
-  endif
-  " タブページ内に変更ありのバッファがあったら '+' を付ける
-  let mod = len(filter(copy(bufnrs), 'getbufvar(v:val, "&modified")')) ? '+' : ''
-  let sp = (no . mod) ==# '' ? '' : ' '  " 隙間空ける
-
-  " カレントバッファ
-  let curbufnr = bufnrs[tabpagewinnr(a:n) - 1]  " tabpagewinnr() は 1 origin
-  let fname = pathshorten(bufname(curbufnr))
-
-  let label = no . mod . sp . fname
-
-  return '%' . a:n . 'T' . hi . label . '%T%#TabLineFill#'
-endfunction
-
-function! MakeTabLine()
-  let titles = map(range(1, tabpagenr('$')), 's:tabpage_label(v:val)')
-  let sep = ' | '  " タブ間の区切り
-  let tabpages = join(titles, sep) . sep . '%#TabLineFill#%T'
-  let info = ''
-" let info = ''
-" let info .= FoldCCnavi()
-  let info .= ''
-  let info .= cfi#format("[%s()]", "no function")
-  let info .= '   '
-  let info .= '(%l/%L) %P'
-  let info .= '   '
-  let info .= fnamemodify(getcwd(), ":~") . ' '
-  return tabpages . '%=' . info  " タブリストを左に、情報を右に表示
-endfunction
-
-" set tabline=%!MakeTabLine()
-autocmd CursorMoved * set tabline=%!MakeTabLine()
-"============================================================================================================================================
-
-" 挿入モード時、ステータスラインの色を変更
-
-" 挿入モード時の色指定
-if !exists('g:hi_insert')
-  let g:hi_insert = 'highlight StatusLine guifg=darkblue guibg=darkyellow gui=none ctermfg=blue ctermbg=yellow cterm=none'
-endif
-
-if has('syntax')
-  augroup InsertHook
-    autocmd!
-    autocmd InsertEnter * call s:StatusLine('Enter')
-    autocmd InsertLeave * call s:StatusLine('Leave')
-  augroup END
-endif
-
-let s:slhlcmd = ''
-function! s:StatusLine(mode)
-  if a:mode == 'Enter'
-    silent! let s:slhlcmd = 'highlight ' . s:GetHighlight('StatusLine')
-    silent exec g:hi_insert
-  else
-    highlight clear StatusLine
-    silent exec s:slhlcmd
-  endif
-endfunction
-
-function! s:GetHighlight(hi)
-  redir => hl
-  exec 'highlight '.a:hi
-  redir END
-  let hl = substitute(hl, '[\r\n]', '', 'g')
-  let hl = substitute(hl, 'xxx', '', '')
-  return hl
-endfunction
-"============================================================================================================================================
+" unite original sorce {{{1
 " 某プロジェクトの各ファイルにアクセスしやすくするコマンド
 " TODO 一時的に、別ディレクトリを見るように
 command! -nargs=0 UniteProjectFileController :Unite file_rec/async:server/application/controller -buffer-name=file
@@ -945,6 +722,142 @@ nnoremap <Leader>ii :<C-u>Unite project_file<CR>
 nnoremap <Leader>ic :<C-u>UniteProjectFileController<CR>
 nnoremap <Leader>il :<C-u>UniteProjectFileLib<CR>
 nnoremap <Leader>ix :<C-u>UniteProjectFileContract<CR>
+
+" user command {{{1
+
+" Ev/Rvでvimrcの編集と反映
+command! Ev edit ~/dotfiles/.vimrc
+command! Rv source ~/dotfiles/.vimrc
+
+" Eg/Rgでgvimrcの編集と反映
+command! Eg edit ~/dotfiles/.gvimrc
+command! Rg source ~/dotfiles/.gvimrc
+
+" Eb/RbでNeoBundleの編集と反映
+command! Eb edit ~/dotfiles/.vim/bundles.vim
+command! -bang Rb :Unite neobundle/install:<bang>
+
+" メモを作成する
+command! -nargs=0 MemoWrite call s:open_memo_file()
+function! s:open_memo_file()
+    let l:memo_dir = $HOME . '/Dropbox/Memo'. strftime('/%Y/%m')
+    if !isdirectory(l:memo_dir)
+        call mkdir(l:memo_dir, 'p')
+    endif
+
+    let l:filename = input('File Name: ', l:memo_dir.strftime('/%d%H%M%S_'))
+    if l:filename != ''
+        execute 'edit ' . l:filename
+    endif
+endfunction augroup END
+" メモ一覧をUniteで呼び出すコマンド
+command! -nargs=0 MemoRead :Unite file_rec:~/Dropbox/Memo/ -buffer-name=file -auto-preview
+
+" temp_edit
+command! -nargs=0 TempEdit :Unite file_rec:~/.vim/template -buffer-name=file
+
+" 一時ファイル
+command! -nargs=1 -complete=filetype Tmp edit ~/Dropbox/tmp/tmp.<args>
+command! -nargs=1 -complete=filetype Temp edit ~/Dropbox/tmp/tmp.<args>
+
+" ファイルタイプのショートカットコマンド
+command! -nargs=1 Type :set filetype=<args>
+
+" TODOファイル
+command! -complete=filetype Todo edit ~/Dropbox/todo.mkd
+
+command!
+\   TOhtmlAndBrowse
+\   call s:TOhtmlAndBrowse()
+function! s:TOhtmlAndBrowse()
+    TOhtml
+    saveas `=tempname()`
+    let save = g:openbrowser_open_filepath_in_vim
+    let g:openbrowser_open_filepath_in_vim = 0
+    try
+        OpenBrowser file://%
+    finally
+        let g:openbrowser_open_filepath_in_vim = save
+    endtry
+    sleep 1
+    call delete(expand('%'))
+endfunction
+
+" マッピングチェック
+command!
+            \   -nargs=* -complete=mapping
+            \   AllMaps
+            \   map <args> | map! <args> | lmap <args>
+
+" other {{{1
+
+" patemodeにF2でトグル
+set pastetoggle=<F2>
+
+
+" ヤンクしたものをクリップボードにも
+set clipboard=unnamed
+
+" 折り畳み関連
+set foldmethod=marker
+" set commentstring=%s
+
+function! PHPLint()
+    let result = system( &ft . ' -l ' . bufname(""))
+    echo result
+endfunction
+" autocmd BufWritePost *.php call PHPLint()
+au FileType php nnoremap <buffer> <Space>l :<C-u>call PHPLint()<CR>
+
+" iskeyword変更
+au FileType php setlocal iskeyword+=$
+
+" テンプレート設定
+autocmd BufNewFile *.pm 0r $HOME/.vim/template/perl.txt
+autocmd BufNewFile *.html 0r $HOME/.vim/template/html.txt
+
+" ファイルタイプ
+au BufNewFile,BufRead *.scala set filetype=scala
+au BufNewFile,BufRead *.ejs set filetype=html
+au BufNewFile,BufRead *.js set filetype=javascript
+au BufNewFile,BufRead *.html set filetype=smarty.html
+
+autocmd FileType php :set dictionary+=~/.vim/dict/php.dict
+autocmd FileType scala :set dictionary+=~/.vim/dict/scala.dict
+set complete+=k
+
+" バッファの戻る・進む
+noremap <Space>n :bn<CR>
+noremap <Space>p :bp<CR>
+
+" バッファを閉じる
+" noremap <Space>q :bd<CR>
+
+
+"php処理
+let php_sql_query=1
+"文字列中のSQLをハイライトする
+let php_htmlInStrings=1
+let php_folding = 1
+let php_parent_error_close = 1
+
+" 改行文字などの表示
+set list
+set listchars=tab:>-,trail:-,nbsp:%,extends:>,precedes:<
+
+autocmd BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$") | exe "normal g`\"" | endif
+
+" カレントウィンドウにのみ罫線を引く
+augroup cch
+    autocmd! cch
+    autocmd WinLeave * set nocursorline
+    autocmd WinLeave * set nocursorcolumn
+    autocmd WinEnter,BufRead * set cursorline
+    autocmd WinEnter,BufRead * set cursorcolumn
+augroup END
+
+
+" last proc {{{1
 
 if has("gui_running")
     " gvimrcも読み込む
