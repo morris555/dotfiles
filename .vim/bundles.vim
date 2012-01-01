@@ -22,7 +22,8 @@ NeoBundle 'https://github.com/mattn/vimplenote-vim.git'
 " folding_function
 NeoBundle 'git://github.com/LeafCage/foldCC.git'
 
-" textobj,operator
+" textobj,operator {{{
+
 NeoBundle 'kana/vim-textobj-user'
 NeoBundle 'kana/vim-operator-user'
 NeoBundle 'kana/vim-textobj-entire'
@@ -33,6 +34,8 @@ NeoBundle 'kana/vim-textobj-function'
 NeoBundle 'kana/vim-operator-replace'
 NeoBundle 'tyru/operator-camelize.vim'
 NeoBundle 'emonkak/vim-operator-comment'
+
+" textobj,operator }}}
 
 " 擬似capslock
 NeoBundle 'git://github.com/vim-scripts/capslock.vim.git'
@@ -69,7 +72,7 @@ NeoBundle 'git://github.com/vim-scripts/Source-Explorer-srcexpl.vim.git'
 
 NeoBundle 'git://github.com/tyru/current-func-info.vim.git'
 
-" unite関連
+" unite {{{
 NeoBundle 'Shougo/unite.vim'
 NeoBundle 'h1mesuke/unite-outline'
 NeoBundle 'tsukkee/unite-help'
@@ -78,6 +81,7 @@ NeoBundle 'ujihisa/unite-colorscheme'
 NeoBundle 'tsukkee/unite-tag'
 NeoBundle 'choplin/unite-vim_hacks'
 NeoBundle 'git://github.com/mattn/unite-advent_calendar.git'
+" unite }}}
 
 " 整形
 NeoBundle 'h1mesuke/vim-alignta'
@@ -115,8 +119,10 @@ NeoBundle 't9md/vim-quickhl'
 " ファイラ
 NeoBundle 'Shougo/vimfiler'
 
-" shell
+" vimproc
 NeoBundle 'Shougo/vimproc'
+
+" shell
 NeoBundle 'Shougo/vimshell'
 NeoBundle 'ujihisa/vimshell-ssh'
 
@@ -171,9 +177,6 @@ NeoBundle 'sjl/gundo.vim'
 " Phrase
 NeoBundle 'git://github.com/vim-scripts/phrase.vim.git'
 
-" zoom
-NeoBundle 'taku-o/vim-zoom'
-
 " zoomwin
 NeoBundle 'git://github.com/vim-scripts/ZoomWin.git'
 
@@ -194,9 +197,6 @@ NeoBundle 'tpope/vim-abolish'
 
 " Vim script doc
 NeoBundle 'git://github.com/mattn/learn-vimscript.git'
-
-" banban
-NeoBundle 'git://github.com/tyru/banban.vim.git'
 
 " Game
 NeoBundle 'mattn/invader-vim'

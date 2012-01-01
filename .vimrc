@@ -384,16 +384,19 @@ let g:monday_patterns = [
 " F3でGundoを開く
 noremap <F3> :GundoToggle<CR>
 
+" eskk
 if has('vim_starting')
     let g:eskk#large_dictionary = '~/.vim/skk/skk-jisyo.l'
-    let g:eskk#egg_like_newline = 1
-    let g:eskk#show_candidates_count = 3
-    " let g:eskk#kakutei_when_unique_candidate = 1
-
-    " あとで
-    " imap <C-j> <Plug>(eskk:enable)
-    " let g:eskk#directory = '~/Dropbox/eskk/'
 endif
+let g:eskk#egg_like_newline = 1
+let g:eskk#egg_like_newline_completion = 1
+let g:eskk#show_candidates_count = 3
+let g:eskk#fix_extra_okuri = 0
+" let g:eskk#kakutei_when_unique_candidate = 1
+
+" あとで
+" imap <C-j> <Plug>(eskk:enable)
+" let g:eskk#directory = '~/Dropbox/eskk/'
 
 " lingr
 let g:lingr_vim_user = 'tek_koc'
@@ -524,12 +527,54 @@ imap <C-k> <C-g>s
 
 " imap <C-i>a array();
 
-" unite
+" NERD Commnterの設定
+let g:NERDCreateDefaultMappings = 0
+let NERDSpaceDelims = 1
+nmap <Leader>c <Plug>NERDCommenterToggle
+vmap <Leader>c <Plug>NERDCommenterToggle
+
+" vimrefのショートカットコマンド
+command! -nargs=1 Alc :Ref alc2 <args>
+
+" vimref用のphpmanualのパス
+let g:ref_phpmanual_path = $HOME. '/dotfiles/.vim/phpmanual/'
+
+" vimproc
+if has('mac')
+    let g:vimproc_dll_path = $HOME . '/.vim/autoload/mac_proc.so'
+else
+    let g:vimproc_dll_path = $HOME . '/.vim/autoload/proc.so'
+endif
+
+" textmanip
+" 選択したテキストの移動
+vmap <C-j> <Plug>(textmanip-move-down)
+vmap <C-k> <Plug>(textmanip-move-up)
+vmap <C-h> <Plug>(textmanip-move-left)
+vmap <C-l> <Plug>(textmanip-move-right)
+
+" 行の複製
+vmap <C-D> <Plug>(textmanip-duplicate-up)
+nmap <C-D> <Plug>(textmanip-duplicate-up)
+vmap <C-d> <Plug>(textmanip-duplicate-down)
+nmap <C-d> <Plug>(textmanip-duplicate-down)
+
+" open-browser.vim
+nmap <Leader>o <Plug>(openbrowser-smart-search)
+vmap <Leader>o <Plug>(openbrowser-smart-search)
+command! -nargs=1 Google :OpenBrowserSearch <args>
+
+" unite {{{2
+"
 " 入力モードで開始する
 let g:unite_enable_start_insert=1
+
 let g:unite_source_file_mru_limit = 10000
+
+" yankソースを有効にする
 let g:unite_source_history_yank_enable = 1
 let g:unite_source_history_yank_limit = 1000
+
 let g:unite_source_grep_max_candidates = 10000
 let g:unite_source_session_enable_auto_save = 1     " セッション保存
 
@@ -596,20 +641,9 @@ function! s:unite_my_settings()
     nnoremap <buffer> <Space> <Space>
 endfunction
 
-" NERD Commnterの設定
-let g:NERDCreateDefaultMappings = 0
-let NERDSpaceDelims = 1
-nmap <Leader>c <Plug>NERDCommenterToggle
-vmap <Leader>c <Plug>NERDCommenterToggle
+" neocomplcache {{{2
 
-" vimrefのショートカットコマンド
-command! -nargs=1 Alc :Ref alc2 <args>
-
-" vimref用のphpmanualのパス
-let g:ref_phpmanual_path = $HOME. '/dotfiles/.vim/phpmanual/'
-
-" neocomplcache設定
-
+" haskell補完用に、cabalのパスを追加
 let $PATH=$PATH . ":" . $HOME . "/.cabal/bin"
 
 " ファイル名補完
@@ -637,7 +671,6 @@ let g:neocomplcache_enable_underbar_completion = 1	" 区切り文字の補完を
 let g:neocomplcache_caching_limit_file_size = 500000000 " キャッシュするファイルサイズを増やす
 let g:neocomplcache_min_syntax_length = 3
 let g:neoComplCache_EnableInfo = 1
-let g:neocomplcache_enable_cursor_hold_i = 1        " 候補の計算を|CursorHoldI|イベント時に行う
 let g:neocomplcache_enable_camel_case_completion = 1 " 大文字を入力したときに、それを単語の区切りとしてあいまい検索
 let g:neocomplcache_enable_underbar_completion = 1  " _を入力したときに、それを単語の区切りとしてあいまい検索
 let g:neocomplcache_dictionary_file_type_lists = {
@@ -660,31 +693,6 @@ autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
 autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
 autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
 autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
-
-" vimproc
-if has('mac')
-    let g:vimproc_dll_path = $HOME . '/.vim/autoload/mac_proc.so'
-else
-    let g:vimproc_dll_path = $HOME . '/.vim/autoload/proc.so'
-endif
-
-" textmanip
-" 選択したテキストの移動
-vmap <C-j> <Plug>(textmanip-move-down)
-vmap <C-k> <Plug>(textmanip-move-up)
-vmap <C-h> <Plug>(textmanip-move-left)
-vmap <C-l> <Plug>(textmanip-move-right)
-
-" 行の複製
-vmap <C-D> <Plug>(textmanip-duplicate-up)
-nmap <C-D> <Plug>(textmanip-duplicate-up)
-vmap <C-d> <Plug>(textmanip-duplicate-down)
-nmap <C-d> <Plug>(textmanip-duplicate-down)
-
-" open-browser.vim
-nmap <Leader>o <Plug>(openbrowser-smart-search)
-vmap <Leader>o <Plug>(openbrowser-smart-search)
-command! -nargs=1 Google :OpenBrowserSearch <args>
 
 " unite original sorce {{{1
 " 某プロジェクトの各ファイルにアクセスしやすくするコマンド
