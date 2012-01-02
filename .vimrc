@@ -199,6 +199,18 @@ set hlsearch
 " *でビジュアルモードで選んでる文字を検索
 vnoremap * "zy:let @/ = @z<CR>n
 
+" ?では、lineソースを使った検索にする
+nnoremap ? :<C-u>Unite -buffer-name=search line -start-insert<CR>
+
+if has('migemo')
+    " ?で行うline検索で、migemoを使う
+    call unite#custom_filters('line', ['matcher_migemo', 'sorter_default', 'converter_default'])
+
+    " 検索をmigemoで行う
+    nnoremap / g/
+    nnoremap g/ /
+endif
+
 " folding {{{1
 
 if s:has_plugin('foldCC')
@@ -319,14 +331,14 @@ endfunction
 nnoremap <silent> <F4> :<C-u>call <SID>toggle_nu()<CR>
 
 " 表示行移動
-nnoremap j gj
-nnoremap k gk
-nnoremap gj j
-nnoremap gk k
-nnoremap 0 g0
-nnoremap g0 0
-nnoremap $ g$
-nnoremap g$ $
+" nnoremap j gj
+" nnoremap k gk
+" nnoremap gj j
+" nnoremap gk k
+" nnoremap 0 g0
+" nnoremap g0 0
+" nnoremap $ g$
+" nnoremap g$ $
 
 " ExCommandの履歴を遡るのを楽に
 cnoremap <C-p>  <Up>
@@ -350,6 +362,7 @@ nnoremap Q q
 " ノーマルモード時にエンター2回で改行
 " nnoremap <CR><CR> :<C-u>call append(expand('.'), '')<Cr>j
 " nnoremap <CR><CR> o<ESC>
+nnoremap <Space><Space> o<ESC>
 
 " status line {{{1
 set laststatus=2
@@ -415,7 +428,9 @@ endfunction
 autocmd CursorMoved * set tabline=%!MakeTabLine()
 
 " plugin {{{1
-"
+
+" other plugin {{{2
+
 " sonictemplate
 let g:sonictemplate_vim_template_dir = $HOME. '/dotfiles/.vim/template'
 
@@ -653,17 +668,21 @@ nnoremap <Leader>uo :<C-u>Unite outline -no-quit -vertical -winwidth=30 -buffer-
 nnoremap <Leader>ut :<C-u>Unite buffer_tab -buffer-name=file<CR>
 " command
 nnoremap <Leader>uc :<C-u>Unite command<CR>
-" line
-nnoremap ? :<C-u>Unite -buffer-name=search line -start-insert<CR>
 " register
 nnoremap <Leader>uy :<C-u>Unite history/yank<CR>
 " source(sourceが増えてきたので、sourceのsourceを経由する方針にしてみる)
 nnoremap <Leader>uu :<C-u>Unite source<CR>
 " snippet
 nnoremap <Leader>us :<C-u>Unite snippet<CR>
+" twitter
+nnoremap <Leader>uT :<C-u>Unite tweetvim<CR>
 
 " カラースキーム用コマンド
 command! UniteColorScheme :Unite colorscheme -auto-preview
+
+if has('migemo')
+    call unite#custom_filters('advent_calendar', ['matcher_migemo', 'sorter_default', 'converter_default'])
+endif
 
 " ウィンドウを横に分割して開く
 au FileType unite nnoremap <silent> <buffer> <expr> <C-J> unite#do_action('split')
@@ -686,6 +705,20 @@ function! s:unite_my_settings()
     nnoremap <buffer> p p
     nnoremap <buffer> <Space> <Space>
 endfunction
+
+" tweetvim {{{2
+
+" タイムライン選択用の Unite を起動する
+nnoremap <silent> t :Unite tweetvim<CR>
+" 発言用バッファを表示する
+nnoremap <silent> s :TweetVimSay<CR>
+
+" スクリーン名のキャッシュを利用して、neocomplcache で補完する
+if !exists('g:neocomplcache_dictionary_filetype_lists')
+  let g:neocomplcache_dictionary_filetype_lists = {}
+endif
+let neco_dic = g:neocomplcache_dictionary_filetype_lists
+let neco_dic.tweetvim_say = $HOME . '/.tweetvim/screen_name'
 
 " neocomplcache {{{2
 

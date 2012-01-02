@@ -15,6 +15,8 @@ NeoBundle 'tomasr/molokai'
 " lib
 NeoBundle 'mattn/webapi-vim'
 NeoBundle 'thinca/vim-openbuf'
+NeoBundle 'git://github.com/basyura/twibill.vim.git'
+NeoBundle 'git://github.com/basyura/bitly.vim.git'
 
 " simplenote
 NeoBundle 'https://github.com/mattn/vimplenote-vim.git'
@@ -81,6 +83,7 @@ NeoBundle 'ujihisa/unite-colorscheme'
 NeoBundle 'tsukkee/unite-tag'
 NeoBundle 'choplin/unite-vim_hacks'
 NeoBundle 'git://github.com/mattn/unite-advent_calendar.git'
+NeoBundle 'git://github.com/basyura/TweetVim.git'
 " unite }}}
 
 " 整形

@@ -13,7 +13,7 @@ if has('gui_macvim')
     set imdisable        " IME OFF
     set antialias        " アンチエイリアス
 
-    set gfn=Ricty\ Bold:h12
+    set gfn=Ricty\ Bold:h13
     set gfw=
 
     set lines=94 columns=317
@@ -56,6 +56,7 @@ if has('gui_macvim')
     endif
 
     " vimにフォーカスがあたっていないときは、透けさせる。(http://vim-users.jp/2011/10/hack234/)
+    " 今は無効にしている
     set transparency=0
     augroup hack234
         autocmd!
