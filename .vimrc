@@ -200,7 +200,7 @@ set hlsearch
 vnoremap * "zy:let @/ = @z<CR>n
 
 " ?では、lineソースを使った検索にする
-nnoremap ? :<C-u>Unite -buffer-name=search line -start-insert<CR>
+nnoremap ? :<C-u>Unite line -buffer-name=search -start-insert<CR>
 
 if has('migemo')
     " ?で行うline検索で、migemoを使う
@@ -470,9 +470,6 @@ map <c-o> <Plug>(poslist-prev-pos)
 map <c-i> <Plug>(poslist-next-pos)
 let g:poslist_histsize = 10000
 
-" echodoc
-" let g:echodoc_enable_at_startup = 1
-
 " quickhl
 nmap <Leader>hh <Plug>(quickhl-toggle)
 nmap <Leader>hr <Plug>(quickhl-reset)
@@ -514,8 +511,8 @@ imap kj <Esc>
 " Arpeggio inoremap x" ""<Esc>i
 
 " smartchr.vim
-inoremap <buffer><expr> = smartchr#one_of(' = ', ' == ', ' === ', '=')
-inoremap <buffer><expr> , smartchr#one_of(', ', ',')
+inoremap <expr> = smartchr#one_of(' = ', ' == ', ' === ', '=')
+inoremap <expr> , smartchr#one_of(', ', ',')
 
 " Alignta(仮設定)
 vnoremap <Leader>a :Alignta 
