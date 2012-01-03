@@ -434,16 +434,12 @@ autocmd CursorMoved * set tabline=%!MakeTabLine()
 " sonictemplate
 let g:sonictemplate_vim_template_dir = $HOME. '/dotfiles/.vim/template'
 
-" TODO:大文字対応
-" むしろ、別のtoggle系のプラグインを入れるべき
-" mondayプラグインの設定例
-let g:monday_patterns = [
-            \["ASC", "DESC"],
-            \["int", "bool", "array", "object"],
-            \]
-
 " F3でGundoを開く
 noremap <F3> :GundoToggle<CR>
+
+" toggle.vim
+nmap <C-t> <Plug>ToggleN
+vmap <C-t> <Plug>ToggleV
 
 " eskk
 if has('vim_starting')
@@ -904,6 +900,7 @@ autocmd BufNewFile *.html 0r $HOME/.vim/template/html.txt
 au BufNewFile,BufRead *.scala set filetype=scala
 au BufNewFile,BufRead *.ejs set filetype=html
 au BufNewFile,BufRead *.js set filetype=javascript
+au BufNewFile,BufRead *.js.shd set filetype=coffee
 au BufNewFile,BufRead *.html set filetype=smarty.html
 
 autocmd FileType php :set dictionary+=~/.vim/dict/php.dict

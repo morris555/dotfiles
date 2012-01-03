@@ -167,9 +167,6 @@ NeoBundle 'tyru/eskk.vim'
 NeoBundle 'tyru/savemap.vim'
 NeoBundle 'tyru/vice.vim'
 
-" skk.vim
-" NeoBundle 'tyru/skk.vim'
-
 " matrix
 NeoBundle 'git://github.com/vim-scripts/matrix.vim--Yang.git'
 NeoBundle 'git://github.com/vim-scripts/matrix.vim.git'
@@ -186,8 +183,8 @@ NeoBundle 'git://github.com/vim-scripts/ZoomWin.git'
 " 移動を細かく記録する
 NeoBundle 'thinca/vim-poslist'
 
-" <c-a><c-x>で変更できるものを増やす
-NeoBundle 'tekkoc/monday'
+" トグル
+NeoBundle 'git://github.com/taku-o/vim-toggle.git'
 
 " コマンドラインでemacsライクな移動ができるように
 NeoBundle 'houtsnip/vim-emacscommandline'
