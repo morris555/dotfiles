@@ -653,7 +653,7 @@ nnoremap <silent> <Leader>uf :<C-u>Unite file_rec/async -buffer-name=file<CR>
 " バッファ一覧(bookmarkと被るので、とりあえずヒストリのhで妥協)
 nnoremap <Leader>uh :<C-u>Unite buffer -buffer-name=file<CR>
 " お気に入り
-nnoremap <Leader>ub :<C-u>Unite bookmark -default-action=cd<CR>
+nnoremap <Leader>ub :<C-u>Unite bookmark directory_mru -default-action=cd<CR>
 " 最近使ったファイルの一覧
 nnoremap <Leader>um :<C-u>Unite file_mru -buffer-name=file<CR>
 " grep
@@ -711,9 +711,9 @@ endfunction
 " tweetvim {{{2
 
 " タイムライン選択用の Unite を起動する
-nnoremap <silent> t :Unite tweetvim<CR>
+autocmd FileType tweetvim nnoremap <buffer><silent> t :Unite tweetvim<CR>
 " 発言用バッファを表示する
-nnoremap <silent> s :TweetVimSay<CR>
+autocmd FileType tweetvim nnoremap <buffer><silent> s :TweetVimSay<CR>
 
 " スクリーン名のキャッシュを利用して、neocomplcache で補完する
 if !exists('g:neocomplcache_dictionary_filetype_lists')
