@@ -58,6 +58,10 @@ function! s:has_plugin(name)
   \   || globpath(&runtimepath, 'autoload/' . a:name . '.vim') !=# ''
 endfunction
 
+function! s:has_tags()
+    return glob('tags') !=# ''
+endfunction
+
 " Call a script local function.
 " Usage:
 " - S('local_func')
@@ -409,17 +413,27 @@ function! s:tabpage_label(n)
   return '%' . a:n . 'T' . hi . label . '%T%#TabLineFill#'
 endfunction
 
+" タグがあるかどうかの文字列を返す関数
+function! s:tags_text()
+    if s:has_tags()
+        return '+tags'
+    else
+        return 'no tags'
+    endif
+endfunction
+
 function! MakeTabLine()
   let titles = map(range(1, tabpagenr('$')), 's:tabpage_label(v:val)')
   let sep = ' | '  " タブ間の区切り
   let tabpages = join(titles, sep) . sep . '%#TabLineFill#%T'
   let info = ''
-" let info = ''
 " let info .= FoldCCnavi()
-  let info .= ''
+" let info .= '   '
   let info .= cfi#format("[%s()]", "no function")
   let info .= '   '
   let info .= '(%l/%L) %P'
+  let info .= '   '
+  let info .= s:tags_text()
   let info .= '   '
   let info .= fnamemodify(getcwd(), ":~") . ' '
   return tabpages . '%=' . info  " タブリストを左に、情報を右に表示
