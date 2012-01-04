@@ -514,8 +514,16 @@ imap kj <Esc>
 " Arpeggio inoremap x" ""<Esc>i
 
 " smartchr.vim
-inoremap <expr> = smartchr#one_of(' = ', ' == ', ' === ', '=')
+inoremap <expr> = smartchr#one_of('= ', '== ', '=== ', '=')
 inoremap <expr> , smartchr#one_of(', ', ',')
+inoremap <expr> ! smartchr#one_of('!', '!= ')
+inoremap <expr> + smartchr#one_of('+ ', '+= ')
+inoremap <expr> - smartchr#one_of('-', '- ', '-= ')
+inoremap <expr> * smartchr#one_of('* ', '*= ')
+inoremap <expr> / smartchr#one_of('/', '~/', './', '../')
+inoremap <expr> . smartchr#one_of('.',  '. ', '.= ')
+inoremap <expr> ' smartchr#one_of("''<left>", "'")
+inoremap <expr> " smartchr#one_of('""<left>', '"')
 
 " Alignta(仮設定)
 vnoremap <Leader>a :Alignta 
