@@ -256,8 +256,9 @@ nnoremap <silent> <Space>tn :tn<CR>
 nnoremap <silent> <Space>tp :tp<CR>
 nnoremap <silent> <Space>tg :<C-u>UniteWithCursorWord -immediately tag<CR>
 nnoremap <silent> <Space>tj <C-]>:<C-u>split<CR><C-o><C-o><C-w>j
-nnoremap <silent> <Space>tu :<C-u>!ctags --sort=foldcase -R<CR>
-autocmd FileType php nnoremap <silent> <Space>tu :<C-u>!ctags --languages=PHP --sort=foldcase -R<CR>
+" nnoremap <silent> <Space>tu :<C-u>!ctags --sort=foldcase -R<CR>
+" autocmd FileType php nnoremap <silent> <Space>tu :<C-u>!ctags --languages=PHP --sort=foldcase -R<CR>
+nnoremap <silent> <Space>tu :<C-u>QuickRun -runner/vimproc -command 'ctags' -cmdopt '-R'<CR>
 nnoremap <silent> <Space>tk <C-]>:<C-u>vsplit<CR><C-o><C-o><C-w>l
 
 " cscope
@@ -428,7 +429,6 @@ endfunction
 autocmd CursorMoved * set tabline=%!MakeTabLine()
 
 " plugin {{{1
-
 " other plugin {{{2
 
 " sonictemplate
@@ -449,11 +449,9 @@ let g:eskk#egg_like_newline = 1
 let g:eskk#egg_like_newline_completion = 1
 let g:eskk#show_candidates_count = 3
 let g:eskk#fix_extra_okuri = 0
-" let g:eskk#kakutei_when_unique_candidate = 1
-
-" あとで
 " imap <C-j> <Plug>(eskk:enable)
-" let g:eskk#directory = '~/Dropbox/eskk/'
+let g:eskk#directory = '~/Dropbox/SKK/eskk/'
+" let g:eskk#kakutei_when_unique_candidate = 1
 
 " lingr
 let g:lingr_vim_user = 'tek_koc'
@@ -476,16 +474,11 @@ let g:vimfiler_as_default_explorer = 1
 
 " quickrun
 " for quickrun.vim
+let g:quickrun_config = {}
+let g:quickrun_config.coffee  = {'command' : 'cat'}
 
-" let g:quickrun_config = {
-            " \'objc': {
-            " \'command': 'cc',
-            " \'exec': ['%c %s -o %s:p:r -std=c99 -framework Foundation', '%s:p:r %a', 'rm -f %s:p:r'],
-            " \'tempfile': '{tempname()}.m',
-            " \}
-            " \}
-
-autocmd FileType objc nmap <Leader>r <d-r>
+" quicklint
+nnoremap <Leader>l :<C-u>QuickRun -exec '%c -l %s'<CR>
 
 " arpeggio(同時押し設定)
 let g:arpeggio_timeoutlen = 70
@@ -522,6 +515,14 @@ endif
 " vim-ref
 nmap <Leader>k <Plug>(ref-keyword)
 let objc_man_key = '<Leader>k'
+autocmd FileType vim nnoremap <buffer> <Leader>k :<C-u>help <C-r><C-w><CR>
+
+" vimrefのショートカットコマンド
+command! -nargs=1 Alc :Ref alc2 <args>
+command! -nargs=1 Wiki :Ref wikipedia <args>
+
+" vimref用のphpmanualのパス
+let g:ref_phpmanual_path = $HOME. '/dotfiles/.vim/phpmanual/'
 
 " smartword.vim
 nmap w  <Plug>(smartword-w)
@@ -586,12 +587,6 @@ let g:NERDCreateDefaultMappings = 0
 let NERDSpaceDelims = 1
 nmap <Leader>c <Plug>NERDCommenterToggle
 vmap <Leader>c <Plug>NERDCommenterToggle
-
-" vimrefのショートカットコマンド
-command! -nargs=1 Alc :Ref alc2 <args>
-
-" vimref用のphpmanualのパス
-let g:ref_phpmanual_path = $HOME. '/dotfiles/.vim/phpmanual/'
 
 " vimproc
 if has('mac')
