@@ -368,6 +368,7 @@ nnoremap Q q
 " nnoremap <CR><CR> :<C-u>call append(expand('.'), '')<Cr>j
 " nnoremap <CR><CR> o<ESC>
 nnoremap <Space><Space> o<ESC>
+nnoremap <Space>d cc<ESC>
 
 " status line {{{1
 set laststatus=2
