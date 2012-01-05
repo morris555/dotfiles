@@ -521,7 +521,7 @@ inoremap <expr> ! smartchr#one_of('!', '!= ')
 inoremap <expr> + smartchr#one_of('+ ', '+= ')
 inoremap <expr> - smartchr#one_of('-', '- ', '-= ')
 inoremap <expr> * smartchr#one_of('* ', '*= ')
-inoremap <expr> / smartchr#one_of('/', '~/', './', '../')
+inoremap <expr> / smartchr#one_of('/', '//', '~/', './', '../')
 inoremap <expr> . smartchr#one_of('.',  '. ', '.= ')
 inoremap <expr> ' smartchr#one_of("''<left>", "'")
 inoremap <expr> " smartchr#one_of('""<left>', '"')
@@ -772,10 +772,10 @@ let g:neocomplcache_dictionary_file_type_lists = {
 let g:NeoComplCache_SnippetsDir = $HOME . '/.vim/snippets'
 
 " php omni
-if !exists('g:neocomplcache_omni_patterns')
-    let g:neocomplcache_omni_patterns = {}
-endif
-let g:neocomplcache_omni_patterns.php = '[^. \t]->\h\w*\|\h\w*::'
+" if !exists('g:neocomplcache_omni_patterns')
+    " let g:neocomplcache_omni_patterns = {}
+" endif
+" let g:neocomplcache_omni_patterns.php = '[^. \t]->\h\w*\|\h\w*::'
 
 " Enable omni completion.
 autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
@@ -862,7 +862,7 @@ command! -nargs=1 -complete=filetype Temp edit ~/Dropbox/tmp/tmp.<args>
 command! -nargs=1 Type :set filetype=<args>
 
 " TODOファイル
-command! -complete=filetype Todo edit ~/Dropbox/todo.mkd
+command! Todo edit ~/Dropbox/todo.mkd
 
 command!
 \   TOhtmlAndBrowse
