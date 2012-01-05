@@ -243,7 +243,7 @@ noremap <Space>fk zk
 noremap <Space>fn ]z
 noremap <Space>fp [z
 " あとで調べる
-noremap <Space>fm zM
+" noremap <Space>fm zM
 noremap <Space>fi zMzv
 " 折り畳み位置を表示
 " むしろ、タブラインに出したい
@@ -504,27 +504,6 @@ Arpeggio vnoremap jk <Esc>
 Arpeggio cnoremap jk <Esc>
 imap jk <Esc>
 imap kj <Esc>
-" inoremap jk <Esc>
-" inoremap kj <Esc>
-
-" いまいち
-" Arpeggio inoremap xj ()<Esc>i
-" Arpeggio inoremap xk []<Esc>i
-" Arpeggio inoremap xl {}<Esc>i
-" Arpeggio inoremap x' ''<Esc>i
-" Arpeggio inoremap x" ""<Esc>i
-
-" smartchr.vim
-inoremap <expr> = smartchr#one_of('= ', '== ', '=== ', '=')
-inoremap <expr> , smartchr#one_of(', ', ',')
-inoremap <expr> ! smartchr#one_of('!', '!= ')
-inoremap <expr> + smartchr#one_of('+ ', '+= ')
-inoremap <expr> - smartchr#one_of('-', '- ', '-= ')
-inoremap <expr> * smartchr#one_of('* ', '*= ')
-inoremap <expr> / smartchr#one_of('/', '//', '~/', './', '../')
-inoremap <expr> . smartchr#one_of('.',  '. ', '.= ')
-inoremap <expr> ' smartchr#one_of("''<left>", "'")
-inoremap <expr> " smartchr#one_of('""<left>', '"')
 
 " Alignta(仮設定)
 vnoremap <Leader>a :Alignta 
@@ -581,30 +560,6 @@ noremap <Leader>sj :<C-u>new<CR>:<C-u>VimShellCreate<CR>
 noremap <Leader>sk :<C-u>vnew<CR>:<C-u>VimShellCreate<CR>
 noremap <Leader>f :<C-u>VimFilerTab<CR>
 
-" surround.vim
-let g:surround_custom_mapping = {}
-let g:surround_custom_mapping._ = {
-            \'[': "[\r]",
-            \'(': "(\r)",
-            \}
-let g:surround_custom_mapping.php= {
-            \'{': "{\r}",
-            \'f': "\1name: \r..*\r&\1(\r)",
-            \'a': "['\r']",
-            \'A': "array(\r);",
-            \'v': "v(\r);",
-            \'s': "self::\r"
-            \}
-let g:surround_custom_mapping.smarty= {
-            \'S': "{{\r}}",
-            \'s': "{{\1name: \r..*\r&\1}}\r{{/\1\1}}",
-            \'{': "{{\r}}"
-            \}
-
-imap <C-k> <C-g>s
-
-" imap <C-i>a array();
-
 " NERD Commnterの設定
 let g:NERDCreateDefaultMappings = 0
 let NERDSpaceDelims = 1
@@ -635,6 +590,44 @@ nmap <C-d> <Plug>(textmanip-duplicate-down)
 nmap <Leader>o <Plug>(openbrowser-smart-search)
 vmap <Leader>o <Plug>(openbrowser-smart-search)
 command! -nargs=1 Google :OpenBrowserSearch <args>
+
+" surround.vim {{{2
+
+let g:surround_custom_mapping = {}
+let g:surround_custom_mapping._ = {
+            \'[': "[\r]",
+            \'(': "(\r)",
+            \}
+let g:surround_custom_mapping.php= {
+            \'{': "{\r}",
+            \'f': "\1name: \r..*\r&\1(\r)",
+            \'a': "['\r']",
+            \'A': "array(\r);",
+            \'v': "v(\r);",
+            \'s': "self::\r"
+            \}
+let g:surround_custom_mapping.smarty= {
+            \'S': "{{\r}}",
+            \'s': "{{\1name: \r..*\r&\1}}\r{{/\1\1}}",
+            \'{': "{{\r}}"
+            \}
+
+imap <C-k> <C-g>s
+
+" smartchr.vim {{{2
+inoremap <expr> = smartchr#one_of('= ', '== ', '=== ', '=')
+inoremap <expr> , smartchr#one_of(', ', ',')
+inoremap <expr> ! smartchr#one_of('!', '!= ')
+inoremap <expr> + smartchr#one_of('+ ', '+= ')
+inoremap <expr> - smartchr#one_of('-', '- ', '-= ')
+inoremap <expr> * smartchr#one_of('* ', '*= ')
+inoremap <expr> / smartchr#one_of('/', '//', '~/', './', '../')
+inoremap <expr> . smartchr#one_of('.',  '. ', '.= ')
+inoremap <expr> ' smartchr#one_of("''<left>", "'")
+inoremap <expr> " smartchr#one_of('""<left>', '"')
+inoremap <expr> ( smartchr#one_of('()<left>', '(')
+inoremap <expr> { smartchr#one_of('{<CR><CR>}<UP><Tab>', '{')
+inoremap <expr> > smartchr#one_of('>', '->',  '=>')
 
 " unite {{{2
 "
