@@ -261,8 +261,8 @@ nnoremap <silent> <Space>tp :tp<CR>
 nnoremap <silent> <Space>tg :<C-u>UniteWithCursorWord -immediately tag<CR>
 nnoremap <silent> <Space>tj <C-]>:<C-u>split<CR><C-o><C-o><C-w>j
 " nnoremap <silent> <Space>tu :<C-u>!ctags --sort=foldcase -R<CR>
-" autocmd FileType php nnoremap <silent> <Space>tu :<C-u>!ctags --languages=PHP --sort=foldcase -R<CR>
-nnoremap <silent> <Space>tu :<C-u>QuickRun -runner/vimproc -command 'ctags' -cmdopt '-R'<CR>
+autocmd FileType php nnoremap <silent> <Space>tu :<C-u>!ctags --languages=PHP --sort=foldcase -R<CR>
+" nnoremap <silent> <Space>tu :<C-u>QuickRun -runner/vimproc -command 'ctags' -cmdopt '-R'<CR>
 nnoremap <silent> <Space>tk <C-]>:<C-u>vsplit<CR><C-o><C-o><C-w>l
 
 " cscope
@@ -626,7 +626,7 @@ inoremap <expr> . smartchr#one_of('.',  '. ', '.= ')
 inoremap <expr> ' smartchr#one_of("''<left>", "'")
 inoremap <expr> " smartchr#one_of('""<left>', '"')
 inoremap <expr> ( smartchr#one_of('()<left>', '(')
-inoremap <expr> { smartchr#one_of('{<CR><CR>}<UP><Tab>', '{')
+inoremap <expr> { smartchr#one_of('{<CR>}', '{')
 inoremap <expr> > smartchr#one_of('>', '->',  '=>')
 
 " unite {{{2
@@ -660,8 +660,8 @@ nnoremap <Leader>ub :<C-u>Unite bookmark directory_mru -default-action=cd<CR>
 nnoremap <Leader>um :<C-u>Unite file_mru -buffer-name=file<CR>
 " grep
 nnoremap <Leader>ug :<C-u>Unite grep -no-quit<CR>/*.
-" grep
-" au FileType php noremap <buffer> <Leader>ug :<C-u>Unite grep -no-quit<CR>/*.php<CR>
+au FileType php noremap <buffer> <Leader>uG :<C-u>Unite grep -no-quit<CR>/*.php<CR><C-r><C-w><CR>
+au FileType vim noremap <buffer> <Leader>uG :<C-u>Unite grep -no-quit<CR>/*.vim<CR><C-r><C-w><CR>
 " ref
 au FileType php nnoremap <buffer> <Leader>ur :<C-u>Unite ref/phpmanual<CR>
 au FileType vim nnoremap <buffer> <Leader>ur :<C-u>Unite help<CR>
