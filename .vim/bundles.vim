@@ -94,6 +94,7 @@ NeoBundle 'nathanaelkane/vim-indent-guides'
 
 " 言語別
 NeoBundle 'kchmck/vim-coffee-script'
+NeoBundle 'git://github.com/vim-scripts/JavaScript-syntax.git'
 
 " 即座に実行
 NeoBundle 'thinca/vim-quickrun'
