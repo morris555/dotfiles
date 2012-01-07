@@ -273,6 +273,7 @@ nnoremap <silent> <Space>tg :<C-u>UniteWithCursorWord -immediately tag<CR>
 nnoremap <silent> <Space>tj <C-]>:<C-u>split<CR><C-o><C-o><C-w>j
 " nnoremap <silent> <Space>tu :<C-u>!ctags --sort=foldcase -R<CR>
 autocmd FileType php nnoremap <silent> <Space>tu :<C-u>!ctags --languages=PHP --sort=foldcase -R<CR>
+autocmd FileType coffee nnoremap <silent> <Space>tu :<C-u>!ctags -R --language-force=coffee<CR>
 " nnoremap <silent> <Space>tu :<C-u>QuickRun -runner/vimproc -command 'ctags' -cmdopt '-R'<CR>
 nnoremap <silent> <Space>tk <C-]>:<C-u>vsplit<CR><C-o><C-o><C-w>l
 
