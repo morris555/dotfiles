@@ -124,11 +124,22 @@ set smartindent
 set autoindent
 set cindent
 
-" タブ幅４
 set shiftwidth=4
 set tabstop=4
 set softtabstop=4
 set expandtab
+
+" phpはタブ幅4でタブ文字を使う
+autocmd FileType php set shiftwidth=4
+autocmd FileType php set tabstop=4
+autocmd FileType php set softtabstop=4
+autocmd FileType php set noexpandtab
+
+" coffee scriptはタブ幅2でスペースを使う
+autocmd FileType coffee set shiftwidth=2
+autocmd FileType coffee set tabstop=2
+autocmd FileType coffee set softtabstop=2
+autocmd FileType coffee set expandtab
 
 " file encoding {{{1
 "
