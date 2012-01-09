@@ -629,16 +629,11 @@ imap <C-k> <C-g>s
 " smartchr.vim {{{2
 inoremap <expr> = smartchr#one_of('= ', '== ', '=== ', '=')
 inoremap <expr> , smartchr#one_of(', ', ',')
-inoremap <expr> ! smartchr#one_of('!', '!= ')
-inoremap <expr> + smartchr#one_of('+ ', '+= ')
-inoremap <expr> - smartchr#one_of('-', '- ', '-= ')
-inoremap <expr> * smartchr#one_of('* ', '*= ')
-inoremap <expr> / smartchr#one_of('/', '//', '~/', './', '../')
-inoremap <expr> . smartchr#one_of('.',  '. ', '.= ')
-inoremap <expr> ' smartchr#one_of("''<left>", "'")
-inoremap <expr> " smartchr#one_of('""<left>', '"')
-inoremap <expr> ( smartchr#one_of('()<left>', '(')
-inoremap <expr> { smartchr#one_of('{<CR>}', '{')
+inoremap <expr> + smartchr#one_of('+ ', '++')
+inoremap <expr> - smartchr#one_of('-', '- ')
+inoremap <expr> * smartchr#one_of('* ')
+inoremap <expr> ' smartchr#one_of("'", "''<left>")
+inoremap <expr> " smartchr#one_of('"', '""<left>')
 inoremap <expr> > smartchr#one_of('>', '->',  '=>')
 
 " unite {{{2
