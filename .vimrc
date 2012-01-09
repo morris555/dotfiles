@@ -947,6 +947,7 @@ let php_parent_error_close = 1
 set list
 set listchars=tab:>-,trail:-,nbsp:%,extends:>,precedes:<
 
+" 前回終了したカーソル行に移動
 autocmd BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$") | exe "normal g`\"" | endif
 
 " カレントウィンドウにのみ罫線を引く
