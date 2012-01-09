@@ -623,6 +623,10 @@ let g:surround_custom_mapping.smarty= {
             \'s': "{{\1name: \r..*\r&\1}}\r{{/\1\1}}",
             \'{': "{{\r}}"
             \}
+let g:surround_custom_mapping.javascript= {
+            \'{': "{\r}",
+            \'l': "console.log(\r);"
+            \}
 
 imap <C-k> <C-g>s
 
