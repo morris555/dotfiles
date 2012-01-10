@@ -969,7 +969,8 @@ inoremap <expr><C-e> neocomplcache#cancel_popup()
 imap <C-s> <Plug>(neocomplcache_snippets_expand)
 smap <C-s> <Plug>(neocomplcache_snippets_expand)
 
-let g:neocomplcache_enable_at_startup = 1 " 自動起動
+" TODO 最近、何故か重くなってきたので、一時的にネオコン解除
+let g:neocomplcache_enable_at_startup = 0 " 自動起動
 let g:neocomplcache_enable_smart_case = 1 " 大文字打つまで、小文字大文字区別しない
 let g:neocomplcache_enable_underbar_completion = 1	" 区切り文字の補完を有効化
 let g:neocomplcache_min_syntax_length = 3
