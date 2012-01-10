@@ -477,6 +477,7 @@ set tags=tags
 nnoremap <silent> <Space>tl :Tlist<CR>
 nnoremap <silent> <Space>te :<C-u>SrcExplToggle<CR>
 nnoremap <silent> <Space>tt <C-]>
+nnoremap <silent> <space>tT :<C-u>tabnew<CR>
 nnoremap <silent> <Space>tn :tn<CR>
 nnoremap <silent> <Space>tp :tp<CR>
 nnoremap <silent> <Space>tg :<C-u>UniteWithCursorWord -immediately tag<CR>
@@ -558,14 +559,14 @@ endfunction
 nnoremap <silent> <F4> :<C-u>call <SID>toggle_nu()<CR>
 
 " 表示行移動
-" nnoremap j gj
-" nnoremap k gk
-" nnoremap gj j
-" nnoremap gk k
-" nnoremap 0 g0
-" nnoremap g0 0
-" nnoremap $ g$
-" nnoremap g$ $
+nnoremap j gj
+nnoremap k gk
+nnoremap gj j
+nnoremap gk k
+nnoremap 0 g0
+nnoremap g0 0
+nnoremap $ g$
+nnoremap g$ $
 
 " ExCommandの履歴を遡るのを楽に
 cnoremap <C-p>  <Up>
