@@ -845,7 +845,6 @@ imap <C-k> <C-g>s
 inoremap <expr> = smartchr#one_of('= ', '== ', '=== ', '=')
 inoremap <expr> , smartchr#one_of(', ', ',')
 inoremap <expr> + smartchr#one_of('+ ', '++')
-inoremap <expr> - smartchr#one_of('-', '- ')
 inoremap <expr> * smartchr#one_of('* ')
 inoremap <expr> ' smartchr#one_of("'", "''<left>")
 inoremap <expr> " smartchr#one_of('"', '""<left>')
