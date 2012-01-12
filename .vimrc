@@ -99,6 +99,9 @@ NeoBundle 'h1mesuke/vim-alignta'
 " インデントの可視化
 NeoBundle 'nathanaelkane/vim-indent-guides'
 
+" syntax
+NeoBundle 'git://github.com/scrooloose/syntastic.git'
+
 " 言語別
 NeoBundle 'kchmck/vim-coffee-script'
 NeoBundle 'git://github.com/vim-scripts/JavaScript-syntax.git'
@@ -813,6 +816,16 @@ nmap <C-d> <Plug>(textmanip-duplicate-down)
 nmap <Leader>o <Plug>(openbrowser-smart-search)
 vmap <Leader>o <Plug>(openbrowser-smart-search)
 command! -nargs=1 Google :OpenBrowserSearch <args>
+
+" syntastic {{{2
+let g:syntastic_mode_map = {
+            \ 'mode': 'active',
+            \ 'active_filetypes': ['php'],
+            \ 'passive_filetypes': ['html']
+            \}
+let g:syntastic_auto_loc_list=1
+nnoremap <silent> <Leader>l :<C-u>SyntasticCheck<CR>
+nnoremap <F5> :SyntasticToggleMode<CR>
 
 " surround.vim {{{2
 
