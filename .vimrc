@@ -1,10 +1,5 @@
 " NeoBundle_plugin_list {{{1
 "
-" Vundleの設定を読み込む
-" if filereadable(expand('~/.vim/bundles.vim'))
-    " source ~/.vim/bundles.vim
-" endif
-
 set nocompatible
 filetype off
 
@@ -202,9 +197,6 @@ NeoBundle 'houtsnip/vim-emacscommandline'
 
 " 変数名を規則に従って変換
 NeoBundle 'tpope/vim-abolish'
-
-" 変数名の規則に従って移動
-" NeoBundle 'ujihisa/camelcasemotion'
 
 " Vim script doc
 NeoBundle 'git://github.com/mattn/learn-vimscript.git'
@@ -466,7 +458,7 @@ noremap <Space>fj zj
 noremap <Space>fk zk
 noremap <Space>fn ]z
 noremap <Space>fp [z
-" あとで調べる
+" TODO あとで調べる
 " noremap <Space>fm zM
 noremap <Space>fi zMzv
 " 折り畳み位置を表示
@@ -522,7 +514,7 @@ map R <Plug>(operator-replace)
 nnoremap <expr> gp '`[' . strpart(getregtype(), 0, 1) . '`]'
 
 " ESC2度押しで検索ハイライトを消す
-" nnoremap <ESC><ESC> :<C-u>nohlsearch<CR>
+nnoremap <ESC><ESC> :<C-u>nohlsearch<CR>
 
 nmap ( ,mf(
 nmap ) ,mF(
@@ -590,9 +582,7 @@ noremap H 10h
 " キーボードマクロをQに降格
 nnoremap Q q
 
-" ノーマルモード時にエンター2回で改行
-" nnoremap <CR><CR> :<C-u>call append(expand('.'), '')<Cr>j
-" nnoremap <CR><CR> o<ESC>
+" ノーマルモード時にスペース2回で改行
 nnoremap <Space><Space> o<ESC>
 nnoremap <Space>d cc<ESC>
 
@@ -654,8 +644,6 @@ function! MakeTabLine()
   let sep = ' | '  " タブ間の区切り
   let tabpages = join(titles, sep) . sep . '%#TabLineFill#%T'
   let info = ''
-" let info .= FoldCCnavi()
-" let info .= '   '
   let info .= cfi#format("[%s()]", "no function")
   let info .= '   '
   let info .= '(%l/%L) %P'
@@ -901,8 +889,7 @@ au FileType php nnoremap <buffer> <Leader>ur :<C-u>Unite ref/phpmanual<CR>
 au FileType vim nnoremap <buffer> <Leader>ur :<C-u>Unite help<CR>
 " outline
 nnoremap <Leader>uo :<C-u>Unite outline -no-quit -vertical -winwidth=30 -buffer-name=side<CR>
-" tags
-" noremap <Leader>ut :<C-u>Unite tag -no-quit -vertical -winwidth=30 -buffer-name=side<CR>
+" tab
 nnoremap <Leader>ut :<C-u>Unite buffer_tab -buffer-name=file<CR>
 " command
 nnoremap <Leader>uc :<C-u>Unite command<CR>
@@ -997,12 +984,6 @@ let g:neocomplcache_dictionary_file_type_lists = {
             \'vimshell' : $HOME.'/.vim/.vimshell_hist'
             \}
 let g:NeoComplCache_SnippetsDir = $HOME . '/.vim/snippets'
-
-" php omni
-" if !exists('g:neocomplcache_omni_patterns')
-    " let g:neocomplcache_omni_patterns = {}
-" endif
-" let g:neocomplcache_omni_patterns.php = '[^. \t]->\h\w*\|\h\w*::'
 
 " Enable omni completion.
 autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
@@ -1125,14 +1106,6 @@ set clipboard=unnamed
 
 " 折り畳み関連
 set foldmethod=marker
-" set commentstring=%s
-
-function! PHPLint()
-    let result = system( &ft . ' -l ' . bufname(""))
-    echo result
-endfunction
-" autocmd BufWritePost *.php call PHPLint()
-au FileType php nnoremap <buffer> <Space>l :<C-u>call PHPLint()<CR>
 
 " iskeyword変更
 au FileType php setlocal iskeyword+=$
@@ -1155,10 +1128,6 @@ set complete+=k
 " バッファの戻る・進む
 noremap <Space>n :bn<CR>
 noremap <Space>p :bp<CR>
-
-" バッファを閉じる
-" noremap <Space>q :bd<CR>
-
 
 "php処理
 let php_sql_query=1
