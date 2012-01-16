@@ -970,7 +970,7 @@ imap <C-s> <Plug>(neocomplcache_snippets_expand)
 smap <C-s> <Plug>(neocomplcache_snippets_expand)
 
 " TODO 最近、何故か重くなってきたので、一時的にネオコン解除
-let g:neocomplcache_enable_at_startup = 0 " 自動起動
+let g:neocomplcache_enable_at_startup = 1 " 自動起動
 let g:neocomplcache_enable_smart_case = 1 " 大文字打つまで、小文字大文字区別しない
 let g:neocomplcache_enable_underbar_completion = 1	" 区切り文字の補完を有効化
 let g:neocomplcache_min_syntax_length = 3
@@ -1130,11 +1130,11 @@ noremap <Space>n :bn<CR>
 noremap <Space>p :bp<CR>
 
 "php処理
-let php_sql_query=1
-"文字列中のSQLをハイライトする
-let php_htmlInStrings=1
-let php_folding = 1
-let php_parent_error_close = 1
+" TODO 重くなる原因らしいので解除。foldingは自分で定義してでも入れたい
+" let php_sql_query=1
+" let php_htmlInStrings=1
+" let php_folding = 1
+" let php_parent_error_close = 1
 
 " 改行文字などの表示
 set list
