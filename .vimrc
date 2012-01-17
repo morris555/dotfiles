@@ -13,6 +13,7 @@ endif
 NeoBundle 'altercation/vim-colors-solarized'
 NeoBundle 'git://github.com/vim-scripts/mrkn256.vim.git'
 NeoBundle 'tomasr/molokai'
+NeoBundle 'git://github.com/Lokaltog/vim-distinguished.git'
 
 " lib
 NeoBundle 'mattn/webapi-vim'
@@ -200,6 +201,9 @@ NeoBundle 'tpope/vim-abolish'
 
 " Vim script doc
 NeoBundle 'git://github.com/mattn/learn-vimscript.git'
+
+" statusline
+NeoBundle 'git://github.com/Lokaltog/vim-powerline.git'
 
 " Game
 NeoBundle 'mattn/invader-vim'
