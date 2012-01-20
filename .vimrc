@@ -685,6 +685,15 @@ let g:toggle_pairs = {
             \'if':'elsif',
             \'elsif':'else',
             \'else':'if',
+            \'ASC':'DESC',
+            \'DESC':'ASC',
+            \'int':'bool',
+            \'bool':'array',
+            \'array':'object',
+            \'object':'int',
+            \'public':'private',
+            \'private':'protected',
+            \'protected':'public',
             \}
 
 " eskk
