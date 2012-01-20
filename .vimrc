@@ -679,6 +679,13 @@ noremap <F3> :GundoToggle<CR>
 " toggle.vim
 nmap <C-t> <Plug>ToggleN
 vmap <C-t> <Plug>ToggleV
+let g:toggle_pairs = {
+            \'and':'or',
+            \'or':'and',
+            \'if':'elsif',
+            \'elsif':'else',
+            \'else':'if',
+            \}
 
 " eskk
 if has('vim_starting')
