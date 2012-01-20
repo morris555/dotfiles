@@ -894,6 +894,7 @@ nnoremap <Leader>um :<C-u>Unite file_mru -buffer-name=file<CR>
 nnoremap <Leader>ug :<C-u>Unite grep -no-quit<CR>/*.
 au FileType php noremap <buffer> <Leader>uG :<C-u>Unite grep -no-quit<CR>/*.php<CR><C-r><C-w><CR>
 au FileType vim noremap <buffer> <Leader>uG :<C-u>Unite grep -no-quit<CR>/*.vim<CR><C-r><C-w><CR>
+au FileType xml noremap <buffer> <Leader>uG :<C-u>Unite grep -no-quit<CR>/*.xml<CR><C-r><C-w><CR>
 " ref
 au FileType php nnoremap <buffer> <Leader>ur :<C-u>Unite ref/phpmanual<CR>
 au FileType vim nnoremap <buffer> <Leader>ur :<C-u>Unite help<CR>
