@@ -577,11 +577,17 @@ cnoremap <Down> <C-n>
 nnoremap [ %
 nnoremap ] %
 
-" シフト移動
+" シフトで多めに移動
 noremap J 30j
 noremap K 30k
 noremap L 10l
 noremap H 10h
+
+" Ctrlで最後まで移動
+noremap <C-j> G
+noremap <C-k> gg
+noremap <C-l> $
+noremap <C-h> ^
 
 " キーボードマクロをQに降格
 nnoremap Q q
