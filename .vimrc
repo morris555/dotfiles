@@ -596,6 +596,33 @@ nnoremap Q q
 nnoremap <Space><Space> o<ESC>
 nnoremap <Space>d cc<ESC>
 
+" Toggle options
+function! s:toggle_grepprg(global_p)
+  let VALUES = ['grep -nHE', 'git grep -n']
+  let grepprg = &l:grepprg == '' ? &grepprg : &l:grepprg
+  let i = (index(VALUES, grepprg) + 1) % len(VALUES)
+
+  if a:global_p
+    let &grepprg = VALUES[i]
+    set grepprg?
+  else
+    let &l:grepprg = VALUES[i]
+    setlocal grepprg?
+  endif
+endfunction
+if has('vim_starting')
+  silent call s:toggle_grepprg(1)
+endif
+
+
+function! s:toggle_option(option_name)
+  execute 'setlocal' a:option_name.'!'
+  execute 'setlocal' a:option_name.'?'
+endfunction
+
+nnoremap <silent> <Space>ol :<C-u>call <SID>toggle_option('cursorline')<CR>
+nnoremap <silent> <Space>op :<C-u>call <SID>toggle_option('paste')<CR>
+
 " status line {{{1
 set laststatus=2
 set statusline=\ %F
