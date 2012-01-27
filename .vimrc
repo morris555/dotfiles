@@ -578,16 +578,20 @@ nnoremap [ %
 nnoremap ] %
 
 " シフトで多めに移動
-noremap J 30j
-noremap K 30k
-noremap L 10l
-noremap H 10h
+vnoremap J 30j
+vnoremap K 30k
+vnoremap L 10l
+vnoremap H 10h
+nnoremap J 30j
+nnoremap K 30k
+nnoremap L 10l
+nnoremap H 10h
 
 " Ctrlで最後まで移動
-noremap <C-j> G
-noremap <C-k> gg
-noremap <C-l> $
-noremap <C-h> ^
+nnoremap <C-j> G
+nnoremap <C-k> gg
+nnoremap <C-l> $
+nnoremap <C-h> ^
 
 " キーボードマクロをQに降格
 nnoremap Q q
