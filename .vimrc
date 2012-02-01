@@ -730,11 +730,14 @@ let g:toggle_pairs = {
 " eskk
 if has('vim_starting')
     let g:eskk#large_dictionary = '~/.vim/skk/skk-jisyo.l'
+    let g:eskk#dictionary = '~/Dropbox/SKK/eskk/skk-jisyo.u'
 endif
 let g:eskk#egg_like_newline = 1
 let g:eskk#egg_like_newline_completion = 1
 let g:eskk#show_candidates_count = 3
-let g:eskk#fix_extra_okuri = 0
+let g:eskk#auto_henkan_at_okuri_match = 3
+let g:eskk#fix_extra_okuri = 1
+let g:eskk#debug_out = "cmdline"
 " imap <C-j> <Plug>(eskk:enable)
 let g:eskk#directory = '~/Dropbox/SKK/eskk/'
 " let g:eskk#kakutei_when_unique_candidate = 1
