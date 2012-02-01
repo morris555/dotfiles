@@ -542,21 +542,6 @@ nnoremap <silent> <space>wv :<C-u>vs<CR>
 nnoremap <Leader>n gt
 nnoremap <Leader>p gT
 
-" 行数表示変更
-function! s:toggle_nu()
-    if !&number && !&relativenumber
-        set number
-        set norelativenumber
-    elseif &number
-        set nonumber
-        set relativenumber
-    elseif &relativenumber
-        set nonumber
-        set norelativenumber
-    endif
-endfunction
-nnoremap <silent> <F4> :<C-u>call <SID>toggle_nu()<CR>
-
 " 表示行移動
 nnoremap j gj
 nnoremap k gk
@@ -602,30 +587,48 @@ nnoremap <Space>d cc<ESC>
 
 " Toggle options
 function! s:toggle_grepprg(global_p)
-  let VALUES = ['grep -nHE', 'git grep -n']
-  let grepprg = &l:grepprg == '' ? &grepprg : &l:grepprg
-  let i = (index(VALUES, grepprg) + 1) % len(VALUES)
+    let VALUES = ['grep -nHE', 'git grep -n']
+    let grepprg = &l:grepprg == '' ? &grepprg : &l:grepprg
+    let i = (index(VALUES, grepprg) + 1) % len(VALUES)
 
-  if a:global_p
-    let &grepprg = VALUES[i]
-    set grepprg?
-  else
-    let &l:grepprg = VALUES[i]
-    setlocal grepprg?
-  endif
+    if a:global_p
+        let &grepprg = VALUES[i]
+        set grepprg?
+    else
+        let &l:grepprg = VALUES[i]
+        setlocal grepprg?
+    endif
 endfunction
 if has('vim_starting')
-  silent call s:toggle_grepprg(1)
+    silent call s:toggle_grepprg(1)
 endif
 
 
-function! s:toggle_option(option_name)
-  execute 'setlocal' a:option_name.'!'
-  execute 'setlocal' a:option_name.'?'
+function! s:toggle_option(...)
+    for option_name in a:000
+        execute 'setlocal' option_name.'!'
+        execute 'setlocal' option_name.'?'
+    endfor
 endfunction
 
-nnoremap <silent> <Space>ol :<C-u>call <SID>toggle_option('cursorline')<CR>
+function! s:toggle_nu()
+    if !&number && !&relativenumber
+        set number
+        set norelativenumber
+    elseif &number
+        set nonumber
+        set relativenumber
+    elseif &relativenumber
+        set nonumber
+        set norelativenumber
+    endif
+endfunction
+
+nnoremap <silent> <Space>on :<C-u>call <SID>toggle_nu()<CR>
+nnoremap <silent> <Space>ol :<C-u>call <SID>toggle_option('cursorline', 'cursorcolumn')<CR>
 nnoremap <silent> <Space>op :<C-u>call <SID>toggle_option('paste')<CR>
+nnoremap <silent> <Space>ou :<C-u>GundoToggle<CR>
+nnoremap <silent> <Space>os :<C-u>SyntasticToggleMode<CR>
 
 " status line {{{1
 set laststatus=2
@@ -703,9 +706,6 @@ autocmd CursorMoved * set tabline=%!MakeTabLine()
 
 " sonictemplate
 let g:sonictemplate_vim_template_dir = $HOME. '/dotfiles/.vim/template'
-
-" F3でGundoを開く
-noremap <F3> :GundoToggle<CR>
 
 " toggle.vim
 nmap <C-t> <Plug>ToggleN
@@ -1159,9 +1159,6 @@ command!
             \   map <args> | map! <args> | lmap <args>
 
 " other {{{1
-
-" patemodeにF2でトグル
-set pastetoggle=<F2>
 
 
 " ヤンクしたものをクリップボードにも
