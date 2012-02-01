@@ -628,6 +628,7 @@ nnoremap <silent> <Space>on :<C-u>call <SID>toggle_nu()<CR>
 nnoremap <silent> <Space>ol :<C-u>call <SID>toggle_option('cursorline', 'cursorcolumn')<CR>
 nnoremap <silent> <Space>op :<C-u>call <SID>toggle_option('paste')<CR>
 nnoremap <silent> <Space>ou :<C-u>GundoToggle<CR>
+nnoremap <silent> <Space>os :<C-u>SyntasticToggleMode<CR>
 
 " status line {{{1
 set laststatus=2
