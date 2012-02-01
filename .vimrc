@@ -916,7 +916,7 @@ imap <C-k> <C-g>s
 " unite {{{2
 "
 " 入力モードで開始する
-let g:unite_enable_start_insert=1
+let g:unite_enable_start_insert=0
 
 let g:unite_source_file_mru_limit = 10000
 
@@ -962,6 +962,8 @@ nnoremap <Leader>uy :<C-u>Unite history/yank<CR>
 nnoremap <Leader>uu :<C-u>Unite source<CR>
 " snippet
 nnoremap <Leader>us :<C-u>Unite snippet<CR>
+" snippet
+nnoremap <Leader>uS :<C-u>Unite session<CR>
 " twitter
 nnoremap <Leader>uT :<C-u>Unite tweetvim<CR>
 
@@ -1123,7 +1125,7 @@ endfunction augroup END
 command! -nargs=0 MemoRead :Unite file_rec:~/Dropbox/Memo/ -buffer-name=file -auto-preview
 
 " temp_edit
-command! -nargs=0 TempEdit :Unite file_rec:~/.vim/template -buffer-name=file
+command! -nargs=0 TempEdit :Unite file_rec:~/.vim/template file -buffer-name=file
 
 " 一時ファイル
 command! -nargs=1 -complete=filetype Tmp edit ~/Dropbox/tmp/tmp.<args>
