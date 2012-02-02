@@ -15,6 +15,9 @@ NeoBundle 'git://github.com/vim-scripts/mrkn256.vim.git'
 NeoBundle 'tomasr/molokai'
 NeoBundle 'git://github.com/Lokaltog/vim-distinguished.git'
 
+" singleton
+NeoBundle 'git://github.com/thinca/vim-singleton.git'
+
 " lib
 NeoBundle 'mattn/webapi-vim'
 NeoBundle 'thinca/vim-openbuf'
@@ -317,6 +320,12 @@ function! S(f, ...)
   \      ? eval(cfunc) : call(cfunc, a:000)
 endfunction
 
+" singleton {{{1
+
+if s:has_plugin('singleton')
+    call singleton#enable()
+endif
+
 " command line {{{1
 
 set cmdheight=2            " コマンドラインは２行
@@ -613,14 +622,14 @@ endfunction
 
 function! s:toggle_nu()
     if !&number && !&relativenumber
-        set number
-        set norelativenumber
+        setlocal number
+        setlocal norelativenumber
     elseif &number
-        set nonumber
-        set relativenumber
+        setlocal nonumber
+        setlocal relativenumber
     elseif &relativenumber
-        set nonumber
-        set norelativenumber
+        setlocal nonumber
+        setlocal norelativenumber
     endif
 endfunction
 
@@ -916,7 +925,7 @@ imap <C-k> <C-g>s
 " unite {{{2
 "
 " 入力モードで開始する
-let g:unite_enable_start_insert=0
+let g:unite_enable_start_insert=1
 
 let g:unite_source_file_mru_limit = 10000
 

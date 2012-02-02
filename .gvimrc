@@ -56,13 +56,12 @@ if has('gui_macvim')
     endif
 
     " vimにフォーカスがあたっていないときは、透けさせる。(http://vim-users.jp/2011/10/hack234/)
-    " 今は無効にしている
     set transparency=0
     augroup hack234
         autocmd!
         if has('mac')
-            autocmd FocusGained * set transparency=0
-            autocmd FocusLost * set transparency=0
+            autocmd FocusGained * set transparency=10
+            autocmd FocusLost * set transparency=35
         endif
     augroup END
 else
