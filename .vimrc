@@ -548,6 +548,21 @@ nnoremap <silent> <space>wp gT
 nnoremap <silent> <space>wt :<C-u>tabnew<CR>
 nnoremap <silent> <space>ws :<C-u>sp<CR>
 nnoremap <silent> <space>wv :<C-u>vs<CR>
+
+" 分割画面移動
+nnoremap <silent> sj <C-w>j
+nnoremap <silent> sk <C-w>k
+nnoremap <silent> sl <C-w>l
+nnoremap <silent> sh <C-w>h
+nnoremap <silent> sr <C-w>r
+nnoremap <silent> s= <C-w>=
+nnoremap <silent> sw <C-w>w
+nnoremap <silent> so :<C-u>ZoomWin<CR>
+nnoremap <silent> sn gt
+nnoremap <silent> sp gT
+nnoremap <silent> st :<C-u>tabnew<CR>
+nnoremap <silent> ss :<C-u>sp<CR>
+nnoremap <silent> sv :<C-u>vs<CR>
 nnoremap <Leader>n gt
 nnoremap <Leader>p gT
 
