@@ -259,6 +259,8 @@ set matchpairs+=<:>
 " 編集中もほかファイルを開けるように
 set hidden
 
+set updatetime=10
+
 " koriya版に同梱されているプラグインを無効化する
 let plugin_dicwin_disable = 1
 
@@ -548,6 +550,21 @@ nnoremap <silent> <space>wp gT
 nnoremap <silent> <space>wt :<C-u>tabnew<CR>
 nnoremap <silent> <space>ws :<C-u>sp<CR>
 nnoremap <silent> <space>wv :<C-u>vs<CR>
+
+" 分割画面移動
+nnoremap <silent> sj <C-w>j
+nnoremap <silent> sk <C-w>k
+nnoremap <silent> sl <C-w>l
+nnoremap <silent> sh <C-w>h
+nnoremap <silent> sr <C-w>r
+nnoremap <silent> s= <C-w>=
+nnoremap <silent> sw <C-w>w
+nnoremap <silent> so :<C-u>ZoomWin<CR>
+nnoremap <silent> sn gt
+nnoremap <silent> sp gT
+nnoremap <silent> st :<C-u>tabnew<CR>
+nnoremap <silent> ss :<C-u>sp<CR>
+nnoremap <silent> sv :<C-u>vs<CR>
 nnoremap <Leader>n gt
 nnoremap <Leader>p gT
 
@@ -944,11 +961,11 @@ endfunction
 
 " ファイル一覧
 nnoremap <silent> <Leader>uF :<C-u>call <SID>unite_project('-start-insert')<CR>
-nnoremap <silent> <Leader>uf :<C-u>Unite file_rec/async -buffer-name=file<CR>
+nnoremap <silent> <Leader>uf :<C-u>Unite file_rec/async -buffer-name=file -no-quit<CR>
 " バッファ一覧(bookmarkと被るので、とりあえずヒストリのhで妥協)
 nnoremap <Leader>uh :<C-u>Unite buffer -buffer-name=file<CR>
 " お気に入り
-nnoremap <Leader>ub :<C-u>Unite bookmark directory_mru -default-action=cd<CR>
+nnoremap <Leader>ub :<C-u>Unite bookmark directory_mru -default-action=lcd<CR>
 " 最近使ったファイルの一覧
 nnoremap <Leader>um :<C-u>Unite file_mru -buffer-name=file<CR>
 " grep
