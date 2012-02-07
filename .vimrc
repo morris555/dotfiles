@@ -259,6 +259,8 @@ set matchpairs+=<:>
 " 編集中もほかファイルを開けるように
 set hidden
 
+set updatetime=10
+
 " koriya版に同梱されているプラグインを無効化する
 let plugin_dicwin_disable = 1
 
