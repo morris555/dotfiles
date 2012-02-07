@@ -959,11 +959,11 @@ endfunction
 
 " ファイル一覧
 nnoremap <silent> <Leader>uF :<C-u>call <SID>unite_project('-start-insert')<CR>
-nnoremap <silent> <Leader>uf :<C-u>Unite file_rec/async -buffer-name=file<CR>
+nnoremap <silent> <Leader>uf :<C-u>Unite file_rec/async -buffer-name=file -no-quit<CR>
 " バッファ一覧(bookmarkと被るので、とりあえずヒストリのhで妥協)
 nnoremap <Leader>uh :<C-u>Unite buffer -buffer-name=file<CR>
 " お気に入り
-nnoremap <Leader>ub :<C-u>Unite bookmark directory_mru -default-action=cd<CR>
+nnoremap <Leader>ub :<C-u>Unite bookmark directory_mru -default-action=lcd<CR>
 " 最近使ったファイルの一覧
 nnoremap <Leader>um :<C-u>Unite file_mru -buffer-name=file<CR>
 " grep
