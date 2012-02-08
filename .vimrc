@@ -525,6 +525,9 @@ nnoremap gc `[v`]
 
 map R <Plug>(operator-replace)
 
+" jsonデコード(仮)
+nnoremap <Leader>j :r!php -r 'print_r(json_decode(file_get_contents("%",true)));'<CR>
+
 " ペーストしたテキストを再選択
 nnoremap <expr> gp '`[' . strpart(getregtype(), 0, 1) . '`]'
 
@@ -961,8 +964,8 @@ endfunction
 
 " ファイル一覧
 " nnoremap <silent> <Leader>uF :<C-u>call <SID>unite_project('-start-insert')<CR>
-nnoremap <silent> <Leader>uF :<C-u>Unite file_rec/async -buffer-name=file<CR>
-nnoremap <silent> <Leader>uf :<C-u>Unite file_rec/async -buffer-name=file -no-quit<CR>
+nnoremap <silent> <Leader>uf :<C-u>Unite file_rec/async -buffer-name=file<CR>
+nnoremap <silent> <Leader>uF :<C-u>Unite file_rec/async -buffer-name=file -no-quit<CR>
 " バッファ一覧(bookmarkと被るので、とりあえずヒストリのhで妥協)
 nnoremap <Leader>uh :<C-u>Unite buffer -buffer-name=file<CR>
 " お気に入り
