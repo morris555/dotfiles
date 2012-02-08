@@ -894,7 +894,7 @@ command! -nargs=1 Google :OpenBrowserSearch <args>
 " syntastic {{{2
 let g:syntastic_mode_map = {
             \ 'mode': 'active',
-            \ 'active_filetypes': ['php'],
+            \ 'active_filetypes': ['php', 'coffeescript', 'haskell'],
             \ 'passive_filetypes': ['html']
             \}
 let g:syntastic_auto_loc_list=1
