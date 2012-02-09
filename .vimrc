@@ -525,9 +525,6 @@ nnoremap gc `[v`]
 
 map R <Plug>(operator-replace)
 
-" jsonデコード(仮)
-nnoremap <Leader>j :r!php -r 'print_r(json_decode(file_get_contents("%",true)));'<CR>
-
 " ペーストしたテキストを再選択
 nnoremap <expr> gp '`[' . strpart(getregtype(), 0, 1) . '`]'
 
@@ -540,19 +537,20 @@ nmap { ,mf{
 nmap } ,mF{
 
 " 分割画面移動
-nnoremap <silent> <space>wj <C-w>j
-nnoremap <silent> <space>wk <C-w>k
-nnoremap <silent> <space>wl <C-w>l
-nnoremap <silent> <space>wh <C-w>h
-nnoremap <silent> <space>wr <C-w>r
-nnoremap <silent> <space>w= <C-w>=
-nnoremap <silent> <space>ww <C-w>w
-nnoremap <silent> <space>wo :<C-u>ZoomWin<CR>
-nnoremap <silent> <space>wn gt
-nnoremap <silent> <space>wp gT
-nnoremap <silent> <space>wt :<C-u>tabnew<CR>
-nnoremap <silent> <space>ws :<C-u>sp<CR>
-nnoremap <silent> <space>wv :<C-u>vs<CR>
+" 慣れるために、コメントアウト
+" nnoremap <silent> <space>wj <C-w>j
+" nnoremap <silent> <space>wk <C-w>k
+" nnoremap <silent> <space>wl <C-w>l
+" nnoremap <silent> <space>wh <C-w>h
+" nnoremap <silent> <space>wr <C-w>r
+" nnoremap <silent> <space>w= <C-w>=
+" nnoremap <silent> <space>ww <C-w>w
+" nnoremap <silent> <space>wo :<C-u>ZoomWin<CR>
+" nnoremap <silent> <space>wn gt
+" nnoremap <silent> <space>wp gT
+" nnoremap <silent> <space>wt :<C-u>tabnew<CR>
+" nnoremap <silent> <space>ws :<C-u>sp<CR>
+" nnoremap <silent> <space>wv :<C-u>vs<CR>
 
 " 分割画面移動
 nnoremap <silent> sj <C-w>j
@@ -1137,6 +1135,9 @@ command! Rg source ~/dotfiles/.gvimrc
 " Eb/RbでNeoBundleの編集と反映
 command! Eb edit ~/dotfiles/.vim/bundles.vim
 command! -bang Rb :Unite neobundle/install:<bang>
+
+" jsonデコード(仮)
+command! JsonReformat :r!php -r 'print_r(json_decode(file_get_contents("%",true)));'
 
 " メモを作成する
 command! -nargs=0 MemoWrite call s:open_memo_file()
