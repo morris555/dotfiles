@@ -23,11 +23,11 @@ RPROMPT="%1(v|%F{green}%1v%f|)"
 
 # ターミナルのタイトル
 case "${TERM}" in
-kterm*|xterm)
-    precmd() {
-        echo -ne "\033]0;${USER}@${HOST%%.*}:${PWD}\007"
-    }
-    ;;
+    kterm*|xterm)
+        precmd() {
+            echo -ne "\033]0;${USER}@${HOST%%.*}:${PWD}\007"
+        }
+        ;;
 esac
 
 # emacsライクなキーバインド
@@ -51,7 +51,7 @@ setopt auto_pushd
 setopt pushd_ignore_dups
 
 # コマンドもしかして
-setopt correct
+# setopt correct
 
 # リストを詰めて表示
 setopt list_packed
@@ -68,12 +68,12 @@ zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
 function google() {
 local str opt
 if [ $ != 0 ]; then
-	for i in $*; do
-		str="$str+$i"
-	done
-	str=`echo $str | sed 's/^\+//'`
-	opt='search?num=50&hl=ja&lr=lang_ja'
-	opt="${opt}&q=${str}"
+    for i in $*; do
+        str="$str+$i"
+    done
+    str=`echo $str | sed 's/^\+//'`
+    opt='search?num=50&hl=ja&lr=lang_ja'
+    opt="${opt}&q=${str}"
 fi
 w3m http://www.google.co.jp/$opt
 }
@@ -81,9 +81,9 @@ w3m http://www.google.co.jp/$opt
 # w3mでALC検索
 function alc() {
 if [ $ != 0 ]; then
-	w3m "http://eow.alc.co.jp/$*/UTF-8/?ref=sa"
+    w3m "http://eow.alc.co.jp/$*/UTF-8/?ref=sa"
 else
-	w3m "http://www.alc.co.jp/"
+    w3m "http://www.alc.co.jp/"
 fi
 }
 
@@ -94,13 +94,13 @@ autoload -U compinit
 compinit
 
 case "$TERM" in
-screen)
-	preexec() {
-		echo -ne "\ek#${1%% *}\e\\"
-	}
-	precmd() {
-		echo -ne "\ek$(basename $(pwd))\e\\"
-	}
+    screen)
+        preexec() {
+            echo -ne "\ek#${1%% *}\e\\"
+        }
+        precmd() {
+            echo -ne "\ek$(basename $(pwd))\e\\"
+        }
 esac
 
 # コマンド補完
@@ -123,27 +123,8 @@ zstyle ':auto-fu:highlight' completion/one fg=white,bold,underline
 zstyle ':auto-fu:var' postdisplay $'\n-azfu-'
 zle-line-init () {auto-fu-init;}; zle -N zle-line-init
 
-# alias
-alias ls="ls -vFG"
-alias ll="ls -vlFG"
-alias la="ls -vaFG"
-alias diff="colordiff"
-alias grep="grep --color"
-alias rm="rm -i"
-# alias less="/usr/share/vim/vim72/macros/less.sh"
-
 # global alias
 alias -g L="|less -R"
 alias -g P='|pbcopy'
 alias -g G='|grep'
 alias -g V='|vim -R -'
-
-# svn_alias
-alias svnci="svn commit -m"
-alias svndiff="svn diff L"
-alias svnlog="svn log --verbose L"
-alias svnup="svn up"
-
-# app_alias
-# alias vim="/opt/local/bin/vim"
-alias coffee="coffee@1.0.1"
