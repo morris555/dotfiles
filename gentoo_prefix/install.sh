@@ -47,3 +47,20 @@ emerge --oneshot sys-devel/make
 emerge --oneshot --nodeps sys-apps/file
 emerge --oneshot --nodeps app-admin/eselect
 
+env FEATURES="-collision-protect" emerge --oneshot sys-apps/portage
+
+hash -r
+
+emerge --sync
+
+env USE=-git emerge -u system
+
+
+echo 'USE="unicode nls"' >> $EPREFIX/etc/make.conf
+echo 'CFLAGS="-O2 -pipe <my-cpu-flags>"' >> $EPREFIX/etc/make.conf
+echo 'CXXFLAGS="${CFLAGS}"' >> $EPREFIX/etc/make.conf
+
+emerge -e system
+
+cd $EPREFIX/usr/portage/scripts
+./bootstrap-prefix.sh $EPREFIX startscript
