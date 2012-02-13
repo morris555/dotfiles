@@ -27,6 +27,9 @@ NeoBundle 'git://github.com/basyura/bitly.vim.git'
 " simplenote
 NeoBundle 'https://github.com/mattn/vimplenote-vim.git'
 
+" quicklearn
+NeoBundle 'git://github.com/ujihisa/quicklearn.git'
+
 " folding_function
 NeoBundle 'git://github.com/LeafCage/foldCC.git'
 
@@ -792,6 +795,8 @@ let g:vimfiler_as_default_explorer = 1
 " for quickrun.vim
 let g:quickrun_config = {}
 let g:quickrun_config.coffee  = {'command' : 'cat'}
+
+nnoremap <Leader>R :<C-u>Unite quicklearn -immediately<Cr>
 
 " quicklint
 nnoremap <Leader>l :<C-u>QuickRun -exec '%c -l %s'<CR>
