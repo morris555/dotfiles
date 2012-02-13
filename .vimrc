@@ -900,8 +900,8 @@ command! -nargs=1 Google :OpenBrowserSearch <args>
 " syntastic {{{2
 let g:syntastic_mode_map = {
             \ 'mode': 'active',
-            \ 'active_filetypes': ['php', 'coffeescript', 'haskell'],
-            \ 'passive_filetypes': ['html']
+            \ 'active_filetypes': ['php', 'coffeescript', 'sh'],
+            \ 'passive_filetypes': ['html', 'haskell']
             \}
 let g:syntastic_auto_loc_list=1
 nnoremap <silent> <Leader>l :<C-u>SyntasticCheck<CR>
@@ -967,8 +967,8 @@ endfunction
 
 " ファイル一覧
 " nnoremap <silent> <Leader>uF :<C-u>call <SID>unite_project('-start-insert')<CR>
-nnoremap <silent> <Leader>uf :<C-u>Unite file_rec/async -buffer-name=file<CR>
-nnoremap <silent> <Leader>uF :<C-u>Unite file_rec/async -buffer-name=file -no-quit<CR>
+nnoremap <silent> <Leader>uf :<C-u>Unite file_rec/async file -buffer-name=file<CR>
+nnoremap <silent> <Leader>uF :<C-u>Unite file_rec/async file -buffer-name=file -no-quit<CR>
 " バッファ一覧(bookmarkと被るので、とりあえずヒストリのhで妥協)
 nnoremap <Leader>uh :<C-u>Unite buffer -buffer-name=file<CR>
 " お気に入り
