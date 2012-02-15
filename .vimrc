@@ -603,6 +603,10 @@ nnoremap L 10l
 nnoremap H 10h
 
 " Ctrlで最後まで移動
+vnoremap <C-j> G
+vnoremap <C-k> gg
+vnoremap <C-l> $
+vnoremap <C-h> ^
 nnoremap <C-j> G
 nnoremap <C-k> gg
 nnoremap <C-l> $
