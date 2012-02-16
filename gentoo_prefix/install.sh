@@ -71,4 +71,7 @@ cd $EPREFIX/usr/portage/scripts
 
 # my tools
 
-
+emerge tmux
+emerge ctags
+emerge vim
+emerge zsh
