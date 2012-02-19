@@ -68,6 +68,7 @@ emerge -e system
 cd $EPREFIX/usr/portage/scripts
 ./bootstrap-prefix.sh $EPREFIX startscript
 
+eselect news read new
 
 # my tools
 

@@ -539,27 +539,17 @@ nmap ) ,mF(
 nmap { ,mf{
 nmap } ,mF{
 
-" 分割画面移動
-" 慣れるために、コメントアウト
-" nnoremap <silent> <space>wj <C-w>j
-" nnoremap <silent> <space>wk <C-w>k
-" nnoremap <silent> <space>wl <C-w>l
-" nnoremap <silent> <space>wh <C-w>h
-" nnoremap <silent> <space>wr <C-w>r
-" nnoremap <silent> <space>w= <C-w>=
-" nnoremap <silent> <space>ww <C-w>w
-" nnoremap <silent> <space>wo :<C-u>ZoomWin<CR>
-" nnoremap <silent> <space>wn gt
-" nnoremap <silent> <space>wp gT
-" nnoremap <silent> <space>wt :<C-u>tabnew<CR>
-" nnoremap <silent> <space>ws :<C-u>sp<CR>
-" nnoremap <silent> <space>wv :<C-u>vs<CR>
+nnoremap <space>w :<C-u>w<CR>
 
 " 分割画面移動
 nnoremap <silent> sj <C-w>j
 nnoremap <silent> sk <C-w>k
 nnoremap <silent> sl <C-w>l
 nnoremap <silent> sh <C-w>h
+nnoremap <silent> sJ <C-w>J
+nnoremap <silent> sK <C-w>K
+nnoremap <silent> sL <C-w>L
+nnoremap <silent> sH <C-w>H
 nnoremap <silent> sr <C-w>r
 nnoremap <silent> s= <C-w>=
 nnoremap <silent> sw <C-w>w
@@ -569,8 +559,8 @@ nnoremap <silent> sp gT
 nnoremap <silent> st :<C-u>tabnew<CR>
 nnoremap <silent> ss :<C-u>sp<CR>
 nnoremap <silent> sv :<C-u>vs<CR>
-nnoremap <Leader>n gt
-nnoremap <Leader>p gT
+nnoremap <silent> sq :<C-u>q<CR>
+nnoremap <silent> sQ :<C-u>bd<CR>
 
 " 表示行移動
 nnoremap j gj
@@ -1147,6 +1137,30 @@ command! -bang Rb :Unite neobundle/install:<bang>
 
 " jsonデコード(仮)
 command! JsonReformat :r!php -r 'print_r(json_decode(file_get_contents("%",true)));'
+
+
+
+" 作成中
+" TODO ファイル名までパス
+" TODO 数字+拡張子なファイル名
+" TODO ファイルの一覧を取得
+" TODO 保存時は数字を増やす
+" TODO とりあえずdiffを出す？
+command! CapturePush call s:capture_push()
+function! s:capture_push()
+    let l:capture_dir = $HOME . '/.vim_capture' . expand('%:p:h')
+    if !isdirectory(l:capture_dir)
+        call mkdir(l:capture_dir, 'p')
+    endif
+
+    let l:filename = l:capture_dir . '/' . expand('%:t')
+    if l:filename != ''
+        execute 'write ' . l:filename
+    endif
+endfunction augroup END
+" 作成中
+
+
 
 " メモを作成する
 command! -nargs=0 MemoWrite call s:open_memo_file()
