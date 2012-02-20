@@ -573,16 +573,18 @@ nnoremap $ g$
 nnoremap g$ $
 
 " ExCommandの履歴を遡るのを楽に
-cnoremap <C-p>  <Up>
-cnoremap <Up>   <C-p>
-cnoremap <C-n>  <Down>
-cnoremap <Down> <C-n>
+" TODO プラグインで定義されてね？
+" cnoremap <C-p>  <Up>
+" cnoremap <Up>   <C-p>
+" cnoremap <C-n>  <Down>
+" cnoremap <Down> <C-n>
 
 " 対応する括弧に移動
 nnoremap [ %
 nnoremap ] %
 
 " シフトで多めに移動
+" TODO まとめて
 vnoremap J 30j
 vnoremap K 30k
 vnoremap L 10l
@@ -593,14 +595,13 @@ nnoremap L 10l
 nnoremap H 10h
 
 " Ctrlで最後まで移動
-vnoremap <C-j> G
-vnoremap <C-k> gg
-vnoremap <C-l> $
-vnoremap <C-h> ^
-nnoremap <C-j> G
-nnoremap <C-k> gg
-nnoremap <C-l> $
-nnoremap <C-h> ^
+" TODO まとめて
+vnoremap <C-e> $
+vnoremap <C-a> ^
+nnoremap <C-e> $
+nnoremap <C-a> ^
+
+" TODO <C-j>があいたので、インサートしつつeskkを入れたい
 
 " キーボードマクロをQに降格
 nnoremap Q q
@@ -732,6 +733,7 @@ autocmd CursorMoved * set tabline=%!MakeTabLine()
 let g:sonictemplate_vim_template_dir = $HOME. '/dotfiles/.vim/template'
 
 " toggle.vim
+" 単語認識がちゃんと出きていなくて使いものにならない
 nmap <C-t> <Plug>ToggleN
 vmap <C-t> <Plug>ToggleV
 let g:toggle_pairs = {
@@ -745,7 +747,8 @@ let g:toggle_pairs = {
             \'int':'bool',
             \'bool':'array',
             \'array':'object',
-            \'object':'int',
+            \'object':'mixed',
+            \'mixed':'int',
             \'public':'private',
             \'private':'protected',
             \'protected':'public',
@@ -765,6 +768,8 @@ let g:eskk#debug_out = "cmdline"
 " imap <C-j> <Plug>(eskk:enable)
 let g:eskk#directory = '~/Dropbox/SKK/eskk/'
 " let g:eskk#kakutei_when_unique_candidate = 1
+" <C-j>でいきなり日本語入力からのインサート
+nmap <C-j> i<C-j>
 
 " lingr
 let g:lingr_vim_user = 'tek_koc'
@@ -1148,15 +1153,20 @@ command! JsonReformat :r!php -r 'print_r(json_decode(file_get_contents("%",true)
 " TODO とりあえずdiffを出す？
 command! CapturePush call s:capture_push()
 function! s:capture_push()
-    let l:capture_dir = $HOME . '/.vim_capture' . expand('%:p:h')
-    if !isdirectory(l:capture_dir)
-        call mkdir(l:capture_dir, 'p')
-    endif
+    let l:capture_dir = $HOME . '/.vim_capture' . expand('%:p') . '/'
+    let l:extension = expand('%:p')
+    let l:filename = l:capture_dir . '0'
+    echo l:capture_dir
+    echo l:filename
+    " if !isdirectory(l:capture_dir)
+        " call mkdir(l:capture_dir, 'p')
+    " endif
 
-    let l:filename = l:capture_dir . '/' . expand('%:t')
-    if l:filename != ''
-        execute 'write ' . l:filename
-    endif
+    " let l:filename = l:capture_dir . '/' . expand('%:t')
+    " if l:filename != ''
+        " " execute 'write ' . l:filename
+        " echo l:filename
+    " endif
 endfunction augroup END
 " 作成中
 
