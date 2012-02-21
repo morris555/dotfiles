@@ -553,7 +553,8 @@ nnoremap <silent> sH <C-w>H
 nnoremap <silent> sr <C-w>r
 nnoremap <silent> s= <C-w>=
 nnoremap <silent> sw <C-w>w
-nnoremap <silent> so :<C-u>ZoomWin<CR>
+" nnoremap <silent> so :<C-u>ZoomWin<CR>
+nnoremap <silent> so :<C-u>call <SID>zoom()<CR>
 nnoremap <silent> sn gt
 nnoremap <silent> sp gT
 nnoremap <silent> st :<C-u>tabnew<CR>
@@ -561,6 +562,16 @@ nnoremap <silent> ss :<C-u>sp<CR>
 nnoremap <silent> sv :<C-u>vs<CR>
 nnoremap <silent> sq :<C-u>q<CR>
 nnoremap <silent> sQ :<C-u>bd<CR>
+
+let g:zoom_flg = 0
+function! s:zoom()
+    if 0 == g:zoom_flg
+        normal <C-w>|<C-w>_
+    else
+        normal <C-w>=
+    endif
+    let g:zoom_flg = 1 - g:zoom_flg
+endfunction
 
 " 表示行移動
 nnoremap j gj
