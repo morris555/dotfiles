@@ -327,8 +327,10 @@ endfunction
 
 " singleton {{{1
 
-if s:has_plugin('singleton')
-    call singleton#enable()
+if has('clientserver')
+    if s:has_plugin('singleton')
+        call singleton#enable()
+    endif
 endif
 
 " command line {{{1
@@ -552,6 +554,9 @@ nnoremap <silent> sL <C-w>L
 nnoremap <silent> sH <C-w>H
 nnoremap <silent> sr <C-w>r
 nnoremap <silent> s= <C-w>=
+nnoremap <silent> s_ <C-w>_
+" nnoremap <silent> s| <C-w>|
+nnoremap <silent> s\| <C-w>\|
 nnoremap <silent> sw <C-w>w
 " nnoremap <silent> so :<C-u>ZoomWin<CR>
 nnoremap <silent> so :<C-u>call <SID>zoom()<CR>
