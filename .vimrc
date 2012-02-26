@@ -327,9 +327,11 @@ endfunction
 
 " singleton {{{1
 
-if has('clientserver')
-    if s:has_plugin('singleton')
-        call singleton#enable()
+if has('gui_running')
+    if has('clientserver')
+        if s:has_plugin('singleton')
+            call singleton#enable()
+        endif
     endif
 endif
 
@@ -568,6 +570,10 @@ nnoremap <silent> ss :<C-u>sp<CR>
 nnoremap <silent> sv :<C-u>vs<CR>
 nnoremap <silent> sq :<C-u>q<CR>
 nnoremap <silent> sQ :<C-u>bd<CR>
+nnoremap <silent> su :<C-u>Unite buffer_tab -buffer-name=file<CR>
+nnoremap <silent> sU :<C-u>Unite buffer -buffer-name=file<CR>
+" nnoremap <silent> su :<C-u>Unite buffer_tab -buffer-name=file -vertical -winwidth=30<CR>
+" nnoremap <silent> sU :<C-u>Unite buffer -buffer-name=file -vertical -winwidth=30<CR>
 
 " 表示行移動
 nnoremap j gj
@@ -1321,5 +1327,5 @@ if has("gui_running")
 else
     " CUI版Vim用のコード
     set background=dark
-    colorscheme evening
+    colorscheme molokai
 endif
