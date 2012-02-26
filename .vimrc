@@ -544,6 +544,7 @@ nmap } ,mF{
 nnoremap <space>w :<C-u>w<CR>
 
 " 分割画面移動
+nnoremap <silent> s <Nop>
 nnoremap <silent> sj <C-w>j
 nnoremap <silent> sk <C-w>k
 nnoremap <silent> sl <C-w>l
@@ -555,28 +556,18 @@ nnoremap <silent> sH <C-w>H
 nnoremap <silent> sr <C-w>r
 nnoremap <silent> s= <C-w>=
 nnoremap <silent> s_ <C-w>_
-" nnoremap <silent> s| <C-w>|
-nnoremap <silent> s\| <C-w>\|
 nnoremap <silent> sw <C-w>w
-" nnoremap <silent> so :<C-u>ZoomWin<CR>
-nnoremap <silent> so :<C-u>call <SID>zoom()<CR>
+nnoremap <silent> so <C-w>_<C-w>|
+nnoremap <silent> sO <C-w>=
 nnoremap <silent> sn gt
 nnoremap <silent> sp gT
+nnoremap <silent> sN :<C-u>bn
+nnoremap <silent> sP :<C-u>bp
 nnoremap <silent> st :<C-u>tabnew<CR>
 nnoremap <silent> ss :<C-u>sp<CR>
 nnoremap <silent> sv :<C-u>vs<CR>
 nnoremap <silent> sq :<C-u>q<CR>
 nnoremap <silent> sQ :<C-u>bd<CR>
-
-let g:zoom_flg = 0
-function! s:zoom()
-    if 0 == g:zoom_flg
-        normal <C-w>|<C-w>_
-    else
-        normal <C-w>=
-    endif
-    let g:zoom_flg = 1 - g:zoom_flg
-endfunction
 
 " 表示行移動
 nnoremap j gj
@@ -585,39 +576,35 @@ nnoremap gj j
 nnoremap gk k
 nnoremap 0 g0
 nnoremap g0 0
+nnoremap ^ g^
+nnoremap g^ ^
 nnoremap $ g$
 nnoremap g$ $
 
-" ExCommandの履歴を遡るのを楽に
-" TODO プラグインで定義されてね？
-" cnoremap <C-p>  <Up>
-" cnoremap <Up>   <C-p>
-" cnoremap <C-n>  <Down>
-" cnoremap <Down> <C-n>
+" vnoremap j gj
+" vnoremap k gk
+" vnoremap gj j
+" vnoremap gk k
+" vnoremap 0 g0
+" vnoremap g0 0
+" vnoremap ^ g^
+" vnoremap g^ ^
+" vnoremap $ g$
+" vnoremap g$ $
 
 " 対応する括弧に移動
 nnoremap [ %
 nnoremap ] %
 
 " シフトで多めに移動
-" TODO まとめて
-vnoremap J 30j
-vnoremap K 30k
-vnoremap L 10l
-vnoremap H 10h
-nnoremap J 30j
-nnoremap K 30k
-nnoremap L 10l
-nnoremap H 10h
+noremap J 30j
+noremap K 30k
+noremap L 10l
+noremap H 10h
 
 " Ctrlで最後まで移動
-" TODO まとめて
-vnoremap <C-e> $
-vnoremap <C-a> ^
-nnoremap <C-e> $
-nnoremap <C-a> ^
-
-" TODO <C-j>があいたので、インサートしつつeskkを入れたい
+noremap <C-e> g$
+noremap <C-a> g^
 
 " キーボードマクロをQに降格
 nnoremap Q q
@@ -893,6 +880,8 @@ if has('mac')
 else
     let g:vimproc_dll_path = $HOME . '/.vim/autoload/proc.so'
 endif
+" TODO dousiyou
+let g:vimproc_dll_path = $HOME . '/.vim/autoload/mac_proc.so'
 
 " textmanip
 " 選択したテキストの移動
