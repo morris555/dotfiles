@@ -236,7 +236,8 @@ filetype plugin indent on
 set autoread
 
 " カーソルを中央行に
-set scrolloff=999
+" set scrolloff=999
+set scrolloff=20
 
 " <Leader>を,に
 let mapleader = ","
@@ -777,8 +778,9 @@ let g:eskk#debug_out = "cmdline"
 " imap <C-j> <Plug>(eskk:enable)
 let g:eskk#directory = '~/Dropbox/SKK/eskk/'
 " let g:eskk#kakutei_when_unique_candidate = 1
-" <C-j>でいきなり日本語入力からのインサート
+" <C-j><C-k>でいきなり日本語入力からのインサート
 nmap <C-j> i<C-j>
+nmap <C-k> a<C-j>
 
 " lingr
 let g:lingr_vim_user = 'tek_koc'
@@ -797,7 +799,7 @@ nmap <Leader>hr <Plug>(quickhl-reset)
 nmap <Leader>hm <Plug>(quickhl-match)
 xmap <Leader>h <Plug>(quickhl-toggle)
 
-let g:vimfiler_as_default_explorer = 1
+" let g:vimfiler_as_default_explorer = 1
 
 " quickrun
 " for quickrun.vim
@@ -820,6 +822,7 @@ imap jk <Esc>
 imap kj <Esc>
 
 " Alignta(仮設定)
+" TODO ちゃんと使ってみる
 vnoremap <Leader>a :Alignta 
 
 " コマンド展開
@@ -862,6 +865,7 @@ map <silent> <Leader>vk <Plug>Vm_goto_prev_sign
 let g:EasyMotion_leader_key='<Leader>m'
 
 " capslock設定
+" これ、有効かわかりづらい
 imap <C-a> <C-o><Plug>CapsLockToggle
 
 " vimshell設定
@@ -875,6 +879,7 @@ noremap <Leader>sk :<C-u>vnew<CR>:<C-u>VimShellCreate<CR>
 noremap <Leader>f :<C-u>VimFilerTab<CR>
 
 " NERD Commnterの設定
+" コメント処理はemonkakさんのを使いたい
 let g:NERDCreateDefaultMappings = 0
 let NERDSpaceDelims = 1
 nmap <Leader>c <Plug>NERDCommenterToggle
@@ -1000,7 +1005,8 @@ nnoremap <Leader>ut :<C-u>Unite buffer_tab -buffer-name=file<CR>
 " command
 nnoremap <Leader>uc :<C-u>Unite command<CR>
 " register
-nnoremap <Leader>uy :<C-u>Unite history/yank<CR>
+" nnoremap <Leader>uy :<C-u>Unite history/yank<CR>
+nnoremap <C-p> :<C-u>Unite history/yank<CR>
 " source(sourceが増えてきたので、sourceのsourceを経由する方針にしてみる)
 nnoremap <Leader>uu :<C-u>Unite source<CR>
 " snippet
@@ -1027,8 +1033,9 @@ au FileType unite inoremap <silent> <buffer> <expr> <C-K> unite#do_action('vspli
 au FileType unite nnoremap <silent> <buffer> <expr> <C-T> unite#do_action('tabopen')
 au FileType unite inoremap <silent> <buffer> <expr> <C-T> unite#do_action('tabopen')
 " ESCキーを2回押すと終了する
-au FileType unite nnoremap <silent> <buffer> <ESC><ESC> :q<CR>
-au FileType unite inoremap <silent> <buffer> <ESC><ESC> <ESC>:q<CR>
+" TODO 使ってなくね？
+" au FileType unite nnoremap <silent> <buffer> <ESC><ESC> :q<CR>
+" au FileType unite inoremap <silent> <buffer> <ESC><ESC> <ESC>:q<CR>
 " 初期設定関数を起動する
 au FileType unite call s:unite_my_settings()
 function! s:unite_my_settings()
@@ -1077,14 +1084,15 @@ inoremap <expr><C-e> neocomplcache#cancel_popup()
 imap <C-s> <Plug>(neocomplcache_snippets_expand)
 smap <C-s> <Plug>(neocomplcache_snippets_expand)
 
-" TODO 最近、何故か重くなってきたので、一時的にネオコン解除
 let g:neocomplcache_enable_at_startup = 1 " 自動起動
 let g:neocomplcache_enable_smart_case = 1 " 大文字打つまで、小文字大文字区別しない
 let g:neocomplcache_enable_underbar_completion = 1	" 区切り文字の補完を有効化
 let g:neocomplcache_min_syntax_length = 3
+let g:neocomplcache_min_keyword_length = 3
 let g:neoComplCache_EnableInfo = 1
-" let g:neocomplcache_enable_camel_case_completion = 1 " 大文字を入力したときに、それを単語の区切りとしてあいまい検索
-" let g:neocomplcache_enable_underbar_completion = 1  " _を入力したときに、それを単語の区切りとしてあいまい検索
+let g:neocomplcache_enable_camel_case_completion = 1 " 大文字を入力したときに、それを単語の区切りとしてあいまい検索
+let g:neocomplcache_enable_underbar_completion = 1  " _を入力したときに、それを単語の区切りとしてあいまい検索
+let g:neocomplcache_caching_limit_file_size = 5000000
 let g:neocomplcache_dictionary_file_type_lists = {
             \'default' : '',
             \'php' : $HOME.'/.vim/dict/php.dict',
@@ -1092,6 +1100,18 @@ let g:neocomplcache_dictionary_file_type_lists = {
             \'vimshell' : $HOME.'/.vim/.vimshell_hist'
             \}
 let g:NeoComplCache_SnippetsDir = $HOME . '/.vim/snippets'
+
+" if !exists('g:neocomplcache_omni_patterns')
+	" let g:neocomplcache_omni_patterns = {}
+" endif
+" let g:neocomplcache_omni_patterns.ruby = '[^. *\t]\.\h\w*\|\h\w*::'
+" let g:neocomplcache_omni_patterns.php = '[^. \t]->\h\w*\|\h\w*::'
+" let g:neocomplcache_omni_patterns.c = '\%(\.\|->\)\h\w*'
+" let g:neocomplcache_omni_patterns.cpp = '\h\w*\%(\.\|->\)\h\w*\|\h\w*::'
+" let g:neocomplcache_release_cache_time = 7200
+" imap <C-u> <Plug>(neocomplcache_start_unite_complete)
+" imap <C-u> <Plug>(neocomplcache_start_unite_quick_match)
+
 
 " Enable omni completion.
 autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
