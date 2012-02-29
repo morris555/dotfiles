@@ -115,13 +115,13 @@ WORDCHARS='*?_-.[]~=&;!#$%^(){}<>'
 
 ## auto-fu.zsh stuff.
 # source ~/auto-fu.zsh/auto-fu.zsh
-{ . ~/.zsh/auto-fu; auto-fu-install; }
-zstyle ':completion:*' completer _oldlist _complete
-zstyle ':auto-fu:highlight' input bold
-zstyle ':auto-fu:highlight' completion fg=black,bold
-zstyle ':auto-fu:highlight' completion/one fg=white,bold,underline
-zstyle ':auto-fu:var' postdisplay $'\n-azfu-'
-zle-line-init () {auto-fu-init;}; zle -N zle-line-init
+# { . ~/.zsh/auto-fu; auto-fu-install; }
+# zstyle ':completion:*' completer _oldlist _complete
+# zstyle ':auto-fu:highlight' input bold
+# zstyle ':auto-fu:highlight' completion fg=black,bold
+# zstyle ':auto-fu:highlight' completion/one fg=white,bold,underline
+# zstyle ':auto-fu:var' postdisplay $'\n-azfu-'
+# zle-line-init () {auto-fu-init;}; zle -N zle-line-init
 
 # global alias
 alias -g L="|less -R"

@@ -14,6 +14,7 @@ NeoBundle 'altercation/vim-colors-solarized'
 NeoBundle 'git://github.com/vim-scripts/mrkn256.vim.git'
 NeoBundle 'tomasr/molokai'
 NeoBundle 'git://github.com/Lokaltog/vim-distinguished.git'
+NeoBundle 'git://github.com/aereal/vim-magica-colors.git'
 
 " singleton
 NeoBundle 'git://github.com/thinca/vim-singleton.git'
@@ -56,6 +57,7 @@ NeoBundle 'tsukkee/lingr-vim'
 
 " ghc
 NeoBundle 'git://github.com/ujihisa/neco-ghc.git'
+NeoBundle 'git://github.com/eagletmt/ghcmod-vim.git'
 
 " template
 NeoBundle 'git://github.com/mattn/sonictemplate-vim.git'
@@ -93,6 +95,8 @@ NeoBundle 'tsukkee/unite-tag'
 NeoBundle 'choplin/unite-vim_hacks'
 NeoBundle 'git://github.com/mattn/unite-advent_calendar.git'
 NeoBundle 'git://github.com/basyura/TweetVim.git'
+NeoBundle 'git://github.com/kmnk/vim-unite-giti.git'
+NeoBundle 'git://github.com/ujihisa/unite-haskellimport.git'
 " unite }}}
 
 " 整形
@@ -107,6 +111,7 @@ NeoBundle 'git://github.com/scrooloose/syntastic.git'
 " 言語別
 NeoBundle 'kchmck/vim-coffee-script'
 NeoBundle 'git://github.com/vim-scripts/JavaScript-syntax.git'
+NeoBundle 'git://github.com/vim-scripts/php.vim--Hodge.git'
 
 " 即座に実行
 NeoBundle 'thinca/vim-quickrun'
@@ -522,6 +527,85 @@ let g:SrcExpl_RefreshTime = 1
 let g:SrcExpl_WinHeight = 9
 "tagsは自動で作成する
 let g:SrcExpl_isUpdateTags = 0
+" operator object {{{1
+
+" 置換
+map R <Plug>(operator-replace)
+
+let g:arpeggio_timeoutlen = 70
+call arpeggio#load()
+
+" クリップボードにヤンク
+function! OperatorYankClipboard(motion_wiseness)
+  let visual_commnad =
+  \ operator#user#visual_command_from_wise_name(a:motion_wiseness)
+  execute 'normal!' '`['.visual_commnad.'`]"+y'
+endfunction
+
+call operator#user#define('yank-clipboard', 'OperatorYankClipboard')
+Arpeggio map oy  <Plug>(operator-yank-clipboard)
+
+" 翻訳
+function! OperatorTranslate(motion_wiseness)
+  let visual_commnad =
+  \ operator#user#visual_command_from_wise_name(a:motion_wiseness)
+  let query = join(s:get_region("'[", "']", visual_commnad), "\n")
+ 
+  let api = 'http://translate.google.com/translate_a/t'
+  let response = http#get(api, {
+  \   'client': 'o',
+  \   'hl': 'en',
+  \   'sl': 'en',
+  \   'tl': 'ja',
+  \   'text': query
+  \ }, {'User-Agent': 'Mozilla/5.0'})
+  if response.header[0] ==# 'HTTP/1.1 200 OK'
+    let result = json#decode(response.content)
+    echo join(map(result.sentences, 'v:val.trans'))
+  else
+    echoerr response.header[0]
+  end
+endfunction
+
+function! s:strpart(src, start, ...)
+  let str = strpart(a:src, a:start)
+  if a:0 > 0
+    let i = byteidx(strpart(str, a:1 - 1), 1) - 1
+    return i == -1 ? str : strpart(str, 0, a:1 + i)
+  else
+    return str
+  endif
+endfunction
+
+function! s:get_region(expr1, expr2, visual_commnad)
+  let [lnum1, col1] = getpos(a:expr1)[1:2]
+  let [lnum2, col2] = getpos(a:expr2)[1:2]
+  let region = getline(lnum1, lnum2)
+ 
+  if a:visual_commnad ==# "v"  " char
+    if lnum1 == lnum2  " single line
+      let region[0] = s:strpart(region[-1], col1 - 1, col2 - (col1 - 1))
+    else  " multi line
+      let region[0] = s:strpart(region[0], col1 - 1)
+      let region[-1] = s:strpart(region[-1], 0, col2)
+    endif
+  elseif a:visual_commnad ==# "V"  " line
+    let region += ['']
+  else  " block
+    call map(region, 's:strpart(v:val, col1 - 1, col2 - (col1 - 1))')
+  endif
+ 
+  return region
+endfunction
+
+call operator#user#define('translate', 'OperatorTranslate')
+Arpeggio map ot  <Plug>(operator-translate)
+
+Arpeggio map oc  <Plug>(operator-comment)
+Arpeggio map od  <Plug>(operator-uncomment)
+
+
+
 " other mapping {{{1
 
 " コロンとセミコロンを入れ替え
@@ -530,8 +614,6 @@ noremap ; :
 
 " 最後に編集したところを選択
 nnoremap gc `[v`]
-
-map R <Plug>(operator-replace)
 
 " ペーストしたテキストを再選択
 nnoremap <expr> gp '`[' . strpart(getregtype(), 0, 1) . '`]'
@@ -661,9 +743,16 @@ endfunction
 
 nnoremap <silent> <Space>on :<C-u>call <SID>toggle_nu()<CR>
 nnoremap <silent> <Space>ol :<C-u>call <SID>toggle_option('cursorline', 'cursorcolumn')<CR>
-nnoremap <silent> <Space>op :<C-u>call <SID>toggle_option('paste')<CR>
+" nnoremap <silent> <Space>op :<C-u>call <SID>toggle_option('paste')<CR>
 nnoremap <silent> <Space>ou :<C-u>GundoToggle<CR>
 nnoremap <silent> <Space>os :<C-u>SyntasticToggleMode<CR>
+
+function! s:at()
+  let syntax = synstack(line('.'), col('.'))
+  let name = empty(syntax) ? '' : synIDattr(syntax[-1], "name")
+  return name =~# 'String\|Comment\|None' ? '@' : '$this->'
+endfunction
+autocmd FileType php inoremap <expr> <buffer> @ <SID>at()
 
 " status line {{{1
 set laststatus=2
@@ -812,8 +901,6 @@ nnoremap <Leader>R :<C-u>Unite quicklearn -immediately<Cr>
 nnoremap <Leader>l :<C-u>QuickRun -exec '%c -l %s'<CR>
 
 " arpeggio(同時押し設定)
-let g:arpeggio_timeoutlen = 70
-call arpeggio#load()
 
 " jkの同時押しで<Esc>
 Arpeggio vnoremap jk <Esc>
@@ -1114,11 +1201,12 @@ let g:NeoComplCache_SnippetsDir = $HOME . '/.vim/snippets'
 
 
 " Enable omni completion.
-autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
+autocmd filetype css setlocal omnifunc=csscomplete#completecss
 autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
 autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
 autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
 autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
+
 
 " unite original sorce {{{1
 " 某プロジェクトの各ファイルにアクセスしやすくするコマンド
