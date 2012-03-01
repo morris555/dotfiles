@@ -627,6 +627,7 @@ nmap { ,mf{
 nmap } ,mF{
 
 nnoremap <space>w :<C-u>w<CR>
+nnoremap <space>W :<C-u>wa<CR>
 
 " 分割画面移動
 nnoremap <silent> s <Nop>
@@ -646,17 +647,17 @@ nnoremap <silent> so <C-w>_<C-w>|
 nnoremap <silent> sO <C-w>=
 nnoremap <silent> sn gt
 nnoremap <silent> sp gT
-nnoremap <silent> sN :<C-u>bn
-nnoremap <silent> sP :<C-u>bp
+nnoremap <silent> sN :<C-u>bn<CR>
+nnoremap <silent> sP :<C-u>bp<CR>
 nnoremap <silent> st :<C-u>tabnew<CR>
 nnoremap <silent> ss :<C-u>sp<CR>
 nnoremap <silent> sv :<C-u>vs<CR>
 nnoremap <silent> sq :<C-u>q<CR>
 nnoremap <silent> sQ :<C-u>bd<CR>
-nnoremap <silent> su :<C-u>Unite buffer_tab -buffer-name=file<CR>
-nnoremap <silent> sU :<C-u>Unite buffer -buffer-name=file<CR>
-" nnoremap <silent> su :<C-u>Unite buffer_tab -buffer-name=file -vertical -winwidth=30<CR>
-" nnoremap <silent> sU :<C-u>Unite buffer -buffer-name=file -vertical -winwidth=30<CR>
+" nnoremap <silent> su :<C-u>Unite buffer_tab -buffer-name=file<CR>
+" nnoremap <silent> sU :<C-u>Unite buffer -buffer-name=file<CR>
+nnoremap <silent> su :<C-u>Unite buffer_tab -buffer-name=file -vertical -winwidth=30 -no-quit<CR>
+nnoremap <silent> sU :<C-u>Unite buffer -buffer-name=file -vertical -winwidth=30 -no-quit<CR>
 
 " 表示行移動
 nnoremap j gj
@@ -723,21 +724,21 @@ endif
 
 function! s:toggle_option(...)
     for option_name in a:000
-        execute 'setlocal' option_name.'!'
-        execute 'setlocal' option_name.'?'
+        execute 'set' option_name.'!'
+        execute 'set' option_name.'?'
     endfor
 endfunction
 
 function! s:toggle_nu()
     if !&number && !&relativenumber
-        setlocal number
-        setlocal norelativenumber
+        set number
+        set norelativenumber
     elseif &number
-        setlocal nonumber
-        setlocal relativenumber
+        set nonumber
+        set relativenumber
     elseif &relativenumber
-        setlocal nonumber
-        setlocal norelativenumber
+        set nonumber
+        set norelativenumber
     endif
 endfunction
 
