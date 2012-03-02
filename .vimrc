@@ -1263,6 +1263,9 @@ command! -bang Rb :Unite neobundle/install:<bang>
 " jsonデコード(仮)
 command! JsonReformat :r!php -r 'print_r(json_decode(file_get_contents("%",true)));'
 
+command! Kansyai normal iあ、はい かんしゃい<ESC>
+
+
 " test
 
 
