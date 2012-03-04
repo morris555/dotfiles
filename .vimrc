@@ -1357,7 +1357,7 @@ function! s:diffCapture()
     
     " 対象ファイル名
     let l:target_filename = s:makeCaptureFilename(l:target_dir, l:version)
-    execute "diffsplit" l:target_filename
+    execute "VDsplit" l:target_filename
 endfunction augroup END
 
 " メモを作成する
@@ -1493,7 +1493,6 @@ augroup cch
     autocmd WinEnter,BufRead * set cursorline
     autocmd WinEnter,BufRead * set cursorcolumn
 augroup END
-
 
 " last proc {{{1
 
