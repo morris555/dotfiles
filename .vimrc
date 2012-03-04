@@ -700,15 +700,21 @@ noremap <C-a> g^
 nnoremap Q q
 
 " ノーマルモード時にスペース2回で改行
-nnoremap <Space><Space> o<ESC>
+nnoremap <Space><Space> oX<C-h><ESC>
 nnoremap <Space>d cc<ESC>
+
+" 空行のスペースやタブを維持
+nnoremap o oX<C-h>
+nnoremap O OX<C-h>
+inoremap <CR> <CR>X<C-h>
 
 " Toggle options
 function! s:toggle_grepprg(global_p)
     let VALUES = ['grep -nHE', 'git grep -n']
     let grepprg = &l:grepprg == '' ? &grepprg : &l:grepprg
+    
     let i = (index(VALUES, grepprg) + 1) % len(VALUES)
-
+    
     if a:global_p
         let &grepprg = VALUES[i]
         set grepprg?
@@ -774,13 +780,13 @@ function! s:tabpage_label(n)
   if title !=# ''
     return title
   endif
-
+  
   " タブページ内のバッファのリスト
   let bufnrs = tabpagebuflist(a:n)
-
+  
   " カレントタブページかどうかでハイライトを切り替える
   let hi = a:n is tabpagenr() ? '%#TabLineSel#' : '%#TabLine#'
-
+  
   " バッファが複数あったらバッファ数を表示
   let no = len(bufnrs)
   if no is 1
@@ -789,13 +795,13 @@ function! s:tabpage_label(n)
   " タブページ内に変更ありのバッファがあったら '+' を付ける
   let mod = len(filter(copy(bufnrs), 'getbufvar(v:val, "&modified")')) ? '+' : ''
   let sp = (no . mod) ==# '' ? '' : ' '  " 隙間空ける
-
+  
   " カレントバッファ
   let curbufnr = bufnrs[tabpagewinnr(a:n) - 1]  " tabpagewinnr() は 1 origin
   let fname = pathshorten(bufname(curbufnr))
-
+  
   let label = no . mod . sp . fname
-
+  
   return '%' . a:n . 'T' . hi . label . '%T%#TabLineFill#'
 endfunction
 
@@ -1267,40 +1273,48 @@ command! JsonReformat :r!php -r 'print_r(json_decode(file_get_contents("%",true)
 command! Kansyai normal iあ、はい かんしゃい<ESC>
 
 " 作成中
-" TODO 先頭の数字を取得
-" TODO 保存時は数字を増やす
 " TODO とりあえずdiffを出す？
-command! CapturePush call s:capture_push()
-function! s:capture_push()
+" TODO プラグイン(機能)名を考える
+command! CapturePush call s:pushCapture()
+command! CaptureDiff call s:diffCapture()
+function! s:getCaptureDir()
     " 隠しファイルの場合は置換しつつ、現在のファイル名を取得
     let l:filename = expand('%')
     if l:filename =~ '^\.'
         let l:filename = '__' . l:filename[1:]
     endif
-
+    
     " 保存先ディレクトリ名を求める
-    let l:save_dir = $HOME . '/.vim_capture' . expand('%:p:h') . '/' . l:filename
+    return $HOME . '/.vim_capture' . expand('%:p:h') . '/' . l:filename
+endfunction
 
-    " ディレクトリを生成
-    if !isdirectory(l:save_dir)
-        call mkdir(l:save_dir, 'p')
-    endif
-
+function! s:getCaptureLetestVersion(save_dir)
     " ファイルのバージョン番号を取得
-    let l:file_list = split(system('ls ' . l:save_dir), '\n')
+    let l:file_list = split(system('ls ' . a:save_dir), '\n')
     if 0 == len(l:file_list)
-        let l:version = 0
+        let l:version = -1
     else
         let l:version_list = []
         for value in l:file_list
             let l:temp = split(value, '\.')
             call add(l:version_list, l:temp[0])
         endfor
-        let l:version = max(l:version_list) + 1
+        let l:version = max(l:version_list)
     endif
+    
+    return l:version
+endfunction
 
+function! s:getCaptureFilename(save_dir)
+    let l:version = s:getCaptureLetestVersion(a:save_dir) + 1
+    return s:makeCaptureFilename(a:save_dir, l:version)
+endfunction
+
+function! s:makeCaptureFilename(save_dir, version)
+    " TODO 名前苦しい
     " 保存ファイル名を生成
-    let l:save_filename = l:save_dir . '/' . l:version
+    let l:save_filename = a:save_dir . '/' . a:version
+    
     if '' != expand('%:e')
         " 拡張子があるなら付加する
         let l:save_filename = l:save_filename . '.' . expand('%:e')
@@ -1308,8 +1322,42 @@ function! s:capture_push()
         " TODO 暫定的に、拡張子がない場合は.vimを付ける。filetypeから取りたい
         let l:save_filename = l:save_filename . '.vim'
     endif
+    return l:save_filename
+endfunction
 
+function! s:pushCapture()
+    " 保存先ディレクトリ名
+    let l:save_dir = s:getCaptureDir()
+    
+    " ディレクトリを生成
+    if !isdirectory(l:save_dir)
+        call mkdir(l:save_dir, 'p')
+    endif
+    
+    " 保存ファイル名
+    let l:save_filename = s:getCaptureFilename(l:save_dir)
+    
     execute "write!" l:save_filename
+endfunction augroup END
+
+function! s:diffCapture()
+    " 対象ディレクトリ名
+    let l:target_dir = s:getCaptureDir()
+    
+    " ディレクトリを生成
+    if !isdirectory(l:target_dir)
+        " TODO エラー
+    endif
+    
+    " 対象バージョン
+    let l:version = s:getCaptureLetestVersion(l:target_dir)
+    if l:version < 0
+        " TODO エラー
+    endif
+    
+    " 対象ファイル名
+    let l:target_filename = s:makeCaptureFilename(l:target_dir, l:version)
+    execute "diffsplit" l:target_filename
 endfunction augroup END
 
 " メモを作成する
