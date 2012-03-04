@@ -1263,38 +1263,54 @@ command! -bang Rb :Unite neobundle/install:<bang>
 " jsonデコード(仮)
 command! JsonReformat :r!php -r 'print_r(json_decode(file_get_contents("%",true)));'
 
+" sakuriver
 command! Kansyai normal iあ、はい かんしゃい<ESC>
 
-
-" test
-
-
 " 作成中
-" TODO ファイル名までパス
-" TODO 数字+拡張子なファイル名
-" TODO ファイルの一覧を取得
+" TODO 先頭の数字を取得
 " TODO 保存時は数字を増やす
 " TODO とりあえずdiffを出す？
 command! CapturePush call s:capture_push()
 function! s:capture_push()
-    let l:capture_dir = $HOME . '/.vim_capture' . expand('%:p') . '/'
-    let l:extension = expand('%:p')
-    let l:filename = l:capture_dir . '0'
-    echo l:capture_dir
-    echo l:filename
-    " if !isdirectory(l:capture_dir)
-        " call mkdir(l:capture_dir, 'p')
-    " endif
+    " 隠しファイルの場合は置換しつつ、現在のファイル名を取得
+    let l:filename = expand('%')
+    if l:filename =~ '^\.'
+        let l:filename = '__' . l:filename[1:]
+    endif
 
-    " let l:filename = l:capture_dir . '/' . expand('%:t')
-    " if l:filename != ''
-        " " execute 'write ' . l:filename
-        " echo l:filename
-    " endif
+    " 保存先ディレクトリ名を求める
+    let l:save_dir = $HOME . '/.vim_capture' . expand('%:p:h') . '/' . l:filename
+
+    " ディレクトリを生成
+    if !isdirectory(l:save_dir)
+        call mkdir(l:save_dir, 'p')
+    endif
+
+    " ファイルのバージョン番号を取得
+    let l:file_list = split(system('ls ' . l:save_dir), '\n')
+    if 0 == len(l:file_list)
+        let l:version = 0
+    else
+        let l:version_list = []
+        for value in l:file_list
+            let l:temp = split(value, '\.')
+            call add(l:version_list, l:temp[0])
+        endfor
+        let l:version = max(l:version_list) + 1
+    endif
+
+    " 保存ファイル名を生成
+    let l:save_filename = l:save_dir . '/' . l:version
+    if '' != expand('%:e')
+        " 拡張子があるなら付加する
+        let l:save_filename = l:save_filename . '.' . expand('%:e')
+    else
+        " TODO 暫定的に、拡張子がない場合は.vimを付ける。filetypeから取りたい
+        let l:save_filename = l:save_filename . '.vim'
+    endif
+
+    execute "write!" l:save_filename
 endfunction augroup END
-" 作成中
-
-
 
 " メモを作成する
 command! -nargs=0 MemoWrite call s:open_memo_file()
