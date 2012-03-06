@@ -654,10 +654,10 @@ nnoremap <silent> ss :<C-u>sp<CR>
 nnoremap <silent> sv :<C-u>vs<CR>
 nnoremap <silent> sq :<C-u>q<CR>
 nnoremap <silent> sQ :<C-u>bd<CR>
-" nnoremap <silent> su :<C-u>Unite buffer_tab -buffer-name=file<CR>
-" nnoremap <silent> sU :<C-u>Unite buffer -buffer-name=file<CR>
-nnoremap <silent> su :<C-u>Unite buffer_tab -buffer-name=file -vertical -winwidth=30 -no-quit<CR>
-nnoremap <silent> sU :<C-u>Unite buffer -buffer-name=file -vertical -winwidth=30 -no-quit<CR>
+nnoremap <silent> su :<C-u>Unite buffer_tab -buffer-name=file<CR>
+nnoremap <silent> sU :<C-u>Unite buffer -buffer-name=file<CR>
+" nnoremap <silent> su :<C-u>Unite buffer_tab -buffer-name=file -vertical -winwidth=30 -no-quit<CR>
+" nnoremap <silent> sU :<C-u>Unite buffer -buffer-name=file -vertical -winwidth=30 -no-quit<CR>
 
 " 表示行移動
 nnoremap j gj
@@ -670,6 +670,7 @@ nnoremap ^ g^
 nnoremap g^ ^
 nnoremap $ g$
 nnoremap g$ $
+
 
 " vnoremap j gj
 " vnoremap k gk
@@ -1215,43 +1216,6 @@ autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
 autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
 
 
-" unite original sorce {{{1
-" 某プロジェクトの各ファイルにアクセスしやすくするコマンド
-" TODO 一時的に、別ディレクトリを見るように
-command! -nargs=0 UniteProjectFileController :Unite file_rec/async:server/application/controller -buffer-name=file
-command! -nargs=0 UniteProjectFileLib :Unite file_rec/async:server/application/lib -buffer-name=file
-command! -nargs=0 UniteProjectFileContract :Unite file_rec/async:contract -buffer-name=file
-
-" 某プロジェクトの各ファイルにアクセスしやすくするUnite source
-let s:unite_project_file_source = {
-\   'name': 'project_file',
-\ }
-function! s:unite_project_file_source.gather_candidates(args, context)
-    let lists = [{
-                \   "name" : "controller",
-                \   "command" : "UniteProjectFileController"
-                \}, {
-                \   "name" : "lib",
-                \   "command" : "UniteProjectFileLib"
-                \}, {
-                \   "name" : "contract",
-                \   "command" : "UniteProjectFileContract"
-                \}]
-    return map(lists, '{
-                \   "word": v:val.name,
-                \   "kind": "command",
-                \   "action__command": v:val.command,
-                \ }')
-endfunction
-call unite#define_source(s:unite_project_file_source)
-unlet s:unite_project_file_source
-
-" 某プロジェクトの各ファイルにアクセスしやすくするマッピング
-nnoremap <Leader>ii :<C-u>Unite project_file<CR>
-nnoremap <Leader>ic :<C-u>UniteProjectFileController<CR>
-nnoremap <Leader>il :<C-u>UniteProjectFileLib<CR>
-nnoremap <Leader>ix :<C-u>UniteProjectFileContract<CR>
-
 " user command {{{1
 
 " Ev/Rvでvimrcの編集と反映
@@ -1374,7 +1338,7 @@ function! s:open_memo_file()
     endif
 endfunction augroup END
 " メモ一覧をUniteで呼び出すコマンド
-command! -nargs=0 MemoRead :Unite file_rec:~/Dropbox/Memo/ -buffer-name=file -auto-preview
+command! -nargs=0 MemoRead :Unite file_rec:~/Dropbox/Memo/ -buffer-name=file
 
 " temp_edit
 command! -nargs=0 TempEdit :Unite file_rec:~/.vim/template file -buffer-name=file
