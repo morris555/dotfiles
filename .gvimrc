@@ -1,7 +1,12 @@
 if has('gui_macvim')
     " カラースキーム
-    " set background=dark
-    set background=light
+    
+    " 日によってsolarizedの配色のライトとダークを切り替える
+    if (1 == strftime("%d") % 2)
+        set background=light
+    else
+        set background=dark
+    endif
     let g:solarized_contrast="high"
     let g:solarized_italic=1
     let g:solarized_menu=1
