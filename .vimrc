@@ -97,6 +97,7 @@ NeoBundle 'git://github.com/mattn/unite-advent_calendar.git'
 NeoBundle 'git://github.com/basyura/TweetVim.git'
 NeoBundle 'git://github.com/kmnk/vim-unite-giti.git'
 NeoBundle 'git://github.com/ujihisa/unite-haskellimport.git'
+NeoBundle 'git://github.com/sgur/unite-qf.git'
 " unite }}}
 
 " 整形
@@ -104,6 +105,8 @@ NeoBundle 'h1mesuke/vim-alignta'
 
 " インデントの可視化
 NeoBundle 'nathanaelkane/vim-indent-guides'
+
+NeoBundle 'git://github.com/bitc/vim-bad-whitespace.git'
 
 " syntax
 NeoBundle 'git://github.com/scrooloose/syntastic.git'
@@ -751,9 +754,13 @@ endfunction
 
 nnoremap <silent> <Space>on :<C-u>call <SID>toggle_nu()<CR>
 nnoremap <silent> <Space>ol :<C-u>call <SID>toggle_option('cursorline', 'cursorcolumn')<CR>
+" TODO pasteは別設定
 " nnoremap <silent> <Space>op :<C-u>call <SID>toggle_option('paste')<CR>
+nnoremap <silent> <Space>op :<C-u>pastetoggle<CR>
 nnoremap <silent> <Space>ou :<C-u>GundoToggle<CR>
 nnoremap <silent> <Space>os :<C-u>SyntasticToggleMode<CR>
+nnoremap <silent> <Space>ob :<C-u>ToggleBadWhitespace<CR>
+
 
 function! s:at()
   let syntax = synstack(line('.'), col('.'))
@@ -820,7 +827,9 @@ function! MakeTabLine()
   let sep = ' | '  " タブ間の区切り
   let tabpages = join(titles, sep) . sep . '%#TabLineFill#%T'
   let info = ''
-  let info .= cfi#format("[%s()]", "no function")
+  " let info .= cfi#format("[%s()]", "no function")
+  " let info .= '[%f]'
+  let info .= '[%F]'
   let info .= '   '
   let info .= '(%l/%L) %P'
   let info .= '   '
@@ -915,6 +924,8 @@ Arpeggio vnoremap jk <Esc>
 Arpeggio cnoremap jk <Esc>
 imap jk <Esc>
 imap kj <Esc>
+inoremap k<space> k
+inoremap j<space> j
 
 " Alignta(仮設定)
 " TODO ちゃんと使ってみる
@@ -1430,10 +1441,6 @@ au BufNewFile,BufRead *.html set filetype=smarty.html
 autocmd FileType php :set dictionary+=~/.vim/dict/php.dict
 autocmd FileType scala :set dictionary+=~/.vim/dict/scala.dict
 set complete+=k
-
-" バッファの戻る・進む
-noremap <Space>n :bn<CR>
-noremap <Space>p :bp<CR>
 
 "php処理
 " TODO 重くなる原因らしいので解除。foldingは自分で定義してでも入れたい
