@@ -106,7 +106,7 @@ NeoBundle 'h1mesuke/vim-alignta'
 " インデントの可視化
 NeoBundle 'nathanaelkane/vim-indent-guides'
 
-NeoBundle 'git://github.com/bitc/vim-bad-whitespace.git'
+" NeoBundle 'git://github.com/bitc/vim-bad-whitespace.git'
 
 " syntax
 NeoBundle 'git://github.com/scrooloose/syntastic.git'
