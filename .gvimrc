@@ -1,12 +1,7 @@
 if has('gui_macvim')
     " カラースキーム
     
-    " 日によってsolarizedの配色のライトとダークを切り替える
-    if (1 == strftime("%d") % 2)
-        set background=light
-    else
-        set background=dark
-    endif
+    set background=dark
     let g:solarized_contrast="high"
     let g:solarized_italic=1
     let g:solarized_menu=1
@@ -40,9 +35,13 @@ if has('gui_macvim')
     highlight ZenkakuSpace cterm=underline ctermfg=red guibg=red guifg=white
     match ZenkakuSpace /　/
 
+    " 全角スペース表示
+    highlight Eol cterm=underline guifg=#666666
+    match Eol /\n/
+    
     " gVimでもテキストベースのタブページを使う
     set guioptions-=e
-
+    
     " visualmark
     if &bg == "dark"
         " highlight SignColor ctermfg=white ctermbg=blue guibg=#073672
