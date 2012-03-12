@@ -56,7 +56,8 @@ NeoBundle 'git://github.com/vim-scripts/capslock.vim.git'
 NeoBundle 'tsukkee/lingr-vim'
 
 " smartinput
-NeoBundle 'git://github.com/kana/vim-smartinput.git'
+" 入れたいけど、やはり意図しない入力がされるケースがあり、辛い
+" NeoBundle 'git://github.com/kana/vim-smartinput.git'
 
 " ghc
 NeoBundle 'git://github.com/ujihisa/neco-ghc.git'
@@ -112,7 +113,9 @@ NeoBundle 'nathanaelkane/vim-indent-guides'
 " NeoBundle 'git://github.com/bitc/vim-bad-whitespace.git'
 
 " syntax
-NeoBundle 'git://github.com/scrooloose/syntastic.git'
+" NeoBundle 'git://github.com/scrooloose/syntastic.git'
+" NeoBundle 'git://github.com/scrooloose/syntastic.git', '1f91303cdc3be44112a9b3734241a7b36173f44b'
+NeoBundle 'git://github.com/scrooloose/syntastic.git', '637182c181814631f8d5d33d3183a51c8aec22bd'
 
 " 言語別
 NeoBundle 'kchmck/vim-coffee-script'
@@ -230,6 +233,7 @@ NeoBundle 'mfumi/lightsout.vim'
 
 filetype plugin on
 filetype indent on
+
 
 " common setting {{{1
 
@@ -1038,7 +1042,6 @@ let g:syntastic_mode_map = {
       \}
 let g:syntastic_auto_loc_list=1
 nnoremap <silent> <Leader>l :<C-u>SyntasticCheck<CR>
-nnoremap <F5> :SyntasticToggleMode<CR>
 
 " surround.vim {{{2
 
@@ -1369,8 +1372,8 @@ command! -nargs=0 MemoRead :Unite file_rec:~/Dropbox/Memo/ -buffer-name=file
 command! -nargs=0 TempEdit :Unite file_rec:~/.vim/template file -buffer-name=file
 
 " 一時ファイル
-command! -nargs=1 -complete=filetype Tmp edit ~/Dropbox/tmp/tmp.<args>
-command! -nargs=1 -complete=filetype Temp edit ~/Dropbox/tmp/tmp.<args>
+command! -nargs=1 -complete=filetype Tmp edit ~/.vim_tmp/tmp.<args>
+command! -nargs=1 -complete=filetype Temp edit ~/.vim_tmp/tmp.<args>
 
 " ファイルタイプのショートカットコマンド
 command! -nargs=1 Type :set filetype=<args>
