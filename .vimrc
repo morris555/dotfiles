@@ -55,6 +55,9 @@ NeoBundle 'git://github.com/vim-scripts/capslock.vim.git'
 " lingr
 NeoBundle 'tsukkee/lingr-vim'
 
+" smartinput
+NeoBundle 'git://github.com/kana/vim-smartinput.git'
+
 " ghc
 NeoBundle 'git://github.com/ujihisa/neco-ghc.git'
 NeoBundle 'git://github.com/eagletmt/ghcmod-vim.git'
@@ -281,11 +284,11 @@ let plugin_dicwin_disable = 1
 " thinca's vimrc
 function! s:has_plugin(name)
   return globpath(&runtimepath, 'plugin/' . a:name . '.vim') !=# ''
-  \   || globpath(&runtimepath, 'autoload/' . a:name . '.vim') !=# ''
+        \   || globpath(&runtimepath, 'autoload/' . a:name . '.vim') !=# ''
 endfunction
 
 function! s:has_tags()
-    return glob('tags') !=# ''
+  return glob('tags') !=# ''
 endfunction
 
 " Call a script local function.
@@ -314,7 +317,7 @@ function! S(f, ...)
     let [nr, sfile] = p[1 : 2]
     let sfile = fnamemodify(sfile, ':p:gs?\\?/?')
     if sfile =~# filepat &&
-    \    exists(printf("*\<SNR>%d_%s", nr, fname))
+          \    exists(printf("*\<SNR>%d_%s", nr, fname))
       let cfunc = printf("\<SNR>%d_%s", nr, func)
       break
     endif
@@ -326,22 +329,22 @@ function! S(f, ...)
   elseif !exists('cfunc')
     let file = fnamemodify(file, ':p')
     echoerr printf(
-    \    'File found, but function is not defined: %s: %s()', file, fname)
+          \    'File found, but function is not defined: %s: %s()', file, fname)
     return
   endif
 
   return 0 <= match(func, '^\w*\s*(.*)\s*$')
-  \      ? eval(cfunc) : call(cfunc, a:000)
+        \      ? eval(cfunc) : call(cfunc, a:000)
 endfunction
 
 " singleton {{{1
 
 if has('gui_running')
-    if has('clientserver')
-        if s:has_plugin('singleton')
-            call singleton#enable()
-        endif
+  if has('clientserver')
+    if s:has_plugin('singleton')
+      call singleton#enable()
     endif
+  endif
 endif
 
 " command line {{{1
@@ -356,14 +359,14 @@ set complete+=k            " 補完に辞書ファイル追加
 
 " indent {{{1
 
-set smartindent
-set autoindent
-set cindent
+" set smartindent
+" set autoindent
+" set cindent
 
-set shiftwidth=4
-set tabstop=4
-set softtabstop=4
-set expandtab
+" set shiftwidth=4
+" set tabstop=4
+" set softtabstop=4
+" set expandtab
 
 " phpはタブ幅4でタブ文字を使う
 autocmd FileType php set shiftwidth=4
@@ -377,66 +380,72 @@ autocmd FileType coffee set tabstop=2
 autocmd FileType coffee set softtabstop=2
 autocmd FileType coffee set expandtab
 
+" vim scriptはタブ幅2でスペースを使う
+autocmd FileType vim set shiftwidth=2
+autocmd FileType vim set tabstop=2
+autocmd FileType vim set softtabstop=2
+autocmd FileType vim set expandtab
+
 " file encoding {{{1
 "
 set fileformats=unix,dos,mac
 
 " 文字コードの自動認識
 if &encoding !=# 'utf-8'
-    set encoding=japan
-    set fileencoding=japan
+  set encoding=japan
+  set fileencoding=japan
 endif
 if has('iconv')
-    let s:enc_euc = 'euc-jp'
-    let s:enc_jis = 'iso-2022-jp'
-    " iconvがeucJP-msに対応しているかをチェック
-    if iconv("\x87\x64\x87\x6a", 'cp932', 'eucjp-ms') ==# "\xad\xc5\xad\xcb"
-        let s:enc_euc = 'eucjp-ms'
-        let s:enc_jis = 'iso-2022-jp-3'
-        " iconvがJISX0213に対応しているかをチェック
-    elseif iconv("\x87\x64\x87\x6a", 'cp932', 'euc-jisx0213') ==# "\xad\xc5\xad\xcb"
-        let s:enc_euc = 'euc-jisx0213'
-        let s:enc_jis = 'iso-2022-jp-3'
-    endif
-    " fileencodingsを構築
-    if &encoding ==# 'utf-8'
-        let s:fileencodings_default = &fileencodings
-        let &fileencodings = s:enc_jis .','. s:enc_euc .',cp932'
-        let &fileencodings = &fileencodings .','. s:fileencodings_default
-        unlet s:fileencodings_default
+  let s:enc_euc = 'euc-jp'
+  let s:enc_jis = 'iso-2022-jp'
+  " iconvがeucJP-msに対応しているかをチェック
+  if iconv("\x87\x64\x87\x6a", 'cp932', 'eucjp-ms') ==# "\xad\xc5\xad\xcb"
+    let s:enc_euc = 'eucjp-ms'
+    let s:enc_jis = 'iso-2022-jp-3'
+    " iconvがJISX0213に対応しているかをチェック
+  elseif iconv("\x87\x64\x87\x6a", 'cp932', 'euc-jisx0213') ==# "\xad\xc5\xad\xcb"
+    let s:enc_euc = 'euc-jisx0213'
+    let s:enc_jis = 'iso-2022-jp-3'
+  endif
+  " fileencodingsを構築
+  if &encoding ==# 'utf-8'
+    let s:fileencodings_default = &fileencodings
+    let &fileencodings = s:enc_jis .','. s:enc_euc .',cp932'
+    let &fileencodings = &fileencodings .','. s:fileencodings_default
+    unlet s:fileencodings_default
+  else
+    let &fileencodings = &fileencodings .','. s:enc_jis
+    set fileencodings+=utf-8,ucs-2le,ucs-2
+    if &encoding =~# '^\(euc-jp\|euc-jisx0213\|eucjp-ms\)$'
+      set fileencodings+=cp932
+      set fileencodings-=euc-jp
+      set fileencodings-=euc-jisx0213
+      set fileencodings-=eucjp-ms
+      let &encoding = s:enc_euc
+      let &fileencoding = s:enc_euc
     else
-        let &fileencodings = &fileencodings .','. s:enc_jis
-        set fileencodings+=utf-8,ucs-2le,ucs-2
-        if &encoding =~# '^\(euc-jp\|euc-jisx0213\|eucjp-ms\)$'
-            set fileencodings+=cp932
-            set fileencodings-=euc-jp
-            set fileencodings-=euc-jisx0213
-            set fileencodings-=eucjp-ms
-            let &encoding = s:enc_euc
-            let &fileencoding = s:enc_euc
-        else
-            let &fileencodings = &fileencodings .','. s:enc_euc
-        endif
+      let &fileencodings = &fileencodings .','. s:enc_euc
     endif
-    " 定数を処分
-    unlet s:enc_euc
-    unlet s:enc_jis
+  endif
+  " 定数を処分
+  unlet s:enc_euc
+  unlet s:enc_jis
 endif
 
 " 日本語を含まない場合は fileencoding に encoding を使うようにする
 if has('autocmd')
-    function! AU_ReCheck_FENC()
-        if &fileencoding =~# 'iso-2022-jp' && search("[^\x01-\x7e]", 'n') == 0
-            let &fileencoding=&encoding
-        endif
-    endfunction
-    autocmd BufReadPost * call AU_ReCheck_FENC()
+  function! AU_ReCheck_FENC()
+    if &fileencoding =~# 'iso-2022-jp' && search("[^\x01-\x7e]", 'n') == 0
+      let &fileencoding=&encoding
+    endif
+  endfunction
+  autocmd BufReadPost * call AU_ReCheck_FENC()
 endif
 " 改行コードの自動認識
 set fileformats=unix,dos,mac
 " □とか○の文字があってもカーソル位置がずれないようにする
 if exists('&ambiwidth')
-    set ambiwidth=double
+  set ambiwidth=double
 endif
 
 " searching {{{1
@@ -454,20 +463,20 @@ vnoremap * "zy:let @/ = @z<CR>n
 nnoremap ? :<C-u>Unite line -buffer-name=search -start-insert<CR>
 
 if has('migemo')
-    " ?で行うline検索で、migemoを使う
-    call unite#custom_filters('line', ['matcher_migemo', 'sorter_default', 'converter_default'])
+  " ?で行うline検索で、migemoを使う
+  call unite#custom_filters('line', ['matcher_migemo', 'sorter_default', 'converter_default'])
 
-    " 検索をmigemoで行う
-    nnoremap / g/
-    nnoremap g/ /
+  " 検索をmigemoで行う
+  nnoremap / g/
+  nnoremap g/ /
 endif
 
 " folding {{{1
 
 if s:has_plugin('foldCC')
-    set foldtext=FoldCCtext()
-    set foldcolumn=3
-    set fillchars=vert:\|
+  set foldtext=FoldCCtext()
+  set foldcolumn=3
+  set fillchars=vert:\|
 endif
 
 " 作成
@@ -541,7 +550,7 @@ call arpeggio#load()
 " クリップボードにヤンク
 function! OperatorYankClipboard(motion_wiseness)
   let visual_commnad =
-  \ operator#user#visual_command_from_wise_name(a:motion_wiseness)
+        \ operator#user#visual_command_from_wise_name(a:motion_wiseness)
   execute 'normal!' '`['.visual_commnad.'`]"+y'
 endfunction
 
@@ -551,17 +560,17 @@ Arpeggio map oy  <Plug>(operator-yank-clipboard)
 " 翻訳
 function! OperatorTranslate(motion_wiseness)
   let visual_commnad =
-  \ operator#user#visual_command_from_wise_name(a:motion_wiseness)
+        \ operator#user#visual_command_from_wise_name(a:motion_wiseness)
   let query = join(s:get_region("'[", "']", visual_commnad), "\n")
- 
+
   let api = 'http://translate.google.com/translate_a/t'
   let response = http#get(api, {
-  \   'client': 'o',
-  \   'hl': 'en',
-  \   'sl': 'en',
-  \   'tl': 'ja',
-  \   'text': query
-  \ }, {'User-Agent': 'Mozilla/5.0'})
+        \   'client': 'o',
+        \   'hl': 'en',
+        \   'sl': 'en',
+        \   'tl': 'ja',
+        \   'text': query
+        \ }, {'User-Agent': 'Mozilla/5.0'})
   if response.header[0] ==# 'HTTP/1.1 200 OK'
     let result = json#decode(response.content)
     echo join(map(result.sentences, 'v:val.trans'))
@@ -584,7 +593,7 @@ function! s:get_region(expr1, expr2, visual_commnad)
   let [lnum1, col1] = getpos(a:expr1)[1:2]
   let [lnum2, col2] = getpos(a:expr2)[1:2]
   let region = getline(lnum1, lnum2)
- 
+
   if a:visual_commnad ==# "v"  " char
     if lnum1 == lnum2  " single line
       let region[0] = s:strpart(region[-1], col1 - 1, col2 - (col1 - 1))
@@ -597,7 +606,7 @@ function! s:get_region(expr1, expr2, visual_commnad)
   else  " block
     call map(region, 's:strpart(v:val, col1 - 1, col2 - (col1 - 1))')
   endif
- 
+
   return region
 endfunction
 
@@ -717,42 +726,42 @@ nnoremap <Space>I /^\n<CR>oX<C-h><ESC>kdd
 
 " Toggle options
 function! s:toggle_grepprg(global_p)
-    let VALUES = ['grep -nHE', 'git grep -n']
-    let grepprg = &l:grepprg == '' ? &grepprg : &l:grepprg
-    
-    let i = (index(VALUES, grepprg) + 1) % len(VALUES)
-    
-    if a:global_p
-        let &grepprg = VALUES[i]
-        set grepprg?
-    else
-        let &l:grepprg = VALUES[i]
-        setlocal grepprg?
-    endif
+  let VALUES = ['grep -nHE', 'git grep -n']
+  let grepprg = &l:grepprg == '' ? &grepprg : &l:grepprg
+
+  let i = (index(VALUES, grepprg) + 1) % len(VALUES)
+
+  if a:global_p
+    let &grepprg = VALUES[i]
+    set grepprg?
+  else
+    let &l:grepprg = VALUES[i]
+    setlocal grepprg?
+  endif
 endfunction
 if has('vim_starting')
-    silent call s:toggle_grepprg(1)
+  silent call s:toggle_grepprg(1)
 endif
 
 
 function! s:toggle_option(...)
-    for option_name in a:000
-        execute 'set' option_name.'!'
-        execute 'set' option_name.'?'
-    endfor
+  for option_name in a:000
+    execute 'set' option_name.'!'
+    execute 'set' option_name.'?'
+  endfor
 endfunction
 
 function! s:toggle_nu()
-    if !&number && !&relativenumber
-        set number
-        set norelativenumber
-    elseif &number
-        set nonumber
-        set relativenumber
-    elseif &relativenumber
-        set nonumber
-        set norelativenumber
-    endif
+  if !&number && !&relativenumber
+    set number
+    set norelativenumber
+  elseif &number
+    set nonumber
+    set relativenumber
+  elseif &relativenumber
+    set nonumber
+    set norelativenumber
+  endif
 endfunction
 
 nnoremap <silent> <Space>on :<C-u>call <SID>toggle_nu()<CR>
@@ -791,13 +800,13 @@ function! s:tabpage_label(n)
   if title !=# ''
     return title
   endif
-  
+
   " タブページ内のバッファのリスト
   let bufnrs = tabpagebuflist(a:n)
-  
+
   " カレントタブページかどうかでハイライトを切り替える
   let hi = a:n is tabpagenr() ? '%#TabLineSel#' : '%#TabLine#'
-  
+
   " バッファが複数あったらバッファ数を表示
   let no = len(bufnrs)
   if no is 1
@@ -806,23 +815,23 @@ function! s:tabpage_label(n)
   " タブページ内に変更ありのバッファがあったら '+' を付ける
   let mod = len(filter(copy(bufnrs), 'getbufvar(v:val, "&modified")')) ? '+' : ''
   let sp = (no . mod) ==# '' ? '' : ' '  " 隙間空ける
-  
+
   " カレントバッファ
   let curbufnr = bufnrs[tabpagewinnr(a:n) - 1]  " tabpagewinnr() は 1 origin
   let fname = pathshorten(bufname(curbufnr))
-  
+
   let label = no . mod . sp . fname
-  
+
   return '%' . a:n . 'T' . hi . label . '%T%#TabLineFill#'
 endfunction
 
 " タグがあるかどうかの文字列を返す関数
 function! s:tags_text()
-    if s:has_tags()
-        return '+tags'
-    else
-        return 'no tags'
-    endif
+  if s:has_tags()
+    return '+tags'
+  else
+    return 'no tags'
+  endif
 endfunction
 
 function! MakeTabLine()
@@ -856,27 +865,27 @@ let g:sonictemplate_vim_template_dir = $HOME. '/dotfiles/.vim/template'
 nmap <C-t> <Plug>ToggleN
 vmap <C-t> <Plug>ToggleV
 let g:toggle_pairs = {
-            \'and':'or',
-            \'or':'and',
-            \'if':'elsif',
-            \'elsif':'else',
-            \'else':'if',
-            \'ASC':'DESC',
-            \'DESC':'ASC',
-            \'int':'bool',
-            \'bool':'array',
-            \'array':'object',
-            \'object':'mixed',
-            \'mixed':'int',
-            \'public':'private',
-            \'private':'protected',
-            \'protected':'public',
-            \}
+      \'and':'or',
+      \'or':'and',
+      \'if':'elsif',
+      \'elsif':'else',
+      \'else':'if',
+      \'ASC':'DESC',
+      \'DESC':'ASC',
+      \'int':'bool',
+      \'bool':'array',
+      \'array':'object',
+      \'object':'mixed',
+      \'mixed':'int',
+      \'public':'private',
+      \'private':'protected',
+      \'protected':'public',
+      \}
 
 " eskk
 if has('vim_starting')
-    let g:eskk#large_dictionary = '~/.vim/skk/skk-jisyo.l'
-    let g:eskk#dictionary = '~/Dropbox/SKK/eskk/skk-jisyo.u'
+  let g:eskk#large_dictionary = '~/.vim/skk/skk-jisyo.l'
+  let g:eskk#dictionary = '~/Dropbox/SKK/eskk/skk-jisyo.u'
 endif
 let g:eskk#egg_like_newline = 1
 let g:eskk#egg_like_newline_completion = 1
@@ -894,7 +903,7 @@ nmap <C-k> a<C-j>
 " lingr
 let g:lingr_vim_user = 'tek_koc'
 if filereadable(expand('~/Dropbox/.password/.lingr_account.vim'))
-    source ~/Dropbox/.password/.lingr_account.vim
+  source ~/Dropbox/.password/.lingr_account.vim
 endif
 
 " poslist.vim
@@ -936,8 +945,8 @@ vnoremap <Leader>a :Alignta
 
 " コマンド展開
 if s:has_plugin('ambicmd')
-    cnoremap <expr> <Space> ambicmd#expand("\<Space>")
-    cnoremap <expr> <CR>    ambicmd#expand("\<CR>")
+  cnoremap <expr> <Space> ambicmd#expand("\<Space>")
+  cnoremap <expr> <CR>    ambicmd#expand("\<CR>")
 endif
 
 " vim-ref
@@ -996,9 +1005,9 @@ vmap <Leader>c <Plug>NERDCommenterToggle
 
 " vimproc
 if has('mac')
-    let g:vimproc_dll_path = $HOME . '/.vim/autoload/mac_proc.so'
+  let g:vimproc_dll_path = $HOME . '/.vim/autoload/mac_proc.so'
 else
-    let g:vimproc_dll_path = $HOME . '/.vim/autoload/proc.so'
+  let g:vimproc_dll_path = $HOME . '/.vim/autoload/proc.so'
 endif
 " TODO dousiyou
 let g:vimproc_dll_path = $HOME . '/.vim/autoload/mac_proc.so'
@@ -1023,10 +1032,10 @@ command! -nargs=1 Google :OpenBrowserSearch <args>
 
 " syntastic {{{2
 let g:syntastic_mode_map = {
-            \ 'mode': 'active',
-            \ 'active_filetypes': ['php', 'coffeescript', 'sh'],
-            \ 'passive_filetypes': ['html', 'haskell']
-            \}
+      \ 'mode': 'active',
+      \ 'active_filetypes': ['php', 'coffeescript', 'sh'],
+      \ 'passive_filetypes': ['html', 'haskell']
+      \}
 let g:syntastic_auto_loc_list=1
 nnoremap <silent> <Leader>l :<C-u>SyntasticCheck<CR>
 nnoremap <F5> :SyntasticToggleMode<CR>
@@ -1035,26 +1044,28 @@ nnoremap <F5> :SyntasticToggleMode<CR>
 
 let g:surround_custom_mapping = {}
 let g:surround_custom_mapping._ = {
-            \'[': "[\r]",
-            \'(': "(\r)",
-            \}
+      \'[': "[\r]",
+      \'(': "(\r)",
+      \'k': "「\r」",
+      \'K': "【\r】",
+      \}
 let g:surround_custom_mapping.php= {
-            \'{': "{\r}",
-            \'f': "\1name: \r..*\r&\1(\r)",
-            \'a': "['\r']",
-            \'A': "array(\r);",
-            \'v': "v(\r);",
-            \'s': "self::\r"
-            \}
+      \'{': "{\r}",
+      \'f': "\1name: \r..*\r&\1(\r)",
+      \'a': "['\r']",
+      \'A': "array(\r);",
+      \'v': "v(\r);",
+      \'s': "self::\r"
+      \}
 let g:surround_custom_mapping.smarty= {
-            \'S': "{{\r}}",
-            \'s': "{{\1name: \r..*\r&\1}}\r{{/\1\1}}",
-            \'{': "{{\r}}"
-            \}
+      \'S': "{{\r}}",
+      \'s': "{{\1name: \r..*\r&\1}}\r{{/\1\1}}",
+      \'{': "{{\r}}"
+      \}
 let g:surround_custom_mapping.javascript= {
-            \'{': "{\r}",
-            \'l': "console.log(\r);"
-            \}
+      \'{': "{\r}",
+      \'l': "console.log(\r);"
+      \}
 
 imap <C-k> <C-g>s
 
@@ -1129,7 +1140,7 @@ nnoremap <Leader>uT :<C-u>Unite tweetvim<CR>
 command! UniteColorScheme :Unite colorscheme -auto-preview
 
 if has('migemo')
-    call unite#custom_filters('advent_calendar', ['matcher_migemo', 'sorter_default', 'converter_default'])
+  call unite#custom_filters('advent_calendar', ['matcher_migemo', 'sorter_default', 'converter_default'])
 endif
 
 " ウィンドウを横に分割して開く
@@ -1148,11 +1159,11 @@ au FileType unite inoremap <silent> <buffer> <expr> <C-T> unite#do_action('tabop
 " 初期設定関数を起動する
 au FileType unite call s:unite_my_settings()
 function! s:unite_my_settings()
-    " Overwrite settings.
-    imap <buffer> <C-w> <Plug>(unite_delete_backward_path)
-    nmap <buffer> <space><space> <Plug>(unite_toggle_mark_current_candidate)
-    nnoremap <buffer> p p
-    nnoremap <buffer> <Space> <Space>
+  " Overwrite settings.
+  imap <buffer> <C-w> <Plug>(unite_delete_backward_path)
+  nmap <buffer> <space><space> <Plug>(unite_toggle_mark_current_candidate)
+  nnoremap <buffer> p p
+  nnoremap <buffer> <Space> <Space>
 endfunction
 
 " tweetvim {{{2
@@ -1203,15 +1214,15 @@ let g:neocomplcache_enable_camel_case_completion = 1 " 大文字を入力した�
 let g:neocomplcache_enable_underbar_completion = 1  " _を入力したときに、それを単語の区切りとしてあいまい検索
 let g:neocomplcache_caching_limit_file_size = 5000000
 let g:neocomplcache_dictionary_file_type_lists = {
-            \'default' : '',
-            \'php' : $HOME.'/.vim/dict/php.dict',
-            \'scala' : $HOME.'/.vim/dict/scala.dict',
-            \'vimshell' : $HOME.'/.vim/.vimshell_hist'
-            \}
+      \'default' : '',
+      \'php' : $HOME.'/.vim/dict/php.dict',
+      \'scala' : $HOME.'/.vim/dict/scala.dict',
+      \'vimshell' : $HOME.'/.vim/.vimshell_hist'
+      \}
 let g:NeoComplCache_SnippetsDir = $HOME . '/.vim/snippets'
 
 " if !exists('g:neocomplcache_omni_patterns')
-	" let g:neocomplcache_omni_patterns = {}
+" let g:neocomplcache_omni_patterns = {}
 " endif
 " let g:neocomplcache_omni_patterns.ruby = '[^. *\t]\.\h\w*\|\h\w*::'
 " let g:neocomplcache_omni_patterns.php = '[^. \t]->\h\w*\|\h\w*::'
@@ -1256,100 +1267,100 @@ command! Kansyai normal iあ、はい かんしゃい<ESC>
 command! CapturePush call s:pushCapture()
 command! CaptureDiff call s:diffCapture()
 function! s:getCaptureDir()
-    " 隠しファイルの場合は置換しつつ、現在のファイル名を取得
-    let l:filename = expand('%')
-    if l:filename =~ '^\.'
-        let l:filename = '__' . l:filename[1:]
-    endif
-    
-    " 保存先ディレクトリ名を求める
-    return $HOME . '/.vim_capture' . expand('%:p:h') . '/' . l:filename
+  " 隠しファイルの場合は置換しつつ、現在のファイル名を取得
+  let l:filename = expand('%')
+  if l:filename =~ '^\.'
+    let l:filename = '__' . l:filename[1:]
+  endif
+
+  " 保存先ディレクトリ名を求める
+  return $HOME . '/.vim_capture' . expand('%:p:h') . '/' . l:filename
 endfunction
 
 function! s:getCaptureLetestVersion(save_dir)
-    " ファイルのバージョン番号を取得
-    let l:file_list = split(system('ls ' . a:save_dir), '\n')
-    if 0 == len(l:file_list)
-        let l:version = -1
-    else
-        let l:version_list = []
-        for value in l:file_list
-            let l:temp = split(value, '\.')
-            call add(l:version_list, l:temp[0])
-        endfor
-        let l:version = max(l:version_list)
-    endif
-    
-    return l:version
+  " ファイルのバージョン番号を取得
+  let l:file_list = split(system('ls ' . a:save_dir), '\n')
+  if 0 == len(l:file_list)
+    let l:version = -1
+  else
+    let l:version_list = []
+    for value in l:file_list
+      let l:temp = split(value, '\.')
+      call add(l:version_list, l:temp[0])
+    endfor
+    let l:version = max(l:version_list)
+  endif
+
+  return l:version
 endfunction
 
 function! s:getCaptureFilename(save_dir)
-    let l:version = s:getCaptureLetestVersion(a:save_dir) + 1
-    return s:makeCaptureFilename(a:save_dir, l:version)
+  let l:version = s:getCaptureLetestVersion(a:save_dir) + 1
+  return s:makeCaptureFilename(a:save_dir, l:version)
 endfunction
 
 function! s:makeCaptureFilename(save_dir, version)
-    " TODO 名前苦しい
-    " 保存ファイル名を生成
-    let l:save_filename = a:save_dir . '/' . a:version
-    
-    if '' != expand('%:e')
-        " 拡張子があるなら付加する
-        let l:save_filename = l:save_filename . '.' . expand('%:e')
-    else
-        " TODO 暫定的に、拡張子がない場合は.vimを付ける。filetypeから取りたい
-        let l:save_filename = l:save_filename . '.vim'
-    endif
-    return l:save_filename
+  " TODO 名前苦しい
+  " 保存ファイル名を生成
+  let l:save_filename = a:save_dir . '/' . a:version
+
+  if '' != expand('%:e')
+    " 拡張子があるなら付加する
+    let l:save_filename = l:save_filename . '.' . expand('%:e')
+  else
+    " TODO 暫定的に、拡張子がない場合は.vimを付ける。filetypeから取りたい
+    let l:save_filename = l:save_filename . '.vim'
+  endif
+  return l:save_filename
 endfunction
 
 function! s:pushCapture()
-    " 保存先ディレクトリ名
-    let l:save_dir = s:getCaptureDir()
-    
-    " ディレクトリを生成
-    if !isdirectory(l:save_dir)
-        call mkdir(l:save_dir, 'p')
-    endif
-    
-    " 保存ファイル名
-    let l:save_filename = s:getCaptureFilename(l:save_dir)
-    
-    execute "write!" l:save_filename
+  " 保存先ディレクトリ名
+  let l:save_dir = s:getCaptureDir()
+  
+  " ディレクトリを生成
+  if !isdirectory(l:save_dir)
+    call mkdir(l:save_dir, 'p')
+  endif
+  
+  " 保存ファイル名
+  let l:save_filename = s:getCaptureFilename(l:save_dir)
+  
+  execute "write!" l:save_filename
 endfunction augroup END
 
 function! s:diffCapture()
-    " 対象ディレクトリ名
-    let l:target_dir = s:getCaptureDir()
-    
-    " ディレクトリを生成
-    if !isdirectory(l:target_dir)
-        " TODO エラー
-    endif
-    
-    " 対象バージョン
-    let l:version = s:getCaptureLetestVersion(l:target_dir)
-    if l:version < 0
-        " TODO エラー
-    endif
-    
-    " 対象ファイル名
-    let l:target_filename = s:makeCaptureFilename(l:target_dir, l:version)
-    execute "VDsplit" l:target_filename
+  " 対象ディレクトリ名
+  let l:target_dir = s:getCaptureDir()
+  
+  " ディレクトリを生成
+  if !isdirectory(l:target_dir)
+    " TODO エラー
+  endif
+  
+  " 対象バージョン
+  let l:version = s:getCaptureLetestVersion(l:target_dir)
+  if l:version < 0
+    " TODO エラー
+  endif
+  
+  " 対象ファイル名
+  let l:target_filename = s:makeCaptureFilename(l:target_dir, l:version)
+  execute "VDsplit" l:target_filename
 endfunction augroup END
 
 " メモを作成する
 command! -nargs=0 MemoWrite call s:open_memo_file()
 function! s:open_memo_file()
-    let l:memo_dir = $HOME . '/Dropbox/Memo'. strftime('/%Y/%m')
-    if !isdirectory(l:memo_dir)
-        call mkdir(l:memo_dir, 'p')
-    endif
-
-    let l:filename = input('File Name: ', l:memo_dir.strftime('/%d%H%M%S_'))
-    if l:filename != ''
-        execute 'edit ' . l:filename
-    endif
+  let l:memo_dir = $HOME . '/Dropbox/Memo'. strftime('/%Y/%m')
+  if !isdirectory(l:memo_dir)
+    call mkdir(l:memo_dir, 'p')
+  endif
+  
+  let l:filename = input('File Name: ', l:memo_dir.strftime('/%d%H%M%S_'))
+  if l:filename != ''
+    execute 'edit ' . l:filename
+  endif
 endfunction augroup END
 " メモ一覧をUniteで呼び出すコマンド
 command! -nargs=0 MemoRead :Unite file_rec:~/Dropbox/Memo/ -buffer-name=file
@@ -1368,27 +1379,27 @@ command! -nargs=1 Type :set filetype=<args>
 command! Todo edit ~/Dropbox/todo.mkd
 
 command!
-\   TOhtmlAndBrowse
-\   call s:TOhtmlAndBrowse()
+      \   TOhtmlAndBrowse
+      \   call s:TOhtmlAndBrowse()
 function! s:TOhtmlAndBrowse()
-    TOhtml
-    saveas `=tempname()`
-    let save = g:openbrowser_open_filepath_in_vim
-    let g:openbrowser_open_filepath_in_vim = 0
-    try
-        OpenBrowser file://%
-    finally
-        let g:openbrowser_open_filepath_in_vim = save
-    endtry
-    sleep 1
-    call delete(expand('%'))
+  TOhtml
+  saveas `=tempname()`
+  let save = g:openbrowser_open_filepath_in_vim
+  let g:openbrowser_open_filepath_in_vim = 0
+  try
+    OpenBrowser file://%
+  finally
+    let g:openbrowser_open_filepath_in_vim = save
+  endtry
+  sleep 1
+  call delete(expand('%'))
 endfunction
 
 " マッピングチェック
 command!
-            \   -nargs=* -complete=mapping
-            \   AllMaps
-            \   map <args> | map! <args> | lmap <args>
+      \   -nargs=* -complete=mapping
+      \   AllMaps
+      \   map <args> | map! <args> | lmap <args>
 
 " sticky shift {{{1
 
@@ -1397,26 +1408,26 @@ cnoremap <expr> ;  <SID>sticky_func()
 snoremap <expr> ;  <SID>sticky_func()
 
 function! s:sticky_func()
-    let l:sticky_table = {
-                \',' : '<', '.' : '>', '/' : '?',
-                \'1' : '!', '2' : '@', '3' : '#', '4' : '$', '5' : '%',
-                \'6' : '^', '7' : '&', '8' : '*', '9' : '(', '0' : ')', '-' : '_', '=' : '+',
-                \';' : ':', '[' : '{', ']' : '}', '`' : '~', "'" : "\"", '\' : '|',
-                \}
-    let l:special_table = {
-                \"\<ESC>" : "\<ESC>", "\<Space>" : ';', "\<CR>" : ";\<CR>"
-                \}
+  let l:sticky_table = {
+        \',' : '<', '.' : '>', '/' : '?',
+        \'1' : '!', '2' : '@', '3' : '#', '4' : '$', '5' : '%',
+        \'6' : '^', '7' : '&', '8' : '*', '9' : '(', '0' : ')', '-' : '_', '=' : '+',
+        \';' : ':', '[' : '{', ']' : '}', '`' : '~', "'" : "\"", '\' : '|',
+        \}
+  let l:special_table = {
+        \"\<ESC>" : "\<ESC>", "\<Space>" : ';', "\<CR>" : ";\<CR>"
+        \}
 
-    let l:key = getchar()
-    if nr2char(l:key) =~ '\l'
-        return toupper(nr2char(l:key))
-    elseif has_key(l:sticky_table, nr2char(l:key))
-        return l:sticky_table[nr2char(l:key)]
-    elseif has_key(l:special_table, nr2char(l:key))
-        return l:special_table[nr2char(l:key)]
-    else
-        return ''
-    endif
+  let l:key = getchar()
+  if nr2char(l:key) =~ '\l'
+    return toupper(nr2char(l:key))
+  elseif has_key(l:sticky_table, nr2char(l:key))
+    return l:sticky_table[nr2char(l:key)]
+  elseif has_key(l:special_table, nr2char(l:key))
+    return l:special_table[nr2char(l:key)]
+  else
+    return ''
+  endif
 endfunction
 " other {{{1
 
@@ -1454,27 +1465,28 @@ set complete+=k
 
 " 改行文字などの表示
 set list
-set listchars=tab:>-,trail:-,nbsp:%,extends:>,precedes:<
+" set listchars=tab:>-,trail:-,nbsp:%,extends:>,precedes:<
+set listchars=tab:>-,eol:↴,nbsp:%,extends:>,precedes:<
 
 " 前回終了したカーソル行に移動
 autocmd BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$") | exe "normal g`\"" | endif
 
 " カレントウィンドウにのみ罫線を引く
 augroup cch
-    autocmd! cch
-    autocmd WinLeave * set nocursorline
-    autocmd WinLeave * set nocursorcolumn
-    autocmd WinEnter,BufRead * set cursorline
-    autocmd WinEnter,BufRead * set cursorcolumn
+  autocmd! cch
+  autocmd WinLeave * set nocursorline
+  autocmd WinLeave * set nocursorcolumn
+  autocmd WinEnter,BufRead * set cursorline
+  autocmd WinEnter,BufRead * set cursorcolumn
 augroup END
 
 " last proc {{{1
 
 if has("gui_running")
-    " gvimrcも読み込む
-    source ~/dotfiles/.gvimrc
+  " gvimrcも読み込む
+  source ~/dotfiles/.gvimrc
 else
-    " CUI版Vim用のコード
-    set background=dark
-    colorscheme molokai
+  " CUI版Vim用のコード
+  set background=dark
+  colorscheme molokai
 endif
