@@ -704,13 +704,16 @@ noremap <C-a> g^
 nnoremap Q q
 
 " ノーマルモード時にスペース2回で改行
-nnoremap <Space><Space> oX<C-h><ESC>
+" nnoremap <Space><Space> oX<C-h><ESC>
+nnoremap <Space><Space> o<ESC>
 nnoremap <Space>d cc<ESC>
+nnoremap <Space>i oX<C-h><ESC>kdd
+nnoremap <Space>I /^\n<CR>oX<C-h><ESC>kdd
 
 " 空行のスペースやタブを維持
-nnoremap o oX<C-h>
-nnoremap O OX<C-h>
-inoremap <CR> <CR>X<C-h>
+" nnoremap o oX<C-h>
+" nnoremap O OX<C-h>
+" inoremap <CR> <CR>X<C-h>
 
 " Toggle options
 function! s:toggle_grepprg(global_p)
