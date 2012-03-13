@@ -46,6 +46,7 @@ NeoBundle 'kana/vim-textobj-function'
 NeoBundle 'kana/vim-operator-replace'
 NeoBundle 'tyru/operator-camelize.vim'
 NeoBundle 'emonkak/vim-operator-comment'
+NeoBundle 'git://github.com/kana/vim-textobj-line.git'
 
 " textobj,operator }}}
 
@@ -121,6 +122,7 @@ NeoBundle 'git://github.com/scrooloose/syntastic.git', '637182c181814631f8d5d33d
 NeoBundle 'kchmck/vim-coffee-script'
 NeoBundle 'git://github.com/vim-scripts/JavaScript-syntax.git'
 NeoBundle 'git://github.com/vim-scripts/php.vim--Hodge.git'
+NeoBundle 'git://github.com/vim-scripts/actionscript.vim--Leider.git'
 
 " 即座に実行
 NeoBundle 'thinca/vim-quickrun'
@@ -1258,6 +1260,13 @@ command! Rg source ~/dotfiles/.gvimrc
 command! Eb edit ~/dotfiles/.vim/bundles.vim
 command! -bang Rb :Unite neobundle/install:<bang>
 
+command! Push call s:push_dotfiles()
+function! s:push_dotfiles()
+  execute "!git add -u"
+  execute "!git commit -m \"fix\""
+  execute "!git push"
+endfunction
+
 " jsonデコード(仮)
 command! JsonReformat :r!php -r 'print_r(json_decode(file_get_contents("%",true)));'
 
@@ -1454,6 +1463,7 @@ au BufNewFile,BufRead *.ejs set filetype=html
 au BufNewFile,BufRead *.js set filetype=javascript
 au BufNewFile,BufRead *.js.shd set filetype=coffee
 au BufNewFile,BufRead *.html set filetype=smarty.html
+au BufNewFile,BufRead *.as set filetype=actionscript
 
 autocmd FileType php :set dictionary+=~/.vim/dict/php.dict
 autocmd FileType scala :set dictionary+=~/.vim/dict/scala.dict
