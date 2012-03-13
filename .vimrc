@@ -1267,6 +1267,11 @@ function! s:push_dotfiles()
   execute "!git push"
 endfunction
 
+command! Pull call s:pull_dotfiles()
+function! s:pull_dotfiles()
+  execute "!git pull"
+endfunction
+
 " jsonデコード(仮)
 command! JsonReformat :r!php -r 'print_r(json_decode(file_get_contents("%",true)));'
 
