@@ -1096,7 +1096,7 @@ let g:unite_source_file_mru_limit = 10000
 let g:unite_source_history_yank_enable = 1
 let g:unite_source_history_yank_limit = 1000
 
-let g:unite_source_grep_max_candidates = 10000
+let g:unite_source_grep_max_candidates = 100
 let g:unite_source_session_enable_auto_save = 1     " セッション保存
 
 function! s:unite_project(...)
@@ -1116,10 +1116,11 @@ nnoremap <Leader>ub :<C-u>Unite bookmark directory_mru -default-action=lcd<CR>
 " 最近使ったファイルの一覧
 nnoremap <Leader>um :<C-u>Unite file_mru -buffer-name=file<CR>
 " grep
-nnoremap <Leader>ug :<C-u>Unite grep -no-quit<CR>/*.
-au FileType php noremap <buffer> <Leader>uG :<C-u>Unite grep -no-quit<CR>/*.php<CR><C-r><C-w><CR>
-au FileType vim noremap <buffer> <Leader>uG :<C-u>Unite grep -no-quit<CR>/*.vim<CR><C-r><C-w><CR>
-au FileType xml noremap <buffer> <Leader>uG :<C-u>Unite grep -no-quit<CR>/*.xml<CR><C-r><C-w><CR>
+nnoremap <Leader>ug :<C-u>Unite grep -no-quit<CR>
+nnoremap <Leader>uG :<C-u>Unite grep -no-quit<CR><CR><C-r><C-w><CR>
+" au FileType php noremap <buffer> <Leader>uG :<C-u>Unite grep -no-quit<CR><CR><C-r><C-w>
+" au FileType vim noremap <buffer> <Leader>uG :<C-u>Unite grep -no-quit<CR><CR><C-r><C-w>
+" au FileType xml noremap <buffer> <Leader>uG :<C-u>Unite grep -no-quit<CR><CR><C-r><C-w>
 " ref
 au FileType php nnoremap <buffer> <Leader>ur :<C-u>Unite ref/phpmanual<CR>
 au FileType vim nnoremap <buffer> <Leader>ur :<C-u>Unite help<CR>
@@ -1494,8 +1495,10 @@ augroup cch
   autocmd! cch
   autocmd WinLeave * set nocursorline
   autocmd WinLeave * set nocursorcolumn
+  autocmd WinLeave * set norelativenumber
   autocmd WinEnter,BufRead * set cursorline
   autocmd WinEnter,BufRead * set cursorcolumn
+  autocmd WinEnter,BufRead * set relativenumber
 augroup END
 
 " last proc {{{1
