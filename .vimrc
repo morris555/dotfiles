@@ -1034,7 +1034,11 @@ nmap <C-d> <Plug>(textmanip-duplicate-down)
 " open-browser.vim
 nmap <Leader>o <Plug>(openbrowser-smart-search)
 vmap <Leader>o <Plug>(openbrowser-smart-search)
+" nnoremap <expr> <Leader>p call openBrowserSearch expand(<cword>w)
 command! -nargs=1 Google :OpenBrowserSearch <args>
+let g:openbrowser_search_engines = {
+    \   'phpmanual': 'http://example.com/search?q={query}',
+    \}
 
 " syntastic {{{2
 let g:syntastic_mode_map = {
