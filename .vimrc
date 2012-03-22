@@ -114,9 +114,9 @@ NeoBundle 'nathanaelkane/vim-indent-guides'
 " NeoBundle 'git://github.com/bitc/vim-bad-whitespace.git'
 
 " syntax
-" NeoBundle 'git://github.com/scrooloose/syntastic.git'
+NeoBundle 'git://github.com/scrooloose/syntastic.git'
 " NeoBundle 'git://github.com/scrooloose/syntastic.git', '1f91303cdc3be44112a9b3734241a7b36173f44b'
-NeoBundle 'git://github.com/scrooloose/syntastic.git', '637182c181814631f8d5d33d3183a51c8aec22bd'
+" NeoBundle 'git://github.com/scrooloose/syntastic.git', '637182c181814631f8d5d33d3183a51c8aec22bd'
 
 " 言語別
 NeoBundle 'kchmck/vim-coffee-script'
@@ -131,6 +131,8 @@ NeoBundle 'thinca/vim-quickrun'
 NeoBundle 'thinca/vim-ref'
 NeoBundle 'mojako/ref-alc.vim'
 NeoBundle 'mojako/ref-sources.vim'
+
+NeoBundle 'git://github.com/yuratomo/w3m.vim.git'
 
 " cocoa
 NeoBundle 'msanders/cocoa.vim'
@@ -955,10 +957,10 @@ if s:has_plugin('ambicmd')
 endif
 
 " vim-ref
-" nmap <Leader>k <Plug>(ref-keyword)
+nmap <Leader>k <Plug>(ref-keyword)
 " let objc_man_key = '<Leader>k'
 autocmd FileType vim nnoremap <buffer> <Leader>k :<C-u>help <C-r><C-w><CR>
-autocmd FileType php nnoremap <buffer><expr> <Leader>k openbrowser#search(expand('<cword>'), "phpmanual_func")
+" autocmd FileType php nnoremap <buffer><expr> <Leader>k openbrowser#search(expand('<cword>'), "phpmanual_func")
 
 " vimrefのショートカットコマンド
 command! -nargs=1 Alc :Ref alc2 <args>
