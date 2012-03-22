@@ -253,8 +253,7 @@ filetype plugin indent on
 set autoread
 
 " カーソルを中央行に
-" set scrolloff=999
-set scrolloff=20
+set scrolloff=999
 
 " <Leader>を,に
 let mapleader = ","
@@ -956,9 +955,10 @@ if s:has_plugin('ambicmd')
 endif
 
 " vim-ref
-nmap <Leader>k <Plug>(ref-keyword)
-let objc_man_key = '<Leader>k'
+" nmap <Leader>k <Plug>(ref-keyword)
+" let objc_man_key = '<Leader>k'
 autocmd FileType vim nnoremap <buffer> <Leader>k :<C-u>help <C-r><C-w><CR>
+autocmd FileType php nnoremap <buffer><expr> <Leader>k openbrowser#search(expand('<cword>'), "phpmanual_func")
 
 " vimrefのショートカットコマンド
 command! -nargs=1 Alc :Ref alc2 <args>
@@ -1034,10 +1034,12 @@ nmap <C-d> <Plug>(textmanip-duplicate-down)
 " open-browser.vim
 nmap <Leader>o <Plug>(openbrowser-smart-search)
 vmap <Leader>o <Plug>(openbrowser-smart-search)
+" nnoremap <expr> <Leader>p openbrowser#search(expand('<cword>'), "phpmanual_func")
 " nnoremap <expr> <Leader>p call openBrowserSearch expand(<cword>w)
 command! -nargs=1 Google :OpenBrowserSearch <args>
 let g:openbrowser_search_engines = {
-    \   'phpmanual': 'http://example.com/search?q={query}',
+    \   'phpmanual_all': 'http://jp.php.net/results.php?q={query}&l=ja&p=all',
+    \   'phpmanual_func': 'http://jp.php.net/manual-lookup.php?pattern={query}&scope=quickref',
     \}
 
 " syntastic {{{2
@@ -1120,7 +1122,7 @@ nnoremap <Leader>ub :<C-u>Unite bookmark directory_mru -default-action=lcd<CR>
 " 最近使ったファイルの一覧
 nnoremap <Leader>um :<C-u>Unite file_mru -buffer-name=file<CR>
 " grep
-nnoremap <Leader>ug :<C-u>Unite grep -no-quit<CR>
+nnoremap <Leader>ug :<C-u>Unite grep -no-quit<CR><CR>
 nnoremap <Leader>uG :<C-u>Unite grep -no-quit<CR><CR><C-r><C-w><CR>
 " au FileType php noremap <buffer> <Leader>uG :<C-u>Unite grep -no-quit<CR><CR><C-r><C-w>
 " au FileType vim noremap <buffer> <Leader>uG :<C-u>Unite grep -no-quit<CR><CR><C-r><C-w>
