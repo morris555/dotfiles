@@ -852,6 +852,10 @@ function! MakeTabLine()
   let info .= '   '
   let info .= '(%l/%L) %P'
   let info .= '   '
+  let info .= '(◕‿‿◕)「クズだから、ッネ！」'
+  " let info .= '(◕‿‿◕)「訳がわからないよ」'
+  " let info .= '(◕‿‿◕)'
+  let info .= '   '
   let info .= s:tags_text()
   let info .= '   '
   let info .= fnamemodify(getcwd(), ":~") . ' '
@@ -1033,6 +1037,8 @@ nmap <C-D> <Plug>(textmanip-duplicate-up)
 vmap <C-d> <Plug>(textmanip-duplicate-down)
 nmap <C-d> <Plug>(textmanip-duplicate-down)
 
+" vmap <Leader>s :<C-u>
+
 " open-browser.vim
 nmap <Leader>o <Plug>(openbrowser-smart-search)
 vmap <Leader>o <Plug>(openbrowser-smart-search)
@@ -1043,6 +1049,12 @@ let g:openbrowser_search_engines = {
     \   'phpmanual_all': 'http://jp.php.net/results.php?q={query}&l=ja&p=all',
     \   'phpmanual_func': 'http://jp.php.net/manual-lookup.php?pattern={query}&scope=quickref',
     \}
+
+let g:w3m#search_engine = 
+      \ 'https://www.google.co.jp/search?aq=f&ix=seb&sourceid=chrome&ie=' . &encoding . '&q='
+      " \ 'http://search.yahoo.co.jp/search?search.x=1&fr=top_ga1_sa_124&tid=top_ga1_sa_124&ei=' . &encoding . '&aq=&oq=&p='
+
+
 
 " syntastic {{{2
 let g:syntastic_mode_map = {
@@ -1268,18 +1280,6 @@ command! Rg source ~/dotfiles/.gvimrc
 " Eb/RbでNeoBundleの編集と反映
 command! Eb edit ~/dotfiles/.vim/bundles.vim
 command! -bang Rb :Unite neobundle/install:<bang>
-
-command! Push call s:push_dotfiles()
-function! s:push_dotfiles()
-  execute "!git add -u"
-  execute "!git commit -m \"fix\""
-  execute "!git push"
-endfunction
-
-command! Pull call s:pull_dotfiles()
-function! s:pull_dotfiles()
-  execute "!git pull"
-endfunction
 
 " jsonデコード(仮)
 command! JsonReformat :r!php -r 'print_r(json_decode(file_get_contents("%",true)));'
