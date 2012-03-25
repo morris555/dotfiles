@@ -1,5 +1,4 @@
-" NeoBundle_plugin_list {{{1
-"
+" NeoBundle_setup {{{
 set nocompatible
 filetype off
 
@@ -8,7 +7,9 @@ if has('vim_starting')
 
   call neobundle#rc(expand('~/.vim/bundle'))
 endif
+" }}}
 
+" NeoBundle_plugin_list {{{
 " color-scheme
 NeoBundle 'altercation/vim-colors-solarized'
 NeoBundle 'git://github.com/vim-scripts/mrkn256.vim.git'
@@ -237,9 +238,7 @@ NeoBundle 'mfumi/lightsout.vim'
 
 filetype plugin on
 filetype indent on
-
-
-" common setting {{{1
+" }}}
 
 " 自動コマンド削除
 autocmd!
@@ -283,19 +282,21 @@ set hidden
 
 set updatetime=10
 
+set cmdheight=2            " コマンドラインは２行
+set showcmd                " コマンドを表示
+set wildmenu               " コマンド補完を強化
+set wildchar=<tab>         " コマンド補完を開始するキー
+set wildmode=list:full     " リスト表示，最長マッチ
+set history=1000           " コマンド・検索パターンの履歴数
+set complete+=k            " 補完に辞書ファイル追加
+
 " koriya版に同梱されているプラグインを無効化する
 let plugin_dicwin_disable = 1
 
-" function {{{1
-"
-" thinca's vimrc
+" utility function {{{
 function! s:has_plugin(name)
   return globpath(&runtimepath, 'plugin/' . a:name . '.vim') !=# ''
         \   || globpath(&runtimepath, 'autoload/' . a:name . '.vim') !=# ''
-endfunction
-
-function! s:has_tags()
-  return glob('tags') !=# ''
 endfunction
 
 " Call a script local function.
@@ -306,7 +307,7 @@ endfunction
 "   -> call s:local_func('string', 10) in *plugin/hoge.vim.
 " - S('plugin/hoge:local_func("string", 10)')
 "   -> call s:local_func("string", 10) in *plugin/hoge(.vim)?.
-function! S(f, ...)
+function! S(f, ...) " {{{
   let [file, func] =a:f =~# ':' ?  split(a:f, ':') : [expand('%:p'), a:f]
   let fname = matchstr(func, '^\w*')
 
@@ -343,9 +344,14 @@ function! S(f, ...)
   return 0 <= match(func, '^\w*\s*(.*)\s*$')
         \      ? eval(cfunc) : call(cfunc, a:000)
 endfunction
+" }}}
 
-" singleton {{{1
+function! s:has_tags()
+  return glob('tags') !=# ''
+endfunction
+" }}}
 
+" singleton {{{
 if has('gui_running')
   if has('clientserver')
     if s:has_plugin('singleton')
@@ -353,27 +359,13 @@ if has('gui_running')
     endif
   endif
 endif
+" }}}
 
-" command line {{{1
-
-set cmdheight=2            " コマンドラインは２行
-set showcmd                " コマンドを表示
-set wildmenu               " コマンド補完を強化
-set wildchar=<tab>         " コマンド補完を開始するキー
-set wildmode=list:full     " リスト表示，最長マッチ
-set history=1000           " コマンド・検索パターンの履歴数
-set complete+=k            " 補完に辞書ファイル追加
-
-" indent {{{1
+" indent
 
 " set smartindent
 " set autoindent
 " set cindent
-
-" set shiftwidth=4
-" set tabstop=4
-" set softtabstop=4
-" set expandtab
 
 " phpはタブ幅4でタブ文字を使う
 autocmd FileType php set shiftwidth=4
@@ -393,7 +385,7 @@ autocmd FileType vim set tabstop=2
 autocmd FileType vim set softtabstop=2
 autocmd FileType vim set expandtab
 
-" file encoding {{{1
+" file encoding {{{
 "
 set fileformats=unix,dos,mac
 
@@ -454,6 +446,7 @@ set fileformats=unix,dos,mac
 if exists('&ambiwidth')
   set ambiwidth=double
 endif
+" }}}
 
 " searching {{{1
 
@@ -852,8 +845,8 @@ function! MakeTabLine()
   let info .= '   '
   let info .= '(%l/%L) %P'
   let info .= '   '
-  let info .= '(◕‿‿◕)「クズだから、ッネ！」'
-  " let info .= '(◕‿‿◕)「訳がわからないよ」'
+  " let info .= '(◕‿‿◕)「クズだから、ッネ！」'
+  let info .= '(◕‿‿◕)「訳がわからないよ」'
   " let info .= '(◕‿‿◕)'
   let info .= '   '
   let info .= s:tags_text()
@@ -1052,7 +1045,6 @@ let g:openbrowser_search_engines = {
 
 let g:w3m#search_engine = 
       \ 'https://www.google.co.jp/search?aq=f&ix=seb&sourceid=chrome&ie=' . &encoding . '&q='
-      " \ 'http://search.yahoo.co.jp/search?search.x=1&fr=top_ga1_sa_124&tid=top_ga1_sa_124&ei=' . &encoding . '&aq=&oq=&p='
 
 
 
