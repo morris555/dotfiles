@@ -448,7 +448,7 @@ if exists('&ambiwidth')
 endif
 " }}}
 
-" searching {{{1
+" searching
 
 set ignorecase
 set smartcase
@@ -471,7 +471,7 @@ if has('migemo')
   nnoremap g/ /
 endif
 
-" folding {{{1
+" folding
 
 if s:has_plugin('foldCC')
   set foldtext=FoldCCtext()
@@ -505,7 +505,7 @@ noremap <Space>fi zMzv
 " むしろ、タブラインに出したい
 noremap <space>fg :echo FoldCCnavi()<CR>
 
-" tag {{{1
+" tag
 
 set tags=tags
 
@@ -524,6 +524,7 @@ autocmd FileType coffee nnoremap <silent><buffer> <Space>tu :<C-u>!ctags --langu
 nnoremap <silent> <Space>tk <C-]>:<C-u>vsplit<CR><C-o><C-o><C-w>l
 
 " cscope
+" TODO 最近使ってないから、削除を検討
 nnoremap <silent> <space>sa :<C-u>cscope add cscope.out<CR>
 nnoremap <silent> <space>ss :<C-u>cscope find s <C-r><C-w><CR>
 nnoremap <silent> <space>sg :<C-u>cscope find g <C-r><C-w><CR>
@@ -539,7 +540,8 @@ let g:SrcExpl_RefreshTime = 1
 let g:SrcExpl_WinHeight = 9
 "tagsは自動で作成する
 let g:SrcExpl_isUpdateTags = 0
-" operator object {{{1
+
+" operator object {{{
 
 " 置換
 map R <Plug>(operator-replace)
@@ -617,8 +619,9 @@ Arpeggio map oc  <Plug>(operator-comment)
 Arpeggio map od  <Plug>(operator-uncomment)
 
 
+" }}}
 
-" other mapping {{{1
+" other mapping
 
 " コロンとセミコロンを入れ替え
 noremap : ;
@@ -781,7 +784,7 @@ function! s:at()
 endfunction
 autocmd FileType php inoremap <expr> <buffer> @ <SID>at()
 
-" status line {{{1
+" status line
 set laststatus=2
 set statusline=\ %F
 set statusline+=\ %(%m\ %r%)
@@ -789,7 +792,7 @@ set statusline+=\ type=%{&filetype}
 set statusline+=%=\ [%l]
 set statusline+=%=\ \ 
 
-" tab line {{{1
+" tab line
 
 " 参考(http://d.hatena.ne.jp/thinca/20111204/1322932585)
 
@@ -846,7 +849,9 @@ function! MakeTabLine()
   let info .= '(%l/%L) %P'
   let info .= '   '
   " let info .= '(◕‿‿◕)「クズだから、ッネ！」'
-  let info .= '(◕‿‿◕)「訳がわからないよ」'
+  " let info .= '(◕‿‿◕)「訳がわからないよ」'
+  " let info .= '(◕‿‿◕)「おかしいショ！ 言ってないからネ！」'
+  let info .= '(◕‿‿◕)「そのまま眠り続けて死ね！」'
   " let info .= '(◕‿‿◕)'
   let info .= '   '
   let info .= s:tags_text()
@@ -858,8 +863,7 @@ endfunction
 " set tabline=%!MakeTabLine()
 autocmd CursorMoved * set tabline=%!MakeTabLine()
 
-" plugin {{{1
-" other plugin {{{2
+" plugin
 
 " sonictemplate
 let g:sonictemplate_vim_template_dir = $HOME. '/dotfiles/.vim/template'
@@ -1046,9 +1050,7 @@ let g:openbrowser_search_engines = {
 let g:w3m#search_engine = 
       \ 'https://www.google.co.jp/search?aq=f&ix=seb&sourceid=chrome&ie=' . &encoding . '&q='
 
-
-
-" syntastic {{{2
+" syntastic
 let g:syntastic_mode_map = {
       \ 'mode': 'active',
       \ 'active_filetypes': ['php', 'coffeescript', 'sh'],
@@ -1057,7 +1059,7 @@ let g:syntastic_mode_map = {
 let g:syntastic_auto_loc_list=1
 nnoremap <silent> <Leader>l :<C-u>SyntasticCheck<CR>
 
-" surround.vim {{{2
+" surround.vim
 
 let g:surround_custom_mapping = {}
 let g:surround_custom_mapping._ = {
@@ -1069,6 +1071,7 @@ let g:surround_custom_mapping._ = {
 let g:surround_custom_mapping.php= {
       \'{': "{\r}",
       \'f': "\1name: \r..*\r&\1(\r)",
+      \'F': "\1name: \r..*\rfb('&');\nfb(\r)",
       \'a': "['\r']",
       \'A': "array(\r);",
       \'v': "v(\r);",
