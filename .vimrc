@@ -115,14 +115,16 @@ NeoBundle 'nathanaelkane/vim-indent-guides'
 " NeoBundle 'git://github.com/bitc/vim-bad-whitespace.git'
 
 " syntax
-NeoBundle 'git://github.com/scrooloose/syntastic.git'
+" NeoBundle 'git://github.com/scrooloose/syntastic.git'
 " NeoBundle 'git://github.com/scrooloose/syntastic.git', '1f91303cdc3be44112a9b3734241a7b36173f44b'
-" NeoBundle 'git://github.com/scrooloose/syntastic.git', '637182c181814631f8d5d33d3183a51c8aec22bd'
+NeoBundle 'git://github.com/scrooloose/syntastic.git', '637182c181814631f8d5d33d3183a51c8aec22bd'
 
 " 言語別
 NeoBundle 'kchmck/vim-coffee-script'
 NeoBundle 'git://github.com/vim-scripts/JavaScript-syntax.git'
 NeoBundle 'git://github.com/vim-scripts/php.vim--Hodge.git'
+NeoBundle 'git://github.com/2072/PHP-Indenting-for-VIm.git'
+NeoBundle 'git://github.com/potix2/vim-phprefactor.git'
 NeoBundle 'git://github.com/vim-scripts/actionscript.vim--Leider.git'
 
 " 即座に実行
