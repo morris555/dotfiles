@@ -83,6 +83,9 @@ NeoBundle 'tyru/open-browser.vim'
 " ambicmd
 NeoBundle 'thinca/vim-ambicmd'
 
+" memo
+NeoBundle 'git://github.com/glidenote/memolist.vim.git'
+
 " coffeescriptなどに使う
 NeoBundle 'ujihisa/shadow.vim'
 
@@ -1372,8 +1375,9 @@ function! s:diffCapture()
   execute "VDsplit" l:target_filename
 endfunction augroup END
 
+" TODO memolist導入のため、一時的に解除
 " メモを作成する
-command! -nargs=0 MemoWrite call s:open_memo_file()
+" command! -nargs=0 MemoWrite call s:open_memo_file()
 function! s:open_memo_file()
   let l:memo_dir = $HOME . '/Dropbox/Memo'. strftime('/%Y/%m')
   if !isdirectory(l:memo_dir)
@@ -1386,7 +1390,7 @@ function! s:open_memo_file()
   endif
 endfunction augroup END
 " メモ一覧をUniteで呼び出すコマンド
-command! -nargs=0 MemoRead :Unite file_rec:~/Dropbox/Memo/ -buffer-name=file
+" command! -nargs=0 MemoRead :Unite file_rec:~/Dropbox/Memo/ -buffer-name=file
 
 " temp_edit
 command! -nargs=0 TempEdit :Unite file_rec:~/.vim/template file -buffer-name=file
