@@ -1094,6 +1094,22 @@ let g:surround_custom_mapping.javascript= {
 
 imap <C-k> <C-g>s
 
+" memolist.vim
+let g:memolist_memo_suffix = "mkd"
+let g:memolist_memo_date = "%Y-%m-%d %H:%M"
+let g:memolist_memo_date = "epoch"
+let g:memolist_memo_date = "%D %T"
+let g:memolist_prompt_tags = 1
+let g:memolist_prompt_categories = 1
+" let g:memolist_qfixgrep = 1
+let g:memolist_vimfiler = 1
+" let g:memolist_template_dir_path = $HOME . '/Dropbox/Memo'
+let g:memolist_path = $HOME . '/Dropbox/Memo'
+
+nnoremap Mn :MemoNew<CR>
+nnoremap Ml :MemoList<CR>
+nnoremap Mg :MemoGrep<CR>
+
 " smartchr.vim {{{2
 
 " 意図しないで発動するケースが多くて辛い
