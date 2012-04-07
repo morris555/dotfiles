@@ -83,9 +83,6 @@ NeoBundle 'tyru/open-browser.vim'
 " ambicmd
 NeoBundle 'thinca/vim-ambicmd'
 
-" memo
-NeoBundle 'git://github.com/glidenote/memolist.vim.git'
-
 " coffeescriptなどに使う
 NeoBundle 'ujihisa/shadow.vim'
 
@@ -1094,21 +1091,56 @@ let g:surround_custom_mapping.javascript= {
 
 imap <C-k> <C-g>s
 
-" memolist.vim
-let g:memolist_memo_suffix = "mkd"
-let g:memolist_memo_date = "%Y-%m-%d %H:%M"
-let g:memolist_memo_date = "epoch"
-let g:memolist_memo_date = "%D %T"
-let g:memolist_prompt_tags = 1
-let g:memolist_prompt_categories = 1
-" let g:memolist_qfixgrep = 1
-let g:memolist_vimfiler = 1
-" let g:memolist_template_dir_path = $HOME . '/Dropbox/Memo'
-let g:memolist_path = $HOME . '/Dropbox/Memo'
+" memo_list {{{
+" メモを作成する
+command! -nargs=0 MemoNew call s:open_memo_file()
+function! s:open_memo_file()
+  let l:category = input('Category: ')
+  let l:title = input('Title: ')
+
+  if l:category == ""
+    let l:category = "Other"
+  endif
+
+  let l:memo_dir = $HOME . '/Dropbox/Memo/Vim/' . l:category
+  if !isdirectory(l:memo_dir)
+    call mkdir(l:memo_dir, 'p')
+  endif
+  
+  let l:filename = l:memo_dir . strftime('/%Y-%m-%d_') . l:title . '.mkd'
+
+  let l:template = [
+        \'Category: ' . l:category,
+        \'========================================',
+        \'Title: ' . l:title,
+        \'----------------------------------------',
+        \'date: ' . strftime('%Y/%m/%d %T'),
+        \'- - - - - - - - - - - - - - - - - - - - ',
+        \'',
+        \]
+
+  " ファイル生成
+  execute 'tabnew ' . l:filename
+  call setline(1, l:template)
+  execute '5'
+  execute 'write'
+endfunction augroup END
+
+" メモ一覧をUniteで呼び出すコマンド
+command! -nargs=0 MemoList :Unite file_rec:~/Dropbox/Memo/
+
+" メモ一覧をUnite grepするコマンド
+command! -nargs=0 MemoGrep :Unite grep:~/Dropbox/Memo/ -no-quit<CR>
+
+" メモ一覧をVimFilerで呼び出すコマンド
+command! -nargs=0 MemoFiler :VimFiler ~/Dropbox/Memo
 
 nnoremap Mn :MemoNew<CR>
 nnoremap Ml :MemoList<CR>
+nnoremap Mf :MemoFiler<CR>
 nnoremap Mg :MemoGrep<CR>
+" }}}
+
 
 " smartchr.vim {{{2
 
@@ -1390,23 +1422,6 @@ function! s:diffCapture()
   let l:target_filename = s:makeCaptureFilename(l:target_dir, l:version)
   execute "VDsplit" l:target_filename
 endfunction augroup END
-
-" TODO memolist導入のため、一時的に解除
-" メモを作成する
-" command! -nargs=0 MemoWrite call s:open_memo_file()
-function! s:open_memo_file()
-  let l:memo_dir = $HOME . '/Dropbox/Memo'. strftime('/%Y/%m')
-  if !isdirectory(l:memo_dir)
-    call mkdir(l:memo_dir, 'p')
-  endif
-  
-  let l:filename = input('File Name: ', l:memo_dir.strftime('/%d%H%M%S_'))
-  if l:filename != ''
-    execute 'edit ' . l:filename
-  endif
-endfunction augroup END
-" メモ一覧をUniteで呼び出すコマンド
-" command! -nargs=0 MemoRead :Unite file_rec:~/Dropbox/Memo/ -buffer-name=file
 
 " temp_edit
 command! -nargs=0 TempEdit :Unite file_rec:~/.vim/template file -buffer-name=file
