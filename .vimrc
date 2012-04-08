@@ -1122,12 +1122,13 @@ function! s:open_memo_file()
   " ファイル生成
   execute 'tabnew ' . l:filename
   call setline(1, l:template)
-  execute '5'
+  execute '999'
   execute 'write'
 endfunction augroup END
 
 " メモ一覧をUniteで呼び出すコマンド
-command! -nargs=0 MemoList :Unite file_rec:~/Dropbox/Memo/
+command! -nargs=0 MemoList :Unite file_rec:~/Dropbox/Memo/ -buffer-name=memo_list
+call unite#set_profile('memo_list', 'filters', ['matcher_default', 'sorter_reverse', 'converter_default'])
 
 " メモ一覧をUnite grepするコマンド
 command! -nargs=0 MemoGrep :Unite grep:~/Dropbox/Memo/ -no-quit<CR>
@@ -1142,7 +1143,7 @@ nnoremap Mg :MemoGrep<CR>
 " }}}
 
 
-" smartchr.vim {{{2
+" smartchr.vim {{{
 
 " 意図しないで発動するケースが多くて辛い
 " inoremap <expr> = smartchr#one_of('= ', '== ', '=== ', '=')
@@ -1152,8 +1153,9 @@ nnoremap Mg :MemoGrep<CR>
 " inoremap <expr> ' smartchr#one_of("'", "''<left>")
 " inoremap <expr> " smartchr#one_of('"', '""<left>')
 " inoremap <expr> > smartchr#one_of('>', '->',  '=>')
+" }}}
 
-" unite {{{2
+" unite {{{
 "
 " 入力モードで開始する
 let g:unite_enable_start_insert=1
@@ -1173,6 +1175,9 @@ function! s:unite_project(...)
   execute 'Unite' opts 'file_rec/async:' . dir
 endfunction
 
+call unite#set_profile('file', 'filters', ['matcher_fuzzy', 'sorter_rank', 'converter_default'])
+call unite#set_profile('grep', 'filters', ['matcher_regexp', 'sorter_default', 'converter_default'])
+
 " ファイル一覧
 " nnoremap <silent> <Leader>uF :<C-u>call <SID>unite_project('-start-insert')<CR>
 nnoremap <silent> <Leader>uf :<C-u>Unite file_rec/async file -buffer-name=file<CR>
@@ -1184,22 +1189,18 @@ nnoremap <Leader>ub :<C-u>Unite bookmark directory_mru -default-action=lcd<CR>
 " 最近使ったファイルの一覧
 nnoremap <Leader>um :<C-u>Unite file_mru -buffer-name=file<CR>
 " grep
-nnoremap <Leader>ug :<C-u>Unite grep -no-quit<CR><CR>
-nnoremap <Leader>uG :<C-u>Unite grep -no-quit<CR><CR><C-r><C-w><CR>
-" au FileType php noremap <buffer> <Leader>uG :<C-u>Unite grep -no-quit<CR><CR><C-r><C-w>
-" au FileType vim noremap <buffer> <Leader>uG :<C-u>Unite grep -no-quit<CR><CR><C-r><C-w>
-" au FileType xml noremap <buffer> <Leader>uG :<C-u>Unite grep -no-quit<CR><CR><C-r><C-w>
+nnoremap <Leader>ug :<C-u>Unite grep -no-quit -buffer-name=grep<CR><CR>
+nnoremap <Leader>uG :<C-u>Unite grep -no-quit -buffer-name=grep<CR><CR><C-r><C-w><CR>
 " ref
 au FileType php nnoremap <buffer> <Leader>ur :<C-u>Unite ref/phpmanual<CR>
 au FileType vim nnoremap <buffer> <Leader>ur :<C-u>Unite help<CR>
 " outline
-nnoremap <Leader>uo :<C-u>Unite outline -no-quit -vertical -winwidth=30 -buffer-name=side<CR>
+nnoremap <Leader>uo :<C-u>Unite outline -no-quit -vertical -winwidth=60 -buffer-name=side<CR>
 " tab
 nnoremap <Leader>ut :<C-u>Unite buffer_tab -buffer-name=file<CR>
 " command
 nnoremap <Leader>uc :<C-u>Unite command<CR>
-" register
-" nnoremap <Leader>uy :<C-u>Unite history/yank<CR>
+" yank
 nnoremap <C-p> :<C-u>Unite history/yank<CR>
 " source(sourceが増えてきたので、sourceのsourceを経由する方針にしてみる)
 nnoremap <Leader>uu :<C-u>Unite source<CR>
@@ -1239,6 +1240,7 @@ function! s:unite_my_settings()
   nnoremap <buffer> p p
   nnoremap <buffer> <Space> <Space>
 endfunction
+" }}}
 
 " tweetvim {{{2
 
