@@ -9,6 +9,10 @@ if has('vim_starting')
 endif
 " }}}
 
+" ===== TODO ========================
+" ・todoをまとめる
+" ===================================
+
 " NeoBundle_plugin_list {{{
 " color-scheme
 NeoBundle 'altercation/vim-colors-solarized'
@@ -551,74 +555,11 @@ map R <Plug>(operator-replace)
 let g:arpeggio_timeoutlen = 70
 call arpeggio#load()
 
-" クリップボードにヤンク
-function! OperatorYankClipboard(motion_wiseness)
-  let visual_commnad =
-        \ operator#user#visual_command_from_wise_name(a:motion_wiseness)
-  execute 'normal!' '`['.visual_commnad.'`]"+y'
-endfunction
+" TODO commentstringを正しく指定する必要あり
+" set commentstring='\"%s'  
 
-call operator#user#define('yank-clipboard', 'OperatorYankClipboard')
-Arpeggio map oy  <Plug>(operator-yank-clipboard)
-
-" 翻訳
-function! OperatorTranslate(motion_wiseness)
-  let visual_commnad =
-        \ operator#user#visual_command_from_wise_name(a:motion_wiseness)
-  let query = join(s:get_region("'[", "']", visual_commnad), "\n")
-
-  let api = 'http://translate.google.com/translate_a/t'
-  let response = http#get(api, {
-        \   'client': 'o',
-        \   'hl': 'en',
-        \   'sl': 'en',
-        \   'tl': 'ja',
-        \   'text': query
-        \ }, {'User-Agent': 'Mozilla/5.0'})
-  if response.header[0] ==# 'HTTP/1.1 200 OK'
-    let result = json#decode(response.content)
-    echo join(map(result.sentences, 'v:val.trans'))
-  else
-    echoerr response.header[0]
-  end
-endfunction
-
-function! s:strpart(src, start, ...)
-  let str = strpart(a:src, a:start)
-  if a:0 > 0
-    let i = byteidx(strpart(str, a:1 - 1), 1) - 1
-    return i == -1 ? str : strpart(str, 0, a:1 + i)
-  else
-    return str
-  endif
-endfunction
-
-function! s:get_region(expr1, expr2, visual_commnad)
-  let [lnum1, col1] = getpos(a:expr1)[1:2]
-  let [lnum2, col2] = getpos(a:expr2)[1:2]
-  let region = getline(lnum1, lnum2)
-
-  if a:visual_commnad ==# "v"  " char
-    if lnum1 == lnum2  " single line
-      let region[0] = s:strpart(region[-1], col1 - 1, col2 - (col1 - 1))
-    else  " multi line
-      let region[0] = s:strpart(region[0], col1 - 1)
-      let region[-1] = s:strpart(region[-1], 0, col2)
-    endif
-  elseif a:visual_commnad ==# "V"  " line
-    let region += ['']
-  else  " block
-    call map(region, 's:strpart(v:val, col1 - 1, col2 - (col1 - 1))')
-  endif
-
-  return region
-endfunction
-
-call operator#user#define('translate', 'OperatorTranslate')
-Arpeggio map ot  <Plug>(operator-translate)
-
-Arpeggio map oc  <Plug>(operator-comment)
-Arpeggio map od  <Plug>(operator-uncomment)
+Arpeggio map C <Plug>(operator-comment)
+Arpeggio map X <Plug>(operator-uncomment)
 
 
 " }}}
