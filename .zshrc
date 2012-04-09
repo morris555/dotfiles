@@ -1,6 +1,9 @@
 # 言語
 export LANG=ja_JP.UTF-8
 
+# screen
+export SCREENDIR="$HOME/.screen"
+
 # プロンプト
 local GREEN=$'%{\e[1;32m%}'
 local YELLOW=$'%{\e[1;33m%}'
