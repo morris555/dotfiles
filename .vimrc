@@ -10,7 +10,14 @@ endif
 " }}}
 
 " ===== TODO ========================
-" ・todoをまとめる
+"
+" TODO 折り畳みのキーマップ。zMについて調べる
+" noremap <Space>fm zM
+" TODO Alignta使う
+
+" TODO commentstringを正しく指定する必要あり
+" set commentstring='\"%s'  
+
 " ===================================
 
 " NeoBundle_plugin_list {{{
@@ -504,8 +511,6 @@ noremap <Space>fj zj
 noremap <Space>fk zk
 noremap <Space>fn ]z
 noremap <Space>fp [z
-" TODO あとで調べる
-" noremap <Space>fm zM
 noremap <Space>fi zMzv
 " 折り畳み位置を表示
 " むしろ、タブラインに出したい
@@ -529,17 +534,6 @@ autocmd FileType coffee nnoremap <silent><buffer> <Space>tu :<C-u>!ctags --langu
 " nnoremap <silent> <Space>tu :<C-u>QuickRun -runner/vimproc -command 'ctags' -cmdopt '-R'<CR>
 nnoremap <silent> <Space>tk <C-]>:<C-u>vsplit<CR><C-o><C-o><C-w>l
 
-" cscope
-" TODO 最近使ってないから、削除を検討
-nnoremap <silent> <space>sa :<C-u>cscope add cscope.out<CR>
-nnoremap <silent> <space>ss :<C-u>cscope find s <C-r><C-w><CR>
-nnoremap <silent> <space>sg :<C-u>cscope find g <C-r><C-w><CR>
-nnoremap <silent> <space>sc :<C-u>cscope find c <C-r><C-w><CR>
-nnoremap <silent> <space>sd :<C-u>cscope find d <C-r><C-w><CR>
-nnoremap <silent> <space>st :<C-u>cscope find t <C-r><C-w><CR>
-nnoremap <silent> <space>sf :<C-u>cscope find f <C-r><C-w><CR>
-nnoremap <silent> <space>si :<C-u>cscope find i <C-r><C-w><CR>
-
 "自動でプレビューを表示する。
 let g:SrcExpl_RefreshTime = 1
 "プレビューウインドウの高さ
@@ -554,9 +548,6 @@ map R <Plug>(operator-replace)
 
 let g:arpeggio_timeoutlen = 70
 call arpeggio#load()
-
-" TODO commentstringを正しく指定する必要あり
-" set commentstring='\"%s'  
 
 Arpeggio map C <Plug>(operator-comment)
 Arpeggio map X <Plug>(operator-uncomment)
@@ -712,8 +703,6 @@ endfunction
 
 nnoremap <silent> <Space>on :<C-u>call <SID>toggle_nu()<CR>
 nnoremap <silent> <Space>ol :<C-u>call <SID>toggle_option('cursorline', 'cursorcolumn')<CR>
-" TODO pasteは別設定
-" nnoremap <silent> <Space>op :<C-u>call <SID>toggle_option('paste')<CR>
 nnoremap <silent> <Space>op :<C-u>pastetoggle<CR>
 nnoremap <silent> <Space>ou :<C-u>GundoToggle<CR>
 nnoremap <silent> <Space>os :<C-u>SyntasticToggleMode<CR>
@@ -891,7 +880,6 @@ inoremap k<space> k
 inoremap j<space> j
 
 " Alignta(仮設定)
-" TODO ちゃんと使ってみる
 vnoremap <Leader>a :Alignta 
 
 " コマンド展開
@@ -1168,10 +1156,6 @@ au FileType unite inoremap <silent> <buffer> <expr> <C-K> unite#do_action('vspli
 " ウィンドウをタブで開く
 au FileType unite nnoremap <silent> <buffer> <expr> <C-T> unite#do_action('tabopen')
 au FileType unite inoremap <silent> <buffer> <expr> <C-T> unite#do_action('tabopen')
-" ESCキーを2回押すと終了する
-" TODO 使ってなくね？
-" au FileType unite nnoremap <silent> <buffer> <ESC><ESC> :q<CR>
-" au FileType unite inoremap <silent> <buffer> <ESC><ESC> <ESC>:q<CR>
 " 初期設定関数を起動する
 au FileType unite call s:unite_my_settings()
 function! s:unite_my_settings()
@@ -1183,7 +1167,7 @@ function! s:unite_my_settings()
 endfunction
 " }}}
 
-" tweetvim {{{2
+" tweetvim {{{
 
 " タイムライン選択用の Unite を起動する
 autocmd FileType tweetvim nnoremap <buffer><silent> t :Unite tweetvim<CR>
@@ -1197,7 +1181,9 @@ endif
 let neco_dic = g:neocomplcache_dictionary_filetype_lists
 let neco_dic.tweetvim_say = $HOME . '/.tweetvim/screen_name'
 
-" neocomplcache {{{2
+" }}}
+
+" neocomplcache {{{
 
 " haskell補完用に、cabalのパスを追加
 let $PATH=$PATH . ":" . $HOME . "/.cabal/bin"
@@ -1227,8 +1213,8 @@ let g:neocomplcache_enable_underbar_completion = 1	" 区切り文字の補完を
 let g:neocomplcache_min_syntax_length = 3
 let g:neocomplcache_min_keyword_length = 3
 let g:neoComplCache_EnableInfo = 1
-let g:neocomplcache_enable_camel_case_completion = 1 " 大文字を入力したときに、それを単語の区切りとしてあいまい検索
-let g:neocomplcache_enable_underbar_completion = 1  " _を入力したときに、それを単語の区切りとしてあいまい検索
+let g:neocomplcache_enable_camel_case_completion = 0 " 大文字を入力したときに、それを単語の区切りとしてあいまい検索
+let g:neocomplcache_enable_underbar_completion = 0  " _を入力したときに、それを単語の区切りとしてあいまい検索
 let g:neocomplcache_caching_limit_file_size = 5000000
 let g:neocomplcache_dictionary_file_type_lists = {
       \'default' : '',
@@ -1256,6 +1242,7 @@ autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
 autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
 autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
 autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
+" }}}
 
 
 " user command {{{1
@@ -1459,11 +1446,9 @@ autocmd FileType scala :set dictionary+=~/.vim/dict/scala.dict
 set complete+=k
 
 "php処理
-" TODO 重くなる原因らしいので解除。foldingは自分で定義してでも入れたい
-" let php_sql_query=1
-" let php_htmlInStrings=1
+let php_sql_query=1
+let php_htmlInStrings=1
 " let php_folding = 1
-" let php_parent_error_close = 1
 
 " 改行文字などの表示
 set list
