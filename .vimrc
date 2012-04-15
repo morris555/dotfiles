@@ -541,16 +541,15 @@ let g:SrcExpl_WinHeight = 9
 "tagsは自動で作成する
 let g:SrcExpl_isUpdateTags = 0
 
+autocmd FileType php setlocal commentstring=//%s
+
 " operator object {{{
 
 " 置換
 map R <Plug>(operator-replace)
 
-let g:arpeggio_timeoutlen = 70
-call arpeggio#load()
-
-Arpeggio map C <Plug>(operator-comment)
-Arpeggio map X <Plug>(operator-uncomment)
+map X <Plug>(operator-comment)
+" map X <Plug>(operator-uncomment)
 
 
 " }}}
@@ -646,7 +645,16 @@ noremap H 10h
 noremap <C-e> g$
 noremap <C-a> g^
 
+" insert mode
+inoremap <C-f> <Right>
+inoremap <C-b> <Left>
+inoremap <C-e> <End>
+inoremap <C-a> <Home>
+inoremap <expr> <C-k>
+\ repeat("\<Delete>", max([strchars(getline('.')[col('.') - 1:]), 1]))
+
 " キーボードマクロをQに降格
+nnoremap q <Nop>
 nnoremap Q q
 
 " ノーマルモード時にスペース2回で改行
@@ -783,9 +791,9 @@ function! MakeTabLine()
   " let info .= '(◕‿‿◕)「クズだから、ッネ！」'
   " let info .= '(◕‿‿◕)「訳がわからないよ」'
   " let info .= '(◕‿‿◕)「おかしいショ！ 言ってないからネ！」'
-  let info .= '(◕‿‿◕)「そのまま眠り続けて死ね！」'
+  " let info .= '(◕‿‿◕)「そのまま眠り続けて死ね！」'
   " let info .= '(◕‿‿◕)'
-  let info .= '   '
+  " let info .= '   '
   let info .= s:tags_text()
   let info .= '   '
   let info .= fnamemodify(getcwd(), ":~") . ' '
@@ -795,7 +803,7 @@ endfunction
 " set tabline=%!MakeTabLine()
 autocmd CursorMoved * set tabline=%!MakeTabLine()
 
-" plugin
+" plugin {{{
 
 " sonictemplate
 let g:sonictemplate_vim_template_dir = $HOME. '/dotfiles/.vim/template'
@@ -872,6 +880,8 @@ nnoremap <Leader>l :<C-u>QuickRun -exec '%c -l %s'<CR>
 " arpeggio(同時押し設定)
 
 " jkの同時押しで<Esc>
+let g:arpeggio_timeoutlen = 70
+call arpeggio#load()
 Arpeggio vnoremap jk <Esc>
 Arpeggio cnoremap jk <Esc>
 imap jk <Esc>
@@ -924,7 +934,7 @@ let g:EasyMotion_leader_key='<Leader>m'
 
 " capslock設定
 " これ、有効かわかりづらい
-imap <C-a> <C-o><Plug>CapsLockToggle
+" imap <C-a> <C-o><Plug>CapsLockToggle
 
 " vimshell設定
 
@@ -960,8 +970,6 @@ vmap <C-h> <Plug>(textmanip-move-left)
 vmap <C-l> <Plug>(textmanip-move-right)
 
 " 行の複製
-vmap <C-D> <Plug>(textmanip-duplicate-up)
-nmap <C-D> <Plug>(textmanip-duplicate-up)
 vmap <C-d> <Plug>(textmanip-duplicate-down)
 nmap <C-d> <Plug>(textmanip-duplicate-down)
 
@@ -984,14 +992,15 @@ let g:w3m#search_engine =
 " syntastic
 let g:syntastic_mode_map = {
       \ 'mode': 'active',
-      \ 'active_filetypes': ['php', 'coffeescript', 'sh'],
+      \ 'active_filetypes': ['php', 'coffeescript', 'sh', 'vim'],
       \ 'passive_filetypes': ['html', 'haskell']
       \}
 let g:syntastic_auto_loc_list=1
 nnoremap <silent> <Leader>l :<C-u>SyntasticCheck<CR>
 
-" surround.vim
+" surround.vim {{{
 
+let g:surround_108 = "\\begin{\1environment: \1}\r\\end{\1\1}"
 let g:surround_custom_mapping = {}
 let g:surround_custom_mapping._ = {
       \'[': "[\r]",
@@ -1002,7 +1011,7 @@ let g:surround_custom_mapping._ = {
 let g:surround_custom_mapping.php= {
       \'{': "{\r}",
       \'f': "\1name: \r..*\r&\1(\r)",
-      \'F': "\1name: \r..*\rfb('&');\nfb(\r)",
+      \'F': "fb('\1name: \1');\nfb(\r);",
       \'a': "['\r']",
       \'A': "array(\r);",
       \'v': "v(\r);",
@@ -1018,11 +1027,11 @@ let g:surround_custom_mapping.javascript= {
       \'l': "console.log(\r);"
       \}
 
-imap <C-k> <C-g>s
-
+nmap S i<C-g>s
+imap <C-s> <C-g>s
+" }}}
 " memo_list {{{
-" メモを作成する
-command! -nargs=0 MemoNew call s:open_memo_file()
+" メモ関連関数 {{{
 function! s:open_memo_file()
   let l:category = input('Category: ')
   let l:title = input('Title: ')
@@ -1054,10 +1063,14 @@ function! s:open_memo_file()
   execute '999'
   execute 'write'
 endfunction augroup END
+call unite#set_profile('memo_list', 'filters', ['matcher_default', 'sorter_reverse', 'converter_default'])
+" }}}
+
+" メモを作成するコマンド
+command! -nargs=0 MemoNew call s:open_memo_file()
 
 " メモ一覧をUniteで呼び出すコマンド
 command! -nargs=0 MemoList :Unite file_rec:~/Dropbox/Memo/ -buffer-name=memo_list
-call unite#set_profile('memo_list', 'filters', ['matcher_default', 'sorter_reverse', 'converter_default'])
 
 " メモ一覧をUnite grepするコマンド
 command! -nargs=0 MemoGrep :Unite grep:~/Dropbox/Memo/ -no-quit<CR>
@@ -1070,8 +1083,6 @@ nnoremap Ml :MemoList<CR>
 nnoremap Mf :MemoFiler<CR>
 nnoremap Mg :MemoGrep<CR>
 " }}}
-
-
 " smartchr.vim {{{
 
 " 意図しないで発動するケースが多くて辛い
@@ -1083,13 +1094,10 @@ nnoremap Mg :MemoGrep<CR>
 " inoremap <expr> " smartchr#one_of('"', '""<left>')
 " inoremap <expr> > smartchr#one_of('>', '->',  '=>')
 " }}}
-
 " unite {{{
 "
 " 入力モードで開始する
 let g:unite_enable_start_insert=1
-
-let g:unite_source_file_mru_limit = 10000
 
 " yankソースを有効にする
 let g:unite_source_history_yank_enable = 1
@@ -1097,6 +1105,8 @@ let g:unite_source_history_yank_limit = 1000
 
 let g:unite_source_grep_max_candidates = 100
 let g:unite_source_session_enable_auto_save = 1     " セッション保存
+
+let g:unite_source_file_mru_limit = 10000
 
 function! s:unite_project(...)
   let opts = (a:0 ? join(a:000, ' ') : '')
@@ -1166,7 +1176,6 @@ function! s:unite_my_settings()
   nnoremap <buffer> <Space> <Space>
 endfunction
 " }}}
-
 " tweetvim {{{
 
 " タイムライン選択用の Unite を起動する
@@ -1182,7 +1191,6 @@ let neco_dic = g:neocomplcache_dictionary_filetype_lists
 let neco_dic.tweetvim_say = $HOME . '/.tweetvim/screen_name'
 
 " }}}
-
 " neocomplcache {{{
 
 " haskell補完用に、cabalのパスを追加
@@ -1192,20 +1200,20 @@ let $PATH=$PATH . ":" . $HOME . "/.cabal/bin"
 inoremap <expr><C-x><C-f>  neocomplcache#manual_filename_complete()
 
 " omni補完
-inoremap <expr> <C-x><C-o> &filetype == 'vim' ? "\<C-x><C-v><C-p>" : neocomplcache#manual_omni_complete()
+" inoremap <expr> <C-x><C-o> &filetype == 'vim' ? "\<C-x><C-v><C-p>" : neocomplcache#manual_omni_complete()
 
 " <C-h>のときにポップアップを消す
-inoremap <expr><C-h> neocomplcache#smart_close_popup()."<C-h>"
+" inoremap <expr><C-h> neocomplcache#smart_close_popup()."<C-h>"
 
 " <C-f>で補完を確定
-inoremap <expr><C-f> neocomplcache#close_popup()
+" inoremap <expr><C-f> neocomplcache#close_popup()
 
 " <C-e>で補完をキャンセル
-inoremap <expr><C-e> neocomplcache#cancel_popup()
+" inoremap <expr><C-e> neocomplcache#cancel_popup()
 
 " スニペット
-imap <C-s> <Plug>(neocomplcache_snippets_expand)
-smap <C-s> <Plug>(neocomplcache_snippets_expand)
+" imap <C-s> <Plug>(neocomplcache_snippets_expand)
+" smap <C-s> <Plug>(neocomplcache_snippets_expand)
 
 let g:neocomplcache_enable_at_startup = 1 " 自動起動
 let g:neocomplcache_enable_smart_case = 1 " 大文字打つまで、小文字大文字区別しない
@@ -1235,7 +1243,6 @@ let g:NeoComplCache_SnippetsDir = $HOME . '/.vim/snippets'
 " imap <C-u> <Plug>(neocomplcache_start_unite_complete)
 " imap <C-u> <Plug>(neocomplcache_start_unite_quick_match)
 
-
 " Enable omni completion.
 autocmd filetype css setlocal omnifunc=csscomplete#completecss
 autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
@@ -1243,8 +1250,7 @@ autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
 autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
 autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
 " }}}
-
-
+" }}}
 " user command {{{1
 
 " Ev/Rvでvimrcの編集と反映
