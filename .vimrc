@@ -15,9 +15,6 @@ endif
 " noremap <Space>fm zM
 " TODO Alignta使う
 
-" TODO commentstringを正しく指定する必要あり
-" set commentstring='\"%s'  
-
 " ===================================
 
 " NeoBundle_plugin_list {{{
@@ -548,8 +545,8 @@ autocmd FileType php setlocal commentstring=//%s
 " 置換
 map R <Plug>(operator-replace)
 
-map X <Plug>(operator-comment)
-" map X <Plug>(operator-uncomment)
+map C <Plug>(operator-comment)
+map X <Plug>(operator-uncomment)
 
 
 " }}}
@@ -771,9 +768,9 @@ endfunction
 " タグがあるかどうかの文字列を返す関数
 function! s:tags_text()
   if s:has_tags()
-    return '+tags'
+    return ''
   else
-    return 'no tags'
+    return '【no tags!!!】'
   endif
 endfunction
 
@@ -786,8 +783,8 @@ function! MakeTabLine()
   " let info .= '[%f]'
   let info .= '[%F]'
   let info .= '   '
-  let info .= '(%l/%L) %P'
-  let info .= '   '
+  " let info .= '(%l/%L) %P'
+  " let info .= '   '
   " let info .= '(◕‿‿◕)「クズだから、ッネ！」'
   " let info .= '(◕‿‿◕)「訳がわからないよ」'
   " let info .= '(◕‿‿◕)「おかしいショ！ 言ってないからネ！」'
@@ -1026,7 +1023,10 @@ let g:surround_custom_mapping.javascript= {
       \'{': "{\r}",
       \'l': "console.log(\r);"
       \}
-
+let g:surround_custom_mapping.vim= {
+      \'{': "{\r}",
+      \'v': "echomsg printf('%s: %s','\1name: \1',string(\r));"
+      \}
 nmap S i<C-g>s
 imap <C-s> <C-g>s
 " }}}
@@ -1372,6 +1372,8 @@ command! -nargs=1 Type :set filetype=<args>
 " TODOファイル
 command! Todo edit ~/Dropbox/todo.mkd
 
+command! TOhtml runtime! syntax/2html.vim
+
 command!
       \   TOhtmlAndBrowse
       \   call s:TOhtmlAndBrowse()
@@ -1427,7 +1429,7 @@ endfunction
 
 
 " ヤンクしたものをクリップボードにも
-set clipboard=unnamed
+ set clipboard=unnamed
 
 " 折り畳み関連
 set foldmethod=marker
