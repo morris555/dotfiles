@@ -1,3 +1,10 @@
+" {{{ ==== TODO ========================
+"
+" TODO 折り畳みのキーマップ。zMについて調べる
+" noremap <Space>fm zM
+" TODO Alignta使う
+" TODO ファイルタイプ別の設定をまとめるべき
+" }}}
 " NeoBundle_setup {{{
 set nocompatible
 filetype off
@@ -8,15 +15,6 @@ if has('vim_starting')
   call neobundle#rc(expand('~/.vim/bundle'))
 endif
 " }}}
-
-" ===== TODO ========================
-"
-" TODO 折り畳みのキーマップ。zMについて調べる
-" noremap <Space>fm zM
-" TODO Alignta使う
-" TODO ファイルタイプ別の設定をまとめるべき
-" ===================================
-
 " NeoBundle_plugin_list {{{
 " color-scheme
 NeoBundle 'altercation/vim-colors-solarized'
@@ -253,14 +251,20 @@ filetype indent on
 " 自動コマンド削除
 autocmd!
 
-set fileencodings=utf-8,cp932
-
 " シンタックス有効
 syntax on
+
+" koriya版に同梱されているプラグインを無効化する
+let plugin_dicwin_disable = 1
+
+" オプション指定 {{{
 
 " ファイルタイプ判定ON
 filetype plugin indent on
 
+set fileencodings=utf-8,cp932
+
+" 自動再読み込み
 set autoread
 
 " カーソルを中央行に
@@ -290,7 +294,8 @@ set matchpairs+=<:>
 " 編集中もほかファイルを開けるように
 set hidden
 
-set updatetime=10
+" CursorHoldまでの時間
+set updatetime=1000
 
 set cmdheight=2            " コマンドラインは２行
 set showcmd                " コマンドを表示
@@ -300,8 +305,7 @@ set wildmode=list:full     " リスト表示，最長マッチ
 set history=1000           " コマンド・検索パターンの履歴数
 set complete+=k            " 補完に辞書ファイル追加
 
-" koriya版に同梱されているプラグインを無効化する
-let plugin_dicwin_disable = 1
+" }}}
 
 " utility function {{{
 function! s:has_plugin(name)
@@ -497,9 +501,9 @@ noremap <Space>fo zo
 " 閉じる
 noremap <Space>fc zc
 " 全て開く
-noremap <Space>fO zO
+noremap <Space>fO zR
 " 全て閉じる
-noremap <Space>fC zC
+noremap <Space>fC zV
 " トグル
 noremap <Space>ff za
 " 移動
