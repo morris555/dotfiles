@@ -15,8 +15,7 @@ endif
 " noremap <Space>fm zM
 " TODO Alignta使う
 
-" TODO commentstringを正しく指定する必要あり
-" set commentstring='\"%s'  
+" TODO ファイルタイプ別の設定をまとめるべき
 
 " ===================================
 
@@ -462,7 +461,6 @@ endif
 " }}}
 
 " searching
-
 set ignorecase
 set smartcase
 set wrapscan
@@ -655,6 +653,10 @@ nnoremap <Space><Space> o<ESC>
 nnoremap <Space>d cc<ESC>
 nnoremap <Space>i oX<C-h><ESC>kdd
 nnoremap <Space>I /^\n<CR>oX<C-h><ESC>kdd
+
+" 入力時C-vで貼り付けにする。
+cnoremap <C-v> <C-R>"
+inoremap <C-v> <C-R>"
 
 " 空行のスペースやタブを維持
 " nnoremap o oX<C-h>
