@@ -375,11 +375,7 @@ if has('gui_running')
 endif
 " }}}
 
-" indent
-
-" set smartindent
-" set autoindent
-" set cindent
+" {{{ === ファイルタイプ別設定 ========
 
 " phpはタブ幅4でタブ文字を使う
 autocmd FileType php set shiftwidth=4
@@ -1379,7 +1375,7 @@ command! -nargs=1 Type :set filetype=<args>
 " TODOファイル
 command! Todo edit ~/Dropbox/todo.mkd
 
-command! TOhtml runtime! syntax/2html.vim
+" command! TOhtml runtime! syntax/2html.vim
 
 command!
       \   TOhtmlAndBrowse
