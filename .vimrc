@@ -394,6 +394,7 @@ autocmd FileType vim set shiftwidth=2
 autocmd FileType vim set tabstop=2
 autocmd FileType vim set softtabstop=2
 autocmd FileType vim set expandtab
+" }}}
 
 " file encoding {{{
 "
