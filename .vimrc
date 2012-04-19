@@ -98,7 +98,7 @@ NeoBundle 'git://github.com/vim-scripts/Source-Explorer-srcexpl.vim.git'
 NeoBundle 'git://github.com/tyru/current-func-info.vim.git'
 
 " unite {{{
-NeoBundle 'Shougo/unite.vim'
+NeoBundle 'Shougo/unite.vim', '5aef9ba9bc056f6be1420534829279200dc9feab'
 NeoBundle 'h1mesuke/unite-outline'
 NeoBundle 'tsukkee/unite-help'
 NeoBundle 'thinca/vim-unite-history'
@@ -807,7 +807,7 @@ autocmd CursorMoved * set tabline=%!MakeTabLine()
 " plugin {{{
 
 " sonictemplate
-let g:sonictemplate_vim_template_dir = $HOME. '/dotfiles/.vim/template'
+let g:sonictemplate_vim_template_dir = $HOME. '/Dropbox/Vim/sonic_template'
 
 " toggle.vim
 " 単語認識がちゃんと出きていなくて使いものにならない
@@ -1041,10 +1041,10 @@ function! s:open_memo_file()
   let l:title = input('Title: ')
 
   if l:category == ""
-    let l:category = "Other"
+    let l:category = "other"
   endif
 
-  let l:memo_dir = $HOME . '/Dropbox/Memo/Vim/' . l:category
+  let l:memo_dir = $HOME . '/Dropbox/Memo/vim/' . l:category
   if !isdirectory(l:memo_dir)
     call mkdir(l:memo_dir, 'p')
   endif

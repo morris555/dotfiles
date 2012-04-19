@@ -1,1 +1,0 @@
-$dba = DatabaseAccess::singleton();
