@@ -1363,9 +1363,6 @@ function! s:diffCapture()
   execute "VDsplit" l:target_filename
 endfunction augroup END
 
-" temp_edit
-command! -nargs=0 TempEdit :Unite file_rec:~/.vim/template file -buffer-name=file
-
 " 一時ファイル
 command! -nargs=1 -complete=filetype Tmp edit ~/.vim_tmp/tmp.<args>
 command! -nargs=1 -complete=filetype Temp edit ~/.vim_tmp/tmp.<args>
