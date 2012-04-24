@@ -1,0 +1,11 @@
+# Pointing Device
+## CursorMove to ScrollWheel
+* MouseButton4 + CursorMove to ScrollWheel
+## Button to Key
+* Set2: Button5 to Command + [ (Back)
+* (Simultaneous) LeftClick+ RightClickto Expose 
+# For Japanese
+## Change Command_R Key
+* Command_R to KANA
+## Change Option_R Key
+* Option_R to EISUU

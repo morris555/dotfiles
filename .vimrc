@@ -525,11 +525,11 @@ nnoremap <silent> <Space>tn :tn<CR>
 nnoremap <silent> <Space>tp :tp<CR>
 nnoremap <silent> <Space>tg :<C-u>UniteWithCursorWord -immediately tag<CR>
 nnoremap <silent> <Space>tj <C-]>:<C-u>split<CR><C-o><C-o><C-w>j
+nnoremap <silent> <Space>tk <C-]>:<C-u>vsplit<CR><C-o><C-o><C-w>l
 " nnoremap <silent> <Space>tu :<C-u>!ctags -R<CR
 autocmd FileType php nnoremap <silent><buffer> <Space>tu :<C-u>!ctags --languages=PHP --sort=foldcase -R<CR>
 autocmd FileType coffee nnoremap <silent><buffer> <Space>tu :<C-u>!ctags --languages=coffee -R<CR>
 " nnoremap <silent> <Space>tu :<C-u>QuickRun -runner/vimproc -command 'ctags' -cmdopt '-R'<CR>
-nnoremap <silent> <Space>tk <C-]>:<C-u>vsplit<CR><C-o><C-o><C-w>l
 
 "自動でプレビューを表示する。
 let g:SrcExpl_RefreshTime = 1
