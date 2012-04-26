@@ -1130,7 +1130,7 @@ nnoremap <Leader>uh :<C-u>Unite buffer -buffer-name=file<CR>
 " お気に入り
 nnoremap <Leader>ub :<C-u>Unite bookmark directory_mru -default-action=lcd<CR>
 " 最近使ったファイルの一覧
-nnoremap <Leader>um :<C-u>Unite file_mru -buffer-name=file<CR>
+nnoremap <Leader>um :<C-u>Unite file_mru<CR>
 " grep
 nnoremap <Leader>ug :<C-u>Unite grep -no-quit -buffer-name=grep<CR><CR>
 nnoremap <Leader>uG :<C-u>Unite grep -no-quit -buffer-name=grep<CR><CR><C-r><C-w><CR>
