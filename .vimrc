@@ -808,11 +808,12 @@ autocmd CursorMoved * set tabline=%!MakeTabLine()
 
 " sonictemplate
 let g:sonictemplate_vim_template_dir = $HOME. '/Dropbox/Vim/sonic_template'
+imap <C-t> <space><bs><c-o>:call sonictemplate#select('i')<cr>
 
 " toggle.vim
 " 単語認識がちゃんと出きていなくて使いものにならない
-nmap <C-t> <Plug>ToggleN
-vmap <C-t> <Plug>ToggleV
+" nmap <C-t> <Plug>ToggleN
+" vmap <C-t> <Plug>ToggleV
 let g:toggle_pairs = {
       \'and':'or',
       \'or':'and',
