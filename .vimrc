@@ -98,7 +98,7 @@ NeoBundle 'git://github.com/vim-scripts/Source-Explorer-srcexpl.vim.git'
 NeoBundle 'git://github.com/tyru/current-func-info.vim.git'
 
 " unite {{{
-NeoBundle 'Shougo/unite.vim', '5aef9ba9bc056f6be1420534829279200dc9feab'
+NeoBundle 'Shougo/unite.vim'
 NeoBundle 'h1mesuke/unite-outline'
 NeoBundle 'tsukkee/unite-help'
 NeoBundle 'thinca/vim-unite-history'
@@ -1032,8 +1032,11 @@ let g:surround_custom_mapping.vim= {
       \'{': "{\r}",
       \'v': "echomsg printf('%s: %s','\1name: \1',string(\r));"
       \}
-nmap S i<C-g>s
-imap <C-s> <C-g>s
+" nmap S i<C-g>s
+" imap <C-s> <C-g>s
+nmap <C-s> i<Plug>Isurround
+imap <C-s> <Plug>Isurround
+xmap <C-s> <Plug>VSurround
 " }}}
 " memo_list {{{
 " メモ関連関数 {{{
