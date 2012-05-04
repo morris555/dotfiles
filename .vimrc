@@ -981,6 +981,9 @@ let g:openbrowser_search_engines = {
 let g:w3m#search_engine = 
       \ 'https://www.google.co.jp/search?aq=f&ix=seb&sourceid=chrome&ie=' . &encoding . '&q='
 
+autocmd FileType w3m nnoremap <silent><buffer> r :<C-u>W3mReload<CR>
+autocmd FileType w3m nnoremap <silent><buffer> q :<C-u>W3mClose<CR>
+
 " syntastic
 let g:syntastic_mode_map = {
       \ 'mode': 'active',
