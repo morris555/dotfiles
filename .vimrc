@@ -77,9 +77,6 @@ NeoBundle 'git://github.com/mattn/sonictemplate-vim.git'
 " 究極補完
 NeoBundle 'Shougo/neocomplcache'
 
-" コメントorコメントアウト
-NeoBundle 'scrooloose/nerdcommenter'
-
 " easymotion
 NeoBundle 'Lokaltog/vim-easymotion'
 
@@ -947,13 +944,6 @@ noremap <Leader>st :<C-u>VimShellTab<CR>
 noremap <Leader>sj :<C-u>new<CR>:<C-u>VimShellCreate<CR>
 noremap <Leader>sk :<C-u>vnew<CR>:<C-u>VimShellCreate<CR>
 noremap <Leader>f :<C-u>VimFilerTab<CR>
-
-" NERD Commnterの設定
-" コメント処理はemonkakさんのを使いたい
-let g:NERDCreateDefaultMappings = 0
-let NERDSpaceDelims = 1
-nmap <Leader>c <Plug>NERDCommenterToggle
-vmap <Leader>c <Plug>NERDCommenterToggle
 
 " vimproc
 if has('mac')
