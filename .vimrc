@@ -374,6 +374,11 @@ endif
 
 " {{{ === ファイルタイプ別設定 ========
 
+set shiftwidth=4
+set tabstop=4
+set softtabstop=4
+set expandtab
+
 " phpはタブ幅4でタブ文字を使う
 autocmd FileType php set shiftwidth=4
 autocmd FileType php set tabstop=4
@@ -391,6 +396,12 @@ autocmd FileType vim set shiftwidth=2
 autocmd FileType vim set tabstop=2
 autocmd FileType vim set softtabstop=2
 autocmd FileType vim set expandtab
+
+" haskellはタブ幅2でスペースを使う
+autocmd FileType haskell set shiftwidth=2
+autocmd FileType haskell set tabstop=2
+autocmd FileType haskell set softtabstop=2
+autocmd FileType haskell set expandtab
 " }}}
 
 " file encoding {{{
@@ -987,8 +998,8 @@ autocmd FileType w3m nnoremap <silent><buffer> q :<C-u>W3mClose<CR>
 " syntastic
 let g:syntastic_mode_map = {
       \ 'mode': 'active',
-      \ 'active_filetypes': ['php', 'coffeescript', 'sh', 'vim'],
-      \ 'passive_filetypes': ['html', 'haskell']
+      \ 'active_filetypes': ['php', 'coffeescript', 'sh', 'vim', 'haskell'],
+      \ 'passive_filetypes': ['html']
       \}
 let g:syntastic_auto_loc_list=1
 nnoremap <silent> <Leader>l :<C-u>SyntasticCheck<CR>
