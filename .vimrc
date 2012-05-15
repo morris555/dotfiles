@@ -134,7 +134,7 @@ NeoBundle 'git://github.com/vim-scripts/actionscript.vim--Leider.git'
 NeoBundle 'thinca/vim-quickrun'
 
 " リファレンスを開く
-NeoBundle 'thinca/vim-ref'
+NeoBundle 'thinca/vim-ref', '91fb1b2d811f461bdd7711ddbe68c27e567a9a4a'
 NeoBundle 'mojako/ref-alc.vim'
 NeoBundle 'mojako/ref-sources.vim'
 
@@ -233,7 +233,7 @@ NeoBundle 'tpope/vim-abolish'
 NeoBundle 'git://github.com/mattn/learn-vimscript.git'
 
 " statusline
-NeoBundle 'git://github.com/Lokaltog/vim-powerline.git'
+NeoBundle 'git://github.com/Lokaltog/vim-powerline.git', '65e54dde89c73cae4cf089a83f5c26d605dda594'
 
 " Game
 NeoBundle 'mattn/invader-vim'
@@ -797,12 +797,6 @@ function! MakeTabLine()
   let info .= '   '
   let info .= '(%l/%L) %P'
   let info .= '   '
-  " let info .= '(◕‿‿◕)「クズだから、ッネ！」'
-  " let info .= '(◕‿‿◕)「訳がわからないよ」'
-  " let info .= '(◕‿‿◕)「おかしいショ！ 言ってないからネ！」'
-  " let info .= '(◕‿‿◕)「そのまま眠り続けて死ね！」'
-  " let info .= '(◕‿‿◕)'
-  " let info .= '   '
   let info .= s:tags_text()
   let info .= '   '
   let info .= fnamemodify(getcwd(), ":~") . ' '
