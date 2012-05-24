@@ -1109,6 +1109,9 @@ let g:unite_enable_start_insert=1
 let g:unite_source_history_yank_enable = 1
 let g:unite_source_history_yank_limit = 1000
 
+" grepソース
+let g:unite_source_grep_default_opts = '-Hn --include="*.vim" --include="*.txt" --include="*.php" --include="*.xml" --include="*.mkd" --include="*.hs" --include="*.js" --include="*.log"'
+
 let g:unite_source_grep_max_candidates = 100
 let g:unite_source_session_enable_auto_save = 1     " セッション保存
 
