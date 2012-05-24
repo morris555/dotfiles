@@ -480,14 +480,15 @@ vnoremap * "zy:let @/ = @z<CR>n
 " ?では、lineソースを使った検索にする
 nnoremap ? :<C-u>Unite line -buffer-name=search -start-insert<CR>
 
-if has('migemo')
-  " ?で行うline検索で、migemoを使う
-  call unite#custom_filters('line', ['matcher_migemo', 'sorter_default', 'converter_default'])
-
-  " 検索をmigemoで行う
-  nnoremap / g/
-  nnoremap g/ /
-endif
+" TODO 検索がなぜか調子悪いため、試しに外している
+" if has('migemo')
+"   " ?で行うline検索で、migemoを使う
+"   call unite#custom_filters('line', ['matcher_migemo', 'sorter_default', 'converter_default'])
+"
+"   " 検索をmigemoで行う
+"   nnoremap / g/
+"   nnoremap g/ /
+" endif
 
 " folding
 
@@ -522,7 +523,6 @@ noremap <Space>fi zMzv
 noremap <space>fg :echo FoldCCnavi()<CR>
 
 " tag
-
 set tags=tags
 
 nnoremap <silent> <Space>tl :Tlist<CR>
@@ -534,7 +534,7 @@ nnoremap <silent> <Space>tp :tp<CR>
 nnoremap <silent> <Space>tg :<C-u>UniteWithCursorWord -immediately tag<CR>
 nnoremap <silent> <Space>tj <C-]>:<C-u>split<CR><C-o><C-o><C-w>j
 nnoremap <silent> <Space>tk <C-]>:<C-u>vsplit<CR><C-o><C-o><C-w>l
-" nnoremap <silent> <Space>tu :<C-u>!ctags -R<CR
+nnoremap <silent> <Space>tu :<C-u>!ctags -R<CR>
 autocmd FileType php nnoremap <silent><buffer> <Space>tu :<C-u>!ctags --languages=PHP --sort=foldcase -R<CR>
 autocmd FileType coffee nnoremap <silent><buffer> <Space>tu :<C-u>!ctags --languages=coffee -R<CR>
 " nnoremap <silent> <Space>tu :<C-u>QuickRun -runner/vimproc -command 'ctags' -cmdopt '-R'<CR>
