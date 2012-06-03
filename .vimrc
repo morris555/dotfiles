@@ -26,6 +26,9 @@ NeoBundle 'git://github.com/aereal/vim-magica-colors.git'
 " singleton
 NeoBundle 'git://github.com/thinca/vim-singleton.git'
 
+" singleton
+NeoBundle 'git://github.com/vim-scripts/sudo.vim.git'
+
 " lib
 NeoBundle 'mattn/webapi-vim'
 NeoBundle 'thinca/vim-openbuf'
@@ -200,7 +203,8 @@ NeoBundle 'thinca/vim-scouter.git'
 NeoBundle 'thinca/vim-localrc'
 
 " eskk.vim
-NeoBundle 'tyru/eskk.vim'
+NeoBundle 'tyru/eskk.vim', '06e78f9af0f6aee91bf869e9a345af5e05d20e3c'
+" NeoBundle 'tyru/eskk.vim'
 NeoBundle 'tyru/savemap.vim'
 NeoBundle 'tyru/vice.vim'
 
