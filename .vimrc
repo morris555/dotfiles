@@ -17,6 +17,7 @@ endif
 " }}}
 " NeoBundle_plugin_list {{{
 " color-scheme
+NeoBundle 'vol2223/vim-colorblind-colorscheme'
 NeoBundle 'altercation/vim-colors-solarized'
 NeoBundle 'git://github.com/vim-scripts/mrkn256.vim.git'
 NeoBundle 'tomasr/molokai'
