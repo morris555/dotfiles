@@ -137,7 +137,7 @@ NeoBundle 'git://github.com/vim-scripts/actionscript.vim--Leider.git'
 NeoBundle 'thinca/vim-quickrun'
 
 " リファレンスを開く
-NeoBundle 'thinca/vim-ref', '91fb1b2d811f461bdd7711ddbe68c27e567a9a4a'
+NeoBundle 'thinca/vim-ref'
 NeoBundle 'mojako/ref-alc.vim'
 NeoBundle 'mojako/ref-sources.vim'
 
@@ -203,10 +203,10 @@ NeoBundle 'thinca/vim-scouter.git'
 NeoBundle 'thinca/vim-localrc'
 
 " eskk.vim
-NeoBundle 'tyru/eskk.vim', '06e78f9af0f6aee91bf869e9a345af5e05d20e3c'
-" NeoBundle 'tyru/eskk.vim'
+NeoBundle 'tyru/eskk.vim'
 NeoBundle 'tyru/savemap.vim'
 NeoBundle 'tyru/vice.vim'
+NeoBundle 'tyru/skkdict.vim'
 
 " matrix
 NeoBundle 'git://github.com/vim-scripts/matrix.vim--Yang.git'
@@ -849,9 +849,9 @@ let g:eskk#show_candidates_count = 3
 let g:eskk#auto_henkan_at_okuri_match = 3
 let g:eskk#fix_extra_okuri = 1
 let g:eskk#debug_out = "cmdline"
-" imap <C-j> <Plug>(eskk:enable)
+imap <C-j> <Plug>(eskk:enable)
 let g:eskk#directory = '~/Dropbox/SKK/eskk/'
-" let g:eskk#kakutei_when_unique_candidate = 1
+let g:eskk#kakutei_when_unique_candidate = 1
 " <C-j><C-k>でいきなり日本語入力からのインサート
 nmap <C-j> i<C-j>
 nmap <C-k> a<C-j>
@@ -1280,9 +1280,6 @@ command! -bang Rb :Unite neobundle/install:<bang>
 
 " jsonデコード(仮)
 command! JsonReformat :r!php -r 'print_r(json_decode(file_get_contents("%",true)));'
-
-" sakuriver
-command! Kansyai normal iあ、はい かんしゃい<ESC>
 
 " 作成中
 " TODO とりあえずdiffを出す？
