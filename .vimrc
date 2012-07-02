@@ -1,10 +1,10 @@
-" {{{ ==== TODO ========================
+"  ==== TODO ========================
 "
 " TODO 折り畳みのキーマップ。zMについて調べる
 " noremap <Space>fm zM
 " TODO Alignta使う
 " TODO ファイルタイプ別の設定をまとめるべき
-" }}}
+
 " NeoBundle_setup {{{
 set nocompatible
 filetype off
@@ -15,7 +15,7 @@ if has('vim_starting')
   call neobundle#rc(expand('~/.vim/bundle'))
 endif
 " }}}
-" NeoBundle_plugin_list {{{
+
 " color-scheme
 NeoBundle 'altercation/vim-colors-solarized'
 NeoBundle 'git://github.com/vim-scripts/mrkn256.vim.git'
@@ -44,7 +44,7 @@ NeoBundle 'git://github.com/ujihisa/quicklearn.git'
 " folding_function
 NeoBundle 'git://github.com/LeafCage/foldCC.git'
 
-" textobj,operator {{{
+" textobj,operator
 
 NeoBundle 'kana/vim-textobj-user'
 NeoBundle 'kana/vim-operator-user'
@@ -57,8 +57,6 @@ NeoBundle 'kana/vim-operator-replace'
 NeoBundle 'tyru/operator-camelize.vim'
 NeoBundle 'emonkak/vim-operator-comment'
 NeoBundle 'git://github.com/kana/vim-textobj-line.git'
-
-" textobj,operator }}}
 
 " 擬似capslock
 NeoBundle 'git://github.com/vim-scripts/capslock.vim.git'
@@ -97,7 +95,7 @@ NeoBundle 'git://github.com/vim-scripts/Source-Explorer-srcexpl.vim.git'
 
 NeoBundle 'git://github.com/tyru/current-func-info.vim.git'
 
-" unite {{{
+" unite
 NeoBundle 'Shougo/unite.vim'
 NeoBundle 'h1mesuke/unite-outline'
 NeoBundle 'tsukkee/unite-help'
@@ -110,7 +108,7 @@ NeoBundle 'git://github.com/basyura/TweetVim.git'
 NeoBundle 'git://github.com/kmnk/vim-unite-giti.git'
 NeoBundle 'git://github.com/ujihisa/unite-haskellimport.git'
 NeoBundle 'git://github.com/sgur/unite-qf.git'
-" unite }}}
+
 
 " 整形
 NeoBundle 'h1mesuke/vim-alignta'
@@ -247,7 +245,6 @@ NeoBundle 'mfumi/lightsout.vim'
 
 filetype plugin on
 filetype indent on
-" }}}
 
 " 自動コマンド削除
 autocmd!
@@ -258,7 +255,7 @@ syntax on
 " koriya版に同梱されているプラグインを無効化する
 let plugin_dicwin_disable = 1
 
-" オプション指定 {{{
+" オプション指定 
 
 " ファイルタイプ判定ON
 filetype plugin indent on
@@ -306,9 +303,8 @@ set wildmode=list:full     " リスト表示，最長マッチ
 set history=1000           " コマンド・検索パターンの履歴数
 set complete+=k            " 補完に辞書ファイル追加
 
-" }}}
 
-" utility function {{{
+" utility function 
 function! s:has_plugin(name)
   return globpath(&runtimepath, 'plugin/' . a:name . '.vim') !=# ''
         \   || globpath(&runtimepath, 'autoload/' . a:name . '.vim') !=# ''
@@ -322,7 +318,7 @@ endfunction
 "   -> call s:local_func('string', 10) in *plugin/hoge.vim.
 " - S('plugin/hoge:local_func("string", 10)')
 "   -> call s:local_func("string", 10) in *plugin/hoge(.vim)?.
-function! S(f, ...) " {{{
+function! S(f, ...)
   let [file, func] =a:f =~# ':' ?  split(a:f, ':') : [expand('%:p'), a:f]
   let fname = matchstr(func, '^\w*')
 
@@ -359,14 +355,14 @@ function! S(f, ...) " {{{
   return 0 <= match(func, '^\w*\s*(.*)\s*$')
         \      ? eval(cfunc) : call(cfunc, a:000)
 endfunction
-" }}}
+
 
 function! s:has_tags()
   return glob('tags') !=# ''
 endfunction
-" }}}
 
-" singleton {{{
+
+" singleton
 if has('gui_running')
   if has('clientserver')
     if s:has_plugin('singleton')
@@ -374,9 +370,9 @@ if has('gui_running')
     endif
   endif
 endif
-" }}}
 
-" {{{ === ファイルタイプ別設定 ========
+
+"  === ファイルタイプ別設定 ========
 
 set shiftwidth=4
 set tabstop=4
@@ -406,9 +402,9 @@ autocmd FileType haskell set shiftwidth=2
 autocmd FileType haskell set tabstop=2
 autocmd FileType haskell set softtabstop=2
 autocmd FileType haskell set expandtab
-" }}}
 
-" file encoding {{{
+
+" file encoding 
 "
 set fileformats=unix,dos,mac
 
@@ -469,7 +465,7 @@ set fileformats=unix,dos,mac
 if exists('&ambiwidth')
   set ambiwidth=double
 endif
-" }}}
+
 
 " searching
 set ignorecase
@@ -552,16 +548,13 @@ let g:SrcExpl_isUpdateTags = 0
 
 autocmd FileType php setlocal commentstring=//%s
 
-" operator object {{{
+" operator object
 
 " 置換
 map R <Plug>(operator-replace)
 
 map C <Plug>(operator-comment)
 map X <Plug>(operator-uncomment)
-
-
-" }}}
 
 " other mapping
 
@@ -628,17 +621,6 @@ nnoremap g^ ^
 nnoremap $ g$
 nnoremap g$ $
 
-
-" vnoremap j gj
-" vnoremap k gk
-" vnoremap gj j
-" vnoremap gk k
-" vnoremap 0 g0
-" vnoremap g0 0
-" vnoremap ^ g^
-" vnoremap g^ ^
-" vnoremap $ g$
-" vnoremap g$ $
 
 " 対応する括弧に移動
 nnoremap [ %
@@ -810,7 +792,7 @@ endfunction
 " set tabline=%!MakeTabLine()
 autocmd CursorMoved * set tabline=%!MakeTabLine()
 
-" plugin {{{
+" plugin
 
 " sonictemplate
 let g:sonictemplate_vim_template_dir = $HOME. '/Dropbox/Vim/sonic_template'
@@ -1002,7 +984,7 @@ let g:syntastic_mode_map = {
 let g:syntastic_auto_loc_list=1
 nnoremap <silent> <Leader>l :<C-u>SyntasticCheck<CR>
 
-" surround.vim {{{
+" surround.vim
 
 let g:surround_108 = "\\begin{\1environment: \1}\r\\end{\1\1}"
 let g:surround_custom_mapping = {}
@@ -1039,9 +1021,9 @@ let g:surround_custom_mapping.vim= {
 nmap <C-s> i<Plug>Isurround
 imap <C-s> <Plug>Isurround
 xmap <C-s> <Plug>VSurround
-" }}}
-" memo_list {{{
-" メモ関連関数 {{{
+
+" memo_list
+" メモ関連関数
 function! s:open_memo_file()
   let l:category = input('Category: ')
   let l:title = input('Title: ')
@@ -1074,7 +1056,7 @@ function! s:open_memo_file()
   execute 'write'
 endfunction augroup END
 call unite#set_profile('memo_list', 'filters', ['matcher_default', 'sorter_reverse', 'converter_default'])
-" }}}
+
 
 " メモを作成するコマンド
 command! -nargs=0 MemoNew call s:open_memo_file()
@@ -1092,7 +1074,7 @@ nnoremap Mn :MemoNew<CR>
 nnoremap Ml :MemoList<CR>
 nnoremap Mf :MemoFiler<CR>
 nnoremap Mg :MemoGrep<CR>
-" }}}
+
 " smartchr.vim {{{
 
 " 意図しないで発動するケースが多くて辛い
@@ -1104,7 +1086,7 @@ nnoremap Mg :MemoGrep<CR>
 " inoremap <expr> " smartchr#one_of('"', '""<left>')
 " inoremap <expr> > smartchr#one_of('>', '->',  '=>')
 " }}}
-" unite {{{
+" unite
 "
 " 入力モードで開始する
 let g:unite_enable_start_insert=1
@@ -1114,7 +1096,8 @@ let g:unite_source_history_yank_enable = 1
 let g:unite_source_history_yank_limit = 1000
 
 " grepソース
-let g:unite_source_grep_default_opts = '-Hn --include="*.vim" --include="*.txt" --include="*.php" --include="*.xml" --include="*.mkd" --include="*.hs" --include="*.js" --include="*.log"'
+let g:unite_source_grep_default_opts = '-Hn --include="*.vim" --include="*.txt" --include="*.php" --include="*.xml" --include="*.mkd" --include="*.hs" --include="*.js" --include="*.log" --include="*.sql" --include="*.as"'
+" let g:unite_source_grep_default_opts = '-Hn --include="*.vim" --include="*.txt" --include="*.php" --include="*.xml" --include="*.mkd" --include="*.hs" --include="*.js" --include="*.log" --include="*.sql"'
 
 let g:unite_source_grep_max_candidates = 100
 let g:unite_source_session_enable_auto_save = 1     " セッション保存
@@ -1188,8 +1171,8 @@ function! s:unite_my_settings()
   nnoremap <buffer> p p
   nnoremap <buffer> <Space> <Space>
 endfunction
-" }}}
-" tweetvim {{{
+
+" tweetvim
 
 " タイムライン選択用の Unite を起動する
 autocmd FileType tweetvim nnoremap <buffer><silent> t :Unite tweetvim<CR>
@@ -1203,8 +1186,8 @@ endif
 let neco_dic = g:neocomplcache_dictionary_filetype_lists
 let neco_dic.tweetvim_say = $HOME . '/.tweetvim/screen_name'
 
-" }}}
-" neocomplcache {{{
+
+" neocomplcache
 
 " haskell補完用に、cabalのパスを追加
 let $PATH=$PATH . ":" . $HOME . "/.cabal/bin"
@@ -1264,7 +1247,7 @@ autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
 autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
 " }}}
 " }}}
-" user command {{{1
+" user command
 
 " Ev/Rvでvimrcの編集と反映
 command! Ev edit ~/dotfiles/.vimrc
