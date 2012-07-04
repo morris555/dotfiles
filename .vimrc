@@ -305,7 +305,7 @@ set history=1000           " コマンド・検索パターンの履歴数
 set complete+=k            " 補完に辞書ファイル追加
 
 
-" utility function 
+" {{{ utility function 
 function! s:has_plugin(name)
   return globpath(&runtimepath, 'plugin/' . a:name . '.vim') !=# ''
         \   || globpath(&runtimepath, 'autoload/' . a:name . '.vim') !=# ''
@@ -372,6 +372,7 @@ if has('gui_running')
   endif
 endif
 
+" }}}
 
 "  === ファイルタイプ別設定 ========
 
