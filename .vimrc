@@ -23,6 +23,7 @@ NeoBundle 'git://github.com/vim-scripts/mrkn256.vim.git'
 NeoBundle 'tomasr/molokai'
 NeoBundle 'git://github.com/Lokaltog/vim-distinguished.git'
 NeoBundle 'git://github.com/aereal/vim-magica-colors.git'
+NeoBundle 'git://gist.github.com/187578.git'
 
 " singleton
 NeoBundle 'git://github.com/thinca/vim-singleton.git'
@@ -1453,7 +1454,8 @@ let php_htmlInStrings=1
 " 改行文字などの表示
 set list
 " set listchars=tab:>-,trail:-,nbsp:%,extends:>,precedes:<
-set listchars=tab:>-,eol:↴,nbsp:%,extends:>,precedes:<
+" set listchars=tab:>-,eol:↴,nbsp:%,extends:>,precedes:<
+set listchars=tab:>-,eol:↴,nbsp:%,tab:»\ ,extends:>,precedes:<
 
 " 前回終了したカーソル行に移動
 autocmd BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$") | exe "normal g`\"" | endif
