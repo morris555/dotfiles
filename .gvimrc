@@ -1,15 +1,13 @@
 if has('gui_macvim')
     " カラースキーム
     
-    set background=light
-    colorscheme h2u_white
-    " set background=dark
-    " let g:solarized_contrast="high"
-    " let g:solarized_italic=1
-    " let g:solarized_menu=1
-    " let g:solarized_visibility="normal"
-    " let g:solarized_termcolors=256
-    " colorscheme solarized
+    set background=dark
+    let g:solarized_contrast="high"
+    let g:solarized_italic=1
+    let g:solarized_menu=1
+    let g:solarized_visibility="normal"
+    let g:solarized_termcolors=256
+    colorscheme solarized
 
     set showtabline=2    " タブを常に表示
     set imdisable        " IME OFF

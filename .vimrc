@@ -1453,9 +1453,8 @@ let php_htmlInStrings=1
 
 " 改行文字などの表示
 set list
-" set listchars=tab:>-,trail:-,nbsp:%,extends:>,precedes:<
+set listchars=tab:>-,trail:-,nbsp:%,extends:>,precedes:<
 " set listchars=tab:>-,eol:↴,nbsp:%,extends:>,precedes:<
-set listchars=tab:>-,eol:↴,nbsp:%,tab:»\ ,extends:>,precedes:<
 
 " 前回終了したカーソル行に移動
 autocmd BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$") | exe "normal g`\"" | endif
