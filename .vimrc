@@ -66,6 +66,9 @@ NeoBundle 'git://github.com/vim-scripts/capslock.vim.git'
 " lingr
 NeoBundle 'tsukkee/lingr-vim'
 
+" omniforcus
+NeoBundle 'git://github.com/fifnel/ofaddinbox.vim.git'
+
 " smartinput
 " 入れたいけど、やはり意図しない入力がされるケースがあり、辛い
 " NeoBundle 'git://github.com/kana/vim-smartinput.git'
