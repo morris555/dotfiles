@@ -800,6 +800,11 @@ autocmd CursorMoved * set tabline=%!MakeTabLine()
 
 " plugin
 
+" ofaddinbox(omniforcus)
+nmap <silent> <Leader>O <Plug>SingleTaskToOmniFocus
+vmap <silent> <Leader>O <Plug>MultiTaskToOmniFocus
+" vmap <silent> <Leader>OT <Plug>SingleNoteTaskToOmniFocus
+
 " sonictemplate
 let g:sonictemplate_vim_template_dir = $HOME. '/Dropbox/Vim/sonic_template'
 imap <C-t> <space><bs><c-o>:call sonictemplate#select('i')<cr>
