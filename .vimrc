@@ -1141,7 +1141,7 @@ nnoremap <Leader>uG :<C-u>Unite grep -no-quit -buffer-name=grep<CR><CR><C-r><C-w
 au FileType php nnoremap <buffer> <Leader>ur :<C-u>Unite ref/phpmanual<CR>
 au FileType vim nnoremap <buffer> <Leader>ur :<C-u>Unite help<CR>
 " outline
-nnoremap <Leader>uo :<C-u>Unite outline -no-quit -vertical -winwidth=60 -buffer-name=side<CR>
+nnoremap <Leader>uo :<C-u>Unite outline -no-start-insert -vertical -winwidth=60 -buffer-name=side<CR>
 " tab
 nnoremap <Leader>ut :<C-u>Unite buffer_tab -buffer-name=file<CR>
 " command
