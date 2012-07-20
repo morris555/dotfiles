@@ -661,10 +661,6 @@ nnoremap <Space>d cc<ESC>
 nnoremap <Space>i oX<C-h><ESC>kdd
 nnoremap <Space>I /^\n<CR>oX<C-h><ESC>kdd
 
-" 入力時C-vで貼り付けにする。
-cnoremap <C-v> <C-R>"
-inoremap <C-v> <C-R>"
-
 " 空行のスペースやタブを維持
 " nnoremap o oX<C-h>
 " nnoremap O OX<C-h>
