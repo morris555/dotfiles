@@ -10,5 +10,5 @@ endfunction
 
 command! Pull call s:pull_dotfiles()
 function! s:pull_dotfiles()
-  execute "!git pull"
+  execute "!git pull --rebase"
 endfunction
