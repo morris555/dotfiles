@@ -884,16 +884,12 @@ nnoremap <Leader>l :<C-u>QuickRun -exec '%c -l %s'<CR>
 " jkの同時押しで<Esc>
 let g:arpeggio_timeoutlen = 70
 call arpeggio#load()
-" Arpeggio vnoremap jk <Esc>
-" Arpeggio cnoremap jk <Esc>
-" imap jk <Esc>
-" imap kj <Esc>
-" inoremap k<space> k
-" inoremap j<space> j
-
-inoremap <C-l> <Esc>
-vnoremap <C-l> <Esc>
-cnoremap <C-l> <Esc>
+Arpeggio vnoremap jk <Esc>
+Arpeggio cnoremap jk <Esc>
+imap jk <Esc>
+imap kj <Esc>
+inoremap k<space> k
+inoremap j<space> j
 
 " Alignta(仮設定)
 vnoremap <Leader>a :Alignta 
@@ -1157,7 +1153,7 @@ nnoremap <C-p> :<C-u>Unite history/yank<CR>
 nnoremap <Leader>uu :<C-u>Unite source<CR>
 " snippet
 nnoremap <Leader>us :<C-u>Unite snippet<CR>
-" snippet
+" session
 nnoremap <Leader>uS :<C-u>Unite session<CR>
 " twitter
 nnoremap <Leader>uT :<C-u>Unite tweetvim<CR>
