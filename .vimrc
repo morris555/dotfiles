@@ -1152,6 +1152,10 @@ nnoremap <Leader>us :<C-u>Unite snippet<CR>
 nnoremap <Leader>uS :<C-u>Unite session<CR>
 " twitter
 nnoremap <Leader>uT :<C-u>Unite tweetvim<CR>
+" giti
+nnoremap <Leader>Vs :<C-u>Unite giti/status -no-start-insert<CR>
+nnoremap <Leader>Vl :<C-u>Unite giti/log -no-start-insert<CR>
+nnoremap <Leader>Vb :<C-u>Unite giti/branch -no-start-insert<CR>
 
 " カラースキーム用コマンド
 command! UniteColorScheme :Unite colorscheme -auto-preview
