@@ -66,6 +66,9 @@ NeoBundle 'git://github.com/vim-scripts/capslock.vim.git'
 " lingr
 NeoBundle 'tsukkee/lingr-vim'
 
+" GCalcでグーグル計算
+NeoBundle 'git://github.com/tasuten/gcalc.vim.git'
+
 " omniforcus
 NeoBundle 'git://github.com/fifnel/ofaddinbox.vim.git'
 
