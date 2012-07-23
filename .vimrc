@@ -140,7 +140,6 @@ NeoBundle 'git://github.com/potix2/vim-phprefactor.git'
 NeoBundle 'git://github.com/vim-scripts/actionscript.vim--Leider.git'
 NeoBundle 'git://github.com/wlangstroth/vim-haskell.git'
 NeoBundle 'git://github.com/Twinside/vim-haskellConceal.git'
-NeoBundle 'git://github.com/laurentb/vim-cute-php.git'
 
 " 即座に実行
 NeoBundle 'thinca/vim-quickrun'
