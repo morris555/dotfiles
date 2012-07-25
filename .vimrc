@@ -513,14 +513,10 @@ endif
 noremap <Space>fm zf
 " 削除
 noremap <Space>fd zd
-" 開く
-noremap <Space>fo zo
-" 閉じる
-noremap <Space>fc zc
 " 全て開く
-noremap <Space>fO zR
+noremap <Space>fo zR
 " 全て閉じる
-noremap <Space>fC zV
+noremap <Space>fc zM
 " トグル
 noremap <Space>ff za
 " 移動
@@ -1129,22 +1125,22 @@ call unite#set_profile('grep', 'filters', ['matcher_regexp', 'sorter_default', '
 " nnoremap <silent> <Leader>uF :<C-u>call <SID>unite_project('-start-insert')<CR>
 nnoremap <silent> <Leader>uf :<C-u>Unite file_rec/async file -buffer-name=file<CR>
 nnoremap <silent> <Leader>uF :<C-u>Unite file_rec/async file -buffer-name=file -no-quit<CR>
-" バッファ一覧(bookmarkと被るので、とりあえずヒストリのhで妥協)
-nnoremap <Leader>uh :<C-u>Unite buffer -buffer-name=file<CR>
 " お気に入り
 nnoremap <Leader>ub :<C-u>Unite bookmark directory_mru -default-action=lcd<CR>
 " 最近使ったファイルの一覧
 nnoremap <Leader>um :<C-u>Unite file_mru<CR>
 " grep
-nnoremap <Leader>ug :<C-u>Unite grep -no-quit -buffer-name=grep<CR><CR>
-nnoremap <Leader>uG :<C-u>Unite grep -no-quit -buffer-name=grep<CR><CR><C-r><C-w><CR>
+nnoremap <Leader>ug :<C-u>Unite grep -no-quit -buffer-name=grep -no-start-insert<CR><CR>
+nnoremap <Leader>uG :<C-u>Unite grep -no-quit -buffer-name=grep -no-start-insert<CR><CR><C-r><C-w><CR>
 " ref
 au FileType php nnoremap <buffer> <Leader>ur :<C-u>Unite ref/phpmanual<CR>
 au FileType vim nnoremap <buffer> <Leader>ur :<C-u>Unite help<CR>
 " outline
 nnoremap <Leader>uo :<C-u>Unite outline -no-start-insert -vertical -winwidth=60 -buffer-name=side<CR>
 " tab
-nnoremap <Leader>ut :<C-u>Unite buffer_tab -buffer-name=file<CR>
+nnoremap <Leader>ut :<C-u>Unite buffer_tab -buffer-name=file -no-start-insert<CR>
+" バッファ一覧(tabの強化系、というイメージでTを採用)
+nnoremap <Leader>uT :<C-u>Unite buffer -buffer-name=file -no-start-insert<CR>
 " command
 nnoremap <Leader>uc :<C-u>Unite command<CR>
 " yank
@@ -1155,8 +1151,6 @@ nnoremap <Leader>uu :<C-u>Unite source<CR>
 nnoremap <Leader>us :<C-u>Unite snippet<CR>
 " session
 nnoremap <Leader>uS :<C-u>Unite session<CR>
-" twitter
-nnoremap <Leader>uT :<C-u>Unite tweetvim<CR>
 " giti
 nnoremap <Leader>Vs :<C-u>Unite giti/status -no-start-insert<CR>
 nnoremap <Leader>Vl :<C-u>Unite giti/log -no-start-insert<CR>
