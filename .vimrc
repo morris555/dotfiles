@@ -858,10 +858,9 @@ map <c-i> <Plug>(poslist-next-pos)
 let g:poslist_histsize = 10000
 
 " quickhl
-nmap <Leader>hh <Plug>(quickhl-toggle)
-nmap <Leader>hr <Plug>(quickhl-reset)
-nmap <Leader>hm <Plug>(quickhl-match)
-xmap <Leader>h <Plug>(quickhl-toggle)
+nmap <Leader>h <Plug>(quickhl-toggle)
+nmap # <Plug>(quickhl-match)
+nmap <Leader>Hr <Plug>(quickhl-reset)
 
 " let g:vimfiler_as_default_explorer = 1
 
