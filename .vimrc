@@ -396,22 +396,22 @@ autocmd FileType php set tabstop=4
 autocmd FileType php set softtabstop=4
 autocmd FileType php set noexpandtab
 
-" coffee scriptはタブ幅2でスペースを使う
-autocmd FileType coffee set shiftwidth=2
-autocmd FileType coffee set tabstop=2
-autocmd FileType coffee set softtabstop=2
+" coffee scriptはタブ幅4でスペースを使う
+autocmd FileType coffee set shiftwidth=4
+autocmd FileType coffee set tabstop=4
+autocmd FileType coffee set softtabstop=4
 autocmd FileType coffee set expandtab
 
-" vim scriptはタブ幅2でスペースを使う
-autocmd FileType vim set shiftwidth=2
-autocmd FileType vim set tabstop=2
-autocmd FileType vim set softtabstop=2
+" vim scriptはタブ幅4でスペースを使う
+autocmd FileType vim set shiftwidth=4
+autocmd FileType vim set tabstop=4
+autocmd FileType vim set softtabstop=4
 autocmd FileType vim set expandtab
 
-" haskellはタブ幅2でスペースを使う
-autocmd FileType haskell set shiftwidth=2
-autocmd FileType haskell set tabstop=2
-autocmd FileType haskell set softtabstop=2
+" haskellはタブ幅4でスペースを使う
+autocmd FileType haskell set shiftwidth=4
+autocmd FileType haskell set tabstop=4
+autocmd FileType haskell set softtabstop=4
 autocmd FileType haskell set expandtab
 
 
