@@ -41,7 +41,7 @@ NeoBundle 'git://github.com/basyura/bitly.vim.git'
 NeoBundle 'https://github.com/mattn/vimplenote-vim.git'
 
 " quicklearn
-NeoBundle 'git://github.com/ujihisa/quicklearn.git'
+" NeoBundle 'git://github.com/ujihisa/quicklearn.git'
 
 " folding_function
 NeoBundle 'git://github.com/LeafCage/foldCC.git'
@@ -861,6 +861,9 @@ let g:poslist_histsize = 10000
 nmap <Leader>h <Plug>(quickhl-toggle)
 nmap # <Plug>(quickhl-match)
 nmap <Leader>Hr <Plug>(quickhl-reset)
+xmap <Leader>h <Plug>(quickhl-toggle)
+xmap # <Plug>(quickhl-match)
+xmap <Leader>Hr <Plug>(quickhl-reset)
 
 " let g:vimfiler_as_default_explorer = 1
 
