@@ -1112,7 +1112,7 @@ let g:unite_source_grep_default_opts = '-Hn --include="*.vim" --include="*.txt" 
 let g:unite_source_grep_max_candidates = 100
 let g:unite_source_session_enable_auto_save = 1     " セッション保存
 
-let g:unite_source_file_mru_limit = 10000
+let g:unite_source_file_mru_limit = 100000
 
 function! s:unite_project(...)
   let opts = (a:0 ? join(a:000, ' ') : '')
@@ -1130,7 +1130,7 @@ nnoremap <silent> <Leader>uF :<C-u>Unite file_rec/async file -buffer-name=file -
 " お気に入り
 nnoremap <Leader>ub :<C-u>Unite bookmark directory_mru -default-action=lcd<CR>
 " 最近使ったファイルの一覧
-nnoremap <Leader>um :<C-u>Unite file_mru<CR>
+nnoremap <Leader>um :<C-u>Unite file_mru<CR>!fugitive 
 " grep
 nnoremap <Leader>ug :<C-u>Unite grep -no-quit -buffer-name=grep -no-start-insert<CR><CR>
 nnoremap <Leader>uG :<C-u>Unite grep -no-quit -buffer-name=grep -no-start-insert<CR><CR><C-r><C-w><CR>
@@ -1398,6 +1398,11 @@ command!
       \   -nargs=* -complete=mapping
       \   AllMaps
       \   map <args> | map! <args> | lmap <args>
+
+" 連番
+nnoremap <silent> co :ContinuousNumber <C-a><CR>
+vnoremap <silent> co :ContinuousNumber <C-a><CR>
+command! -count -nargs=1 ContinuousNumber let c = col('.')|for n in range(1, <count>?<count>-line('.'):1)|exec 'normal! j' . n . <q-args>|call cursor('.', c)|endfor
 
 " sticky shift {{{1
 
