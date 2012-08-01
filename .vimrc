@@ -946,6 +946,8 @@ noremap <Leader>sj :<C-u>new<CR>:<C-u>VimShellCreate<CR>
 noremap <Leader>sk :<C-u>vnew<CR>:<C-u>VimShellCreate<CR>
 noremap <Leader>f :<C-u>VimFilerTab<CR>
 
+command! Ghci VimShellInteractive ghci
+
 " vimproc
 if has('mac')
     let g:vimproc_dll_path = $HOME . '/.vim/autoload/mac_proc.so'
