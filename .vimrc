@@ -951,6 +951,7 @@ noremap <Leader>sk :<C-u>vnew<CR>:<C-u>VimShellCreate<CR>
 noremap <Leader>f :<C-u>VimFilerTab<CR>
 
 command! Ghci VimShellInteractive ghci
+command! Php VimShellInteractive php -a
 
 " vimproc
 if has('mac')
