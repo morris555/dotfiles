@@ -16,6 +16,7 @@
 #include <stddef.h>
 #include <dlfcn.h>
 #include <ctype.h>
+#include <dirent.h>
 
 #if !defined __APPLE__
 # include <sys/types.h>
@@ -36,8 +37,10 @@
 #if defined __linux__ || defined __CYGWIN__
 # include <pty.h>
 # include <utmp.h>
-#elif defined __APPLE__ 
+#elif defined __APPLE__ || defined __NetBSD__
 # include <util.h>
+#elif defined __sun
+# include "ptytty.c"
 #else
 # include <termios.h>
 # include <libutil.h>
@@ -58,8 +61,15 @@
 /* for waitpid() */
 #include <sys/types.h>
 #include <sys/wait.h>
+#if defined __NetBSD__
+#define WIFCONTINUED(x) (_WSTATUS(x) == _WSTOPPED && WSTOPSIG(x) == 0x13)
+#endif
 
 /* for socket */
+#if defined __FreeBSD__
+#define __BSD_VISIBLE 1
+#include <arpa/inet.h>
+#endif
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <netinet/in.h>
@@ -72,6 +82,7 @@ const int debug = 0;
 /* API */
 const char *vp_dlopen(char *args);      /* [handle] (path) */
 const char *vp_dlclose(char *args);     /* [] (handle) */
+const char *vp_dlversion(char *args);   /* [] (version) */
 
 const char *vp_file_open(char *args);   /* [fd] (path, flags, mode) */
 const char *vp_file_close(char *args);  /* [] (fd) */
@@ -139,6 +150,13 @@ vp_dlclose(char *args)
         return dlerror();
     vp_stack_free(&_result);
     return NULL;
+}
+
+const char *
+vp_dlversion(char *args)
+{
+    vp_stack_push_num(&_result, "%2d%02d", 7, 0);
+    return vp_stack_return(&_result);
 }
 
 const char *
@@ -833,39 +851,90 @@ vp_socket_write(char *args)
 }
 
 const char *
+vp_readdir(char *args)
+{
+    vp_stack_t stack;
+    char *dirname;
+    char buf[1024];
+
+    DIR *dir;
+    struct dirent *dp;
+
+    VP_RETURN_IF_FAIL(vp_stack_from_args(&stack, args));
+    VP_RETURN_IF_FAIL(vp_stack_pop_str(&stack, &dirname));
+
+    if ((dir=opendir(dirname)) == NULL) {
+        return vp_stack_return_error(&_result, "opendir() error: %s",
+                strerror(errno));
+    }
+
+    for (dp = readdir(dir); dp != NULL; dp = readdir(dir)) {
+        snprintf(buf, sizeof(buf), "%s/%s", dirname, dp->d_name);
+        vp_stack_push_str(&_result, buf);
+    }
+    closedir(dir);
+
+    return vp_stack_return(&_result);
+}
+
+const char *
 vp_decode(char *args)
 {
     vp_stack_t stack;
-    unsigned num = 0;
-    unsigned i = 0;
-    size_t length;
+    unsigned num;
+    unsigned i, bi;
+    size_t length, max_buf;
     char *str;
     char *buf;
     char *p;
-    char *bp;
 
     VP_RETURN_IF_FAIL(vp_stack_from_args(&stack, args));
     VP_RETURN_IF_FAIL(vp_stack_pop_str(&stack, &str));
 
     length = strlen(str);
-    buf = (char *)malloc(length/2 + 2);
+    max_buf = length/2 + 2;
+    buf = (char *)malloc(max_buf);
+    if (buf == NULL) {
+        return vp_stack_return_error(&_result, "malloc() error: %s",
+                "Memory cannot allocate");
+    }
 
     p = str;
-    bp = buf;
+    bi = 0;
+    num = 0;
     for (i = 0; i < length; i++, p++) {
-        if (isdigit(*p))
+        if (isdigit((int)*p))
             num |= (*p & 15);
         else
             num |= (*p & 15) + 9;
 
-        if (i % 2) {
-            *bp++ = num;
-            num = 0;
-        } else {
+        if (i % 2 == 0) {
             num <<= 4;
+            continue;
         }
+
+        /* Write character. */
+        if (num == 0) {
+            /* Convert NULL character. */
+            max_buf += 1;
+            buf = (char *)realloc(buf, max_buf);
+            if (buf == NULL) {
+                return vp_stack_return_error(
+                        &_result, "realloc() error: %s",
+                        "Memory cannot allocate");
+            }
+
+            buf[bi] = '^';
+            bi++;
+            buf[bi] = '@';
+            bi++;
+        } else {
+            buf[bi] = num;
+            bi++;
+        }
+        num = 0;
     }
-    *bp = '\0';
+    buf[bi] = '\0';
     vp_stack_push_str(&_result, buf);
     free(buf);
     return vp_stack_return(&_result);

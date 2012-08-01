@@ -28,8 +28,12 @@
 #include <ctype.h>
 
 /* For GetConsoleWindow() for Windows 2000 or later. */
+#ifndef WINVER
 #define WINVER        0x0500
+#endif
+#ifndef _WIN32_WINNT
 #define _WIN32_WINNT  0x0500
+#endif
 
 #include <windows.h>
 #include <winbase.h>
@@ -51,9 +55,14 @@ const int debug = 0;
 # define EXPORT
 #endif
 
+#ifdef _MSC_VER
+# define snprintf _snprintf
+#endif
+
 /* API */
 EXPORT const char *vp_dlopen(char *args);      /* [handle] (path) */
 EXPORT const char *vp_dlclose(char *args);     /* [] (handle) */
+EXPORT const char *vp_dlversion(char *args);     /* [] (version) */
 
 EXPORT const char *vp_file_open(char *args);   /* [fd] (path, flags, mode) */
 EXPORT const char *vp_file_close(char *args);  /* [] (fd) */
@@ -86,8 +95,11 @@ EXPORT const char *vp_socket_write(char *args);/* [nleft] (socket, hd, timeout) 
 EXPORT const char *vp_decode(char *args);      /* [decoded_str] (encode_str) */
 
 EXPORT const char *vp_open(char *args);      /* [] (path) */
+EXPORT const char *vp_readdir(char *args);  /* [files] (dirname) */
 
-static BOOL ExitRemoteProcess(HANDLE hProcess, UINT uExitCode);
+EXPORT const char * vp_delete_trash(char *args);  /* [filename] */
+
+static BOOL ExitRemoteProcess(HANDLE hProcess, UINT_PTR uExitCode);
 
 /* --- */
 
@@ -145,6 +157,12 @@ vp_dlclose(char *args)
     return NULL;
 }
 
+const char *
+vp_dlversion(char *args)
+{
+    vp_stack_push_num(&_result, "%2d%02d", 7, 0);
+    return vp_stack_return(&_result);
+}
 
 const char *
 vp_file_open(char *args)
@@ -410,7 +428,7 @@ vp_pipe_open(char *args)
                     GetCurrentProcess(),
                     &hOutputRead,
                     0,
-                    FALSE,
+                    TRUE,
                     DUPLICATE_SAME_ACCESS))
             return vp_stack_return_error(&_result, "DuplicateHandle() error: %s",
                     lasterror());
@@ -446,7 +464,7 @@ vp_pipe_open(char *args)
                         GetCurrentProcess(),
                         &hErrorRead,
                         0,
-                        FALSE,
+                        TRUE,
                         DUPLICATE_SAME_ACCESS))
                 return vp_stack_return_error(&_result, "DuplicateHandle() error: %s",
                         lasterror());
@@ -489,12 +507,12 @@ vp_pipe_open(char *args)
 
     vp_stack_push_num(&_result, "%p", pi.hProcess);
     vp_stack_push_num(&_result, "%d", hstdin ?
-            0 : _open_osfhandle((long)hInputWrite, 0));
+            0 : _open_osfhandle((size_t)hInputWrite, 0));
     vp_stack_push_num(&_result, "%d", hstdout ?
-            0 : _open_osfhandle((long)hOutputRead, _O_RDONLY));
+            0 : _open_osfhandle((size_t)hOutputRead, _O_RDONLY));
     if (npipe == 3)
         vp_stack_push_num(&_result, "%d", hstderr ?
-                0 : _open_osfhandle((long)hErrorRead, _O_RDONLY));
+                0 : _open_osfhandle((size_t)hErrorRead, _O_RDONLY));
     return vp_stack_return(&_result);
 }
 
@@ -631,7 +649,7 @@ vp_kill(char *args)
 
 /* Improved kill function. */
 /* http://homepage3.nifty.com/k-takata/diary/2009-05.html */
-static BOOL ExitRemoteProcess(HANDLE hProcess, UINT uExitCode)
+static BOOL ExitRemoteProcess(HANDLE hProcess, UINT_PTR uExitCode)
 {
     LPTHREAD_START_ROUTINE pfnExitProcess =
         (LPTHREAD_START_ROUTINE) GetProcAddress(
@@ -856,6 +874,80 @@ vp_socket_write(char *args)
     return vp_stack_return(&_result);
 }
 
+/* Referenced from */
+/* http://www.syuhitu.org/other/dir.html */
+const char *
+vp_readdir(char *args)
+{
+    vp_stack_t stack;
+    char *dirname;
+    char buf[1024];
+
+    WIN32_FIND_DATA fd;
+    HANDLE h;
+
+    VP_RETURN_IF_FAIL(vp_stack_from_args(&stack, args));
+    VP_RETURN_IF_FAIL(vp_stack_pop_str(&stack, &dirname));
+
+    snprintf(buf, sizeof(buf), "%s\\*", dirname);
+
+    /* Get handle. */
+    h = FindFirstFileEx(buf, FindExInfoStandard, &fd,
+        FindExSearchNameMatch, NULL, 0
+    );
+
+    if (h == INVALID_HANDLE_VALUE) {
+        return vp_stack_return_error(&_result, "FindFirstFileEx() error: %s",
+                GetLastError());
+    }
+
+    do {
+        snprintf(buf, sizeof(buf), "%s/%s", dirname, fd.cFileName);
+        vp_stack_push_str(&_result, buf);
+    } while (FindNextFile(h, &fd));
+
+    FindClose(h);
+    return vp_stack_return(&_result);
+}
+
+const char *
+vp_delete_trash(char *args)
+{
+    vp_stack_t stack;
+    char *filename;
+    char *buf;
+    size_t len;
+    SHFILEOPSTRUCT fs;
+
+    VP_RETURN_IF_FAIL(vp_stack_from_args(&stack, args));
+    VP_RETURN_IF_FAIL(vp_stack_pop_str(&stack, &filename));
+
+    len = strlen(filename);
+
+    buf = malloc(len + 2);
+    if (buf == NULL) {
+        return vp_stack_return_error(&_result, "malloc() error: %s",
+                "Memory cannot allocate");
+    }
+
+    /* Copy filename + '\0\0' */
+    strcpy(buf, filename);
+    buf[len + 1] = 0;
+
+    ZeroMemory(&fs, sizeof(SHFILEOPSTRUCT));
+    fs.hwnd = NULL;
+    fs.wFunc = FO_DELETE;
+    fs.pFrom = buf;
+    fs.pTo = NULL;
+    fs.fFlags = FOF_ALLOWUNDO | FOF_NOCONFIRMATION | FOF_NOERRORUI | FOF_SILENT;
+
+    vp_stack_push_num(&_result, "%d", SHFileOperation(&fs));
+
+    free(buf);
+
+    return vp_stack_return(&_result);
+}
+
 const char *
 vp_open(char *args)
 {
@@ -865,7 +957,7 @@ vp_open(char *args)
     VP_RETURN_IF_FAIL(vp_stack_from_args(&stack, args));
     VP_RETURN_IF_FAIL(vp_stack_pop_str(&stack, &path));
 
-    if ((int)ShellExecute(NULL, "open", path, NULL, NULL, SW_SHOWNORMAL) < 32) {
+    if ((size_t)ShellExecute(NULL, "open", path, NULL, NULL, SW_SHOWNORMAL) < 32) {
         return vp_stack_return_error(&_result, "ShellExecute() error: %s",
                 lasterror());
     }
@@ -877,36 +969,60 @@ const char *
 vp_decode(char *args)
 {
     vp_stack_t stack;
-    unsigned num = 0;
-    unsigned i = 0;
-    size_t length;
+    unsigned num;
+    unsigned i, bi;
+    size_t length, max_buf;
     char *str;
     char *buf;
     char *p;
-    char *bp;
 
     VP_RETURN_IF_FAIL(vp_stack_from_args(&stack, args));
     VP_RETURN_IF_FAIL(vp_stack_pop_str(&stack, &str));
 
     length = strlen(str);
-    buf = (char *)malloc(length/2 + 2);
+    max_buf = length/2 + 2;
+    buf = (char *)malloc(max_buf);
+    if (buf == NULL) {
+        return vp_stack_return_error(&_result, "malloc() error: %s",
+                "Memory cannot allocate");
+    }
 
     p = str;
-    bp = buf;
+    bi = 0;
+    num = 0;
     for (i = 0; i < length; i++, p++) {
-        if (isdigit(*p))
+        if (isdigit((int)*p))
             num |= (*p & 15);
         else
             num |= (*p & 15) + 9;
 
-        if (i % 2) {
-            *bp++ = num;
-            num = 0;
-        } else {
+        if (i % 2 == 0) {
             num <<= 4;
+            continue;
         }
+
+        /* Write character. */
+        if (num == 0) {
+            /* Convert NULL character. */
+            max_buf += 1;
+            buf = (char *)realloc(buf, max_buf);
+            if (buf == NULL) {
+                return vp_stack_return_error(
+                        &_result, "realloc() error: %s",
+                        "Memory cannot allocate");
+            }
+
+            buf[bi] = '^';
+            bi++;
+            buf[bi] = '@';
+            bi++;
+        } else {
+            buf[bi] = num;
+            bi++;
+        }
+        num = 0;
     }
-    *bp = '\0';
+    buf[bi] = '\0';
     vp_stack_push_str(&_result, buf);
     free(buf);
     return vp_stack_return(&_result);

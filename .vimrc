@@ -72,6 +72,9 @@ NeoBundle 'git://github.com/tasuten/gcalc.vim.git'
 " omniforcus
 NeoBundle 'git://github.com/fifnel/ofaddinbox.vim.git'
 
+" omniforcus
+NeoBundle 'git://github.com/mattn/togetter-vim.git'
+
 " smartinput
 " 入れたいけど、やはり意図しない入力がされるケースがあり、辛い
 " NeoBundle 'git://github.com/kana/vim-smartinput.git'
@@ -109,6 +112,7 @@ NeoBundle 'h1mesuke/unite-outline'
 NeoBundle 'tsukkee/unite-help'
 NeoBundle 'thinca/vim-unite-history'
 NeoBundle 'ujihisa/unite-colorscheme'
+NeoBundle 'git://github.com/ujihisa/unite-font.git'
 NeoBundle 'tsukkee/unite-tag'
 NeoBundle 'choplin/unite-vim_hacks'
 NeoBundle 'git://github.com/mattn/unite-advent_calendar.git'
@@ -955,7 +959,8 @@ else
     let g:vimproc_dll_path = $HOME . '/.vim/autoload/proc.so'
 endif
 " TODO dousiyou
-let g:vimproc_dll_path = $HOME . '/.vim/autoload/mac_proc.so'
+" let g:vimproc_dll_path = $HOME . '/.vim/autoload/mac_proc.so'
+let g:vimproc_dll_path = $HOME . '/.vim/autoload/vimproc_mac.so'
 
 " textmanip
 " 選択したテキストの移動
@@ -1162,17 +1167,18 @@ nnoremap <Leader>Vb :<C-u>Unite giti/branch -no-start-insert<CR>
 
 " カラースキーム用コマンド
 command! UniteColorScheme :Unite colorscheme -auto-preview
+command! UniteFont :Unite font -auto-preview
 
 if has('migemo')
     call unite#custom_filters('advent_calendar', ['matcher_migemo', 'sorter_default', 'converter_default'])
 endif
 
 " ウィンドウを横に分割して開く
-au FileType unite nnoremap <silent> <buffer> <expr> <C-J> unite#do_action('split')
-au FileType unite inoremap <silent> <buffer> <expr> <C-J> unite#do_action('split')
+au FileType unite nnoremap <silent> <buffer> <expr> <C-S> unite#do_action('split')
+au FileType unite inoremap <silent> <buffer> <expr> <C-S> unite#do_action('split')
 " ウィンドウを縦に分割して開く
-au FileType unite nnoremap <silent> <buffer> <expr> <C-K> unite#do_action('vsplit')
-au FileType unite inoremap <silent> <buffer> <expr> <C-K> unite#do_action('vsplit')
+au FileType unite inoremap <silent> <buffer> <expr> <C-V> unite#do_action('vsplit')
+au FileType unite nnoremap <silent> <buffer> <expr> <C-V> unite#do_action('vsplit')
 " ウィンドウをタブで開く
 au FileType unite nnoremap <silent> <buffer> <expr> <C-T> unite#do_action('tabopen')
 au FileType unite inoremap <silent> <buffer> <expr> <C-T> unite#do_action('tabopen')
@@ -1183,6 +1189,7 @@ function! s:unite_my_settings()
     imap <buffer> <C-w> <Plug>(unite_delete_backward_path)
     nmap <buffer> <space><space> <Plug>(unite_toggle_mark_current_candidate)
     nnoremap <buffer> p p
+    nnoremap <buffer> a a
     nnoremap <buffer> <Space> <Space>
 endfunction
 

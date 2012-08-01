@@ -14,7 +14,7 @@ if has('gui_macvim')
     set antialias        " アンチエイリアス
 
     " set gfn=Ricty\ Bold:h13
-    set gfn=Ricty\ Bold:h12
+    set gfn=Ricty\ Regular:h11
     set gfw=
 
     set lines=94 columns=317
