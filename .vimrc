@@ -944,10 +944,8 @@ let g:EasyMotion_leader_key='<Leader>m'
 
 let g:vimshell_enable_auto_slash = 1		" ディレクトリ補完時にスラッシュを補う
 let g:vimshell_max_command_history = 100000000			" ヒストリの保存数
-noremap <Leader>ss :<C-u>VimShellCreate<CR>
-noremap <Leader>st :<C-u>VimShellTab<CR>
-noremap <Leader>sj :<C-u>new<CR>:<C-u>VimShellCreate<CR>
-noremap <Leader>sk :<C-u>vnew<CR>:<C-u>VimShellCreate<CR>
+noremap <Leader>s :<C-u>vnew<CR>:<C-u>VimShellCreate<CR>
+noremap <Leader>S :<C-u>VimShellTab<CR>
 noremap <Leader>f :<C-u>VimFilerTab<CR>
 
 command! Ghci VimShellInteractive ghci
