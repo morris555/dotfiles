@@ -617,6 +617,10 @@ nnoremap <silent> sq :<C-u>q<CR>
 nnoremap <silent> sQ :<C-u>bd<CR>
 nnoremap <silent> su :<C-u>Unite buffer_tab -buffer-name=file<CR>
 nnoremap <silent> sU :<C-u>Unite buffer -buffer-name=file<CR>
+nnoremap <silent> <S-Right> <C-w>>
+nnoremap <silent> <S-Left> <C-w><
+nnoremap <silent> <S-Up> <C-w>+
+nnoremap <silent> <S-Down> <C-w>-
 " nnoremap <silent> su :<C-u>Unite buffer_tab -buffer-name=file -vertical -winwidth=30 -no-quit<CR>
 " nnoremap <silent> sU :<C-u>Unite buffer -buffer-name=file -vertical -winwidth=30 -no-quit<CR>
 
@@ -1469,8 +1473,8 @@ autocmd FileType scala :set dictionary+=~/.vim/dict/scala.dict
 set complete+=k
 
 "php処理
-let php_sql_query=1
-let php_htmlInStrings=1
+" let php_sql_query=1
+" let php_htmlInStrings=1
 " let php_folding = 1
 
 " 改行文字などの表示
