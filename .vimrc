@@ -317,6 +317,19 @@ set wildmode=list:full     " リスト表示，最長マッチ
 set history=1000           " コマンド・検索パターンの履歴数
 set complete+=k            " 補完に辞書ファイル追加
 
+set splitbelow   " 横分割したら新しいウィンドウは下に
+set splitright   " 縦分割したら新しいウィンドウは右に
+
+set iminsert=0 " インサートモードで日本語入力を ON にしない
+set imsearch=0 " 検索モードで日本語入力を ON にしない
+
+
+" 改行時のコメントと、自動改行を無効化
+set formatoptions-=tcro
+augroup vimrc_group_formatoptions
+	autocmd!
+	autocmd FileType * setlocal formatoptions-=tcro
+augroup END
 
 " {{{ utility function 
 function! s:has_plugin(name)
@@ -663,11 +676,20 @@ inoremap <expr> <C-k>
 nnoremap q <Nop>
 nnoremap Q q
 
-" ノーマルモード時にスペース2回で改行
-" nnoremap <Space><Space> oX<C-h><ESC>
+" ノーマルモード時に改行
 nnoremap <Space><Space> o<ESC>
+nnoremap <CR> o<Esc>
+
+" ノーマルモード時にスペース挿入
+nnoremap <C-Space> i <Esc><Right>
+
+" 行を詰めずに削除
 nnoremap <Space>d cc<ESC>
+
+" その行を消して挿入
 nnoremap <Space>i oX<C-h><ESC>kdd
+
+" 段落の最後から挿入
 nnoremap <Space>I /^\n<CR>oX<C-h><ESC>kdd
 
 " 空行のスペースやタブを維持
