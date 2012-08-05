@@ -863,19 +863,19 @@ let g:toggle_pairs = {
 if has('vim_starting')
     let g:eskk#large_dictionary = '~/.vim/skk/skk-jisyo.l'
     let g:eskk#dictionary = '~/Dropbox/SKK/eskk/skk-jisyo.u'
+    let g:eskk#egg_like_newline = 1
+    let g:eskk#egg_like_newline_completion = 1
+    let g:eskk#show_candidates_count = 3
+    let g:eskk#auto_henkan_at_okuri_match = 3
+    let g:eskk#fix_extra_okuri = 1
+    let g:eskk#debug_out = "cmdline"
+    imap <C-j> <Plug>(eskk:enable)
+    let g:eskk#directory = '~/Dropbox/SKK/eskk/'
+    let g:eskk#kakutei_when_unique_candidate = 1
+    " <C-j><C-k>でいきなり日本語入力からのインサート
+    nmap <C-j> i<C-j>
+    nmap <C-k> a<C-j>
 endif
-let g:eskk#egg_like_newline = 1
-let g:eskk#egg_like_newline_completion = 1
-let g:eskk#show_candidates_count = 3
-let g:eskk#auto_henkan_at_okuri_match = 3
-let g:eskk#fix_extra_okuri = 1
-let g:eskk#debug_out = "cmdline"
-imap <C-j> <Plug>(eskk:enable)
-let g:eskk#directory = '~/Dropbox/SKK/eskk/'
-let g:eskk#kakutei_when_unique_candidate = 1
-" <C-j><C-k>でいきなり日本語入力からのインサート
-nmap <C-j> i<C-j>
-nmap <C-k> a<C-j>
 
 " lingr
 let g:lingr_vim_user = 'tek_koc'
@@ -1021,11 +1021,12 @@ autocmd FileType w3m nnoremap <silent><buffer> q :<C-u>W3mClose<CR>
 " syntastic
 let g:syntastic_mode_map = {
             \ 'mode': 'active',
-            \ 'active_filetypes': ['php', 'coffeescript', 'sh', 'vim', 'haskell'],
-            \ 'passive_filetypes': ['html']
+            \ 'active_filetypes': ['php', 'coffeescript', 'sh', 'vim'],
+            \ 'passive_filetypes': ['html', 'haskell']
             \}
 let g:syntastic_auto_loc_list=1
 nnoremap <silent> <Leader>l :<C-u>SyntasticCheck<CR>
+autocmd FileType haskell nnoremap <silent><buffer> <Leader>l :<C-u>GhcModCheckAndLintAsync<CR>
 
 " surround.vim
 
@@ -1238,12 +1239,13 @@ let neco_dic.tweetvim_say = $HOME . '/.tweetvim/screen_name'
 
 " haskell補完用に、cabalのパスを追加
 let $PATH=$PATH . ":" . $HOME . "/.cabal/bin"
+" let $PATH=$PATH . ":" . $HOME . "/Users/tekkoc/Library/Haskell/ghc-7.4.1/lib/ghc-mod-1.11.0/bin/"
 
 " ファイル名補完
 inoremap <expr><C-x><C-f>  neocomplcache#manual_filename_complete()
 
 " omni補完
-" inoremap <expr> <C-x><C-o> &filetype == 'vim' ? "\<C-x><C-v><C-p>" : neocomplcache#manual_omni_complete()
+" inoremap <expr><C-x><C-o> &filetype == 'vim' ? "\<C-x><C-v><C-p>" : neocomplcache#manual_omni_complete()
 
 " <C-h>のときにポップアップを消す
 " inoremap <expr><C-h> neocomplcache#smart_close_popup()."<C-h>"
@@ -1259,21 +1261,20 @@ inoremap <expr><C-x><C-f>  neocomplcache#manual_filename_complete()
 " smap <C-s> <Plug>(neocomplcache_snippets_expand)
 
 let g:neocomplcache_enable_at_startup = 1 " 自動起動
-let g:neocomplcache_enable_smart_case = 1 " 大文字打つまで、小文字大文字区別しない
-let g:neocomplcache_enable_underbar_completion = 1	" 区切り文字の補完を有効化
-let g:neocomplcache_min_syntax_length = 3
-let g:neocomplcache_min_keyword_length = 3
-let g:neoComplCache_EnableInfo = 1
-let g:neocomplcache_enable_camel_case_completion = 0 " 大文字を入力したときに、それを単語の区切りとしてあいまい検索
-let g:neocomplcache_enable_underbar_completion = 0  " _を入力したときに、それを単語の区切りとしてあいまい検索
-let g:neocomplcache_caching_limit_file_size = 5000000
-let g:neocomplcache_dictionary_file_type_lists = {
-            \'default' : '',
-            \'php' : $HOME.'/.vim/dict/php.dict',
-            \'scala' : $HOME.'/.vim/dict/scala.dict',
-            \'vimshell' : $HOME.'/.vim/.vimshell_hist'
-            \}
-let g:NeoComplCache_SnippetsDir = $HOME . '/.vim/snippets'
+" let g:neocomplcache_enable_smart_case = 1 " 大文字打つまで、小文字大文字区別しない
+" let g:neocomplcache_min_syntax_length = 3
+" let g:neocomplcache_min_keyword_length = 3
+" let g:neoComplCache_EnableInfo = 1
+" let g:neocomplcache_enable_camel_case_completion = 0 " 大文字を入力したときに、それを単語の区切りとしてあいまい検索
+" let g:neocomplcache_enable_underbar_completion = 0  " _を入力したときに、それを単語の区切りとしてあいまい検索
+" let g:neocomplcache_caching_limit_file_size = 5000000
+" let g:neocomplcache_dictionary_file_type_lists = {
+"             \'default' : '',
+"             \'php' : $HOME.'/.vim/dict/php.dict',
+"             \'scala' : $HOME.'/.vim/dict/scala.dict',
+"             \'vimshell' : $HOME.'/.vim/.vimshell_hist'
+"             \}
+" let g:NeoComplCache_SnippetsDir = $HOME . '/.vim/snippets'
 
 " if !exists('g:neocomplcache_omni_patterns')
 " let g:neocomplcache_omni_patterns = {}
@@ -1292,6 +1293,7 @@ autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
 autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
 autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
 autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
+autocmd FileType haskell setlocal omnifunc=necoghc#omnifunc
 " }}}
 " }}}
 " user command
