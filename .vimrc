@@ -1035,30 +1035,31 @@ let g:surround_custom_mapping = {}
 let g:surround_custom_mapping._ = {
             \'[': "[\r]",
             \'(': "(\r)",
+            \'{': "{\r}",
             \'k': "「\r」",
             \'K': "【\r】",
             \}
 let g:surround_custom_mapping.php= {
-            \'{': "{\r}",
             \'f': "\1name: \r..*\r&\1(\r)",
             \'F': "fb('\1name: \1');\nfb(\r);",
             \'a': "['\r']",
             \'A': "array(\r);",
-            \'v': "v(\r);",
+            \'v': "v(\r)",
             \'s': "self::\r"
             \}
 let g:surround_custom_mapping.smarty= {
             \'S': "{{\r}}",
             \'s': "{{\1name: \r..*\r&\1}}\r{{/\1\1}}",
-            \'{': "{{\r}}"
             \}
 let g:surround_custom_mapping.javascript= {
             \'{': "{\r}",
             \'l': "console.log(\r);"
             \}
 let g:surround_custom_mapping.vim= {
-            \'{': "{\r}",
             \'v': "echomsg printf('%s: %s','\1name: \1',string(\r));"
+            \}
+let g:surround_custom_mapping.markdown= {
+            \'*': "**\r**"
             \}
 " nmap S i<C-g>s
 " imap <C-s> <C-g>s
