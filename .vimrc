@@ -1059,7 +1059,7 @@ nnoremap Mg :MemoGrep<CR>
 " unite
 "
 " 入力モードで開始する
-let g:unite_enable_start_insert=1
+let g:unite_enable_start_insert=0
 
 " yankソースを有効にする
 let g:unite_source_history_yank_enable = 1
@@ -1074,12 +1074,6 @@ let g:unite_source_session_enable_auto_save = 1     " セッション保存
 
 let g:unite_source_file_mru_limit = 100000
 
-function! s:unite_project(...)
-    let opts = (a:0 ? join(a:000, ' ') : '')
-    let dir = unite#util#path2project_directory(expand('%'))
-    execute 'Unite' opts 'file_rec/async:' . dir
-endfunction
-
 call unite#set_profile('file', 'filters', ['matcher_fuzzy', 'sorter_rank', 'converter_default'])
 call unite#set_profile('grep', 'filters', ['matcher_regexp', 'sorter_default', 'converter_default'])
 
@@ -1092,17 +1086,17 @@ nnoremap <Leader>ub :<C-u>Unite bookmark directory_mru -default-action=lcd<CR>
 " 最近使ったファイルの一覧
 nnoremap <Leader>um :<C-u>Unite file_mru<CR>!fugitive 
 " grep
-nnoremap <Leader>ug :<C-u>Unite grep -no-quit -buffer-name=grep -no-start-insert<CR><CR>
-nnoremap <Leader>uG :<C-u>Unite grep -no-quit -buffer-name=grep -no-start-insert<CR><CR><C-r><C-w><CR>
+nnoremap <Leader>ug :<C-u>Unite grep -no-quit -buffer-name=grep<CR><CR>
+nnoremap <Leader>uG :<C-u>Unite grep -no-quit -buffer-name=grep<CR><CR><C-r><C-w><CR>
 " ref
 au FileType php nnoremap <buffer> <Leader>ur :<C-u>Unite ref/phpmanual<CR>
 au FileType vim nnoremap <buffer> <Leader>ur :<C-u>Unite help<CR>
 " outline
-nnoremap <Leader>uo :<C-u>Unite outline -no-start-insert -vertical -winwidth=60 -buffer-name=side<CR>
+nnoremap <Leader>uo :<C-u>Unite outline  -vertical -winwidth=60 -buffer-name=side<CR>
 " tab
-nnoremap <Leader>ut :<C-u>Unite buffer_tab -buffer-name=file -no-start-insert<CR>
+nnoremap <Leader>ut :<C-u>Unite buffer_tab -buffer-name=file <CR>
 " バッファ一覧(tabの強化系、というイメージでTを採用)
-nnoremap <Leader>uT :<C-u>Unite buffer -buffer-name=file -no-start-insert<CR>
+nnoremap <Leader>uT :<C-u>Unite buffer -buffer-name=file <CR>
 " command
 nnoremap <Leader>uc :<C-u>Unite command<CR>
 " yank
@@ -1114,9 +1108,9 @@ nnoremap <Leader>us :<C-u>Unite snippet<CR>
 " session
 nnoremap <Leader>uS :<C-u>Unite session<CR>
 " giti
-nnoremap <Leader>Vs :<C-u>Unite giti/status -no-start-insert<CR>
-nnoremap <Leader>Vl :<C-u>Unite giti/log -no-start-insert<CR>
-nnoremap <Leader>Vb :<C-u>Unite giti/branch -no-start-insert<CR>
+nnoremap <Leader>Vs :<C-u>Unite giti/status <CR>
+nnoremap <Leader>Vl :<C-u>Unite giti/log <CR>
+nnoremap <Leader>Vb :<C-u>Unite giti/branch <CR>
 
 " カラースキーム用コマンド
 command! UniteColorScheme :Unite colorscheme -auto-preview
@@ -1312,15 +1306,47 @@ set listchars=tab:>-,eol:↴,trail:-,nbsp:%,extends:>,precedes:<
 " 前回終了したカーソル行に移動
 autocmd BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$") | exe "normal g`\"" | endif
 
-" カレントウィンドウにのみ罫線を引く
+" カレントウィンドウにのみ相対行を表示
 augroup cch
     autocmd! cch
-    autocmd WinLeave * set nocursorline
-    autocmd WinLeave * set nocursorcolumn
     autocmd WinLeave * set norelativenumber
-    autocmd WinEnter,BufRead * set cursorline
-    autocmd WinEnter,BufRead * set cursorcolumn
     autocmd WinEnter,BufRead * set relativenumber
+augroup END
+
+" 必要なときのみ、カーソル行をハイライト
+" http://d.hatena.ne.jp/thinca/20090530/1243615055
+augroup vimrc-auto-cursorline
+  autocmd!
+  autocmd CursorMoved,CursorMovedI * call s:auto_cursorline('CursorMoved')
+  autocmd CursorHold,CursorHoldI * call s:auto_cursorline('CursorHold')
+  autocmd WinEnter * call s:auto_cursorline('WinEnter')
+  autocmd WinLeave * call s:auto_cursorline('WinLeave')
+
+  let s:cursorline_lock = 0
+  function! s:auto_cursorline(event)
+    if a:event ==# 'WinEnter'
+      setlocal cursorline
+      setlocal cursorcolumn
+      let s:cursorline_lock = 2
+    elseif a:event ==# 'WinLeave'
+      setlocal nocursorline
+      setlocal nocursorcolumn
+    elseif a:event ==# 'CursorMoved'
+      if s:cursorline_lock
+        if 1 < s:cursorline_lock
+          let s:cursorline_lock = 1
+        else
+          setlocal nocursorline
+          setlocal nocursorcolumn
+          let s:cursorline_lock = 0
+        endif
+      endif
+    elseif a:event ==# 'CursorHold'
+      setlocal cursorline
+      setlocal cursorcolumn
+      let s:cursorline_lock = 1
+    endif
+  endfunction
 augroup END
 
 " last proc {{{1
