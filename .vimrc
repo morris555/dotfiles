@@ -1,10 +1,3 @@
-"  ==== TODO ========================
-"
-" TODO 折り畳みのキーマップ。zMについて調べる
-" noremap <Space>fm zM
-" TODO Alignta使う
-" TODO ファイルタイプ別の設定をまとめるべき
-
 " NeoBundle_setup {{{
 set nocompatible
 filetype off
@@ -40,14 +33,10 @@ NeoBundle 'git://github.com/basyura/bitly.vim.git'
 " simplenote
 NeoBundle 'https://github.com/mattn/vimplenote-vim.git'
 
-" quicklearn
-" NeoBundle 'git://github.com/ujihisa/quicklearn.git'
-
 " folding_function
 NeoBundle 'git://github.com/LeafCage/foldCC.git'
 
 " textobj,operator
-
 NeoBundle 'kana/vim-textobj-user'
 NeoBundle 'kana/vim-operator-user'
 NeoBundle 'kana/vim-textobj-entire'
@@ -74,10 +63,6 @@ NeoBundle 'git://github.com/fifnel/ofaddinbox.vim.git'
 
 " omniforcus
 NeoBundle 'git://github.com/mattn/togetter-vim.git'
-
-" smartinput
-" 入れたいけど、やはり意図しない入力がされるケースがあり、辛い
-" NeoBundle 'git://github.com/kana/vim-smartinput.git'
 
 " ghc
 NeoBundle 'git://github.com/ujihisa/neco-ghc.git'
@@ -127,8 +112,6 @@ NeoBundle 'h1mesuke/vim-alignta'
 
 " インデントの可視化
 NeoBundle 'nathanaelkane/vim-indent-guides'
-
-" NeoBundle 'git://github.com/bitc/vim-bad-whitespace.git'
 
 " syntax
 " NeoBundle 'git://github.com/scrooloose/syntastic.git'
@@ -318,9 +301,6 @@ set wildmode=list:full     " リスト表示，最長マッチ
 set history=1000           " コマンド・検索パターンの履歴数
 set complete+=k            " 補完に辞書ファイル追加
 
-set splitbelow   " 横分割したら新しいウィンドウは下に
-set splitright   " 縦分割したら新しいウィンドウは右に
-
 set iminsert=0 " インサートモードで日本語入力を ON にしない
 set imsearch=0 " 検索モードで日本語入力を ON にしない
 
@@ -509,15 +489,15 @@ vnoremap * "zy:let @/ = @z<CR>n
 " ?では、lineソースを使った検索にする
 nnoremap ? :<C-u>Unite line -buffer-name=search -start-insert<CR>
 
-" TODO 検索がなぜか調子悪いため、試しに外している
-" if has('migemo')
-"   " ?で行うline検索で、migemoを使う
-"   call unite#custom_filters('line', ['matcher_migemo', 'sorter_default', 'converter_default'])
-"
-"   " 検索をmigemoで行う
-"   nnoremap / g/
-"   nnoremap g/ /
-" endif
+if has('migemo')
+    " ?で行うline検索で、migemoを使う
+    call unite#custom_filters('line', ['matcher_migemo', 'sorter_default', 'converter_default'])
+
+    " TODO 検索がなぜか調子悪いため、試しに外している
+    " 検索をmigemoで行う
+    " nnoremap / g/
+    " nnoremap g/ /
+endif
 
 " folding
 
@@ -562,7 +542,6 @@ nnoremap <silent> <Space>tk <C-]>:<C-u>vsplit<CR><C-o><C-o><C-w>l
 nnoremap <silent> <Space>tu :<C-u>!ctags -R<CR>
 autocmd FileType php nnoremap <silent><buffer> <Space>tu :<C-u>!ctags --languages=PHP --sort=foldcase -R<CR>
 autocmd FileType coffee nnoremap <silent><buffer> <Space>tu :<C-u>!ctags --languages=coffee -R<CR>
-" nnoremap <silent> <Space>tu :<C-u>QuickRun -runner/vimproc -command 'ctags' -cmdopt '-R'<CR>
 
 "自動でプレビューを表示する。
 let g:SrcExpl_RefreshTime = 1
@@ -635,8 +614,6 @@ nnoremap <silent> <S-Right> <C-w>>
 nnoremap <silent> <S-Left> <C-w><
 nnoremap <silent> <S-Up> <C-w>+
 nnoremap <silent> <S-Down> <C-w>-
-" nnoremap <silent> su :<C-u>Unite buffer_tab -buffer-name=file -vertical -winwidth=30 -no-quit<CR>
-" nnoremap <silent> sU :<C-u>Unite buffer -buffer-name=file -vertical -winwidth=30 -no-quit<CR>
 
 " 表示行移動
 nnoremap j gj
@@ -693,12 +670,7 @@ nnoremap <Space>i oX<C-h><ESC>kdd
 " 段落の最後から挿入
 nnoremap <Space>I /^\n<CR>oX<C-h><ESC>kdd
 
-" 空行のスペースやタブを維持
-" nnoremap o oX<C-h>
-" nnoremap O OX<C-h>
-" inoremap <CR> <CR>X<C-h>
-
-" Toggle options
+" {{{ Toggle options
 function! s:toggle_grepprg(global_p)
     let VALUES = ['grep -nHE', 'git grep -n']
     let grepprg = &l:grepprg == '' ? &grepprg : &l:grepprg
@@ -737,6 +709,7 @@ function! s:toggle_nu()
         set norelativenumber
     endif
 endfunction
+" }}}
 
 nnoremap <silent> <Space>on :<C-u>call <SID>toggle_nu()<CR>
 nnoremap <silent> <Space>ol :<C-u>call <SID>toggle_option('cursorline', 'cursorcolumn')<CR>
@@ -837,28 +810,6 @@ vmap <silent> <Leader>O <Plug>MultiTaskToOmniFocus
 let g:sonictemplate_vim_template_dir = $HOME. '/Dropbox/Vim/sonic_template'
 imap <C-t> <space><bs><c-o>:call sonictemplate#select('i')<cr>
 
-" toggle.vim
-" 単語認識がちゃんと出きていなくて使いものにならない
-" nmap <C-t> <Plug>ToggleN
-" vmap <C-t> <Plug>ToggleV
-let g:toggle_pairs = {
-            \'and':'or',
-            \'or':'and',
-            \'if':'elsif',
-            \'elsif':'else',
-            \'else':'if',
-            \'ASC':'DESC',
-            \'DESC':'ASC',
-            \'int':'bool',
-            \'bool':'array',
-            \'array':'object',
-            \'object':'mixed',
-            \'mixed':'int',
-            \'public':'private',
-            \'private':'protected',
-            \'protected':'public',
-            \}
-
 " eskk
 if has('vim_starting')
     let g:eskk#large_dictionary = '~/.vim/skk/skk-jisyo.l'
@@ -895,8 +846,6 @@ nmap <Leader>Hr <Plug>(quickhl-reset)
 xmap <Leader>h <Plug>(quickhl-toggle)
 xmap # <Plug>(quickhl-match)
 xmap <Leader>Hr <Plug>(quickhl-reset)
-
-" let g:vimfiler_as_default_explorer = 1
 
 " quickrun
 " for quickrun.vim
@@ -963,10 +912,6 @@ map <silent> <Leader>vk <Plug>Vm_goto_prev_sign
 " easymotion
 let g:EasyMotion_leader_key='<Leader>m'
 
-" capslock設定
-" これ、有効かわかりづらい
-" imap <C-a> <C-o><Plug>CapsLockToggle
-
 " vimshell設定
 
 let g:vimshell_enable_auto_slash = 1		" ディレクトリ補完時にスラッシュを補う
@@ -979,13 +924,6 @@ command! Ghci VimShellInteractive ghci
 command! Php VimShellInteractive php -a
 
 " vimproc
-if has('mac')
-    let g:vimproc_dll_path = $HOME . '/.vim/autoload/mac_proc.so'
-else
-    let g:vimproc_dll_path = $HOME . '/.vim/autoload/proc.so'
-endif
-" TODO dousiyou
-" let g:vimproc_dll_path = $HOME . '/.vim/autoload/mac_proc.so'
 let g:vimproc_dll_path = $HOME . '/.vim/autoload/vimproc_mac.so'
 
 " textmanip
@@ -1061,8 +999,6 @@ let g:surround_custom_mapping.vim= {
 let g:surround_custom_mapping.markdown= {
             \'*': "**\r**"
             \}
-" nmap S i<C-g>s
-" imap <C-s> <C-g>s
 nmap <C-s> i<Plug>Isurround
 imap <C-s> <Plug>Isurround
 xmap <C-s> <Plug>VSurround
@@ -1120,17 +1056,6 @@ nnoremap Ml :MemoList<CR>
 nnoremap Mf :MemoFiler<CR>
 nnoremap Mg :MemoGrep<CR>
 
-" smartchr.vim {{{
-
-" 意図しないで発動するケースが多くて辛い
-" inoremap <expr> = smartchr#one_of('= ', '== ', '=== ', '=')
-" inoremap <expr> , smartchr#one_of(', ', ',')
-" inoremap <expr> + smartchr#one_of('+ ', '++')
-" inoremap <expr> * smartchr#one_of('* ')
-" inoremap <expr> ' smartchr#one_of("'", "''<left>")
-" inoremap <expr> " smartchr#one_of('"', '""<left>')
-" inoremap <expr> > smartchr#one_of('>', '->',  '=>')
-" }}}
 " unite
 "
 " 入力モードで開始する
@@ -1245,22 +1170,6 @@ let $PATH=$PATH . ":" . $HOME . "/.cabal/bin"
 " ファイル名補完
 inoremap <expr><C-x><C-f>  neocomplcache#manual_filename_complete()
 
-" omni補完
-" inoremap <expr><C-x><C-o> &filetype == 'vim' ? "\<C-x><C-v><C-p>" : neocomplcache#manual_omni_complete()
-
-" <C-h>のときにポップアップを消す
-" inoremap <expr><C-h> neocomplcache#smart_close_popup()."<C-h>"
-
-" <C-f>で補完を確定
-" inoremap <expr><C-f> neocomplcache#close_popup()
-
-" <C-e>で補完をキャンセル
-" inoremap <expr><C-e> neocomplcache#cancel_popup()
-
-" スニペット
-" imap <C-s> <Plug>(neocomplcache_snippets_expand)
-" smap <C-s> <Plug>(neocomplcache_snippets_expand)
-
 let g:neocomplcache_enable_at_startup = 1 " 自動起動
 " let g:neocomplcache_enable_smart_case = 1 " 大文字打つまで、小文字大文字区別しない
 " let g:neocomplcache_min_syntax_length = 3
@@ -1295,8 +1204,7 @@ autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
 autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
 autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
 autocmd FileType haskell setlocal omnifunc=necoghc#omnifunc
-" }}}
-" }}}
+
 " user command
 
 " Ev/Rvでvimrcの編集と反映
@@ -1308,99 +1216,10 @@ command! Eg edit ~/dotfiles/.gvimrc
 command! Rg source ~/dotfiles/.gvimrc
 
 " Eb/RbでNeoBundleの編集と反映
-command! Eb edit ~/dotfiles/.vim/bundles.vim
 command! -bang Rb :Unite neobundle/install:<bang>
 
 " jsonデコード(仮)
 command! JsonReformat :r!php -r 'print_r(json_decode(file_get_contents("%",true)));'
-
-" 作成中
-" TODO とりあえずdiffを出す？
-" TODO プラグイン(機能)名を考える
-command! CapturePush call s:pushCapture()
-command! CaptureDiff call s:diffCapture()
-function! s:getCaptureDir()
-    " 隠しファイルの場合は置換しつつ、現在のファイル名を取得
-    let l:filename = expand('%')
-    if l:filename =~ '^\.'
-        let l:filename = '__' . l:filename[1:]
-    endif
-
-    " 保存先ディレクトリ名を求める
-    return $HOME . '/.vim_capture' . expand('%:p:h') . '/' . l:filename
-endfunction
-
-function! s:getCaptureLetestVersion(save_dir)
-    " ファイルのバージョン番号を取得
-    let l:file_list = split(system('ls ' . a:save_dir), '\n')
-    if 0 == len(l:file_list)
-        let l:version = -1
-    else
-        let l:version_list = []
-        for value in l:file_list
-            let l:temp = split(value, '\.')
-            call add(l:version_list, l:temp[0])
-        endfor
-        let l:version = max(l:version_list)
-    endif
-
-    return l:version
-endfunction
-
-function! s:getCaptureFilename(save_dir)
-    let l:version = s:getCaptureLetestVersion(a:save_dir) + 1
-    return s:makeCaptureFilename(a:save_dir, l:version)
-endfunction
-
-function! s:makeCaptureFilename(save_dir, version)
-    " TODO 名前苦しい
-    " 保存ファイル名を生成
-    let l:save_filename = a:save_dir . '/' . a:version
-
-    if '' != expand('%:e')
-        " 拡張子があるなら付加する
-        let l:save_filename = l:save_filename . '.' . expand('%:e')
-    else
-        " TODO 暫定的に、拡張子がない場合は.vimを付ける。filetypeから取りたい
-        let l:save_filename = l:save_filename . '.vim'
-    endif
-    return l:save_filename
-endfunction
-
-function! s:pushCapture()
-    " 保存先ディレクトリ名
-    let l:save_dir = s:getCaptureDir()
-
-    " ディレクトリを生成
-    if !isdirectory(l:save_dir)
-        call mkdir(l:save_dir, 'p')
-    endif
-
-    " 保存ファイル名
-    let l:save_filename = s:getCaptureFilename(l:save_dir)
-
-    execute "write!" l:save_filename
-endfunction augroup END
-
-function! s:diffCapture()
-    " 対象ディレクトリ名
-    let l:target_dir = s:getCaptureDir()
-
-    " ディレクトリを生成
-    if !isdirectory(l:target_dir)
-        " TODO エラー
-    endif
-
-    " 対象バージョン
-    let l:version = s:getCaptureLetestVersion(l:target_dir)
-    if l:version < 0
-        " TODO エラー
-    endif
-
-    " 対象ファイル名
-    let l:target_filename = s:makeCaptureFilename(l:target_dir, l:version)
-    execute "VDsplit" l:target_filename
-endfunction augroup END
 
 " 一時ファイル
 command! -nargs=1 -complete=filetype Tmp edit ~/.vim_tmp/tmp.<args>
@@ -1412,37 +1231,20 @@ command! -nargs=1 Type :set filetype=<args>
 " TODOファイル
 command! Todo edit ~/Dropbox/todo.mkd
 
-" command! TOhtml runtime! syntax/2html.vim
-
-command!
-            \   TOhtmlAndBrowse
-            \   call s:TOhtmlAndBrowse()
-function! s:TOhtmlAndBrowse()
-    TOhtml
-    saveas `=tempname()`
-    let save = g:openbrowser_open_filepath_in_vim
-    let g:openbrowser_open_filepath_in_vim = 0
-    try
-        OpenBrowser file://%
-    finally
-        let g:openbrowser_open_filepath_in_vim = save
-    endtry
-    sleep 1
-    call delete(expand('%'))
-endfunction
-
-" マッピングチェック
+" マッピングチェック {{{
 command!
             \   -nargs=* -complete=mapping
             \   AllMaps
             \   map <args> | map! <args> | lmap <args>
+" }}}
 
-" 連番
+" 連番 {{{
 nnoremap <silent> co :ContinuousNumber <C-a><CR>
 vnoremap <silent> co :ContinuousNumber <C-a><CR>
 command! -count -nargs=1 ContinuousNumber let c = col('.')|for n in range(1, <count>?<count>-line('.'):1)|exec 'normal! j' . n . <q-args>|call cursor('.', c)|endfor
+" }}}
 
-" sticky shift {{{1
+" sticky shift {{{
 
 inoremap <expr> ;  <SID>sticky_func()
 cnoremap <expr> ;  <SID>sticky_func()
@@ -1470,7 +1272,7 @@ function! s:sticky_func()
         return ''
     endif
 endfunction
-" other {{{1
+" }}}
 
 
 " ヤンクしたものをクリップボードにも
@@ -1506,7 +1308,6 @@ set complete+=k
 " 改行文字などの表示
 set list
 set listchars=tab:>-,eol:↴,trail:-,nbsp:%,extends:>,precedes:<
-" set listchars=tab:>-,eol:↴,nbsp:%,extends:>,precedes:<
 
 " 前回終了したカーソル行に移動
 autocmd BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$") | exe "normal g`\"" | endif
