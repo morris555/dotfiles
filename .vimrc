@@ -1505,7 +1505,7 @@ set complete+=k
 
 " 改行文字などの表示
 set list
-set listchars=tab:>-,trail:-,nbsp:%,extends:>,precedes:<
+set listchars=tab:>-,eol:↴,trail:-,nbsp:%,extends:>,precedes:<
 " set listchars=tab:>-,eol:↴,nbsp:%,extends:>,precedes:<
 
 " 前回終了したカーソル行に移動
