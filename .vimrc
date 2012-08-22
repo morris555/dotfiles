@@ -1153,32 +1153,42 @@ let $PATH=$PATH . ":" . $HOME . "/.cabal/bin"
 " ファイル名補完
 inoremap <expr><C-x><C-f>  neocomplcache#manual_filename_complete()
 
-let g:neocomplcache_enable_at_startup = 1 " 自動起動
-" let g:neocomplcache_enable_smart_case = 1 " 大文字打つまで、小文字大文字区別しない
-" let g:neocomplcache_min_syntax_length = 3
-" let g:neocomplcache_min_keyword_length = 3
-" let g:neoComplCache_EnableInfo = 1
-" let g:neocomplcache_enable_camel_case_completion = 0 " 大文字を入力したときに、それを単語の区切りとしてあいまい検索
-" let g:neocomplcache_enable_underbar_completion = 0  " _を入力したときに、それを単語の区切りとしてあいまい検索
-" let g:neocomplcache_caching_limit_file_size = 5000000
-" let g:neocomplcache_dictionary_file_type_lists = {
-"             \'default' : '',
-"             \'php' : $HOME.'/.vim/dict/php.dict',
-"             \'scala' : $HOME.'/.vim/dict/scala.dict',
-"             \'vimshell' : $HOME.'/.vim/.vimshell_hist'
-"             \}
-" let g:NeoComplCache_SnippetsDir = $HOME . '/.vim/snippets'
+let g:neocomplcache_enable_at_startup = 1
+let g:neocomplcache_enable_smart_case = 'ignorecase'
+let g:neocomplcache_max_menu_width = 30
+let g:neocomplcache_min_syntax_length = 3
+let g:neocomplcache_min_keyword_length = 3
+let g:neocomplcache_enable_auto_select = 1
+let g:neocomplcache_caching_limit_file_size = 5000000
+let g:neocomplcache_lock_iminsert = 1   "?
+let g:neocomplcache_dictionary_file_type_lists = {
+            \'default' : '',
+            \'php' : $HOME.'/.vim/dict/php.dict',
+            \'scala' : $HOME.'/.vim/dict/scala.dict',
+            \'vimshell' : $HOME.'/.vim/.vimshell_hist'
+            \}
 
-" if !exists('g:neocomplcache_omni_patterns')
-" let g:neocomplcache_omni_patterns = {}
-" endif
-" let g:neocomplcache_omni_patterns.ruby = '[^. *\t]\.\h\w*\|\h\w*::'
-" let g:neocomplcache_omni_patterns.php = '[^. \t]->\h\w*\|\h\w*::'
-" let g:neocomplcache_omni_patterns.c = '\%(\.\|->\)\h\w*'
-" let g:neocomplcache_omni_patterns.cpp = '\h\w*\%(\.\|->\)\h\w*\|\h\w*::'
-" let g:neocomplcache_release_cache_time = 7200
+let g:neocomplcache_release_cache_time = 7200
+let g:neocomplcache_use_vimproc = 1
+
+" Define keyword.
+if !exists('g:neocomplcache_keyword_patterns')
+    let g:neocomplcache_keyword_patterns = {}
+endif
+let g:neocomplcache_keyword_patterns['default'] = '\h\w*'
+
 " imap <C-u> <Plug>(neocomplcache_start_unite_complete)
 " imap <C-u> <Plug>(neocomplcache_start_unite_quick_match)
+
+" todo
+" g:neocomplcache_same_filetype_lists
+" g:neocomplcache_context_filetype_lists
+" g:neocomplcache_text_mode_filetypes
+" g:neocomplcache_ctags_arguments_list
+" g:neocomplcache_filename_include_exprs
+" g:neocomplcache_filename_include_exts
+" g:neocomplcache_delimiter_patterns
+" g:neocomplcache_source_rank
 
 " Enable omni completion.
 autocmd filetype css setlocal omnifunc=csscomplete#completecss
