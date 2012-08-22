@@ -490,8 +490,6 @@ vnoremap * "zy:let @/ = @z<CR>n
 nnoremap ? :<C-u>Unite line -buffer-name=search -start-insert<CR>
 
 if has('migemo')
-    " ?で行うline検索で、migemoを使う
-    call unite#custom_filters('line', ['matcher_migemo', 'sorter_default', 'converter_default'])
 
     " TODO 検索がなぜか調子悪いため、試しに外している
     " 検索をmigemoで行う
@@ -1063,25 +1061,27 @@ let g:unite_source_history_yank_enable = 1
 let g:unite_source_history_yank_limit = 1000
 
 " grepソース
-" let g:unite_source_grep_default_opts = '-Hn --include="*.vim" --include="*.txt" --include="*.php" --include="*.xml" --include="*.mkd" --include="*.hs" --include="*.js" --include="*.log" --include="*.sql" --include="*.as"'
 let g:unite_source_grep_default_opts = '-Hn --include="*.vim" --include="*.txt" --include="*.php" --include="*.xml" --include="*.mkd" --include="*.hs" --include="*.js" --include="*.log" --include="*.sql"'
 
 let g:unite_source_grep_max_candidates = 100
 let g:unite_source_session_enable_auto_save = 1     " セッション保存
 
-let g:unite_source_file_mru_limit = 100000
+let g:unite_source_file_mru_limit = 1000
 
-call unite#set_profile('file', 'filters', ['matcher_fuzzy', 'sorter_rank', 'converter_default'])
-call unite#set_profile('grep', 'filters', ['matcher_regexp', 'sorter_default', 'converter_default'])
+call unite#custom_source('file,file_rec/async', 'filters', ['converter_relative_word', 'matcher_fuzzy', 'sorter_rank', 'converter_relative_abbr'])
+call unite#custom_source('grep', 'filters', ['matcher_regexp', 'sorter_default', 'converter_default'])
+
+if has('migemo')
+    call unite#custom_source('line,advent_calendar', 'filters', ['matcher_migemo', 'sorter_default', 'converter_default'])
+endif
 
 " ファイル一覧
-" nnoremap <silent> <Leader>uF :<C-u>call <SID>unite_project('-start-insert')<CR>
-nnoremap <silent> <Leader>uf :<C-u>Unite file_rec/async file -buffer-name=file<CR>
-nnoremap <silent> <Leader>uF :<C-u>Unite file_rec/async file -buffer-name=file -no-quit<CR>
+nnoremap <silent> <Leader>uf :<C-u>Unite file_rec/async -profile-name=file -start-insert<CR>
+nnoremap <silent> <Leader>uF :<C-u>Unite file_rec/async -profile-name=file -start-insert -no-quit<CR>
 " お気に入り
 nnoremap <Leader>ub :<C-u>Unite bookmark directory_mru -default-action=lcd<CR>
 " 最近使ったファイルの一覧
-nnoremap <Leader>um :<C-u>Unite file_mru<CR>!fugitive 
+nnoremap <Leader>um :<C-u>Unite file_mru -start-insert<CR>!fugitive 
 " grep
 nnoremap <Leader>ug :<C-u>Unite grep -no-quit -buffer-name=grep<CR><CR>
 nnoremap <Leader>uG :<C-u>Unite grep -no-quit -buffer-name=grep<CR><CR><C-r><C-w><CR>
@@ -1094,28 +1094,18 @@ nnoremap <Leader>uo :<C-u>Unite outline  -vertical -winwidth=60 -buffer-name=sid
 nnoremap <Leader>ut :<C-u>Unite buffer_tab -buffer-name=file <CR>
 " バッファ一覧(tabの強化系、というイメージでTを採用)
 nnoremap <Leader>uT :<C-u>Unite buffer -buffer-name=file <CR>
-" command
-nnoremap <Leader>uc :<C-u>Unite command<CR>
 " yank
 nnoremap <C-p> :<C-u>Unite history/yank<CR>
 " source(sourceが増えてきたので、sourceのsourceを経由する方針にしてみる)
 nnoremap <Leader>uu :<C-u>Unite source<CR>
-" snippet
-nnoremap <Leader>us :<C-u>Unite snippet<CR>
-" session
-nnoremap <Leader>uS :<C-u>Unite session<CR>
 " giti
-nnoremap <Leader>Vs :<C-u>Unite giti/status <CR>
-nnoremap <Leader>Vl :<C-u>Unite giti/log <CR>
-nnoremap <Leader>Vb :<C-u>Unite giti/branch <CR>
+nnoremap <Leader>uvs :<C-u>Unite giti/status <CR>
+nnoremap <Leader>uvl :<C-u>Unite giti/log <CR>
+nnoremap <Leader>uvb :<C-u>Unite giti/branch <CR>
 
 " カラースキーム用コマンド
 command! UniteColorScheme :Unite colorscheme -auto-preview
 command! UniteFont :Unite font -auto-preview
-
-if has('migemo')
-    call unite#custom_filters('advent_calendar', ['matcher_migemo', 'sorter_default', 'converter_default'])
-endif
 
 " ウィンドウを横に分割して開く
 au FileType unite nnoremap <silent> <buffer> <expr> <C-S> unite#do_action('split')
@@ -1132,8 +1122,10 @@ function! s:unite_my_settings()
     " Overwrite settings.
     imap <buffer> <C-w> <Plug>(unite_delete_backward_path)
     nmap <buffer> <space><space> <Plug>(unite_toggle_mark_current_candidate)
+    nmap <buffer> <ESC> <Plug>(unite_exit)
+    nmap <buffer> jk <Plug>(unite_insert_leave)
+    nmap <buffer> kj <Plug>(unite_insert_leave)
     nnoremap <buffer> p p
-    nnoremap <buffer> a a
     nnoremap <buffer> <Space> <Space>
 endfunction
 
@@ -1345,7 +1337,7 @@ augroup vimrc-auto-cursorline
     endif
   endfunction
 augroup END
-
+"
 " last proc {{{1
 
 if has("gui_running")
