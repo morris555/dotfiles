@@ -490,7 +490,6 @@ vnoremap * "zy:let @/ = @z<CR>n
 nnoremap ? :<C-u>Unite line -buffer-name=search -start-insert<CR>
 
 if has('migemo')
-
     " TODO 検索がなぜか調子悪いため、試しに外している
     " 検索をmigemoで行う
     " nnoremap / g/
@@ -1123,8 +1122,8 @@ function! s:unite_my_settings()
     imap <buffer> <C-w> <Plug>(unite_delete_backward_path)
     nmap <buffer> <space><space> <Plug>(unite_toggle_mark_current_candidate)
     nmap <buffer> <ESC> <Plug>(unite_exit)
-    nmap <buffer> jk <Plug>(unite_insert_leave)
-    nmap <buffer> kj <Plug>(unite_insert_leave)
+    imap <buffer> jk <Plug>(unite_insert_leave)
+    imap <buffer> kj <Plug>(unite_insert_leave)
     nnoremap <buffer> p p
     nnoremap <buffer> <Space> <Space>
 endfunction
@@ -1158,7 +1157,6 @@ let g:neocomplcache_enable_smart_case = 'ignorecase'
 let g:neocomplcache_max_menu_width = 30
 let g:neocomplcache_min_syntax_length = 3
 let g:neocomplcache_min_keyword_length = 3
-let g:neocomplcache_enable_auto_select = 1
 let g:neocomplcache_caching_limit_file_size = 5000000
 let g:neocomplcache_lock_iminsert = 1   "?
 let g:neocomplcache_dictionary_file_type_lists = {
