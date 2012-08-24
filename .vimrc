@@ -121,13 +121,14 @@ NeoBundle 'git://github.com/scrooloose/syntastic.git', '637182c181814631f8d5d33d
 " 言語別
 NeoBundle 'kchmck/vim-coffee-script'
 NeoBundle 'git://github.com/vim-scripts/JavaScript-syntax.git'
-NeoBundle 'git://github.com/vim-scripts/php.vim--Hodge.git'
-NeoBundle 'git://github.com/2072/PHP-Indenting-for-VIm.git'
-NeoBundle 'git://github.com/potix2/vim-phprefactor.git'
+" NeoBundle 'git://github.com/vim-scripts/php.vim--Hodge.git'
+" NeoBundle 'git://github.com/2072/PHP-Indenting-for-VIm.git'
+" NeoBundle 'git://github.com/potix2/vim-phprefactor.git'
 NeoBundle 'git://github.com/vim-scripts/actionscript.vim--Leider.git'
 NeoBundle 'git://github.com/wlangstroth/vim-haskell.git'
 NeoBundle 'git://github.com/Twinside/vim-haskellConceal.git'
 NeoBundle 'git://github.com/ujihisa/ref-hoogle.git'
+NeoBundle 'git://github.com/spf13/PIV.git'
 
 " 即座に実行
 NeoBundle 'thinca/vim-quickrun'
@@ -796,7 +797,13 @@ endfunction
 " set tabline=%!MakeTabLine()
 autocmd CursorMoved * set tabline=%!MakeTabLine()
 
+" ================
 " plugin
+"================
+
+" PIV(php plugin)
+let g:PIVCreateDefaultMappings = 0
+
 " ofaddinbox(omniforcus)
 nmap <silent> <Leader>O <Plug>SingleTaskToOmniFocus
 vmap <silent> <Leader>O <Plug>MultiTaskToOmniFocus
@@ -1065,7 +1072,7 @@ let g:unite_source_grep_default_opts = '-Hn --include="*.vim" --include="*.txt" 
 let g:unite_source_grep_max_candidates = 100
 let g:unite_source_session_enable_auto_save = 1     " セッション保存
 
-let g:unite_source_file_mru_limit = 1000
+let g:unite_source_file_mru_limit = 100
 
 call unite#custom_source('file,file_rec/async', 'filters', ['converter_relative_word', 'matcher_fuzzy', 'sorter_rank', 'converter_relative_abbr'])
 call unite#custom_source('grep', 'filters', ['matcher_regexp', 'sorter_default', 'converter_default'])
