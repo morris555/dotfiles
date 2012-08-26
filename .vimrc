@@ -1,3 +1,4 @@
+" NeoBundle {{{
 " NeoBundle_setup {{{
 set nocompatible
 filetype off
@@ -8,7 +9,7 @@ if has('vim_starting')
     call neobundle#rc(expand('~/.vim/bundle'))
 endif
 " }}}
-
+" NeoBundle_list {{{
 " color-scheme
 NeoBundle 'vol2223/vim-colorblind-colorscheme'
 NeoBundle 'altercation/vim-colors-solarized'
@@ -242,13 +243,14 @@ NeoBundle 'mfumi/snake.vim'
 NeoBundle 'mfumi/viminesweeper'
 NeoBundle 'mfumi/lightsout.vim'
 
+" }}}
+" }}}
+
 filetype plugin on
 filetype indent on
 
-" 自動コマンド削除
 autocmd!
 
-" シンタックス有効
 syntax on
 
 " koriya版に同梱されているプラグインを無効化する
@@ -1037,7 +1039,7 @@ function! s:open_memo_file()
     execute '999'
     execute 'write'
 endfunction augroup END
-call unite#set_profile('memo_list', 'filters', ['matcher_default', 'sorter_reverse', 'converter_default'])
+" call unite#set_profile('memo_list', 'filters', ['matcher_default', 'sorter_reverse', 'converter_default'])
 
 
 " メモを作成するコマンド
