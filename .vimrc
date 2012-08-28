@@ -50,9 +50,6 @@ NeoBundle 'tyru/operator-camelize.vim'
 NeoBundle 'emonkak/vim-operator-comment'
 NeoBundle 'git://github.com/kana/vim-textobj-line.git'
 
-" 擬似capslock
-NeoBundle 'git://github.com/vim-scripts/capslock.vim.git'
-
 " lingr
 NeoBundle 'tsukkee/lingr-vim'
 
@@ -242,6 +239,8 @@ NeoBundle 'mattn/invader-vim'
 NeoBundle 'mfumi/snake.vim'
 NeoBundle 'mfumi/viminesweeper'
 NeoBundle 'mfumi/lightsout.vim'
+" }}}
+" }}}
 
 " }}}
 " }}}
@@ -659,7 +658,7 @@ nnoremap <Space><Space> o<ESC>
 nnoremap <CR> o<Esc>
 
 " ノーマルモード時にスペース挿入
-nnoremap <C-Space> i <Esc><Right>
+" nnoremap <C-Space> i <Esc><Right>
 
 " 行を詰めずに削除
 nnoremap <Space>d cc<ESC>
@@ -781,11 +780,9 @@ endfunction
 
 function! MakeTabLine()
     let titles = map(range(1, tabpagenr('$')), 's:tabpage_label(v:val)')
-    let sep = ' | '  " タブ間の区切り
+    let sep = '    '  " タブ間の区切り
     let tabpages = join(titles, sep) . sep . '%#TabLineFill#%T'
     let info = ''
-    " let info .= cfi#format("[%s()]", "no function")
-    " let info .= '[%f]'
     let info .= '[%F]'
     let info .= '   '
     let info .= '(%l/%L) %P'
@@ -865,12 +862,15 @@ nnoremap <Leader>l :<C-u>QuickRun -exec '%c -l %s'<CR>
 " jkの同時押しで<Esc>
 let g:arpeggio_timeoutlen = 70
 call arpeggio#load()
-Arpeggio vnoremap jk <Esc>
-Arpeggio cnoremap jk <Esc>
-imap jk <Esc>
-imap kj <Esc>
-inoremap k<space> k
-inoremap j<space> j
+" Arpeggio vnoremap jk <Esc>
+" Arpeggio cnoremap jk <Esc>
+" imap jk <Esc>
+" imap kj <Esc>
+" inoremap k<space> k
+" inoremap j<space> j
+vnoremap <C-Space> <Esc>
+inoremap <C-Space> <Esc>
+cnoremap <C-Space> <Esc>
 
 " Alignta(仮設定)
 vnoremap <Leader>a :Alignta 
@@ -971,6 +971,7 @@ autocmd FileType haskell nnoremap <silent><buffer> <Leader>l :<C-u>GhcModCheckAn
 
 " surround.vim
 
+let g:surround_no_mappings = 1
 let g:surround_108 = "\\begin{\1environment: \1}\r\\end{\1\1}"
 let g:surround_custom_mapping = {}
 let g:surround_custom_mapping._ = {
@@ -1002,6 +1003,15 @@ let g:surround_custom_mapping.vim= {
 let g:surround_custom_mapping.markdown= {
             \'*': "**\r**"
             \}
+nmap ds  <Plug>Dsurround
+nmap cs  <Plug>Csurround
+nmap ys  <Plug>Ysurround
+nmap yS  <Plug>YSurround
+nmap yss <Plug>Yssurround
+nmap ySs <Plug>YSsurround
+nmap ySS <Plug>YSsurround
+xmap S   <Plug>VSurround
+xmap gS  <Plug>VgSurround
 nmap <C-s> i<Plug>Isurround
 imap <C-s> <Plug>Isurround
 xmap <C-s> <Plug>VSurround
@@ -1073,10 +1083,10 @@ let g:unite_source_grep_default_opts = '-Hn --include="*.vim" --include="*.txt" 
 
 let g:unite_source_grep_max_candidates = 100
 let g:unite_source_session_enable_auto_save = 1     " セッション保存
+let g:unite_source_file_mru_limit = 1000
+call unite#custom_max_candidates("file_mru", 1000)
 
-let g:unite_source_file_mru_limit = 100
-
-call unite#custom_source('file,file_rec/async', 'filters', ['converter_relative_word', 'matcher_fuzzy', 'sorter_rank', 'converter_relative_abbr'])
+call unite#custom_source('file,file_rec/async', 'filters', ['converter_relative_word', 'matcher_glob', 'sorter_rank', 'converter_relative_abbr'])
 call unite#custom_source('grep', 'filters', ['matcher_regexp', 'sorter_default', 'converter_default'])
 
 if has('migemo')
@@ -1131,8 +1141,6 @@ function! s:unite_my_settings()
     imap <buffer> <C-w> <Plug>(unite_delete_backward_path)
     nmap <buffer> <space><space> <Plug>(unite_toggle_mark_current_candidate)
     nmap <buffer> <ESC> <Plug>(unite_exit)
-    imap <buffer> jk <Plug>(unite_insert_leave)
-    imap <buffer> kj <Plug>(unite_insert_leave)
     nnoremap <buffer> p p
     nnoremap <buffer> <Space> <Space>
 endfunction
