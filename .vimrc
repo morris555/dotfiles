@@ -126,7 +126,7 @@ NeoBundle 'git://github.com/vim-scripts/actionscript.vim--Leider.git'
 NeoBundle 'git://github.com/wlangstroth/vim-haskell.git'
 NeoBundle 'git://github.com/Twinside/vim-haskellConceal.git'
 NeoBundle 'git://github.com/ujihisa/ref-hoogle.git'
-NeoBundle 'git://github.com/spf13/PIV.git'
+" NeoBundle 'git://github.com/spf13/PIV.git'
 
 " 即座に実行
 NeoBundle 'thinca/vim-quickrun'
@@ -868,9 +868,14 @@ call arpeggio#load()
 " imap kj <Esc>
 " inoremap k<space> k
 " inoremap j<space> j
-vnoremap <C-Space> <Esc>
-inoremap <C-Space> <Esc>
-cnoremap <C-Space> <Esc>
+" vnoremap <C-Space> <Esc>
+" inoremap <C-Space> <Esc>
+" cnoremap <C-Space> <Esc>
+" nnoremap <C-Space> <Esc>
+vnoremap <C-l> <Esc>
+inoremap <C-l> <Esc>
+cnoremap <C-l> <C-c>
+nnoremap <C-l> <Esc>
 
 " Alignta(仮設定)
 vnoremap <Leader>a :Alignta 
@@ -933,8 +938,8 @@ let g:vimproc_dll_path = $HOME . '/.vim/autoload/vimproc_mac.so'
 " 選択したテキストの移動
 vmap <C-j> <Plug>(textmanip-move-down)
 vmap <C-k> <Plug>(textmanip-move-up)
-vmap <C-h> <Plug>(textmanip-move-left)
-vmap <C-l> <Plug>(textmanip-move-right)
+" vmap <C-h> <Plug>(textmanip-move-left)
+" vmap <C-l> <Plug>(textmanip-move-right)
 
 " 行の複製
 vmap <C-d> <Plug>(textmanip-duplicate-down)
@@ -1141,6 +1146,8 @@ function! s:unite_my_settings()
     imap <buffer> <C-w> <Plug>(unite_delete_backward_path)
     nmap <buffer> <space><space> <Plug>(unite_toggle_mark_current_candidate)
     nmap <buffer> <ESC> <Plug>(unite_exit)
+    nmap <buffer> <C-l> <Plug>(unite_exit)
+    imap <buffer> <C-l> <Esc>
     nnoremap <buffer> p p
     nnoremap <buffer> <Space> <Space>
 endfunction
