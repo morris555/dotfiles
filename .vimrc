@@ -862,16 +862,6 @@ nnoremap <Leader>l :<C-u>QuickRun -exec '%c -l %s'<CR>
 " jkの同時押しで<Esc>
 let g:arpeggio_timeoutlen = 70
 call arpeggio#load()
-" Arpeggio vnoremap jk <Esc>
-" Arpeggio cnoremap jk <Esc>
-" imap jk <Esc>
-" imap kj <Esc>
-" inoremap k<space> k
-" inoremap j<space> j
-" vnoremap <C-Space> <Esc>
-" inoremap <C-Space> <Esc>
-" cnoremap <C-Space> <Esc>
-" nnoremap <C-Space> <Esc>
 vnoremap <C-l> <Esc>
 inoremap <C-l> <Esc>
 cnoremap <C-l> <C-c>
@@ -931,6 +921,15 @@ noremap <Leader>f :<C-u>VimFilerTab<CR>
 command! Ghci VimShellInteractive ghci
 command! Php VimShellInteractive php -a
 
+au FileType vimshell call s:vimshell_my_settings()
+function! s:vimshell_my_settings()
+    " Overwrite settings.
+    inoremap <buffer> <expr><silent> <C-Space>
+                \ unite#sources#vimshell_history#start_complete(!0)
+    imap <buffer> <C-l> <Esc>
+    nmap <buffer> <C-l> <Plug>(vimshell_exit)
+endfunction
+
 " vimproc
 let g:vimproc_dll_path = $HOME . '/.vim/autoload/vimproc_mac.so'
 
@@ -938,20 +937,14 @@ let g:vimproc_dll_path = $HOME . '/.vim/autoload/vimproc_mac.so'
 " 選択したテキストの移動
 vmap <C-j> <Plug>(textmanip-move-down)
 vmap <C-k> <Plug>(textmanip-move-up)
-" vmap <C-h> <Plug>(textmanip-move-left)
-" vmap <C-l> <Plug>(textmanip-move-right)
 
 " 行の複製
 vmap <C-d> <Plug>(textmanip-duplicate-down)
 nmap <C-d> <Plug>(textmanip-duplicate-down)
 
-" vmap <Leader>s :<C-u>
-
 " open-browser.vim
 nmap <Leader>o <Plug>(openbrowser-smart-search)
 vmap <Leader>o <Plug>(openbrowser-smart-search)
-" nnoremap <expr> <Leader>p openbrowser#search(expand('<cword>'), "phpmanual_func")
-" nnoremap <expr> <Leader>p call openBrowserSearch expand(<cword>w)
 command! -nargs=1 Google :OpenBrowserSearch <args>
 let g:openbrowser_search_engines = {
             \   'phpmanual_all': 'http://jp.php.net/results.php?q={query}&l=ja&p=all',
@@ -1144,9 +1137,10 @@ au FileType unite call s:unite_my_settings()
 function! s:unite_my_settings()
     " Overwrite settings.
     imap <buffer> <C-w> <Plug>(unite_delete_backward_path)
-    nmap <buffer> <space><space> <Plug>(unite_toggle_mark_current_candidate)
-    nmap <buffer> <ESC> <Plug>(unite_exit)
     imap <buffer> <C-l> <Esc>
+    nmap <buffer> <space><space> <Plug>(unite_toggle_mark_current_candidate)
+    nmap <buffer> <C-l> <Plug>(unite_exit)
+    nmap <buffer> <C-Space> <Plug>(unite_redraw)
     nnoremap <buffer> p p
     nnoremap <buffer> <Space> <Space>
 endfunction
