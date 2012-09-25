@@ -163,6 +163,7 @@ NeoBundle 'Shougo/vimproc'
 " shell
 NeoBundle 'Shougo/vimshell'
 NeoBundle 'ujihisa/vimshell-ssh'
+NeoBundle 'chikatoike/concealedyank.vim'
 
 " echodoc
 NeoBundle 'Shougo/echodoc'
@@ -909,11 +910,15 @@ let g:EasyMotion_leader_key='<Leader>m'
 
 " vimshell設定
 
-let g:vimshell_enable_auto_slash = 1		" ディレクトリ補完時にスラッシュを補う
 let g:vimshell_max_command_history = 100000000			" ヒストリの保存数
-noremap <Leader>s :<C-u>vnew<CR>:<C-u>VimShellCreate<CR>
-noremap <Leader>S :<C-u>VimShellTab<CR>
+let g:vimshell_user_prompt = 'fnamemodify(getcwd(), ":~")'
+noremap <Leader>sv :<C-u>VimShell -split<CR>
+noremap <Leader>ss :<C-u>VimShell -popup<CR>
+noremap <Leader>st :<C-u>VimShellTab<CR>
+noremap <Leader>s <Nop>
+
 noremap <Leader>f :<C-u>VimFilerTab<CR>
+
 
 command! Ghci VimShellInteractive ghci
 command! Php VimShellInteractive php -a
@@ -925,6 +930,11 @@ function! s:vimshell_my_settings()
                 \ unite#sources#vimshell_history#start_complete(!0)
     imap <buffer> <C-l> <Esc>
     nmap <buffer> <C-l> <Plug>(vimshell_exit)
+
+    xmap <buffer> y <Plug>(operator-concealedyank)
+
+    call unite#custom_default_action("vimshell/history", "insert")
+    call unite#custom_default_action("vimshell/external_history", "insert")
 endfunction
 
 au FileType vimfiler call s:vimfiler_my_settings()
