@@ -242,9 +242,6 @@ NeoBundle 'mfumi/lightsout.vim'
 " }}}
 " }}}
 
-" }}}
-" }}}
-
 filetype plugin on
 filetype indent on
 
@@ -928,6 +925,14 @@ function! s:vimshell_my_settings()
                 \ unite#sources#vimshell_history#start_complete(!0)
     imap <buffer> <C-l> <Esc>
     nmap <buffer> <C-l> <Plug>(vimshell_exit)
+endfunction
+
+au FileType vimfiler call s:vimfiler_my_settings()
+function! s:vimfiler_my_settings()
+    " Overwrite settings.
+    nmap <buffer> <C-space> <Plug>(vimfiler_redraw_screen)
+    nmap <buffer> <space><space> <Plug>(vimfiler_toggle_mark_current_line)
+    nnoremap <buffer> <Space> <Space>
 endfunction
 
 " vimproc
