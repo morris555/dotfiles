@@ -13,7 +13,7 @@ if has('gui_macvim')
     set imdisable        " IME OFF
     set antialias        " アンチエイリアス
 
-    " set gfn=Ricty\ Bold:h13
+    " TODO フォント変えたい
     set gfn=Ricty\ Regular:h11
     set gfw=
 
@@ -36,7 +36,6 @@ if has('gui_macvim')
     highlight ZenkakuSpace cterm=underline ctermfg=red guibg=red guifg=white
     match ZenkakuSpace /　/
 
-    " 全角スペース表示
     highlight Eol cterm=underline guifg=#666666
     match Eol /\n/
     
