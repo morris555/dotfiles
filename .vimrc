@@ -1069,7 +1069,7 @@ endfunction augroup END
 command! -nargs=0 MemoNew call s:open_memo_file()
 
 " メモ一覧をUniteで呼び出すコマンド
-command! -nargs=0 MemoList :Unite file_rec:~/Dropbox/Memo/ -buffer-name=memo_list
+command! -nargs=0 MemoList :Unite file_rec:~/Dropbox/Memo/ -buffer-name=memo_list -auto-preview
 
 " メモ一覧をUnite grepするコマンド
 command! -nargs=0 MemoGrep :Unite grep:~/Dropbox/Memo/ -no-quit<CR>
