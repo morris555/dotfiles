@@ -13,7 +13,6 @@ if has('gui_macvim')
     set imdisable        " IME OFF
     set antialias        " アンチエイリアス
 
-    " TODO フォント変えたい
     set gfn=Ricty\ Regular:h11
     set gfw=
 
@@ -60,13 +59,15 @@ if has('gui_macvim')
     endif
 
     " vimにフォーカスがあたっていないときは、透けさせる。(http://vim-users.jp/2011/10/hack234/)
-    set transparency=5
-    augroup hack234
-        autocmd!
-        if has('mac')
-            autocmd FocusGained * set transparency=5
-            autocmd FocusLost * set transparency=25
-        endif
-    augroup END
+    " set transparency=5
+    " augroup hack234
+    "     autocmd!
+    "     if has('mac')
+    "         autocmd FocusGained * set transparency=0
+    "         autocmd FocusLost * set transparency=25
+    "         " autocmd FocusGained * set transparency=5
+    "         " autocmd FocusLost * set transparency=25
+    "     endif
+    " augroup END
 else
 endif
