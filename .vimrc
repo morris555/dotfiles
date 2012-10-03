@@ -499,10 +499,9 @@ vnoremap * "zy:let @/ = @z<CR>n
 nnoremap ? :<C-u>Unite line -buffer-name=search -start-insert<CR>
 
 if has('migemo')
-    " TODO 検索がなぜか調子悪いため、試しに外している
     " 検索をmigemoで行う
-    " nnoremap / g/
-    " nnoremap g/ /
+    nnoremap / g/
+    nnoremap g/ /
 endif
 
 " folding
@@ -937,7 +936,7 @@ function! s:vimshell_my_settings()
     imap <buffer> <C-l> <Esc>
     nmap <buffer> <C-l> <Plug>(vimshell_exit)
 
-    xmap <buffer> y <Plug>(operator-concealedyank)
+    xmap <buffer> Y <Plug>(operator-concealedyank)
 
     call unite#custom_default_action("vimshell/history", "insert")
     call unite#custom_default_action("vimshell/external_history", "insert")
@@ -1186,7 +1185,6 @@ let neco_dic.tweetvim_say = $HOME . '/.tweetvim/screen_name'
 
 " haskell補完用に、cabalのパスを追加
 let $PATH=$PATH . ":" . $HOME . "/.cabal/bin"
-" let $PATH=$PATH . ":" . $HOME . "/Users/tekkoc/Library/Haskell/ghc-7.4.1/lib/ghc-mod-1.11.0/bin/"
 
 " ファイル名補完
 inoremap <expr><C-x><C-f>  neocomplcache#manual_filename_complete()
