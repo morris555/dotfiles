@@ -498,12 +498,6 @@ vnoremap * "zy:let @/ = @z<CR>n
 " ?では、lineソースを使った検索にする
 nnoremap ? :<C-u>Unite line -buffer-name=search -start-insert<CR>
 
-if has('migemo')
-    " 検索をmigemoで行う
-    nnoremap / g/
-    nnoremap g/ /
-endif
-
 " folding
 
 if s:has_plugin('foldCC')
