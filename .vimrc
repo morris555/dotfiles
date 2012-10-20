@@ -119,14 +119,11 @@ NeoBundle 'git://github.com/scrooloose/syntastic.git', '637182c181814631f8d5d33d
 " 言語別
 NeoBundle 'kchmck/vim-coffee-script'
 NeoBundle 'git://github.com/vim-scripts/JavaScript-syntax.git'
-" NeoBundle 'git://github.com/vim-scripts/php.vim--Hodge.git'
-" NeoBundle 'git://github.com/2072/PHP-Indenting-for-VIm.git'
-" NeoBundle 'git://github.com/potix2/vim-phprefactor.git'
 NeoBundle 'git://github.com/vim-scripts/actionscript.vim--Leider.git'
 NeoBundle 'git://github.com/wlangstroth/vim-haskell.git'
 NeoBundle 'git://github.com/Twinside/vim-haskellConceal.git'
 NeoBundle 'git://github.com/ujihisa/ref-hoogle.git'
-" NeoBundle 'git://github.com/spf13/PIV.git'
+NeoBundle 'git://github.com/pasela/unite-fuel.git'
 
 " 即座に実行
 NeoBundle 'thinca/vim-quickrun'
@@ -199,7 +196,7 @@ NeoBundle 'thinca/vim-scouter.git'
 NeoBundle 'thinca/vim-localrc'
 
 " eskk.vim
-NeoBundle 'tyru/eskk.vim'
+NeoBundle 'git://github.com/tyru/eskk.vim.git', {'rev' : 'd996bdd2ed90d32fe0e7ca73a969ee188f750d66'}
 NeoBundle 'tyru/savemap.vim'
 NeoBundle 'tyru/vice.vim'
 NeoBundle 'tyru/skkdict.vim'
