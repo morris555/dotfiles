@@ -385,11 +385,23 @@ set tabstop=4
 set softtabstop=4
 set expandtab
 
-" phpはタブ幅4でタブ文字を使う
-autocmd FileType php set shiftwidth=4
-autocmd FileType php set tabstop=4
-autocmd FileType php set softtabstop=4
-autocmd FileType php set noexpandtab
+autocmd BufEnter * if &filetype == "php" | call InitPHP() | endif
+function! InitPHP()
+    " phpはタブ幅4でタブ文字を使う
+    setlocal shiftwidth=4
+    setlocal tabstop=4
+    setlocal softtabstop=4
+    setlocal noexpandtab
+
+    " <?phpの表記を変更したいが、↓だと内部のハイライトが全て無効になる
+    " syntax match phpMyOperator "<?php" conceal cchar=≪
+    " syntax match phpMyOperator "?>" conceal cchar=≫
+    " syntax match phpMyOperator "array" conceal cchar=A
+    " syntax match phpMyOperator "function" conceal cchar=F
+    " highlight link phpMyOperator phpOperator
+    " highlight! link Conceal phpOperator
+    " setlocal conceallevel=2
+endfunction
 
 " coffee scriptはタブ幅4でスペースを使う
 autocmd FileType coffee set shiftwidth=4
@@ -795,9 +807,6 @@ autocmd CursorMoved * set tabline=%!MakeTabLine()
 " plugin
 "================
 
-" PIV(php plugin)
-let g:PIVCreateDefaultMappings = 0
-
 " ofaddinbox(omniforcus)
 nmap <silent> <Leader>O <Plug>SingleTaskToOmniFocus
 vmap <silent> <Leader>O <Plug>MultiTaskToOmniFocus
@@ -846,6 +855,7 @@ xmap <Leader>Hr <Plug>(quickhl-reset)
 " for quickrun.vim
 let g:quickrun_config = {}
 let g:quickrun_config.coffee  = {'command' : 'cat'}
+let g:quickrun_config.php  = {'command' : 'php'}
 
 nnoremap <Leader>R :<C-u>Unite quicklearn -immediately<Cr>
 
@@ -875,7 +885,6 @@ endif
 nmap <Leader>k <Plug>(ref-keyword)
 " let objc_man_key = '<Leader>k'
 autocmd FileType vim nnoremap <buffer> <Leader>k :<C-u>help <C-r><C-w><CR>
-" autocmd FileType php nnoremap <buffer><expr> <Leader>k openbrowser#search(expand('<cword>'), "phpmanual_func")
 
 " vimrefのショートカットコマンド
 command! -nargs=1 Alc :Ref alc2 <args>
@@ -998,6 +1007,7 @@ let g:surround_custom_mapping.php= {
             \'A': "array(\r);",
             \'v': "v(\r)",
             \'s': "self::\r"
+            \'p': "<?php \r ?>"
             \}
 let g:surround_custom_mapping.smarty= {
             \'S': "{{\r}}",
@@ -1310,10 +1320,9 @@ autocmd BufNewFile *.html 0r $HOME/.vim/template/html.txt
 
 " ファイルタイプ
 au BufNewFile,BufRead *.scala set filetype=scala
-au BufNewFile,BufRead *.ejs set filetype=html
 au BufNewFile,BufRead *.js set filetype=javascript
 au BufNewFile,BufRead *.js.shd set filetype=coffee
-au BufNewFile,BufRead *.html set filetype=smarty.html
+au BufNewFile,BufRead *.html set filetype=smarty
 au BufNewFile,BufRead *.as set filetype=actionscript
 
 autocmd FileType php :set dictionary+=~/.vim/dict/php.dict
