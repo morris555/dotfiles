@@ -529,10 +529,10 @@ noremap <space>fg :echo FoldCCnavi()<CR>
 " tag
 set tags=tags
 
-nnoremap <silent> <Space>tl :Tlist<CR>
-nnoremap <silent> <Space>te :<C-u>SrcExplToggle<CR>
-nnoremap <silent> <Space>tt <C-]>
+" TODO 新規タブ開きたい
 nnoremap <silent> <space>tT :<C-u>tabnew<CR>
+
+nnoremap <silent> <Space>tt <C-]>
 nnoremap <silent> <Space>tn :tn<CR>
 nnoremap <silent> <Space>tp :tp<CR>
 nnoremap <silent> <Space>tg :<C-u>UniteWithCursorWord -immediately tag<CR>
@@ -555,7 +555,6 @@ autocmd FileType php setlocal commentstring=//%s
 
 " 置換
 map R <Plug>(operator-replace)
-
 map C <Plug>(operator-comment)
 map X <Plug>(operator-uncomment)
 
@@ -564,9 +563,6 @@ map X <Plug>(operator-uncomment)
 " コロンとセミコロンを入れ替え
 noremap : ;
 noremap ; :
-
-" 最後に編集したところを選択
-nnoremap gc `[v`]
 
 " ペーストしたテキストを再選択
 nnoremap <expr> gp '`[' . strpart(getregtype(), 0, 1) . '`]'
