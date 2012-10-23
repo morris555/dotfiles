@@ -1006,7 +1006,7 @@ let g:surround_custom_mapping.php= {
             \'a': "['\r']",
             \'A': "array(\r);",
             \'v': "v(\r)",
-            \'s': "self::\r"
+            \'s': "self::\r",
             \'p': "<?php \r ?>"
             \}
 let g:surround_custom_mapping.smarty= {
