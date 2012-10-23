@@ -1,6 +1,6 @@
 if has('gui_macvim')
     " カラースキーム
-    
+
     set background=dark
     let g:solarized_contrast="high"
     let g:solarized_italic=1
@@ -16,7 +16,7 @@ if has('gui_macvim')
     set gfn=Ricty\ Regular:h11
     set gfw=
 
-    set lines=94 columns=317
+    " set lines=94 columns=317
     set guioptions-=T
     set guioptions-=m
 
@@ -37,10 +37,10 @@ if has('gui_macvim')
 
     highlight Eol cterm=underline guifg=#666666
     match Eol /\n/
-    
+
     " gVimでもテキストベースのタブページを使う
     set guioptions-=e
-    
+
     " visualmark
     if &bg == "dark"
         " highlight SignColor ctermfg=white ctermbg=blue guibg=#073672
@@ -58,16 +58,23 @@ if has('gui_macvim')
         highlight CursorColumn guibg=#ddddff
     endif
 
-    " vimにフォーカスがあたっていないときは、透けさせる。(http://vim-users.jp/2011/10/hack234/)
-    " set transparency=5
-    " augroup hack234
-    "     autocmd!
-    "     if has('mac')
-    "         autocmd FocusGained * set transparency=0
-    "         autocmd FocusLost * set transparency=25
-    "         " autocmd FocusGained * set transparency=5
-    "         " autocmd FocusLost * set transparency=25
-    "     endif
-    " augroup END
-else
+    " Hack #120: gVim でウィンドウの位置とサイズを記憶する
+    " http://vim-users.jp/2010/01/hack120/
+    let g:save_window_file = expand('~/.vimwinpos')
+    augroup SaveWindow
+        autocmd!
+        autocmd VimLeavePre * call s:save_window()
+        function! s:save_window()
+            let options = [
+                        \ 'set columns=' . &columns,
+                        \ 'set lines=' . &lines,
+                        \ 'winpos ' . getwinposx() . ' ' . getwinposy(),
+                        \ ]
+            call writefile(options, g:save_window_file)
+        endfunction
+    augroup END
+
+    if filereadable(g:save_window_file)
+        execute 'source' g:save_window_file
+    endif
 endif
