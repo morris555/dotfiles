@@ -403,6 +403,8 @@ function! InitPHP()
 
     " PHPではHTMLも書く
     call MapHTMLKeys()
+
+    inoremap <expr> <buffer> @ <SID>at()
 endfunction
 
 " coffee scriptはタブ幅4でスペースを使う
@@ -437,6 +439,13 @@ function! MapHTMLKeys()
     inoremap <buffer> \2 &#8220;
     inoremap <buffer> \" &#8221;
 endfunction " MapHTMLKeys()
+
+" 押したキーの変わりに「$this->」を代入
+function! s:at()
+    let syntax = synstack(line('.'), col('.'))
+    let name = empty(syntax) ? '' : synIDattr(syntax[-1], "name")
+    return name =~# 'String\|Comment\|None' ? '@' : '$this->'
+endfunction
 
 " file encoding 
 "
@@ -732,20 +741,6 @@ nnoremap <silent> <Space>os :<C-u>SyntasticToggleMode<CR>
 nnoremap <silent> <Space>ob :<C-u>ToggleBadWhitespace<CR>
 
 
-function! s:at()
-    let syntax = synstack(line('.'), col('.'))
-    let name = empty(syntax) ? '' : synIDattr(syntax[-1], "name")
-    return name =~# 'String\|Comment\|None' ? '@' : '$this->'
-endfunction
-autocmd FileType php inoremap <expr> <buffer> @ <SID>at()
-
-" status line
-set laststatus=2
-set statusline=\ %F
-set statusline+=\ %(%m\ %r%)
-set statusline+=\ type=%{&filetype}
-set statusline+=%=\ [%l]
-set statusline+=%=\ \ 
 
 " tab line
 
@@ -823,6 +818,36 @@ vmap <silent> <Leader>O <Plug>MultiTaskToOmniFocus
 let g:sonictemplate_vim_template_dir = $HOME. '/Dropbox/Vim/sonic_template'
 imap <C-t> <space><bs><c-o>:call sonictemplate#select('i')<cr>
 
+" sonictemplate
+" snippetを定義したい
+let g:user_zen_settings = {
+            \ 'indentation' : '    ',
+            \ 'lang' : 'ja',
+            \ 'html' : {
+            \   'filters' : 'html',
+            \   'indentation' : ' '
+            \ },
+            \ 'php' : {
+            \   'extends' : 'html',
+            \   'filters' : 'html,c',
+            \   'snippets' : {
+            \     'ar' : "array()",
+            \   },
+            \ },
+            \ 'css' : {
+            \   'filters' : 'fc',
+            \ },
+            \ 'javascript' : {
+            \   'snippets' : {
+            \     'jq' : "$(function() {\n\t${cursor}${child}\n});",
+            \     'jq:each' : "$.each(arr, function(index, item)\n\t${child}\n});",
+            \     'fn' : "(function() {\n\t${cursor}\n})();",
+            \     'tm' : "setTimeout(function() {\n\t${cursor}\n}, 100);",
+            \   },
+            \ },
+            \}
+
+
 " eskk
 if has('vim_starting')
     let g:eskk#large_dictionary = '~/.vim/skk/skk-jisyo.l'
@@ -841,9 +866,6 @@ endif
 
 " lingr
 let g:lingr_vim_user = 'tek_koc'
-if filereadable(expand('~/Dropbox/.password/.lingr_account.vim'))
-    source ~/Dropbox/.password/.lingr_account.vim
-endif
 
 " poslist.vim
 map <c-o> <Plug>(poslist-prev-pos)
@@ -870,10 +892,10 @@ nnoremap <Leader>R :<C-u>Unite quicklearn -immediately<Cr>
 nnoremap <Leader>l :<C-u>QuickRun -exec '%c -l %s'<CR>
 
 " arpeggio(同時押し設定)
-
-" jkの同時押しで<Esc>
 let g:arpeggio_timeoutlen = 70
 call arpeggio#load()
+
+" <C-l>でEscする
 vnoremap <C-l> <Esc>
 inoremap <C-l> <Esc>
 cnoremap <C-l> <C-c>
@@ -1047,8 +1069,8 @@ imap <C-s> <Plug>Isurround
 xmap <C-s> <Plug>VSurround
 
 " memo_list
-" メモ関連関数
-function! s:open_memo_file()
+"
+function! s:open_memo_file()"{{{
     let l:category = input('Category: ')
     let l:title = input('Title: ')
 
@@ -1078,8 +1100,7 @@ function! s:open_memo_file()
     call setline(1, l:template)
     execute '999'
     execute 'write'
-endfunction augroup END
-" call unite#set_profile('memo_list', 'filters', ['matcher_default', 'sorter_reverse', 'converter_default'])
+endfunction augroup END"}}}
 
 
 " メモを作成するコマンド
@@ -1094,10 +1115,20 @@ command! -nargs=0 MemoGrep :Unite grep:~/Dropbox/Memo/ -no-quit<CR>
 " メモ一覧をVimFilerで呼び出すコマンド
 command! -nargs=0 MemoFiler :VimFiler ~/Dropbox/Memo
 
+" メモ関連マッピング
 nnoremap Mn :MemoNew<CR>
 nnoremap Ml :MemoList<CR>
 nnoremap Mf :MemoFiler<CR>
 nnoremap Mg :MemoGrep<CR>
+
+" シフト押したままでもマッピングが起動するように
+nnoremap MN :MemoNew<CR>
+nnoremap ML :MemoList<CR>
+nnoremap MF :MemoFiler<CR>
+nnoremap MG :MemoGrep<CR>
+
+" TODO 新しいものを上にしたい
+" call unite#set_profile('memo_list', 'filters', ['matcher_default', 'sorter_reverse', 'converter_default'])
 
 " unite
 "
@@ -1239,7 +1270,7 @@ command! Rv source ~/dotfiles/.vimrc
 command! Eg edit ~/dotfiles/.gvimrc
 command! Rg source ~/dotfiles/.gvimrc
 
-" Eb/RbでNeoBundleの編集と反映
+" RbでNeoBundleの編集と反映
 command! -bang Rb :Unite neobundle/install:<bang>
 
 " jsonデコード(仮)
@@ -1308,25 +1339,17 @@ set foldmethod=marker
 " iskeyword変更
 au FileType php setlocal iskeyword+=$
 
-" テンプレート設定
-autocmd BufNewFile *.pm 0r $HOME/.vim/template/perl.txt
-autocmd BufNewFile *.html 0r $HOME/.vim/template/html.txt
-
 " ファイルタイプ
 au BufNewFile,BufRead *.scala set filetype=scala
 au BufNewFile,BufRead *.js set filetype=javascript
 au BufNewFile,BufRead *.js.shd set filetype=coffee
 au BufNewFile,BufRead *.html set filetype=smarty
 au BufNewFile,BufRead *.as set filetype=actionscript
+au BufNewFile,BufRead */doc/*.txt set filetype=help
 
 autocmd FileType php :set dictionary+=~/.vim/dict/php.dict
 autocmd FileType scala :set dictionary+=~/.vim/dict/scala.dict
 set complete+=k
-
-"php処理
-" let php_sql_query=1
-" let php_htmlInStrings=1
-" let php_folding = 1
 
 " 改行文字などの表示
 set list
