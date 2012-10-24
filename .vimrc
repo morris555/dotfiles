@@ -99,7 +99,6 @@ NeoBundle 'git://github.com/ujihisa/unite-font.git'
 NeoBundle 'tsukkee/unite-tag'
 NeoBundle 'choplin/unite-vim_hacks'
 NeoBundle 'git://github.com/mattn/unite-advent_calendar.git'
-NeoBundle 'git://github.com/basyura/TweetVim.git'
 NeoBundle 'git://github.com/kmnk/vim-unite-giti.git'
 NeoBundle 'git://github.com/ujihisa/unite-haskellimport.git'
 NeoBundle 'git://github.com/sgur/unite-qf.git'
@@ -1174,21 +1173,6 @@ function! s:unite_my_settings()
     nnoremap <buffer> p p
     nnoremap <buffer> <Space> <Space>
 endfunction
-
-" tweetvim
-
-" タイムライン選択用の Unite を起動する
-autocmd FileType tweetvim nnoremap <buffer><silent> t :Unite tweetvim<CR>
-" 発言用バッファを表示する
-autocmd FileType tweetvim nnoremap <buffer><silent> s :TweetVimSay<CR>
-
-" スクリーン名のキャッシュを利用して、neocomplcache で補完する
-if !exists('g:neocomplcache_dictionary_filetype_lists')
-    let g:neocomplcache_dictionary_filetype_lists = {}
-endif
-let neco_dic = g:neocomplcache_dictionary_filetype_lists
-let neco_dic.tweetvim_say = $HOME . '/.tweetvim/screen_name'
-
 
 " neocomplcache
 
