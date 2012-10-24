@@ -28,7 +28,7 @@ if has('gui_macvim')
     " indentguides
     IndentGuidesEnable
 
-    let g:indent_guides_color_change_percent = 30
+    let g:indent_guides_color_change_percent = 10
     let g:indent_guides_guide_size = 1
 
     " 全角スペース表示

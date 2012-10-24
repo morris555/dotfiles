@@ -384,8 +384,7 @@ set tabstop=4
 set softtabstop=4
 set expandtab
 
-autocmd BufEnter * if &filetype == "php" | call InitPHP() | endif
-function! InitPHP()
+function! InitPhp()
     " phpはタブ幅4でタブ文字を使う
     setlocal shiftwidth=4
     setlocal tabstop=4
@@ -406,18 +405,16 @@ function! InitPHP()
 
     inoremap <expr> <buffer> @ <SID>at()
 endfunction
+autocmd BufEnter * if &filetype == "php" | call InitPhp() | endif
 
-" coffee scriptはタブ幅4でスペースを使う
-autocmd FileType coffee set shiftwidth=4
-autocmd FileType coffee set tabstop=4
-autocmd FileType coffee set softtabstop=4
-autocmd FileType coffee set expandtab
-
-" vim scriptはタブ幅4でスペースを使う
-autocmd FileType vim set shiftwidth=4
-autocmd FileType vim set tabstop=4
-autocmd FileType vim set softtabstop=4
-autocmd FileType vim set expandtab
+function! InitVim()
+    " vim scriptはタブ幅4でスペースを使う
+    autocmd FileType vim set shiftwidth=4
+    autocmd FileType vim set tabstop=4
+    autocmd FileType vim set softtabstop=4
+    autocmd FileType vim set expandtab
+endfunction
+autocmd BufEnter * if &filetype == "vim" | call InitVim() | endif
 
 " haskellはタブ幅4でスペースを使う
 autocmd FileType haskell set shiftwidth=4
