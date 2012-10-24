@@ -15,6 +15,7 @@ if has('gui_macvim')
 
     set gfn=Ricty\ Regular:h11
     set gfw=
+    set mouse=
 
     " set lines=94 columns=317
     set guioptions-=T

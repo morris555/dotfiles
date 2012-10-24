@@ -448,7 +448,7 @@ endfunction
 "
 set fileformats=unix,dos,mac
 
-" 文字コードの自動認識
+" 文字コードの自動認識"{{{
 if &encoding !=# 'utf-8'
     set encoding=japan
     set fileencoding=japan
@@ -504,8 +504,7 @@ set fileformats=unix,dos,mac
 " □とか○の文字があってもカーソル位置がずれないようにする
 if exists('&ambiwidth')
     set ambiwidth=double
-endif
-
+endif"}}}
 
 " searching
 set ignorecase
