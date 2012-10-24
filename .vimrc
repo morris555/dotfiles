@@ -301,7 +301,6 @@ set complete+=k            " 補完に辞書ファイル追加
 set iminsert=0 " インサートモードで日本語入力を ON にしない
 set imsearch=0 " 検索モードで日本語入力を ON にしない
 
-
 " 改行時のコメントと、自動改行を無効化
 set formatoptions-=tcro
 augroup vimrc_group_formatoptions
@@ -401,6 +400,9 @@ function! InitPHP()
     " highlight link phpMyOperator phpOperator
     " highlight! link Conceal phpOperator
     " setlocal conceallevel=2
+
+    " PHPではHTMLも書く
+    call MapHTMLKeys()
 endfunction
 
 " coffee scriptはタブ幅4でスペースを使う
@@ -421,6 +423,20 @@ autocmd FileType haskell set tabstop=4
 autocmd FileType haskell set softtabstop=4
 autocmd FileType haskell set expandtab
 
+" HTMLの実態参照文字入力用マッピング
+function! MapHTMLKeys()
+    inoremap <buffer> \\ \
+    inoremap <buffer> \& &amp;
+    inoremap <buffer> \< &lt;
+    inoremap <buffer> \> &gt;
+    inoremap <buffer> \. ・
+    inoremap <buffer> \- &#8212;
+    inoremap <buffer> \<Space> &nbsp;
+    inoremap <buffer> \` &#8216;
+    inoremap <buffer> \' &#8217;
+    inoremap <buffer> \2 &#8220;
+    inoremap <buffer> \" &#8221;
+endfunction " MapHTMLKeys()
 
 " file encoding 
 "
@@ -902,6 +918,9 @@ map <silent> <Leader>vk <Plug>Vm_goto_prev_sign
 
 " easymotion
 let g:EasyMotion_leader_key='<Leader>m'
+
+" ホームポジションに近いキーを使う
+let g:EasyMotion_keys = 'hjklasdfgyuiopqwertnmzxcvbHJKLASDFGYUIOPQWERTNMZXCVB'
 
 " vimshell設定
 
