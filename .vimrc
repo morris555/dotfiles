@@ -49,6 +49,7 @@ NeoBundle 'kana/vim-operator-replace'
 NeoBundle 'tyru/operator-camelize.vim'
 NeoBundle 'emonkak/vim-operator-comment'
 NeoBundle 'git://github.com/kana/vim-textobj-line.git'
+NeoBundle 'git://github.com/sgur/vim-textobj-parameter.git'
 
 " lingr
 NeoBundle 'tsukkee/lingr-vim'
@@ -572,6 +573,8 @@ autocmd FileType php setlocal commentstring=//%s
 map R <Plug>(operator-replace)
 map C <Plug>(operator-comment)
 map X <Plug>(operator-uncomment)
+map <Leader>c <Plug>(operator-camelize)
+map <Leader>C <Plug>(operator-decamelize)
 
 " other mapping
 
