@@ -391,11 +391,13 @@ function! InitPhp()
     setlocal softtabstop=4
     setlocal noexpandtab
 
+    " {{で<?php }}で?>
+    inoremap <buffer><expr> { getline('.')[col('.') - 2] ==# '{' ? "\<BS><?php" : '{'
+    inoremap <buffer><expr> } getline('.')[col('.') - 2] ==# '}' ? "\<BS>?>" : '}'
+
     " <?phpの表記を変更したいが、↓だと内部のハイライトが全て無効になる
     " syntax match phpMyOperator "<?php" conceal cchar=≪
     " syntax match phpMyOperator "?>" conceal cchar=≫
-    " syntax match phpMyOperator "array" conceal cchar=A
-    " syntax match phpMyOperator "function" conceal cchar=F
     " highlight link phpMyOperator phpOperator
     " highlight! link Conceal phpOperator
     " setlocal conceallevel=2
@@ -814,8 +816,8 @@ vmap <silent> <Leader>O <Plug>MultiTaskToOmniFocus
 let g:sonictemplate_vim_template_dir = $HOME. '/Dropbox/Vim/sonic_template'
 imap <C-t> <space><bs><c-o>:call sonictemplate#select('i')<cr>
 
-" sonictemplate
-" snippetを定義したい
+" zencoding
+" TODO snippetを定義したい
 let g:user_zen_settings = {
             \ 'indentation' : '    ',
             \ 'lang' : 'ja',
@@ -842,7 +844,6 @@ let g:user_zen_settings = {
             \   },
             \ },
             \}
-
 
 " eskk
 if has('vim_starting')
