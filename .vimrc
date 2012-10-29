@@ -395,12 +395,22 @@ function! InitPhp()
     inoremap <buffer><expr> { getline('.')[col('.') - 2] ==# '{' ? "\<BS><?php" : '{'
     inoremap <buffer><expr> } getline('.')[col('.') - 2] ==# '}' ? "\<BS>?>" : '}'
 
-    " <?phpの表記を変更したいが、↓だと内部のハイライトが全て無効になる
-    " syntax match phpMyOperator "<?php" conceal cchar=≪
-    " syntax match phpMyOperator "?>" conceal cchar=≫
-    " highlight link phpMyOperator phpOperator
-    " highlight! link Conceal phpOperator
-    " setlocal conceallevel=2
+    syntax keyword phpDefine function contained conceal cchar=𝑓
+    syntax keyword phpDefine array contained conceal cchar=𝒂
+    syntax match phpOperator "<=" conceal cchar=≤ contained containedin=phpRegion
+    syntax match phpOperator ">=" conceal cchar=≥ contained containedin=phpRegion
+    syntax match phpOperator "==" conceal cchar=≈ contained containedin=phpRegion
+    syntax match phpOperator "===" conceal cchar=≡ contained containedin=phpRegion
+    syntax match phpOperator "::" conceal cchar=∷ contained containedin=phpRegion
+    syntax match phpOperator "!=" conceal cchar=≠ contained containedin=phpRegion
+    syntax match phpRelation "=>" conceal cchar=⇛ contained containedin=phpRegion
+    syntax match phpMemberSelector "\->" conceal cchar=→ contained containedin=phpRegion
+
+    highlight! link Conceal phpDefine
+    highlight! link Conceal phpRelation
+    highlight! link Conceal phpMemberSelector
+    highlight! link Conceal phpOperator
+    setlocal conceallevel=2
 
     " PHPではHTMLも書く
     call MapHTMLKeys()
