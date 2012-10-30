@@ -287,6 +287,8 @@ set matchpairs+=<:>
 " 編集中もほかファイルを開けるように
 set hidden
 
+set macmeta
+
 " CursorHoldまでの時間
 set updatetime=1000
 
@@ -699,6 +701,19 @@ nnoremap <Space>i oX<C-h><ESC>kdd
 
 " 段落の最後から挿入
 nnoremap <Space>I /^\n<CR>oX<C-h><ESC>kdd
+
+" インサートモードで数字入力
+inoremap <M-n> 0
+inoremap <M-Space> 0
+inoremap <M-m> 1
+inoremap <M-,> 2
+inoremap <M-.> 3
+inoremap <M-j> 4
+inoremap <M-k> 5
+inoremap <M-l> 6
+inoremap <M-u> 7
+inoremap <M-i> 8
+inoremap <M-o> 9
 
 " {{{ Toggle options
 function! s:toggle_grepprg(global_p)
