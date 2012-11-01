@@ -399,14 +399,16 @@ function! InitPhp()
 
     syntax keyword phpDefine function contained conceal cchar=𝑓
     syntax keyword phpDefine array contained conceal cchar=𝒂
-    syntax match phpOperator "<=" conceal cchar=≤ contained containedin=phpRegion
-    syntax match phpOperator ">=" conceal cchar=≥ contained containedin=phpRegion
-    syntax match phpOperator "==" conceal cchar=≈ contained containedin=phpRegion
-    syntax match phpOperator "===" conceal cchar=≡ contained containedin=phpRegion
-    syntax match phpOperator "::" conceal cchar=∷ contained containedin=phpRegion
-    syntax match phpOperator "!=" conceal cchar=≠ contained containedin=phpRegion
-    syntax match phpRelation "=>" conceal cchar=⇛ contained containedin=phpRegion
-    syntax match phpMemberSelector "\->" conceal cchar=→ contained containedin=phpRegion
+
+    " jama?
+    " syntax match phpOperator "<=" conceal cchar=≤ contained containedin=phpRegion
+    " syntax match phpOperator ">=" conceal cchar=≥ contained containedin=phpRegion
+    " syntax match phpOperator "==" conceal cchar=≈ contained containedin=phpRegion
+    " syntax match phpOperator "===" conceal cchar=≡ contained containedin=phpRegion
+    " syntax match phpOperator "::" conceal cchar=∷ contained containedin=phpRegion
+    " syntax match phpOperator "!=" conceal cchar=≠ contained containedin=phpRegion
+    " syntax match phpRelation "=>" conceal cchar=⇛ contained containedin=phpRegion
+    " syntax match phpMemberSelector "\->" conceal cchar=→ contained containedin=phpRegion
 
     highlight! link Conceal phpDefine
     highlight! link Conceal phpRelation
