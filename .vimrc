@@ -70,8 +70,11 @@ NeoBundle 'git://github.com/eagletmt/ghcmod-vim.git'
 " template
 NeoBundle 'git://github.com/mattn/sonictemplate-vim.git'
 
-" 究極補完
+" 補完
 NeoBundle 'Shougo/neocomplcache'
+
+" snippet
+NeoBundle 'git://github.com/Shougo/neosnippet.git'
 
 " easymotion
 NeoBundle 'Lokaltog/vim-easymotion'
@@ -310,6 +313,13 @@ augroup vimrc_group_formatoptions
 	autocmd FileType * setlocal formatoptions-=tcro
 augroup END
 
+" concealを有効に
+if has('conceal')
+  set conceallevel=2
+  " TODO concealcursorの値をどうするか検討
+  " set conceallevel=2 concealcursor=i
+endif
+
 " {{{ utility function 
 function! s:has_plugin(name)
     return globpath(&runtimepath, 'plugin/' . a:name . '.vim') !=# ''
@@ -414,7 +424,6 @@ function! InitPhp()
     highlight! link Conceal phpRelation
     highlight! link Conceal phpMemberSelector
     highlight! link Conceal phpOperator
-    setlocal conceallevel=2
 
     " PHPではHTMLも書く
     call MapHTMLKeys()
@@ -681,8 +690,6 @@ inoremap <C-f> <Right>
 inoremap <C-b> <Left>
 inoremap <C-e> <End>
 inoremap <C-a> <Home>
-inoremap <expr> <C-k>
-            \ repeat("\<Delete>", max([strchars(getline('.')[col('.') - 1:]), 1]))
 
 " キーボードマクロをQに降格
 nnoremap q <Nop>
@@ -846,7 +853,7 @@ imap <C-t> <space><bs><c-o>:call sonictemplate#select('i')<cr>
 " zencoding
 " TODO snippetを定義したい
 let g:user_zen_settings = {
-            \ 'indentation' : '    ',
+           \ 'indentation' : '    ',
             \ 'lang' : 'ja',
             \ 'html' : {
             \   'filters' : 'html',
@@ -1275,6 +1282,14 @@ let g:neocomplcache_keyword_patterns['default'] = '\h\w*'
 " g:neocomplcache_filename_include_exts
 " g:neocomplcache_delimiter_patterns
 " g:neocomplcache_source_rank
+
+" neosnippet
+imap <C-k>     <Plug>(neosnippet_expand_or_jump)
+smap <C-k>     <Plug>(neosnippet_expand_or_jump)
+let g:neosnippet#snippets_directory='~/Dropbox/vim/snippet'
+let g:neosnippet#disable_runtime_snippets = {
+		\   'php' : 1,
+		\ }
 
 " Enable omni completion.
 autocmd filetype css setlocal omnifunc=csscomplete#completecss
