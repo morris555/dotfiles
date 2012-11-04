@@ -734,6 +734,10 @@ inoremap <M-u> 7
 inoremap <M-i> 8
 inoremap <M-o> 9
 
+" 行マージ
+" TODO :Mergeとかを定義出来るならそれでもいい気がする
+vnoremap <C-m> J
+
 " {{{ Toggle options
 function! s:toggle_grepprg(global_p)
     let VALUES = ['grep -nHE', 'git grep -n']
