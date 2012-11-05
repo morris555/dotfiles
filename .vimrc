@@ -451,11 +451,14 @@ function! InitVim()
 endfunction
 autocmd BufEnter * if &filetype == "vim" | call InitVim() | endif
 
-" haskellはタブ幅4でスペースを使う
-autocmd FileType haskell set shiftwidth=4
-autocmd FileType haskell set tabstop=4
-autocmd FileType haskell set softtabstop=4
-autocmd FileType haskell set expandtab
+function! InitHaskell()
+    " haskellはタブ幅4でスペースを使う
+    setlocal shiftwidth=4
+    setlocal tabstop=4
+    setlocal softtabstop=4
+    setlocal expandtab
+endfunction
+autocmd BufEnter * if &filetype == "haskell" | call InitHaskell() | endif
 
 " HTMLの実態参照文字入力用マッピング
 function! MapHTMLKeys()
