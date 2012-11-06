@@ -300,7 +300,11 @@ set matchpairs+=<:>
 " 編集中もほかファイルを開けるように
 set hidden
 
+" MacでOptionキーをMetaキーに
 set macmeta
+
+" ビープを消す
+set visualbell t_vb=
 
 " CursorHoldまでの時間
 set updatetime=1000
@@ -323,11 +327,9 @@ augroup vimrc_group_formatoptions
 	autocmd FileType * setlocal formatoptions-=tcro
 augroup END
 
-" concealを有効に
 if has('conceal')
-  set conceallevel=2
-  " TODO concealcursorの値をどうするか検討
-  " set conceallevel=2 concealcursor=i
+    " 同じ行になってもconcealを展開しない
+    set conceallevel=2 concealcursor=nc
 endif
 
 " {{{ utility function 
