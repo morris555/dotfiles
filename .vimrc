@@ -82,6 +82,7 @@ NeoBundle 'git://github.com/mattn/sonictemplate-vim.git'
 
 " 補完
 NeoBundle 'Shougo/neocomplcache'
+NeoBundle 'git://github.com/ujihisa/neco-look.git'
 
 " snippet
 NeoBundle 'git://github.com/Shougo/neosnippet.git'
@@ -239,6 +240,9 @@ NeoBundle 'houtsnip/vim-emacscommandline'
 " 変数名を規則に従って変換
 NeoBundle 'tpope/vim-abolish'
 
+" jkを加速
+NeoBundle 'git://github.com/rhysd/accelerated-jk.git'
+
 " Vim script doc
 NeoBundle 'git://github.com/mattn/learn-vimscript.git'
 
@@ -328,8 +332,8 @@ augroup vimrc_group_formatoptions
 augroup END
 
 if has('conceal')
-    " 同じ行になってもconcealを展開しない
-    set conceallevel=2 concealcursor=nc
+    " set conceallevel=2 concealcursor=nc
+    set conceallevel=2
 endif
 
 " {{{ utility function 
@@ -856,6 +860,8 @@ endfunction
 " set tabline=%!MakeTabLine()
 autocmd CursorMoved * set tabline=%!MakeTabLine()
 
+imap <C-q> ヒヤハハハハハハハハハハハハハハ
+
 " ================
 " plugin
 "================
@@ -1081,6 +1087,7 @@ let g:surround_custom_mapping._ = {
             \'{': "{\r}",
             \'k': "「\r」",
             \'K': "【\r】",
+            \'T': "＿人人 人人＿\n＞ \r ＜\n￣Y^Y^Y^Y￣",
             \}
 let g:surround_custom_mapping.php= {
             \'f': "\1name: \r..*\r&\1(\r)",
@@ -1289,6 +1296,14 @@ if !exists('g:neocomplcache_keyword_patterns')
 endif
 let g:neocomplcache_keyword_patterns['default'] = '\h\w*'
 
+" sourcelist
+if !exists('g:neocomplcache_sources_list')
+    let g:neocomplcache_sources_list = {}
+endif
+let g:neocomplcache_sources_list._ = ['neco-look']
+
+inoremap <expr><C-x><C-e>  neocomplcache#start_manual_complete("neco-look")
+
 " imap <C-u> <Plug>(neocomplcache_start_unite_complete)
 " imap <C-u> <Plug>(neocomplcache_start_unite_quick_match)
 
@@ -1309,6 +1324,11 @@ let g:neosnippet#snippets_directory='~/Dropbox/vim/snippet'
 let g:neosnippet#disable_runtime_snippets = {
 		\   'php' : 1,
 		\ }
+
+
+let g:accelerated_jk_enable_deceleration = 0
+nmap j <Plug>(accelerated_jk_gj)
+nmap k <Plug>(accelerated_jk_gk)
 
 " Enable omni completion.
 autocmd filetype css setlocal omnifunc=csscomplete#completecss
@@ -1344,7 +1364,15 @@ command! -nargs=1 Type :set filetype=<args>
 " TODOファイル
 command! Todo edit ~/Dropbox/todo.mkd
 
-" マッピングチェック {{{
+" command! DeleteTrail"{{{
+command! -bar DeleteTrail call s:deletetrail()
+function! s:deletetrail()
+  let save_cursor = getpos('.')
+  %s/\s\+$//e
+  call setpos('.', save_cursor)
+endfunction"}}}
+
+" command! AllMaps {{{
 command!
             \   -nargs=* -complete=mapping
             \   AllMaps
@@ -1412,6 +1440,7 @@ set complete+=k
 " 改行文字などの表示
 set list
 set listchars=tab:>-,eol:↴,trail:-,nbsp:%,extends:>,precedes:<
+
 
 " 前回終了したカーソル行に移動
 autocmd BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$") | exe "normal g`\"" | endif
