@@ -22,12 +22,6 @@ if has('gui_macvim')
     set cursorline
     set cursorcolumn
 
-    " indentguides
-    IndentGuidesEnable
-
-    let g:indent_guides_color_change_percent = 10
-    let g:indent_guides_guide_size = 1
-
     " 全角スペース表示
     highlight ZenkakuSpace cterm=underline ctermfg=red guibg=red guifg=white
     match ZenkakuSpace /　/

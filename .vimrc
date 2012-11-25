@@ -104,6 +104,10 @@ NeoBundle 'git://github.com/vim-scripts/Source-Explorer-srcexpl.vim.git'
 
 NeoBundle 'git://github.com/tyru/current-func-info.vim.git'
 
+
+" gitディレクトリのあるところをカレントディレクトリに
+NeoBundle 'git://github.com/airblade/vim-rooter.git'
+
 " unite
 NeoBundle 'Shougo/unite.vim'
 NeoBundle 'h1mesuke/unite-outline'
@@ -448,12 +452,15 @@ function! InitPhp()
 endfunction
 autocmd BufEnter * if &filetype == "php" | call InitPhp() | endif
 
+
 function! InitVim()
     " vim scriptはタブ幅4でスペースを使う
-    autocmd FileType vim set shiftwidth=4
-    autocmd FileType vim set tabstop=4
-    autocmd FileType vim set softtabstop=4
-    autocmd FileType vim set expandtab
+    setlocal shiftwidth=4
+    setlocal tabstop=4
+    setlocal softtabstop=4
+    setlocal expandtab
+
+    IndentGuidesEnable
 endfunction
 autocmd BufEnter * if &filetype == "vim" | call InitVim() | endif
 
@@ -463,8 +470,23 @@ function! InitHaskell()
     setlocal tabstop=4
     setlocal softtabstop=4
     setlocal expandtab
+
+    IndentGuidesEnable
 endfunction
 autocmd BufEnter * if &filetype == "haskell" | call InitHaskell() | endif
+
+function! InitCoffee()
+    " haskellはタブ幅2でスペースを使う
+    setlocal shiftwidth=2
+    setlocal tabstop=2
+    setlocal softtabstop=2
+    setlocal expandtab
+
+    IndentGuidesEnable
+endfunction
+autocmd BufEnter * if &filetype == "coffee" | call InitCoffee() | endif
+" todo ディレクトリを維持したい……。
+" autocmd BufWritePost * if &filetype == "coffee" | CoffeeMake! -cb | cwindow | redraw! | endif
 
 " HTMLの実態参照文字入力用マッピング
 function! MapHTMLKeys()
@@ -794,6 +816,7 @@ nnoremap <silent> <Space>op :<C-u>pastetoggle<CR>
 nnoremap <silent> <Space>ou :<C-u>GundoToggle<CR>
 nnoremap <silent> <Space>os :<C-u>SyntasticToggleMode<CR>
 nnoremap <silent> <Space>ob :<C-u>ToggleBadWhitespace<CR>
+nmap <silent> <Space>oi <Plug>IndentGuidesToggle
 
 
 
@@ -1125,6 +1148,19 @@ nmap <C-s> i<Plug>Isurround
 imap <C-s> <Plug>Isurround
 xmap <C-s> <Plug>VSurround
 
+"------------------------------------
+" indent_guides
+"------------------------------------
+" インデントの深さに色を付ける
+" let g:indent_guides_start_level=2
+" let g:indent_guides_auto_colors=0
+" let g:indent_guides_enable_on_vim_startup=0
+" let g:indent_guides_space_guides=1
+" hi IndentGuidesOdd  ctermbg=235
+" hi IndentGuidesEven ctermbg=237
+let g:indent_guides_color_change_percent=10
+let g:indent_guides_guide_size=1
+
 " memo_list
 "
 function! s:open_memo_file()"{{{
@@ -1296,12 +1332,6 @@ if !exists('g:neocomplcache_keyword_patterns')
 endif
 let g:neocomplcache_keyword_patterns['default'] = '\h\w*'
 
-" sourcelist
-if !exists('g:neocomplcache_sources_list')
-    let g:neocomplcache_sources_list = {}
-endif
-let g:neocomplcache_sources_list._ = ['neco-look']
-
 inoremap <expr><C-x><C-e>  neocomplcache#start_manual_complete("neco-look")
 
 " imap <C-u> <Plug>(neocomplcache_start_unite_complete)
@@ -1429,7 +1459,8 @@ au FileType php setlocal iskeyword+=$
 au BufNewFile,BufRead *.scala set filetype=scala
 au BufNewFile,BufRead *.js set filetype=javascript
 au BufNewFile,BufRead *.js.shd set filetype=coffee
-au BufNewFile,BufRead *.html set filetype=smarty
+au BufNewFile,BufRead *.coffee set filetype=coffee
+au BufNewFile,BufRead *.html set filetype=html
 au BufNewFile,BufRead *.as set filetype=actionscript
 au BufNewFile,BufRead */doc/*.txt set filetype=help
 
@@ -1487,8 +1518,8 @@ augroup vimrc-auto-cursorline
         endif
     endfunction
 augroup END
-"
-" last proc {{{1
+
+" last proc {{{
 
 if has("gui_running")
     " gvimrcも読み込む
@@ -1498,3 +1529,4 @@ else
     set background=dark
     colorscheme molokai
 endif
+" }}}
