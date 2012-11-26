@@ -449,6 +449,8 @@ function! InitPhp()
     call MapHTMLKeys()
 
     inoremap <expr> <buffer> @ <SID>at()
+
+    IndentGuidesEnable
 endfunction
 autocmd BufEnter * if &filetype == "php" | call InitPhp() | endif
 
@@ -1291,12 +1293,25 @@ au FileType unite inoremap <silent> <buffer> <expr> <C-T> unite#do_action('tabop
 " 初期設定関数を起動する
 au FileType unite call s:unite_my_settings()
 function! s:unite_my_settings()
-    " Overwrite settings.
+    imap <buffer> <silent> <C-n> <Plug>(unite_insert_leave)<Plug>(unite_loop_cursor_down)
+    imap <buffer> <silent> <C-p> <Plug>(unite_insert_leave)<Plug>(unite_loop_cursor_up)
+    nmap <buffer> <silent> <C-n> <Plug>(unite_loop_cursor_down)
+    nmap <buffer> <silent> <C-p> <Plug>(unite_loop_cursor_up)
+
     imap <buffer> <C-w> <Plug>(unite_delete_backward_path)
+
+    " ?
+    nmap <buffer> <silent> <expr> / unite#do_action("narrow")
+
+    " <C-l>でEscの代わりに
     imap <buffer> <C-l> <Esc>
-    nmap <buffer> <space><space> <Plug>(unite_toggle_mark_current_candidate)
     nmap <buffer> <C-l> <Plug>(unite_exit)
+
+    " <C-l>を潰したため、元々あったredrawを<C-Space>に移動
     nmap <buffer> <C-Space> <Plug>(unite_redraw)
+
+    nmap <buffer> <space><space> <Plug>(unite_toggle_mark_current_candidate)
+
     nnoremap <buffer> p p
     nnoremap <buffer> <Space> <Space>
 endfunction
