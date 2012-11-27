@@ -145,6 +145,7 @@ NeoBundle 'git://github.com/pasela/unite-fuel.git'
 
 " 即座に実行
 NeoBundle 'thinca/vim-quickrun'
+NeoBundle 'git://github.com/ujihisa/quicklearn.git'
 
 " リファレンスを開く
 NeoBundle 'thinca/vim-ref'
@@ -152,6 +153,8 @@ NeoBundle 'mojako/ref-alc.vim'
 NeoBundle 'mojako/ref-sources.vim'
 
 NeoBundle 'git://github.com/yuratomo/w3m.vim.git'
+
+NeoBundle 'git://github.com/mattn/benchvimrc-vim.git'
 
 " cocoa
 NeoBundle 'msanders/cocoa.vim'
@@ -868,18 +871,18 @@ function! s:tags_text()
 endfunction
 
 function! MakeTabLine()
-    let titles = map(range(1, tabpagenr('$')), 's:tabpage_label(v:val)')
-    let sep = '    '  " タブ間の区切り
-    let tabpages = join(titles, sep) . sep . '%#TabLineFill#%T'
-    let info = ''
-    let info .= '[%F]'
-    let info .= '   '
-    let info .= '(%l/%L) %P'
-    let info .= '   '
-    let info .= s:tags_text()
-    let info .= '   '
-    let info .= fnamemodify(getcwd(), ":~") . ' '
-    return tabpages . '%=' . info  " タブリストを左に、情報を右に表示
+    let s:titles = map(range(1, tabpagenr('$')), 's:tabpage_label(v:val)')
+    let s:sep = '    '  " タブ間の区切り
+    let s:tabpages = join(s:titles, s:sep) . s:sep . '%#TabLineFill#%T'
+    let s:info = ''
+    let s:info .= '[%F]'
+    let s:info .= '   '
+    let s:info .= s:tags_text()
+    let s:info .= '   '
+
+    let s:info .= fnamemodify(getcwd(), ":~") . ' '
+
+    return s:tabpages . '%=' . s:info  " タブリストを左に、情報を右に表示
 endfunction
 
 " set tabline=%!MakeTabLine()
@@ -960,12 +963,6 @@ nmap <Leader>Hr <Plug>(quickhl-reset)
 xmap <Leader>h <Plug>(quickhl-toggle)
 xmap # <Plug>(quickhl-match)
 xmap <Leader>Hr <Plug>(quickhl-reset)
-
-" quickrun
-" for quickrun.vim
-let g:quickrun_config = {}
-let g:quickrun_config.coffee  = {'command' : 'cat'}
-let g:quickrun_config.php  = {'command' : 'php'}
 
 nnoremap <Leader>R :<C-u>Unite quicklearn -immediately<Cr>
 
@@ -1231,7 +1228,7 @@ nnoremap MG :MemoGrep<CR>
 let g:unite_enable_start_insert=0
 
 " yankソースを有効にする
-let g:unite_source_history_yank_enable = 1
+let g:unite_source_history_yank_enable = 0
 let g:unite_source_history_yank_limit = 1000
 
 " grepソース
@@ -1502,34 +1499,34 @@ augroup END
 " http://d.hatena.ne.jp/thinca/20090530/1243615055
 augroup vimrc-auto-cursorline
     autocmd!
-    autocmd CursorMoved,CursorMovedI * call s:auto_cursorline('CursorMoved')
-    autocmd CursorHold,CursorHoldI * call s:auto_cursorline('CursorHold')
-    autocmd WinEnter * call s:auto_cursorline('WinEnter')
-    autocmd WinLeave * call s:auto_cursorline('WinLeave')
+    autocmd CursorMoved,CursorMovedI * call Auto_cursorline('CursorMoved')
+    autocmd CursorHold,CursorHoldI * call Auto_cursorline('CursorHold')
+    autocmd WinEnter * call Auto_cursorline('WinEnter')
+    autocmd WinLeave * call Auto_cursorline('WinLeave')
 
-    let s:cursorline_lock = 0
-    function! s:auto_cursorline(event)
+    let g:cursorline_lock = 0
+    function! Auto_cursorline(event)
         if a:event ==# 'WinEnter'
             setlocal cursorline
             setlocal cursorcolumn
-            let s:cursorline_lock = 2
+            let g:cursorline_lock = 2
         elseif a:event ==# 'WinLeave'
             setlocal nocursorline
             setlocal nocursorcolumn
         elseif a:event ==# 'CursorMoved'
-            if s:cursorline_lock
-                if 1 < s:cursorline_lock
-                    let s:cursorline_lock = 1
+            if g:cursorline_lock
+                if 1 < g:cursorline_lock
+                    let g:cursorline_lock = 1
                 else
                     setlocal nocursorline
                     setlocal nocursorcolumn
-                    let s:cursorline_lock = 0
+                    let g:cursorline_lock = 0
                 endif
             endif
         elseif a:event ==# 'CursorHold'
             setlocal cursorline
             setlocal cursorcolumn
-            let s:cursorline_lock = 1
+            let g:cursorline_lock = 1
         endif
     endfunction
 augroup END
