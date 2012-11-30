@@ -481,7 +481,7 @@ endfunction
 autocmd BufEnter * if &filetype == "haskell" | call InitHaskell() | endif
 
 function! InitCoffee()
-    " haskellはタブ幅2でスペースを使う
+    " coffeescriptはタブ幅2でスペースを使う
     setlocal shiftwidth=2
     setlocal tabstop=2
     setlocal softtabstop=2
@@ -490,8 +490,17 @@ function! InitCoffee()
     IndentGuidesEnable
 endfunction
 autocmd BufEnter * if &filetype == "coffee" | call InitCoffee() | endif
-" todo ディレクトリを維持したい……。
-" autocmd BufWritePost * if &filetype == "coffee" | CoffeeMake! -cb | cwindow | redraw! | endif
+
+function! InitMarkdown()
+    " vim markdownはタブ幅4でスペースを使う
+    setlocal shiftwidth=4
+    setlocal tabstop=4
+    setlocal softtabstop=4
+    setlocal expandtab
+
+    IndentGuidesEnable
+endfunction
+autocmd BufEnter * if &filetype == "markdown" | call InitMarkdown() | endif
 
 " HTMLの実態参照文字入力用マッピング
 function! MapHTMLKeys()
@@ -1199,7 +1208,7 @@ endfunction augroup END"}}}
 command! -nargs=0 MemoNew call s:open_memo_file()
 
 " メモ一覧をUniteで呼び出すコマンド
-command! -nargs=0 MemoList :Unite file_rec:~/Dropbox/Memo/ -buffer-name=memo_list -auto-preview
+command! -nargs=0 MemoList :Unite file_rec:~/Dropbox/Memo/ -buffer-name=memo_list
 
 " メモ一覧をUnite grepするコマンド
 command! -nargs=0 MemoGrep :Unite grep:~/Dropbox/Memo/ -no-quit<CR>
@@ -1232,7 +1241,7 @@ let g:unite_source_history_yank_enable = 0
 let g:unite_source_history_yank_limit = 1000
 
 " grepソース
-let g:unite_source_grep_default_opts = '-Hn --include="*.vim" --include="*.txt" --include="*.php" --include="*.xml" --include="*.mkd" --include="*.hs" --include="*.js" --include="*.log" --include="*.sql"'
+let g:unite_source_grep_default_opts = '-Hn --include="*.vim" --include="*.txt" --include="*.php" --include="*.xml" --include="*.mkd" --include="*.hs" --include="*.js" --include="*.log" --include="*.sql" --include="*.coffee" --include="*.as"'
 
 let g:unite_source_grep_max_candidates = 100
 let g:unite_source_session_enable_auto_save = 1     " セッション保存
