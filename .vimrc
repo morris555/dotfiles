@@ -1137,6 +1137,10 @@ let g:surround_custom_mapping.javascript= {
             \'{': "{\r}",
             \'l': "console.log(\r);"
             \}
+let g:surround_custom_mapping.coffee= {
+            \'{': "{\r}",
+            \'$': '$ "\r"'
+            \}
 let g:surround_custom_mapping.vim= {
             \'v': "echomsg printf('%s: %s','\1name: \1',string(\r));"
             \}
