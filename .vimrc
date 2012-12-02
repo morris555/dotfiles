@@ -59,7 +59,9 @@ NeoBundle 'kana/vim-operator-replace'
 NeoBundle 'tyru/operator-camelize.vim'
 NeoBundle 'emonkak/vim-operator-comment'
 NeoBundle 'git://github.com/kana/vim-textobj-line.git'
-NeoBundle 'git://github.com/sgur/vim-textobj-parameter.git'
+" NeoBundle 'git://github.com/sgur/vim-textobj-parameter.git'
+NeoBundle 'https://github.com/tekkoc/vim-textobj-parameter.git'
+" https://github.com/tekkoc/vim-textobj-parameter.git
 
 " lingr
 NeoBundle 'tsukkee/lingr-vim'
@@ -130,9 +132,8 @@ NeoBundle 'h1mesuke/vim-alignta'
 NeoBundle 'nathanaelkane/vim-indent-guides'
 
 " syntax
-" NeoBundle 'git://github.com/scrooloose/syntastic.git'
-" NeoBundle 'git://github.com/scrooloose/syntastic.git', '1f91303cdc3be44112a9b3734241a7b36173f44b'
-NeoBundle 'git://github.com/scrooloose/syntastic.git', '637182c181814631f8d5d33d3183a51c8aec22bd'
+NeoBundle 'git://github.com/scrooloose/syntastic.git'
+" NeoBundle 'git://github.com/scrooloose/syntastic.git', '637182c181814631f8d5d33d3183a51c8aec22bd'
 
 " 言語別
 NeoBundle 'kchmck/vim-coffee-script'
@@ -149,7 +150,6 @@ NeoBundle 'git://github.com/ujihisa/quicklearn.git'
 
 " リファレンスを開く
 NeoBundle 'thinca/vim-ref'
-NeoBundle 'mojako/ref-alc.vim'
 NeoBundle 'mojako/ref-sources.vim'
 
 NeoBundle 'git://github.com/yuratomo/w3m.vim.git'
@@ -217,7 +217,8 @@ NeoBundle 'thinca/vim-scouter.git'
 NeoBundle 'thinca/vim-localrc'
 
 " eskk.vim
-NeoBundle 'git://github.com/tyru/eskk.vim.git', {'rev' : 'd996bdd2ed90d32fe0e7ca73a969ee188f750d66'}
+NeoBundle 'git://github.com/tyru/eskk.vim.git'
+" NeoBundle 'git://github.com/tyru/eskk.vim.git', {'rev' : 'd996bdd2ed90d32fe0e7ca73a969ee188f750d66'}
 NeoBundle 'tyru/savemap.vim'
 NeoBundle 'tyru/vice.vim'
 NeoBundle 'tyru/skkdict.vim'
@@ -248,13 +249,15 @@ NeoBundle 'houtsnip/vim-emacscommandline'
 NeoBundle 'tpope/vim-abolish'
 
 " jkを加速
-NeoBundle 'git://github.com/rhysd/accelerated-jk.git'
+" 意図せず加速することがあるのでやめた
+" NeoBundle 'git://github.com/rhysd/accelerated-jk.git'
 
 " Vim script doc
 NeoBundle 'git://github.com/mattn/learn-vimscript.git'
 
 " statusline
-NeoBundle 'git://github.com/Lokaltog/vim-powerline.git', '65e54dde89c73cae4cf089a83f5c26d605dda594'
+NeoBundle 'git://github.com/Lokaltog/vim-powerline.git'
+" NeoBundle 'git://github.com/Lokaltog/vim-powerline.git', '65e54dde89c73cae4cf089a83f5c26d605dda594'
 
 " Game
 NeoBundle 'mattn/invader-vim'
@@ -492,7 +495,7 @@ endfunction
 autocmd BufEnter * if &filetype == "coffee" | call InitCoffee() | endif
 
 function! InitMarkdown()
-    " vim markdownはタブ幅4でスペースを使う
+    " markdownはタブ幅4でスペースを使う
     setlocal shiftwidth=4
     setlocal tabstop=4
     setlocal softtabstop=4
@@ -903,6 +906,8 @@ imap <C-q> ヒヤハハハハハハハハハハハハハハ
 " plugin
 "================
 
+let g:textobj_parameter_map_key = "c"
+
 " ofaddinbox(omniforcus)
 nmap <silent> <Leader>O <Plug>SingleTaskToOmniFocus
 vmap <silent> <Leader>O <Plug>MultiTaskToOmniFocus
@@ -946,12 +951,12 @@ if has('vim_starting')
     let g:eskk#large_dictionary = '~/.vim/skk/skk-jisyo.l'
     let g:eskk#dictionary = '~/Dropbox/SKK/eskk/skk-jisyo.u'
     let g:eskk#egg_like_newline = 1
-    " let g:eskk#egg_like_newline_completion = 1
+    let g:eskk#egg_like_newline_completion = 1
     let g:eskk#show_candidates_count = 5
     let g:eskk#auto_henkan_at_okuri_match = 3
     let g:eskk#fix_extra_okuri = 1
-    imap <C-j> <Plug>(eskk:enable)
-    let g:eskk#directory = '~/Dropbox/SKK/eskk/'
+    " imap <C-j> <Plug>(eskk:enable)
+    "
     " <C-j><C-k>でいきなり日本語入力からのインサート
     nmap <C-j> i<C-j>
     nmap <C-k> a<C-j>
@@ -1340,7 +1345,6 @@ let g:neocomplcache_max_menu_width = 30
 let g:neocomplcache_min_syntax_length = 3
 let g:neocomplcache_min_keyword_length = 3
 let g:neocomplcache_caching_limit_file_size = 5000000
-let g:neocomplcache_lock_iminsert = 1   "?
 let g:neocomplcache_dictionary_file_type_lists = {
             \'default' : '',
             \'php' : $HOME.'/.vim/dict/php.dict',
@@ -1349,7 +1353,6 @@ let g:neocomplcache_dictionary_file_type_lists = {
             \}
 
 let g:neocomplcache_release_cache_time = 7200
-let g:neocomplcache_use_vimproc = 1
 
 " Define keyword.
 if !exists('g:neocomplcache_keyword_patterns')
@@ -1381,9 +1384,10 @@ let g:neosnippet#disable_runtime_snippets = {
 		\ }
 
 
-let g:accelerated_jk_enable_deceleration = 0
-nmap j <Plug>(accelerated_jk_gj)
-nmap k <Plug>(accelerated_jk_gk)
+" TODO やめた。どこかにメモを残す
+" let g:accelerated_jk_enable_deceleration = 0
+" nmap j <Plug>(accelerated_jk_gj)
+" nmap k <Plug>(accelerated_jk_gk)
 
 " Enable omni completion.
 autocmd filetype css setlocal omnifunc=csscomplete#completecss
