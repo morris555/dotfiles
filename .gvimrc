@@ -5,6 +5,15 @@ if has('gui_macvim')
 
     colorscheme solarized
 
+    " let g:Powerline_theme =  "solarized256"
+    " let g:Powerline_colorscheme =  "solarized"
+    " let s:prev_seg = 'paste_indicator'
+    " for seg in ['fileformat', 'fileencoding', 'filetype', 'lineinfo']
+    "     call Pl#Theme#InsertSegment(seg, 'after', s:prev_seg)
+    "     let s:prev_seg = seg
+    " endfor
+    " unlet s:prev_seg
+
     set showtabline=2    " タブを常に表示
     set imdisable        " IME OFF
     set antialias        " アンチエイリアス
