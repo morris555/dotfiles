@@ -176,7 +176,11 @@ NeoBundle 't9md/vim-quickhl'
 NeoBundle 'Shougo/vimfiler'
 
 " vimproc
-NeoBundle 'Shougo/vimproc'
+NeoBundle 'Shougo/vimproc', {
+    \ 'build' : {
+    \       'mac' : 'make -f make_mac.mak'
+    \   }
+    \ }
 
 " shell
 NeoBundle 'Shougo/vimshell'
@@ -960,6 +964,25 @@ if has('vim_starting')
     " <C-j><C-k>でいきなり日本語入力からのインサート
     nmap <C-j> i<C-j>
     nmap <C-k> a<C-j>
+
+    autocmd myrc User eskk-initialize-pre call s:eskk_initial_pre()
+    function! s:eskk_initial_pre()
+        let t = eskk#table#new('rom_to_hira*', 'rom_to_hira')
+        " zenkaku
+        call t.add_map('h ', '　')
+        " Input hankaku characters.
+        call t.add_map('h-', '-')
+        call t.add_map('h!', '!')
+        call t.add_map('h/', '/')
+        call t.add_map('h ', ' ')
+        call t.add_map('h:', ':')
+        call t.add_map('h;', ';')
+        call t.add_map('h[', '[')
+        call t.add_map('h]', ']')
+        call t.add_map('(', '(')
+        call t.add_map(')', ')')
+        call eskk#register_mode_table('hira', t)
+    endfunction
 endif
 
 " lingr
@@ -1074,9 +1097,6 @@ function! s:vimfiler_my_settings()
     nmap <buffer> <space><space> <Plug>(vimfiler_toggle_mark_current_line)
     nnoremap <buffer> <Space> <Space>
 endfunction
-
-" vimproc
-let g:vimproc_dll_path = $HOME . '/.vim/autoload/vimproc_mac.so'
 
 " textmanip
 " 選択したテキストの移動
@@ -1241,7 +1261,7 @@ nnoremap MG :MemoGrep<CR>
 " call unite#set_profile('memo_list', 'filters', ['matcher_default', 'sorter_reverse', 'converter_default'])
 
 " unite
-"
+
 " 入力モードで開始する
 let g:unite_enable_start_insert=0
 
