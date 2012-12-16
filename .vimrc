@@ -1038,27 +1038,22 @@ endif
 " vim-ref
 
 let g:ref_source_webdict_sites = {
-\   'je': {
-\     'url': 'http://dictionary.infoseek.ne.jp/jeword/%s',
-\   },
-\   'ej': {
-\     'url': 'http://dictionary.infoseek.ne.jp/ejword/%s',
+\   'alc': {
+\     'url': 'http://eow.alc.co.jp/search?q=%s',
 \   },
 \ }
-let g:ref_source_webdict_sites.default = 'ej'
+let g:ref_source_webdict_sites.default = 'alc'
 
 "出力に対するフィルタ。最初の数行を削除
-function! g:ref_source_webdict_sites.je.filter(output)
-  return join(split(a:output, "\n")[15 :], "\n")
-endfunction
-function! g:ref_source_webdict_sites.ej.filter(output)
-  return join(split(a:output, "\n")[15 :], "\n")
+function! g:ref_source_webdict_sites.alc.filter(output)
+  return join(split(a:output, "\n")[33 :], "\n")
 endfunction
 
 nmap <Leader>k <Plug>(ref-keyword)
 autocmd FileType vim nnoremap <buffer> <Leader>k :<C-u>help <C-r><C-w><CR>
 
 " vimrefのショートカットコマンド
+command! -nargs=1 Alc :Ref webdict alc <args>
 command! -nargs=1 Ej :Ref webdict ej <args>
 command! -nargs=1 Je :Ref webdict je <args>
 command! -nargs=1 Wiki :Ref wikipedia <args>
@@ -1520,7 +1515,6 @@ function! s:sticky_func()
     endif
 endfunction
 " }}}
-
 
 " ヤンクしたものをクリップボードにも
 set clipboard=unnamed
