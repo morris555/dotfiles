@@ -315,6 +315,8 @@ set backspace=indent,eol,start
 " ペアとなる括弧の定義
 set matchpairs+=<:>
 
+set noshowmatch
+
 " 編集中もほかファイルを開けるように
 set hidden
 
@@ -600,6 +602,9 @@ set wrapscan
 set incsearch
 set hlsearch
 
+noremap ZZ <Nop>
+noremap ZQ <Nop>
+
 " *でビジュアルモードで選んでる文字を検索
 vnoremap * "zy:let @/ = @z<CR>n
 
@@ -634,6 +639,14 @@ noremap <Space>fi zMzv
 " むしろ、タブラインに出したい
 noremap <space>fg :echo FoldCCnavi()<CR>
 
+" spell
+noremap <Space>ee :<C-u>set spell!<CR>
+noremap <Space>en ]s
+noremap <Space>ep [s
+noremap <Space>eg zg
+noremap <Space>ew zw
+noremap <Space>ef z=
+
 " tag
 set tags=tags
 
@@ -650,11 +663,11 @@ nnoremap <silent> <Space>tu :<C-u>!ctags -R<CR>
 autocmd FileType php nnoremap <silent><buffer> <Space>tu :<C-u>!ctags --languages=PHP --sort=foldcase -R<CR>
 autocmd FileType coffee nnoremap <silent><buffer> <Space>tu :<C-u>!ctags --languages=coffee -R<CR>
 
-"自動でプレビューを表示する。
+" 自動でプレビューを表示する。
 let g:SrcExpl_RefreshTime = 1
-"プレビューウインドウの高さ
+" プレビューウインドウの高さ
 let g:SrcExpl_WinHeight = 9
-"tagsは自動で作成する
+" tagsは自動で作成する
 let g:SrcExpl_isUpdateTags = 0
 
 autocmd FileType php setlocal commentstring=//%s
@@ -836,7 +849,6 @@ nnoremap <silent> <Space>ol :<C-u>call <SID>toggle_option('cursorline', 'cursorc
 nnoremap <silent> <Space>op :<C-u>pastetoggle<CR>
 nnoremap <silent> <Space>ou :<C-u>GundoToggle<CR>
 nnoremap <silent> <Space>os :<C-u>SyntasticToggleMode<CR>
-nnoremap <silent> <Space>ob :<C-u>ToggleBadWhitespace<CR>
 nmap <silent> <Space>oi <Plug>IndentGuidesToggle
 
 
@@ -903,8 +915,6 @@ endfunction
 
 " set tabline=%!MakeTabLine()
 autocmd CursorMoved * set tabline=%!MakeTabLine()
-
-imap <C-q> ヒヤハハハハハハハハハハハハハハ
 
 " ================
 " plugin
@@ -1379,8 +1389,6 @@ if !exists('g:neocomplcache_keyword_patterns')
     let g:neocomplcache_keyword_patterns = {}
 endif
 let g:neocomplcache_keyword_patterns['default'] = '\h\w*'
-
-inoremap <expr><C-x><C-e>  neocomplcache#start_manual_complete("neco-look")
 
 " imap <C-u> <Plug>(neocomplcache_start_unite_complete)
 " imap <C-u> <Plug>(neocomplcache_start_unite_quick_match)
