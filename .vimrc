@@ -691,7 +691,7 @@ noremap ; :
 nnoremap <expr> gp '`[' . strpart(getregtype(), 0, 1) . '`]'
 
 " ESC2度押しで検索ハイライトを消す
-nnoremap <ESC><ESC> :<C-u>nohlsearch<CR>
+nnoremap <C-l><C-l> :<C-u>nohlsearch<CR>
 
 nmap ( ,mf(
 nmap ) ,mF(
@@ -1036,12 +1036,31 @@ if s:has_plugin('ambicmd')
 endif
 
 " vim-ref
+
+let g:ref_source_webdict_sites = {
+\   'je': {
+\     'url': 'http://dictionary.infoseek.ne.jp/jeword/%s',
+\   },
+\   'ej': {
+\     'url': 'http://dictionary.infoseek.ne.jp/ejword/%s',
+\   },
+\ }
+let g:ref_source_webdict_sites.default = 'ej'
+
+"出力に対するフィルタ。最初の数行を削除
+function! g:ref_source_webdict_sites.je.filter(output)
+  return join(split(a:output, "\n")[15 :], "\n")
+endfunction
+function! g:ref_source_webdict_sites.ej.filter(output)
+  return join(split(a:output, "\n")[15 :], "\n")
+endfunction
+
 nmap <Leader>k <Plug>(ref-keyword)
-" let objc_man_key = '<Leader>k'
 autocmd FileType vim nnoremap <buffer> <Leader>k :<C-u>help <C-r><C-w><CR>
 
 " vimrefのショートカットコマンド
-command! -nargs=1 Alc :Ref alc2 <args>
+command! -nargs=1 Ej :Ref webdict ej <args>
+command! -nargs=1 Je :Ref webdict je <args>
 command! -nargs=1 Wiki :Ref wikipedia <args>
 
 " vimref用のphpmanualのパス
