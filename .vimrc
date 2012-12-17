@@ -650,9 +650,7 @@ noremap <Space>ef z=
 " tag
 set tags=tags
 
-" TODO 新規タブ開きたい
-nnoremap <silent> <space>tT :<C-u>tabnew<CR>
-
+nnoremap <silent> <space>tT :<C-u>tab stj <C-R>=expand('<cword>')<CR><CR>
 nnoremap <silent> <Space>tt <C-]>
 nnoremap <silent> <Space>tn :tn<CR>
 nnoremap <silent> <Space>tp :tp<CR>
@@ -979,7 +977,7 @@ if has('vim_starting')
     function! s:eskk_initial_pre()
         let t = eskk#table#new('rom_to_hira*', 'rom_to_hira')
         " zenkaku
-        call t.add_map('h ', '　')
+        call t.add_map('hg', '　')
         " Input hankaku characters.
         call t.add_map('h-', '-')
         call t.add_map('h!', '!')
