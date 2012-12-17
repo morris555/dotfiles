@@ -743,7 +743,6 @@ nnoremap g^ ^
 nnoremap $ g$
 nnoremap g$ $
 
-
 " 対応する括弧に移動
 nnoremap [ %
 nnoremap ] %
@@ -798,7 +797,6 @@ inoremap <M-i> 8
 inoremap <M-o> 9
 
 " 行マージ
-" TODO :Mergeとかを定義出来るならそれでもいい気がする
 vnoremap <C-m> J
 
 " {{{ Toggle options
@@ -930,7 +928,6 @@ let g:sonictemplate_vim_template_dir = $HOME. '/Dropbox/Vim/sonic_template'
 imap <C-t> <space><bs><c-o>:call sonictemplate#select('i')<cr>
 
 " zencoding
-" TODO snippetを定義したい
 let g:user_zen_settings = {
            \ 'indentation' : '    ',
             \ 'lang' : 'ja',
