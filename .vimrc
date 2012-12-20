@@ -8,6 +8,9 @@
 "
 " _/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
 
+" TODO
+"   Dropboxのパスを変数に
+
 " NeoBundle {{{
 " NeoBundle_setup {{{
 set nocompatible
@@ -21,13 +24,7 @@ endif
 " }}}
 " NeoBundle_list {{{
 " color-scheme
-NeoBundle 'vol2223/vim-colorblind-colorscheme'
 NeoBundle 'altercation/vim-colors-solarized'
-NeoBundle 'git://github.com/vim-scripts/mrkn256.vim.git'
-NeoBundle 'tomasr/molokai'
-NeoBundle 'git://github.com/Lokaltog/vim-distinguished.git'
-NeoBundle 'git://github.com/aereal/vim-magica-colors.git'
-NeoBundle 'git://gist.github.com/187578.git'
 
 " singleton
 NeoBundle 'git://github.com/thinca/vim-singleton.git'
@@ -40,9 +37,6 @@ NeoBundle 'mattn/webapi-vim'
 NeoBundle 'thinca/vim-openbuf'
 NeoBundle 'git://github.com/basyura/twibill.vim.git'
 NeoBundle 'git://github.com/basyura/bitly.vim.git'
-
-" simplenote
-NeoBundle 'https://github.com/mattn/vimplenote-vim.git'
 
 " folding_function
 NeoBundle 'git://github.com/LeafCage/foldCC.git'
@@ -59,9 +53,7 @@ NeoBundle 'kana/vim-operator-replace'
 NeoBundle 'tyru/operator-camelize.vim'
 NeoBundle 'emonkak/vim-operator-comment'
 NeoBundle 'git://github.com/kana/vim-textobj-line.git'
-" NeoBundle 'git://github.com/sgur/vim-textobj-parameter.git'
 NeoBundle 'https://github.com/tekkoc/vim-textobj-parameter.git'
-" https://github.com/tekkoc/vim-textobj-parameter.git
 
 " lingr
 NeoBundle 'tsukkee/lingr-vim'
@@ -72,7 +64,7 @@ NeoBundle 'git://github.com/tasuten/gcalc.vim.git'
 " omniforcus
 NeoBundle 'git://github.com/fifnel/ofaddinbox.vim.git'
 
-" omniforcus
+" togetter
 NeoBundle 'git://github.com/mattn/togetter-vim.git'
 
 " ghc
@@ -101,11 +93,7 @@ NeoBundle 'thinca/vim-ambicmd'
 " coffeescriptなどに使う
 NeoBundle 'ujihisa/shadow.vim'
 
-" srcexpl
-NeoBundle 'git://github.com/vim-scripts/Source-Explorer-srcexpl.vim.git'
-
 NeoBundle 'git://github.com/tyru/current-func-info.vim.git'
-
 
 " gitディレクトリのあるところをカレントディレクトリに
 NeoBundle 'git://github.com/airblade/vim-rooter.git'
@@ -124,7 +112,6 @@ NeoBundle 'git://github.com/kmnk/vim-unite-giti.git'
 NeoBundle 'git://github.com/ujihisa/unite-haskellimport.git'
 NeoBundle 'git://github.com/sgur/unite-qf.git'
 
-
 " 整形
 NeoBundle 'h1mesuke/vim-alignta'
 
@@ -133,7 +120,6 @@ NeoBundle 'nathanaelkane/vim-indent-guides'
 
 " syntax
 NeoBundle 'git://github.com/scrooloose/syntastic.git'
-" NeoBundle 'git://github.com/scrooloose/syntastic.git', '637182c181814631f8d5d33d3183a51c8aec22bd'
 
 " 言語別
 NeoBundle 'kchmck/vim-coffee-script'
@@ -170,6 +156,7 @@ NeoBundle 't9md/vim-textmanip'
 NeoBundle 'kana/vim-smartword'
 
 " 複数ハイライト
+" TODO
 NeoBundle 't9md/vim-quickhl'
 
 " ファイラ
@@ -222,20 +209,13 @@ NeoBundle 'thinca/vim-localrc'
 
 " eskk.vim
 NeoBundle 'git://github.com/tyru/eskk.vim.git'
-" NeoBundle 'git://github.com/tyru/eskk.vim.git', {'rev' : 'd996bdd2ed90d32fe0e7ca73a969ee188f750d66'}
 NeoBundle 'tyru/savemap.vim'
 NeoBundle 'tyru/vice.vim'
 NeoBundle 'tyru/skkdict.vim'
-
-" matrix
-NeoBundle 'git://github.com/vim-scripts/matrix.vim--Yang.git'
 NeoBundle 'git://github.com/vim-scripts/matrix.vim.git'
 
 " gundo
 NeoBundle 'sjl/gundo.vim'
-
-" Phrase
-NeoBundle 'git://github.com/vim-scripts/phrase.vim.git'
 
 " zoomwin
 NeoBundle 'git://github.com/vim-scripts/ZoomWin.git'
@@ -252,16 +232,11 @@ NeoBundle 'houtsnip/vim-emacscommandline'
 " 変数名を規則に従って変換
 NeoBundle 'tpope/vim-abolish'
 
-" jkを加速
-" 意図せず加速することがあるのでやめた
-" NeoBundle 'git://github.com/rhysd/accelerated-jk.git'
-
 " Vim script doc
 NeoBundle 'git://github.com/mattn/learn-vimscript.git'
 
 " statusline
 NeoBundle 'git://github.com/Lokaltog/vim-powerline.git'
-" NeoBundle 'git://github.com/Lokaltog/vim-powerline.git', '65e54dde89c73cae4cf089a83f5c26d605dda594'
 
 " Game
 NeoBundle 'mattn/invader-vim'
@@ -287,7 +262,8 @@ let plugin_dicwin_disable = 1
 filetype plugin indent on
 
 set encoding=utf-8
-set fileencodings=utf-8,cp932
+set fileencodings=utf-8
+" set fileencodings=utf-8,cp932
 
 " 自動再読み込み
 set autoread
@@ -1233,7 +1209,7 @@ function! s:open_memo_file()"{{{
         call mkdir(l:memo_dir, 'p')
     endif
 
-    let l:filename = l:memo_dir . strftime('/%Y-%m-%d_') . l:title . '.mkd'
+    let l:filename = l:memo_dir . strftime('/%Y-%m-%d_') . l:title . '.txt'
 
     let l:template = [
                 \'Category: ' . l:category,
@@ -1460,7 +1436,7 @@ command! -nargs=1 -complete=filetype Temp edit ~/.vim_tmp/tmp.<args>
 command! -nargs=1 Type :set filetype=<args>
 
 " TODOファイル
-command! Todo edit ~/Dropbox/todo.mkd
+command! Todo edit ~/Dropbox/Memo/todo.txt
 
 " command! DeleteTrail"{{{
 command! -bar DeleteTrail call s:deletetrail()
@@ -1529,6 +1505,7 @@ au BufNewFile,BufRead *.js.shd set filetype=coffee
 au BufNewFile,BufRead *.coffee set filetype=coffee
 au BufNewFile,BufRead *.html set filetype=html
 au BufNewFile,BufRead *.as set filetype=actionscript
+au BufNewFile,BufRead *.txt set filetype=markdown
 au BufNewFile,BufRead */doc/*.txt set filetype=help
 
 autocmd FileType php :set dictionary+=~/.vim/dict/php.dict
