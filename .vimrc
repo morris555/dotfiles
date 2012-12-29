@@ -8,9 +8,6 @@
 "
 " _/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
 
-" TODO
-"   Dropboxのパスを変数に
-
 " NeoBundle {{{
 " NeoBundle_setup {{{
 set nocompatible
@@ -20,6 +17,8 @@ if has('vim_starting')
     set runtimepath+=~/.vim/neobundle.git/
 
     call neobundle#rc(expand('~/.vim/bundle'))
+
+    NeoBundleLocal ~/.vim/my_bundle
 endif
 " }}}
 " NeoBundle_list {{{
@@ -37,9 +36,6 @@ NeoBundle 'mattn/webapi-vim'
 NeoBundle 'thinca/vim-openbuf'
 NeoBundle 'git://github.com/basyura/twibill.vim.git'
 NeoBundle 'git://github.com/basyura/bitly.vim.git'
-
-" folding_function
-NeoBundle 'git://github.com/LeafCage/foldCC.git'
 
 " textobj,operator
 NeoBundle 'kana/vim-textobj-user'
@@ -590,12 +586,6 @@ nnoremap ? :<C-u>Unite line -buffer-name=search -start-insert<CR>
 
 " folding
 
-if s:has_plugin('foldCC')
-    set foldtext=FoldCCtext()
-    set foldcolumn=3
-    set fillchars=vert:\|
-endif
-
 " 作成
 noremap <Space>fm zf
 " 削除
@@ -612,9 +602,6 @@ noremap <Space>fk zk
 noremap <Space>fn ]z
 noremap <Space>fp [z
 noremap <Space>fi zMzv
-" 折り畳み位置を表示
-" むしろ、タブラインに出したい
-noremap <space>fg :echo FoldCCnavi()<CR>
 
 " spell
 noremap <Space>ee :<C-u>set spell!<CR>
@@ -947,7 +934,7 @@ if has('vim_starting')
     nmap <C-j> i<C-j>
     nmap <C-k> a<C-j>
 
-    autocmd myrc User eskk-initialize-pre call s:eskk_initial_pre()
+    autocmd User eskk-initialize-pre call s:eskk_initial_pre()
     function! s:eskk_initial_pre()
         let t = eskk#table#new('rom_to_hira*', 'rom_to_hira')
         " zenkaku
@@ -1397,12 +1384,6 @@ let g:neosnippet#snippets_directory='~/Dropbox/vim/snippet'
 let g:neosnippet#disable_runtime_snippets = {
 		\   'php' : 1,
 		\ }
-
-
-" TODO やめた。どこかにメモを残す
-" let g:accelerated_jk_enable_deceleration = 0
-" nmap j <Plug>(accelerated_jk_gj)
-" nmap k <Plug>(accelerated_jk_gk)
 
 " Enable omni completion.
 autocmd filetype css setlocal omnifunc=csscomplete#completecss
