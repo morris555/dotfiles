@@ -107,6 +107,8 @@ NeoBundle 'git://github.com/mattn/unite-advent_calendar.git'
 NeoBundle 'git://github.com/kmnk/vim-unite-giti.git'
 NeoBundle 'git://github.com/ujihisa/unite-haskellimport.git'
 NeoBundle 'git://github.com/sgur/unite-qf.git'
+NeoBundle 'git://github.com/tekkoc/unite-decorate-border.git'
+NeoBundle 'git://github.com/tekkoc/unite-decorate-text.git'
 
 " 整形
 NeoBundle 'h1mesuke/vim-alignta'
@@ -393,6 +395,9 @@ if has('gui_running')
 endif
 
 " }}}
+
+" .gitなどのディレクトリをカレントディレクトリに
+autocmd BufEnter * :Rooter
 
 "  === ファイルタイプ別設定 ========
 

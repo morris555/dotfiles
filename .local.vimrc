@@ -1,6 +1,3 @@
-" カレントディレクトリをプロジェクトのトップに
-lcd <sfile>:h
-
 command! -nargs=1 Push call s:push_dotfiles("<args>")
 function! s:push_dotfiles(msg)
   execute "!git add -u"
