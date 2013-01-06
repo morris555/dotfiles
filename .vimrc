@@ -80,6 +80,9 @@ NeoBundle 'git://github.com/Shougo/neosnippet.git'
 " easymotion
 NeoBundle 'Lokaltog/vim-easymotion'
 
+" clever-f
+NeoBundle 'git://github.com/rhysd/clever-f.vim.git'
+
 " ブラウザで開く
 NeoBundle 'tyru/open-browser.vim'
 
@@ -731,6 +734,7 @@ inoremap <C-f> <Right>
 inoremap <C-b> <Left>
 inoremap <C-e> <End>
 inoremap <C-a> <Home>
+inoremap <expr> <C-k> col('.')==col('$')?"":"\<C-o>D"
 
 " キーボードマクロをQに降格
 nnoremap q <Nop>
@@ -1383,8 +1387,8 @@ let g:neocomplcache_keyword_patterns['default'] = '\h\w*'
 " g:neocomplcache_source_rank
 
 " neosnippet
-imap <C-k>     <Plug>(neosnippet_expand_or_jump)
-smap <C-k>     <Plug>(neosnippet_expand_or_jump)
+imap <C-g>     <Plug>(neosnippet_expand_or_jump)
+smap <C-g>     <Plug>(neosnippet_expand_or_jump)
 let g:neosnippet#snippets_directory='~/Dropbox/vim/snippet'
 let g:neosnippet#disable_runtime_snippets = {
 		\   'php' : 1,
