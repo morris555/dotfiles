@@ -401,6 +401,8 @@ endif
 
 " .gitなどのディレクトリをカレントディレクトリに
 autocmd BufEnter * :Rooter
+let g:rooter_use_lcd = 1
+let g:rooter_patterns = ['.git/', '.git']
 
 "  === ファイルタイプ別設定 ========
 
@@ -661,6 +663,7 @@ noremap ; :
 nnoremap <expr> gp '`[' . strpart(getregtype(), 0, 1) . '`]'
 
 " ESC2度押しで検索ハイライトを消す
+nnoremap <Esc><Esc> :<C-u>nohlsearch<CR>
 nnoremap <C-l><C-l> :<C-u>nohlsearch<CR>
 
 nmap ( ,mf(
