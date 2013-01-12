@@ -449,6 +449,19 @@ function! InitPhp()
 endfunction
 autocmd BufEnter * if &filetype == "php" | call InitPhp() | endif
 
+function! InitHtml()
+    " htmlはタブ幅4でタブ文字を使う
+    setlocal shiftwidth=4
+    setlocal tabstop=4
+    setlocal softtabstop=4
+    setlocal noexpandtab
+
+    call MapHTMLKeys()
+
+    IndentGuidesEnable
+endfunction
+autocmd BufEnter * if &filetype == "html" | call InitHtml() | endif
+
 
 function! InitVim()
     " vim scriptはタブ幅4でスペースを使う
@@ -1060,6 +1073,7 @@ let g:EasyMotion_keys = 'hjklasdfgyuiopqwertnmzxcvbHJKLASDFGYUIOPQWERTNMZXCVB'
 
 let g:vimshell_max_command_history = 100000000			" ヒストリの保存数
 let g:vimshell_user_prompt = 'fnamemodify(getcwd(), ":~")'
+noremap <Leader>sS :<C-u>VimShell<CR>
 noremap <Leader>sv :<C-u>VimShell -split<CR>
 noremap <Leader>ss :<C-u>VimShell -popup<CR>
 noremap <Leader>st :<C-u>VimShellTab<CR>
@@ -1340,6 +1354,7 @@ function! s:unite_my_settings()
 
     " <C-l>を潰したため、元々あったredrawを<C-Space>に移動
     nmap <buffer> <C-Space> <Plug>(unite_redraw)
+    imap <buffer> <C-Space> <Plug>(unite_redraw)
 
     nmap <buffer> <space><space> <Plug>(unite_toggle_mark_current_candidate)
 
