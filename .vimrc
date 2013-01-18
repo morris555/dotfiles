@@ -1091,7 +1091,6 @@ function! s:vimshell_my_settings()
     inoremap <buffer> <expr><silent> <C-Space>
                 \ unite#sources#vimshell_history#start_complete(!0)
     imap <buffer> <C-l> <Esc>
-    nmap <buffer> <C-l> <Plug>(vimshell_exit)
 
     xmap <buffer> Y <Plug>(operator-concealedyank)
 
@@ -1350,7 +1349,6 @@ function! s:unite_my_settings()
 
     " <C-l>でEscの代わりに
     imap <buffer> <C-l> <Esc>
-    nmap <buffer> <C-l> <Plug>(unite_exit)
 
     " <C-l>を潰したため、元々あったredrawを<C-Space>に移動
     nmap <buffer> <C-Space> <Plug>(unite_redraw)
