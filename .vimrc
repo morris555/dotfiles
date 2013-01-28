@@ -1000,6 +1000,16 @@ nnoremap <Leader>R :<C-u>Unite quicklearn -immediately<Cr>
 " quicklint
 nnoremap <Leader>l :<C-u>QuickRun -exec '%c -l %s'<CR>
 
+" quickrun
+let g:quickrun_config = {}
+let g:quickrun_config.markdown = {
+      \ 'outputter' : 'null',
+      \ 'command'   : 'open',
+      \ 'cmdopt'    : '-a',
+      \ 'args'      : 'Marked',
+      \ 'exec'      : '%c %o %a %s',
+      \ }
+
 " arpeggio(同時押し設定)
 let g:arpeggio_timeoutlen = 70
 call arpeggio#load()
