@@ -130,6 +130,8 @@ NeoBundle 'git://github.com/wlangstroth/vim-haskell.git'
 NeoBundle 'git://github.com/Twinside/vim-haskellConceal.git'
 NeoBundle 'git://github.com/ujihisa/ref-hoogle.git'
 NeoBundle 'git://github.com/pasela/unite-fuel.git'
+NeoBundle 'git://github.com/shawncplus/php.vim.git'
+NeoBundle 'git://github.com/iakio/smarty3.vim.git'
 
 " 即座に実行
 NeoBundle 'thinca/vim-quickrun'
