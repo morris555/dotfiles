@@ -132,6 +132,8 @@ NeoBundle 'git://github.com/ujihisa/ref-hoogle.git'
 NeoBundle 'git://github.com/pasela/unite-fuel.git'
 NeoBundle 'git://github.com/shawncplus/php.vim.git'
 NeoBundle 'git://github.com/iakio/smarty3.vim.git'
+NeoBundle 'git://github.com/davidhalter/jedi-vim.git'
+NeoBundle 'git://github.com/heavenshell/pyflakes-vim.git'
 
 " 即座に実行
 NeoBundle 'thinca/vim-quickrun'
@@ -1146,7 +1148,7 @@ autocmd FileType w3m nnoremap <silent><buffer> q :<C-u>W3mClose<CR>
 let g:syntastic_mode_map = {
             \ 'mode': 'active',
             \ 'active_filetypes': ['php', 'coffeescript', 'sh', 'vim'],
-            \ 'passive_filetypes': ['html', 'haskell']
+            \ 'passive_filetypes': ['html', 'haskell', 'python']
             \}
 let g:syntastic_auto_loc_list=1
 nnoremap <silent> <Leader>l :<C-u>SyntasticCheck<CR>
