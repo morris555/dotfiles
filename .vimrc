@@ -185,6 +185,9 @@ NeoBundle 'Shougo/echodoc'
 " 移動
 NeoBundle 'git://github.com/vim-scripts/Visual-Mark.git'
 
+" 移動
+NeoBundle 'git://github.com/supermomonga/shaberu.vim.git'
+
 " html高速入力
 NeoBundle 'mattn/zencoding-vim'
 
@@ -429,16 +432,6 @@ function! InitPhp()
     syntax keyword phpDefine function contained conceal cchar=𝑓
     syntax keyword phpDefine array contained conceal cchar=𝒂
 
-    " jama?
-    " syntax match phpOperator "<=" conceal cchar=≤ contained containedin=phpRegion
-    " syntax match phpOperator ">=" conceal cchar=≥ contained containedin=phpRegion
-    " syntax match phpOperator "==" conceal cchar=≈ contained containedin=phpRegion
-    " syntax match phpOperator "===" conceal cchar=≡ contained containedin=phpRegion
-    " syntax match phpOperator "::" conceal cchar=∷ contained containedin=phpRegion
-    " syntax match phpOperator "!=" conceal cchar=≠ contained containedin=phpRegion
-    " syntax match phpRelation "=>" conceal cchar=⇛ contained containedin=phpRegion
-    " syntax match phpMemberSelector "\->" conceal cchar=→ contained containedin=phpRegion
-
     highlight! link Conceal phpDefine
     highlight! link Conceal phpRelation
     highlight! link Conceal phpMemberSelector
@@ -510,6 +503,32 @@ function! InitMarkdown()
     IndentGuidesEnable
 endfunction
 autocmd BufEnter * if &filetype == "markdown" | call InitMarkdown() | endif
+
+function! InitPython()
+    " jedi.vimとpyhoncompleteがバッティングし得るらしいので
+    " http://mattn.kaoriya.net/software/vim/20121018212621.htm
+    let b:did_ftplugin = 1
+
+    " rename用のマッピングを無効にしたため、代わりにコマンドを定義
+    command! -nargs=0 JediRename :call jedi#rename()
+
+    " markdownはインベント幅4,タブ幅8でスペースを使う
+    " http://d.hatena.ne.jp/over80/20090305/1236264851
+    setlocal shiftwidth=4
+    setlocal tabstop=8
+    setlocal softtabstop=4
+    setlocal expandtab
+
+    setlocal autoindent
+    setlocal smartindent
+    setlocal cinwords=if,elif,else,for,while,try,except,finally,def,class
+
+    IndentGuidesEnable
+endfunction
+autocmd BufEnter * if &filetype == "python" | call InitPython() | endif
+
+" pythonのrename用のマッピングがquickrunとかぶるため回避させる
+let g:jedi#rename_command = "<Leader><C-r><C-r>"
 
 " HTMLの実態参照文字入力用マッピング
 function! MapHTMLKeys()
