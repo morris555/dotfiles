@@ -133,7 +133,7 @@ NeoBundle 'git://github.com/pasela/unite-fuel.git'
 NeoBundle 'git://github.com/shawncplus/php.vim.git'
 NeoBundle 'git://github.com/iakio/smarty3.vim.git'
 NeoBundle 'git://github.com/davidhalter/jedi-vim.git'
-NeoBundle 'git://github.com/heavenshell/pyflakes-vim.git'
+NeoBundle 'git://github.com/nvie/vim-flake8.git'
 
 " 即座に実行
 NeoBundle 'thinca/vim-quickrun'
@@ -523,12 +523,16 @@ function! InitPython()
     setlocal smartindent
     setlocal cinwords=if,elif,else,for,while,try,except,finally,def,class
 
+    nnoremap <buffer> <leader>l :<C-u>call Flake8()<CR>
+
     IndentGuidesEnable
 endfunction
 autocmd BufEnter * if &filetype == "python" | call InitPython() | endif
 
 " pythonのrename用のマッピングがquickrunとかぶるため回避させる
 let g:jedi#rename_command = "<Leader><C-r><C-r>"
+
+let g:flake8_builtins="_,apply"
 
 " HTMLの実態参照文字入力用マッピング
 function! MapHTMLKeys()
