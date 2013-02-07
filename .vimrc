@@ -133,6 +133,7 @@ NeoBundle 'git://github.com/pasela/unite-fuel.git'
 NeoBundle 'git://github.com/shawncplus/php.vim.git'
 NeoBundle 'git://github.com/iakio/smarty3.vim.git'
 NeoBundle 'git://github.com/davidhalter/jedi-vim.git'
+NeoBundle 'git://github.com/kevinw/pyflakes-vim.git'
 NeoBundle 'git://github.com/nvie/vim-flake8.git'
 
 " 即座に実行
