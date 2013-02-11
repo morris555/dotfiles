@@ -510,6 +510,8 @@ function! InitPython()
     " http://mattn.kaoriya.net/software/vim/20121018212621.htm
     let b:did_ftplugin = 1
 
+    setlocal commentstring=#%s
+
     " rename用のマッピングを無効にしたため、代わりにコマンドを定義
     command! -nargs=0 JediRename :call jedi#rename()
 
@@ -532,6 +534,7 @@ autocmd BufEnter * if &filetype == "python" | call InitPython() | endif
 
 " pythonのrename用のマッピングがquickrunとかぶるため回避させる
 let g:jedi#rename_command = "<Leader><C-r><C-r>"
+let g:jedi#pydoc = "<Leader>k"
 
 let g:flake8_builtins="_,apply"
 
