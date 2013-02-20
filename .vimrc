@@ -535,6 +535,8 @@ autocmd BufEnter * if &filetype == "python" | call InitPython() | endif
 " pythonのrename用のマッピングがquickrunとかぶるため回避させる
 let g:jedi#rename_command = "<Leader><C-r><C-r>"
 let g:jedi#pydoc = "<Leader>k"
+let g:jedi#popup_select_first = 0
+let g:jedi#popup_on_dot = 0
 
 let g:flake8_builtins="_,apply"
 
