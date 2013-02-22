@@ -3,7 +3,8 @@ if has('gui_macvim')
 
     set background=dark
 
-    colorscheme solarized
+    colorscheme hybrid
+    " colorscheme solarized
 
     " let g:Powerline_theme =  "solarized256"
     " let g:Powerline_colorscheme =  "solarized"
@@ -51,8 +52,9 @@ if has('gui_macvim')
 
     " カーソル位置
     if &bg == "dark"
-        highlight CursorLine guibg=#0736c2
-        highlight CursorColumn guibg=#0736c2
+        " hybrid導入に際して、無効化
+        " highlight CursorLine guibg=#0736c2
+        " highlight CursorColumn guibg=#0736c2
     else
         highlight CursorLine guibg=#ddddff
         highlight CursorColumn guibg=#ddddff

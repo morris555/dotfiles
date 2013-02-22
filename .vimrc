@@ -24,6 +24,7 @@ endif
 " NeoBundle_list {{{
 " color-scheme
 NeoBundle 'altercation/vim-colors-solarized'
+NeoBundle 'w0ng/vim-hybrid.git'
 
 " singleton
 NeoBundle 'git://github.com/thinca/vim-singleton.git'
@@ -252,6 +253,7 @@ NeoBundle 'mattn/invader-vim'
 NeoBundle 'mfumi/snake.vim'
 NeoBundle 'mfumi/viminesweeper'
 NeoBundle 'mfumi/lightsout.vim'
+NeoBundle 'git://github.com/vim-scripts/vim-game-of-life.git'
 " }}}
 " }}}
 
