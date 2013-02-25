@@ -187,6 +187,7 @@ NeoBundle 'Shougo/vimproc', {
 NeoBundle 'Shougo/vimshell'
 NeoBundle 'ujihisa/vimshell-ssh'
 NeoBundle 'chikatoike/concealedyank.vim'
+NeoBundle 'supermomonga/vimshell-kawaii.vim'
 
 " echodoc
 NeoBundle 'Shougo/echodoc'
