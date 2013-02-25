@@ -127,15 +127,22 @@ NeoBundle 'git://github.com/scrooloose/syntastic.git'
 NeoBundle 'kchmck/vim-coffee-script'
 NeoBundle 'git://github.com/vim-scripts/JavaScript-syntax.git'
 NeoBundle 'git://github.com/vim-scripts/actionscript.vim--Leider.git'
+
+" haskell
 NeoBundle 'git://github.com/wlangstroth/vim-haskell.git'
 NeoBundle 'git://github.com/Twinside/vim-haskellConceal.git'
 NeoBundle 'git://github.com/ujihisa/ref-hoogle.git'
+
+" php
 NeoBundle 'git://github.com/pasela/unite-fuel.git'
 NeoBundle 'git://github.com/shawncplus/php.vim.git'
 NeoBundle 'git://github.com/iakio/smarty3.vim.git'
+
+" python
 NeoBundle 'git://github.com/davidhalter/jedi-vim.git'
 NeoBundle 'git://github.com/kevinw/pyflakes-vim.git'
 NeoBundle 'git://github.com/nvie/vim-flake8.git'
+NeoBundle 'git://github.com/jmcantrell/vim-virtualenv.git'
 
 " 即座に実行
 NeoBundle 'thinca/vim-quickrun'
@@ -1409,6 +1416,7 @@ endfunction
 
 " haskell補完用に、cabalのパスを追加
 let $PATH=$PATH . ":" . $HOME . "/.cabal/bin"
+let $PATH=$PATH . ":" . $HOME . "/.virtualenvs"
 
 " ファイル名補完
 inoremap <expr><C-x><C-f>  neocomplcache#manual_filename_complete()
@@ -1485,6 +1493,7 @@ command! -nargs=1 -complete=filetype Temp edit ~/.vim_tmp/tmp.<args>
 
 " ファイルタイプのショートカットコマンド
 command! -nargs=1 Type :set filetype=<args>
+command! -nargs=1 Encode :e ++enc=<args>
 
 " TODOファイル
 command! Todo edit ~/Dropbox/Memo/todo.txt
