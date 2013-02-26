@@ -19,7 +19,7 @@ if has('gui_macvim')
     set imdisable        " IME OFF
     set antialias        " アンチエイリアス
 
-    set gfn=Ricty\ Regular:h16
+    set gfn=Ricty\ Regular:h18
     set gfw=
     set mouse=
 

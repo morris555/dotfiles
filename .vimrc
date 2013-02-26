@@ -751,12 +751,12 @@ nnoremap <silent> sp gT
 nnoremap <silent> sN :<C-u>bn<CR>
 nnoremap <silent> sP :<C-u>bp<CR>
 nnoremap <silent> st :<C-u>tabnew<CR>
+nnoremap <silent> sT :<C-u>Unite tab<CR>
 nnoremap <silent> ss :<C-u>sp<CR>
 nnoremap <silent> sv :<C-u>vs<CR>
 nnoremap <silent> sq :<C-u>q<CR>
 nnoremap <silent> sQ :<C-u>bd<CR>
-nnoremap <silent> su :<C-u>Unite buffer_tab -buffer-name=file<CR>
-nnoremap <silent> sU :<C-u>Unite buffer -buffer-name=file<CR>
+nnoremap <silent> sb :<C-u>Unite buffer -buffer-name=file<CR>
 nnoremap <silent> <S-Right> <C-w>>
 nnoremap <silent> <S-Left> <C-w><
 nnoremap <silent> <S-Up> <C-w>+
@@ -1259,9 +1259,8 @@ xmap <C-s> <Plug>VSurround
 let g:indent_guides_color_change_percent=10
 let g:indent_guides_guide_size=1
 
-" memo_list
-"
-function! s:open_memo_file()"{{{
+"  memo_list {{{ 
+function! s:open_memo_file() 
     let l:category = input('Category: ')
     let l:title = input('Title: ')
 
