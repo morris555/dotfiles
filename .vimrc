@@ -1386,6 +1386,8 @@ au FileType unite nnoremap <silent> <buffer> <expr> <C-V> unite#do_action('vspli
 " ウィンドウをタブで開く
 au FileType unite nnoremap <silent> <buffer> <expr> <C-T> unite#do_action('tabopen')
 au FileType unite inoremap <silent> <buffer> <expr> <C-T> unite#do_action('tabopen')
+" 消す
+au FileType unite nnoremap <silent> <buffer> <expr> dd unite#do_action('delete')
 " 初期設定関数を起動する
 au FileType unite call s:unite_my_settings()
 function! s:unite_my_settings()
@@ -1394,19 +1396,22 @@ function! s:unite_my_settings()
     nmap <buffer> <silent> <C-n> <Plug>(unite_loop_cursor_down)
     nmap <buffer> <silent> <C-p> <Plug>(unite_loop_cursor_up)
 
-    imap <buffer> <C-w> <Plug>(unite_delete_backward_path)
+    imap <buffer> <silent> <C-w> <Plug>(unite_delete_backward_path)
 
     " ?
     nmap <buffer> <silent> <expr> / unite#do_action("narrow")
 
     " <C-l>でEscの代わりに
-    imap <buffer> <C-l> <Esc>
+    imap <buffer> <silent> <C-l> <Esc>
 
     " <C-l>を潰したため、元々あったredrawを<C-Space>に移動
-    nmap <buffer> <C-Space> <Plug>(unite_redraw)
-    imap <buffer> <C-Space> <Plug>(unite_redraw)
+    nmap <buffer> <silent> <C-Space> <Plug>(unite_redraw)
+    imap <buffer> <silent> <C-Space> <Plug>(unite_redraw)
 
-    nmap <buffer> <space><space> <Plug>(unite_toggle_mark_current_candidate)
+    nmap <buffer> <silent> <space><space> <Plug>(unite_toggle_mark_current_candidate)
+
+    " ddでリストから削除
+    nmap <buffer> <silent> d <Nop>
 
     nnoremap <buffer> p p
     nnoremap <buffer> <Space> <Space>
