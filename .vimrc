@@ -187,7 +187,6 @@ NeoBundle 'Shougo/vimproc', {
 NeoBundle 'Shougo/vimshell'
 NeoBundle 'ujihisa/vimshell-ssh'
 NeoBundle 'chikatoike/concealedyank.vim'
-NeoBundle 'supermomonga/vimshell-kawaii.vim'
 
 " echodoc
 NeoBundle 'Shougo/echodoc'
@@ -1134,9 +1133,12 @@ noremap <Leader>s <Nop>
 
 noremap <Leader>f :<C-u>VimFilerTab<CR>
 
+" clever-f
+let g:clever_f_across_no_line = 0
 
 command! Ghci VimShellInteractive ghci
 command! Php VimShellInteractive php -a
+command! Python VimShellInteractive python
 
 au FileType vimshell call s:vimshell_my_settings()
 function! s:vimshell_my_settings()
@@ -1144,6 +1146,8 @@ function! s:vimshell_my_settings()
     inoremap <buffer> <expr><silent> <C-Space>
                 \ unite#sources#vimshell_history#start_complete(!0)
     imap <buffer> <C-l> <Esc>
+
+    nmap <buffer> <C-a> <Plug>(vimshell_move_head)
 
     xmap <buffer> Y <Plug>(operator-concealedyank)
 
