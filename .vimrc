@@ -678,12 +678,12 @@ noremap <Space>ef z=
 
 " tag
 set tags=tags
+" set tags=./.tags;
 
 nnoremap <silent> <space>tT :<C-u>tab stj <C-R>=expand('<cword>')<CR><CR>
 nnoremap <silent> <Space>tt <C-]>
 nnoremap <silent> <Space>tn :tn<CR>
 nnoremap <silent> <Space>tp :tp<CR>
-nnoremap <silent> <Space>tg :<C-u>UniteWithCursorWord -immediately tag<CR>
 nnoremap <silent> <Space>tj <C-]>:<C-u>split<CR><C-o><C-o><C-w>j
 nnoremap <silent> <Space>tk <C-]>:<C-u>vsplit<CR><C-o><C-o><C-w>l
 nnoremap <silent> <Space>tu :<C-u>!ctags -R<CR>
@@ -725,6 +725,7 @@ nmap ( ,mf(
 nmap ) ,mF(
 nmap { ,mf{
 nmap } ,mF{
+nmap <C-f> ,mf
 
 nnoremap <space>w :<C-u>w<CR>
 nnoremap <space>W :<C-u>wa<CR>
