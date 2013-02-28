@@ -122,6 +122,7 @@ NeoBundle 'nathanaelkane/vim-indent-guides'
 
 " syntax
 NeoBundle 'git://github.com/scrooloose/syntastic.git'
+NeoBundle 'git://github.com/vol2223/vim-colorblind-colorscheme.git'
 
 " 言語別
 NeoBundle 'kchmck/vim-coffee-script'

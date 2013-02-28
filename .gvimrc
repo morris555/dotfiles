@@ -77,14 +77,14 @@ if has('gui_macvim')
     augroup END
 
     " vimにフォーカスがあたっていないときは、透けさせる。(http://vim-users.jp/2011/10/hack234/)
-    set transparency=5
-    augroup hack234
-        autocmd!
-        if has('mac')
-            autocmd FocusGained * set transparency=5
-            autocmd FocusLost * set transparency=25
-        endif
-    augroup END
+    set transparency=0
+    " augroup hack234
+    "     autocmd!
+    "     if has('mac')
+    "         autocmd FocusGained * set transparency=5
+    "         autocmd FocusLost * set transparency=25
+    "     endif
+    " augroup END
 
     if filereadable(g:save_window_file)
         execute 'source' g:save_window_file
