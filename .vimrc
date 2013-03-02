@@ -294,8 +294,8 @@ set scrolloff=999
 let mapleader = ","
 
 " モードラインを無効にする
-set nomodeline
-set modelines=0
+set modeline
+set modelines=1
 
 " 相対行を表示
 set relativenumber
@@ -1145,7 +1145,7 @@ command! Python VimShellInteractive python
 au FileType vimshell call s:vimshell_my_settings()
 function! s:vimshell_my_settings()
     " Overwrite settings.
-    inoremap <buffer> <expr><silent> <C-Space>
+    inoremap <buffer> <expr><silent> <C-g>
                 \ unite#sources#vimshell_history#start_complete(!0)
     imap <buffer> <C-l> <Esc>
 
@@ -1160,7 +1160,7 @@ endfunction
 au FileType vimfiler call s:vimfiler_my_settings()
 function! s:vimfiler_my_settings()
     " Overwrite settings.
-    nmap <buffer> <C-space> <Plug>(vimfiler_redraw_screen)
+    nmap <buffer> <C-g> <Plug>(vimfiler_redraw_screen)
     nmap <buffer> <space><space> <Plug>(vimfiler_toggle_mark_current_line)
     nnoremap <buffer> <Space> <Space>
 endfunction
@@ -1336,8 +1336,10 @@ let g:unite_source_history_yank_enable = 0
 let g:unite_source_history_yank_limit = 1000
 
 " grepソース
-let g:unite_source_grep_default_opts = '-Hn --include="*.vim" --include="*.txt" --include="*.php" --include="*.xml" --include="*.mkd" --include="*.hs" --include="*.js" --include="*.log" --include="*.sql" --include="*.coffee"'
-" let g:unite_source_grep_default_opts = '-Hn --include="*.vim" --include="*.txt" --include="*.php" --include="*.xml" --include="*.mkd" --include="*.hs" --include="*.js" --include="*.log" --include="*.sql" --include="*.coffee" --include="*.as"'
+" let g:unite_source_grep_default_opts = '-Hn --include="*.vim" --include="*.txt" --include="*.php" --include="*.xml" --include="*.mkd" --include="*.hs" --include="*.js" --include="*.log" --include="*.sql" --include="*.coffee"'
+let g:unite_source_grep_command = "ag"
+let g:unite_source_grep_recursive_opt = ""
+let g:unite_source_grep_default_opts = "--nogroup --nocolor"
 
 let g:unite_source_grep_max_candidates = 100
 let g:unite_source_session_enable_auto_save = 1     " セッション保存
@@ -1410,9 +1412,9 @@ function! s:unite_my_settings()
     " <C-l>でEscの代わりに
     imap <buffer> <silent> <C-l> <Esc>
 
-    " <C-l>を潰したため、元々あったredrawを<C-Space>に移動
-    nmap <buffer> <silent> <C-Space> <Plug>(unite_redraw)
-    imap <buffer> <silent> <C-Space> <Plug>(unite_redraw)
+    " <C-l>を潰したため、元々あったredrawを<C-g>に移動
+    nmap <buffer> <silent> <C-g> <Plug>(unite_redraw)
+    imap <buffer> <silent> <C-g> <Plug>(unite_redraw)
 
     nmap <buffer> <silent> <space><space> <Plug>(unite_toggle_mark_current_candidate)
 
@@ -1467,12 +1469,13 @@ let g:neocomplcache_keyword_patterns['default'] = '\h\w*'
 " g:neocomplcache_source_rank
 
 " neosnippet
-imap <C-g>     <Plug>(neosnippet_expand_or_jump)
-smap <C-g>     <Plug>(neosnippet_expand_or_jump)
-let g:neosnippet#snippets_directory='~/Dropbox/vim/snippet'
-let g:neosnippet#disable_runtime_snippets = {
-		\   'php' : 1,
-		\ }
+" TODO あまり使ってないので、一時的に解除
+" imap <C-g>     <Plug>(neosnippet_expand_or_jump)
+" smap <C-g>     <Plug>(neosnippet_expand_or_jump)
+" let g:neosnippet#snippets_directory='~/Dropbox/vim/snippet'
+" let g:neosnippet#disable_runtime_snippets = {
+" 		\   'php' : 1,
+" 		\ }
 
 " Enable omni completion.
 autocmd filetype css setlocal omnifunc=csscomplete#completecss
