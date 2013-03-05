@@ -681,22 +681,17 @@ noremap <Space>ef z=
 set tags=tags
 " set tags=./.tags;
 
+" TODO ↓マッチパターンさえ変えればアリ
+" nnoremap <silent> <Space>tt :<C-u>UniteWithCursorWord -immediately tag<CR>
+nnoremap <silent> <Space>tt g<C-]>
 nnoremap <silent> <space>tT :<C-u>tab stj <C-R>=expand('<cword>')<CR><CR>
-nnoremap <silent> <Space>tt <C-]>
 nnoremap <silent> <Space>tn :tn<CR>
 nnoremap <silent> <Space>tp :tp<CR>
 nnoremap <silent> <Space>tj <C-]>:<C-u>split<CR><C-o><C-o><C-w>j
 nnoremap <silent> <Space>tk <C-]>:<C-u>vsplit<CR><C-o><C-o><C-w>l
 nnoremap <silent> <Space>tu :<C-u>!ctags -R<CR>
-autocmd FileType php nnoremap <silent><buffer> <Space>tu :<C-u>!ctags --languages=PHP --sort=foldcase -R<CR>
+autocmd FileType php nnoremap <silent><buffer> <Space>tu :<C-u>!ctags --languages=PHP --sort=foldcase -R --php-kinds=cfd<CR>
 autocmd FileType coffee nnoremap <silent><buffer> <Space>tu :<C-u>!ctags --languages=coffee -R<CR>
-
-" 自動でプレビューを表示する。
-let g:SrcExpl_RefreshTime = 1
-" プレビューウインドウの高さ
-let g:SrcExpl_WinHeight = 9
-" tagsは自動で作成する
-let g:SrcExpl_isUpdateTags = 0
 
 autocmd FileType php setlocal commentstring=//%s
 
@@ -1368,10 +1363,8 @@ au FileType php nnoremap <buffer> <Leader>ur :<C-u>Unite ref/phpmanual<CR>
 au FileType vim nnoremap <buffer> <Leader>ur :<C-u>Unite help<CR>
 " outline
 nnoremap <Leader>uo :<C-u>Unite outline  -vertical -winwidth=60 -buffer-name=side<CR>
-" tab
-nnoremap <Leader>ut :<C-u>Unite buffer_tab -buffer-name=file <CR>
-" バッファ一覧(tabの強化系、というイメージでTを採用)
-nnoremap <Leader>uT :<C-u>Unite buffer -buffer-name=file <CR>
+" tag
+nnoremap <Leader>ut :<C-u>Unite tag -buffer-name=file <CR>
 " yank
 nnoremap <C-p> :<C-u>Unite history/yank<CR>
 " source(sourceが増えてきたので、sourceのsourceを経由する方針にしてみる)
