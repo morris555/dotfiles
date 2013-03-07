@@ -912,6 +912,7 @@ function! s:tabpage_label(n)
 
     return '%' . a:n . 'T' . hi . label . '%T%#TabLineFill#'
 endfunction
+command! -nargs=1 SetTitle :let t:title="<args>"
 
 " タグがあるかどうかの文字列を返す関数
 function! s:tags_text()
