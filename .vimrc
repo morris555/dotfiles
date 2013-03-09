@@ -883,17 +883,17 @@ nmap <silent> <Space>oi <Plug>IndentGuidesToggle
 
 " 各タブページのカレントバッファ名+αを表示
 function! s:tabpage_label(n)
+    " " カレントタブページかどうかでハイライトを切り替える
+    let hi = a:n is tabpagenr() ? '%#TabLineSel#' : '%#TabLine#'
+
     " t:title と言う変数があったらそれを使う
     let title = gettabvar(a:n, 'title')
     if title !=# ''
-        return title
+        return hi . title
     endif
 
     " タブページ内のバッファのリスト
     let bufnrs = tabpagebuflist(a:n)
-
-    " カレントタブページかどうかでハイライトを切り替える
-    let hi = a:n is tabpagenr() ? '%#TabLineSel#' : '%#TabLine#'
 
     " バッファが複数あったらバッファ数を表示
     let no = len(bufnrs)
