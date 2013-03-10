@@ -8,11 +8,12 @@
 "
 " _/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
 
-" NeoBundle {{{
-" NeoBundle_setup {{{
+" ==============
+"  Neoundle
+" ==============
+" init {{{
 set nocompatible
 filetype off
-
 if has('vim_starting')
     set runtimepath+=~/.vim/neobundle.git/
 
@@ -21,16 +22,14 @@ if has('vim_starting')
     NeoBundleLocal ~/.vim/my_bundle
 endif
 " }}}
-" NeoBundle_list {{{
+" plugin_list {{{
 " color-scheme
 NeoBundle 'altercation/vim-colors-solarized'
 NeoBundle 'w0ng/vim-hybrid.git'
+NeoBundle 'git://github.com/vol2223/vim-colorblind-colorscheme.git'
 
 " singleton
 NeoBundle 'git://github.com/thinca/vim-singleton.git'
-
-" singleton
-NeoBundle 'git://github.com/vim-scripts/sudo.vim.git'
 
 " lib
 NeoBundle 'mattn/webapi-vim'
@@ -38,31 +37,24 @@ NeoBundle 'thinca/vim-openbuf'
 NeoBundle 'git://github.com/basyura/twibill.vim.git'
 NeoBundle 'git://github.com/basyura/bitly.vim.git'
 
-" textobj,operator
+" textobj-user
 NeoBundle 'kana/vim-textobj-user'
-NeoBundle 'kana/vim-operator-user'
 NeoBundle 'kana/vim-textobj-entire'
 NeoBundle 'kana/vim-textobj-indent'
 NeoBundle 'git://github.com/thinca/vim-textobj-plugins.git'
 NeoBundle 'git://github.com/h1mesuke/textobj-wiw.git'
 NeoBundle 'kana/vim-textobj-function'
-NeoBundle 'kana/vim-operator-replace'
-NeoBundle 'tyru/operator-camelize.vim'
-NeoBundle 'emonkak/vim-operator-comment'
 NeoBundle 'git://github.com/kana/vim-textobj-line.git'
 NeoBundle 'https://github.com/tekkoc/vim-textobj-parameter.git'
 
-" lingr
-NeoBundle 'tsukkee/lingr-vim'
-
-" GCalcでグーグル計算
-NeoBundle 'git://github.com/tasuten/gcalc.vim.git'
+" operator-user
+NeoBundle 'kana/vim-operator-user'
+NeoBundle 'tyru/operator-camelize.vim'
+NeoBundle 'kana/vim-operator-replace'
+NeoBundle 'emonkak/vim-operator-comment'
 
 " omniforcus
 NeoBundle 'git://github.com/fifnel/ofaddinbox.vim.git'
-
-" togetter
-NeoBundle 'git://github.com/mattn/togetter-vim.git'
 
 " ghc
 NeoBundle 'git://github.com/ujihisa/neco-ghc.git'
@@ -93,8 +85,6 @@ NeoBundle 'thinca/vim-ambicmd'
 " coffeescriptなどに使う
 NeoBundle 'ujihisa/shadow.vim'
 
-NeoBundle 'git://github.com/tyru/current-func-info.vim.git'
-
 " gitディレクトリのあるところをカレントディレクトリに
 NeoBundle 'git://github.com/airblade/vim-rooter.git'
 
@@ -106,7 +96,6 @@ NeoBundle 'thinca/vim-unite-history'
 NeoBundle 'ujihisa/unite-colorscheme'
 NeoBundle 'git://github.com/ujihisa/unite-font.git'
 NeoBundle 'tsukkee/unite-tag'
-NeoBundle 'choplin/unite-vim_hacks'
 NeoBundle 'git://github.com/mattn/unite-advent_calendar.git'
 NeoBundle 'git://github.com/kmnk/vim-unite-giti.git'
 NeoBundle 'git://github.com/ujihisa/unite-haskellimport.git'
@@ -122,7 +111,6 @@ NeoBundle 'nathanaelkane/vim-indent-guides'
 
 " syntax
 NeoBundle 'git://github.com/scrooloose/syntastic.git'
-NeoBundle 'git://github.com/vol2223/vim-colorblind-colorscheme.git'
 
 " 言語別
 NeoBundle 'kchmck/vim-coffee-script'
@@ -155,11 +143,6 @@ NeoBundle 'mojako/ref-sources.vim'
 
 NeoBundle 'git://github.com/yuratomo/w3m.vim.git'
 
-NeoBundle 'git://github.com/mattn/benchvimrc-vim.git'
-
-" cocoa
-NeoBundle 'msanders/cocoa.vim'
-
 " 外側テキストオブジェクト
 NeoBundle 'tpope/vim-surround'
 NeoBundle 't9md/vim-surround_custom_mapping'
@@ -171,7 +154,6 @@ NeoBundle 't9md/vim-textmanip'
 NeoBundle 'kana/vim-smartword'
 
 " 複数ハイライト
-" TODO
 NeoBundle 't9md/vim-quickhl'
 
 " ファイラ
@@ -189,20 +171,14 @@ NeoBundle 'Shougo/vimshell'
 NeoBundle 'ujihisa/vimshell-ssh'
 NeoBundle 'chikatoike/concealedyank.vim'
 
-" echodoc
-NeoBundle 'Shougo/echodoc'
-
 " 移動
 NeoBundle 'git://github.com/vim-scripts/Visual-Mark.git'
 
-" 移動
+" 喋る
 NeoBundle 'git://github.com/supermomonga/shaberu.vim.git'
 
 " html高速入力
 NeoBundle 'mattn/zencoding-vim'
-
-" 文字入力を賢く
-NeoBundle 'kana/vim-smartchr'
 
 " 同時押しマッピング
 NeoBundle 'kana/vim-arpeggio'
@@ -210,17 +186,11 @@ NeoBundle 'kana/vim-arpeggio'
 " vim再起動
 NeoBundle 'tyru/restart.vim'
 
-" あのファイルを開く
-NeoBundle 'kana/vim-altr'
-
 " git
 NeoBundle 'tpope/vim-fugitive'
 
 " markdown
 NeoBundle 'tpope/vim-markdown'
-
-" scouter
-NeoBundle 'thinca/vim-scouter.git'
 
 " localvimrc
 NeoBundle 'thinca/vim-localrc'
@@ -241,9 +211,6 @@ NeoBundle 'git://github.com/vim-scripts/ZoomWin.git'
 " 移動を細かく記録する
 NeoBundle 'thinca/vim-poslist'
 
-" トグル
-NeoBundle 'git://github.com/taku-o/vim-toggle.git'
-
 " コマンドラインでemacsライクな移動ができるように
 NeoBundle 'houtsnip/vim-emacscommandline'
 
@@ -263,7 +230,6 @@ NeoBundle 'mfumi/viminesweeper'
 NeoBundle 'mfumi/lightsout.vim'
 NeoBundle 'git://github.com/vim-scripts/vim-game-of-life.git'
 " }}}
-" }}}
 
 filetype plugin on
 filetype indent on
@@ -271,6 +237,14 @@ filetype indent on
 autocmd!
 
 syntax on
+
+" featureの状態を取得 {{{
+let s:iswin32 = has('win32')
+let s:iswin64 = has('win64')
+let s:iswin = has('win32') || has('win64')
+let s:isgui = has("gui_running")
+let s:ismacunix = has("macunix")
+" }}}
 
 " koriya版に同梱されているプラグインを無効化する
 let plugin_dicwin_disable = 1
