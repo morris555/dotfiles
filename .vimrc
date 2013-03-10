@@ -9,7 +9,7 @@
 " _/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
 
 " ==============
-"  Neoundle
+"  SECTION: Neoundle
 " ==============
 " init {{{
 set nocompatible
@@ -229,15 +229,22 @@ NeoBundle 'mfumi/snake.vim'
 NeoBundle 'mfumi/viminesweeper'
 NeoBundle 'mfumi/lightsout.vim'
 NeoBundle 'git://github.com/vim-scripts/vim-game-of-life.git'
+NeoBundle 'tyru/pacman.vim'
 " }}}
+" ==============
+"  SECTION: define
+" ==============
+" .vimrcの再読み込み時に.vimrc内で設定されたautocmdを初期化する {{{
+" MyAutocmdを使用することで漏れなく初期化できる
+augroup vimrc
+  autocmd!
+augroup END
 
-filetype plugin on
-filetype indent on
-
-autocmd!
-
-syntax on
-
+command!
+\   -bang -nargs=*
+\   MyAutocmd
+\   autocmd<bang> vimrc <args>
+" }}}
 " featureの状態を取得 {{{
 let s:iswin32 = has('win32')
 let s:iswin64 = has('win64')
@@ -245,83 +252,6 @@ let s:iswin = has('win32') || has('win64')
 let s:isgui = has("gui_running")
 let s:ismacunix = has("macunix")
 " }}}
-
-" koriya版に同梱されているプラグインを無効化する
-let plugin_dicwin_disable = 1
-
-" オプション指定 
-
-" ファイルタイプ判定ON
-filetype plugin indent on
-
-set encoding=utf-8
-set fileencodings=utf-8
-" set fileencodings=utf-8,cp932
-
-" 自動再読み込み
-set autoread
-
-" カーソルを中央行に
-set scrolloff=999
-
-" <Leader>を,に
-let mapleader = ","
-
-" モードラインを無効にする
-set modeline
-set modelines=1
-
-" 相対行を表示
-set relativenumber
-
-" バックアップはとらない
-set nobackup
-set noswapfile
-set directory=~/.vim/swp
-
-" バックスペースで何でも消せるように
-set backspace=indent,eol,start
-
-" ペアとなる括弧の定義
-set matchpairs+=<:>
-
-set noshowmatch
-
-" 編集中もほかファイルを開けるように
-set hidden
-
-" MacでOptionキーをMetaキーに
-set macmeta
-
-" ビープを消す
-set visualbell t_vb=
-
-" CursorHoldまでの時間
-set updatetime=1000
-
-set cmdheight=2            " コマンドラインは２行
-set showcmd                " コマンドを表示
-set wildmenu               " コマンド補完を強化
-set wildchar=<tab>         " コマンド補完を開始するキー
-set wildmode=list:full     " リスト表示，最長マッチ
-set history=1000           " コマンド・検索パターンの履歴数
-set complete+=k            " 補完に辞書ファイル追加
-
-set iminsert=0 " インサートモードで日本語入力を ON にしない
-set imsearch=0 " 検索モードで日本語入力を ON にしない
-
-" 改行時のコメントと、自動改行を無効化
-set formatoptions-=tcro
-augroup vimrc_group_formatoptions
-	autocmd!
-	autocmd FileType * setlocal formatoptions-=tcro
-augroup END
-
-if has('conceal')
-    " set conceallevel=2 concealcursor=nc
-    set conceallevel=2
-endif
-
 " {{{ utility function 
 function! s:has_plugin(name)
     return globpath(&runtimepath, 'plugin/' . a:name . '.vim') !=# ''
@@ -390,25 +320,216 @@ if has('gui_running')
 endif
 
 " }}}
+" 入力補助 {{{
+" HTMLの実態参照文字入力用マッピング
+function! MapHTMLKeys()
+    inoremap <buffer> \\ \
+    inoremap <buffer> \& &amp;
+    inoremap <buffer> \< &lt;
+    inoremap <buffer> \> &gt;
+    inoremap <buffer> \. ・
+    inoremap <buffer> \- &#8212;
+    inoremap <buffer> \<Space> &nbsp;
+    inoremap <buffer> \` &#8216;
+    inoremap <buffer> \' &#8217;
+    inoremap <buffer> \2 &#8220;
+    inoremap <buffer> \" &#8221;
+endfunction " MapHTMLKeys()
 
-" .gitなどのディレクトリをカレントディレクトリに
-autocmd BufEnter * :Rooter
-let g:rooter_use_lcd = 1
-let g:rooter_patterns = ['.git/', '.git']
+" 押したキーの変わりに「$this->」を代入
+function! s:at()
+    let syntax = synstack(line('.'), col('.'))
+    let name = empty(syntax) ? '' : synIDattr(syntax[-1], "name")
+    return name =~# 'String\|Comment\|None' ? '@' : '$this->'
+endfunction
+" }}}
+" ==============
+"  SECTION: init
+" ==============
+" {{{
+autocmd!
+syntax on
+" koriya版に同梱されているプラグインを無効化する
+let plugin_dicwin_disable = 1
 
-"  === ファイルタイプ別設定 ========
+" オプション指定 
 
+filetype plugin indent on
+" }}}
+" ==============
+"  SECTION: Encoding
+" ==============
+" {{{
+set fileencodings=iso-2022-jp-3,iso-2022-jp,euc-jisx0213,euc-jp,utf-8,ucs-bom,euc-jp,eucjp-ms,cp932
+set encoding=utf-8
+set fileformats=unix,dos,mac
+set ambiwidth=double
+
+" マルチバイト文字が含まれていない場合はencodingの値を使用する
+MyAutocmd BufReadPost *
+\   if &modifiable && !search('[^\x00-\x7F]', 'cnw')
+\ |   setlocal fileencoding=
+\ | endif
+
+" }}}
+" ==============
+"  SECTION: option
+" ==============
+" {{{
+let mapleader = ","
+
+set autoread
+
+set scrolloff=999
+set relativenumber
+
+set conceallevel=2
+
+" モードラインは一行
+set modeline
+set modelines=1
+
+" バックアップはとらない
+set nobackup
+set noswapfile
+set directory=~/.vim/swp
+
+" バックスペースで何でも消せるように
+set backspace=indent,eol,start
+
+" ペアとなる括弧の定義
+set matchpairs+=<:>
+set noshowmatch
+
+" 編集中もほかファイルを開けるように
+set hidden
+
+" MacでOptionキーをMetaキーに
+set macmeta
+
+" ビープを消す
+set visualbell t_vb=
+
+" CursorHoldまでの時間
+set updatetime=1000
+
+" tag
+set tags=tags
+
+" コマンドライン
+set cmdheight=2
+set showcmd
+set wildmenu
+set wildchar=<tab>
+set wildmode=list:full
+set history=1000
+set complete+=k
+
+" searching
+set ignorecase
+set smartcase
+set wrapscan
+set incsearch
+set hlsearch
+
+" ヤンクしたものをクリップボードにも
+set clipboard=unnamed
+
+" 折り畳み関連
+set foldmethod=marker
+
+" 改行文字などの表示
+set list
+set listchars=tab:>-,eol:↴,trail:-,nbsp:%,extends:>,precedes:<
+
+" 改行時のコメントと、自動改行を無効化
+" TODO 確認
+set formatoptions-=tcro
+augroup vimrc_group_formatoptions
+	autocmd!
+	autocmd FileType * setlocal formatoptions-=tcro
+augroup END
+
+" 前回終了したカーソル行に移動
+autocmd BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$") | exe "normal g`\"" | endif
+
+" カレントウィンドウにのみ相対行を表示
+augroup cch
+    autocmd! cch
+    autocmd WinLeave * set norelativenumber
+    autocmd WinEnter,BufRead * set relativenumber
+augroup END
+
+" 必要なときのみ、カーソル行をハイライト
+" http://d.hatena.ne.jp/thinca/20090530/1243615055
+augroup vimrc-auto-cursorline
+    autocmd!
+    autocmd CursorMoved,CursorMovedI * call Auto_cursorline('CursorMoved')
+    autocmd CursorHold,CursorHoldI * call Auto_cursorline('CursorHold')
+    autocmd WinEnter * call Auto_cursorline('WinEnter')
+    autocmd WinLeave * call Auto_cursorline('WinLeave')
+
+    let g:cursorline_lock = 0
+    function! Auto_cursorline(event)
+        if a:event ==# 'WinEnter'
+            setlocal cursorline
+            setlocal cursorcolumn
+            let g:cursorline_lock = 2
+        elseif a:event ==# 'WinLeave'
+            setlocal nocursorline
+            setlocal nocursorcolumn
+        elseif a:event ==# 'CursorMoved'
+            if g:cursorline_lock
+                if 1 < g:cursorline_lock
+                    let g:cursorline_lock = 1
+                else
+                    setlocal nocursorline
+                    setlocal nocursorcolumn
+                    let g:cursorline_lock = 0
+                endif
+            endif
+        elseif a:event ==# 'CursorHold'
+            setlocal cursorline
+            setlocal cursorcolumn
+            let g:cursorline_lock = 1
+        endif
+    endfunction
+augroup END
+
+" }}}
+" ==============
+"  SECTION: filetype
+" ==============
+" ファイルタイプ判定 {{{
+au BufNewFile,BufRead *.scala set filetype=scala
+au BufNewFile,BufRead *.js set filetype=javascript
+au BufNewFile,BufRead *.js.shd set filetype=coffee
+au BufNewFile,BufRead *.coffee set filetype=coffee
+au BufNewFile,BufRead *.html set filetype=html
+au BufNewFile,BufRead *.as set filetype=actionscript
+au BufNewFile,BufRead *.txt set filetype=markdown
+au BufNewFile,BufRead */doc/*.txt set filetype=help
+
+autocmd FileType php :set dictionary+=~/.vim/dict/php.dict
+autocmd FileType scala :set dictionary+=~/.vim/dict/scala.dict
+set complete+=k
+" }}}
+" {{{ デフォルト
 set shiftwidth=4
 set tabstop=4
 set softtabstop=4
 set expandtab
-
+" }}}
+" {{{ PHP
 function! InitPhp()
     " phpはタブ幅4でタブ文字を使う
     setlocal shiftwidth=4
     setlocal tabstop=4
     setlocal softtabstop=4
     setlocal noexpandtab
+
+    " 「$hoge」をまとめてwordとする
+    setlocal iskeyword+=$
 
     " {{で<?php }}で?>
     inoremap <buffer><expr> { getline('.')[col('.') - 2] ==# '{' ? "\<BS><?php" : '{'
@@ -430,7 +551,8 @@ function! InitPhp()
     IndentGuidesEnable
 endfunction
 autocmd BufEnter * if &filetype == "php" | call InitPhp() | endif
-
+" }}}
+" HTML {{{
 function! InitHtml()
     " htmlはタブ幅4でタブ文字を使う
     setlocal shiftwidth=4
@@ -443,8 +565,8 @@ function! InitHtml()
     IndentGuidesEnable
 endfunction
 autocmd BufEnter * if &filetype == "html" | call InitHtml() | endif
-
-
+" }}}
+" vim {{{
 function! InitVim()
     " vim scriptはタブ幅4でスペースを使う
     setlocal shiftwidth=4
@@ -455,7 +577,8 @@ function! InitVim()
     IndentGuidesEnable
 endfunction
 autocmd BufEnter * if &filetype == "vim" | call InitVim() | endif
-
+" }}}
+" haskell {{{
 function! InitHaskell()
     " haskellはタブ幅4でスペースを使う
     setlocal shiftwidth=4
@@ -466,7 +589,8 @@ function! InitHaskell()
     IndentGuidesEnable
 endfunction
 autocmd BufEnter * if &filetype == "haskell" | call InitHaskell() | endif
-
+" }}}
+" cofee script {{{
 function! InitCoffee()
     " coffeescriptはタブ幅2でスペースを使う
     setlocal shiftwidth=2
@@ -477,7 +601,8 @@ function! InitCoffee()
     IndentGuidesEnable
 endfunction
 autocmd BufEnter * if &filetype == "coffee" | call InitCoffee() | endif
-
+" }}}
+" markdown {{{
 function! InitMarkdown()
     " markdownはタブ幅4でスペースを使う
     setlocal shiftwidth=4
@@ -488,7 +613,8 @@ function! InitMarkdown()
     IndentGuidesEnable
 endfunction
 autocmd BufEnter * if &filetype == "markdown" | call InitMarkdown() | endif
-
+" }}}
+" python {{{
 function! InitPython()
     " jedi.vimとpyhoncompleteがバッティングし得るらしいので
     " http://mattn.kaoriya.net/software/vim/20121018212621.htm
@@ -523,98 +649,11 @@ let g:jedi#popup_select_first = 0
 let g:jedi#popup_on_dot = 0
 
 let g:flake8_builtins="_,apply"
-
-" HTMLの実態参照文字入力用マッピング
-function! MapHTMLKeys()
-    inoremap <buffer> \\ \
-    inoremap <buffer> \& &amp;
-    inoremap <buffer> \< &lt;
-    inoremap <buffer> \> &gt;
-    inoremap <buffer> \. ・
-    inoremap <buffer> \- &#8212;
-    inoremap <buffer> \<Space> &nbsp;
-    inoremap <buffer> \` &#8216;
-    inoremap <buffer> \' &#8217;
-    inoremap <buffer> \2 &#8220;
-    inoremap <buffer> \" &#8221;
-endfunction " MapHTMLKeys()
-
-" 押したキーの変わりに「$this->」を代入
-function! s:at()
-    let syntax = synstack(line('.'), col('.'))
-    let name = empty(syntax) ? '' : synIDattr(syntax[-1], "name")
-    return name =~# 'String\|Comment\|None' ? '@' : '$this->'
-endfunction
-
-" file encoding 
-"
-set fileformats=unix,dos,mac
-
-" 文字コードの自動認識"{{{
-if &encoding !=# 'utf-8'
-    set encoding=japan
-    set fileencoding=japan
-endif
-if has('iconv')
-    let s:enc_euc = 'euc-jp'
-    let s:enc_jis = 'iso-2022-jp'
-    " iconvがeucJP-msに対応しているかをチェック
-    if iconv("\x87\x64\x87\x6a", 'cp932', 'eucjp-ms') ==# "\xad\xc5\xad\xcb"
-        let s:enc_euc = 'eucjp-ms'
-        let s:enc_jis = 'iso-2022-jp-3'
-        " iconvがJISX0213に対応しているかをチェック
-    elseif iconv("\x87\x64\x87\x6a", 'cp932', 'euc-jisx0213') ==# "\xad\xc5\xad\xcb"
-        let s:enc_euc = 'euc-jisx0213'
-        let s:enc_jis = 'iso-2022-jp-3'
-    endif
-    " fileencodingsを構築
-    if &encoding ==# 'utf-8'
-        let s:fileencodings_default = &fileencodings
-        let &fileencodings = s:enc_jis .','. s:enc_euc .',cp932'
-        let &fileencodings = &fileencodings .','. s:fileencodings_default
-        unlet s:fileencodings_default
-    else
-        let &fileencodings = &fileencodings .','. s:enc_jis
-        set fileencodings+=utf-8,ucs-2le,ucs-2
-        if &encoding =~# '^\(euc-jp\|euc-jisx0213\|eucjp-ms\)$'
-            set fileencodings+=cp932
-            set fileencodings-=euc-jp
-            set fileencodings-=euc-jisx0213
-            set fileencodings-=eucjp-ms
-            let &encoding = s:enc_euc
-            let &fileencoding = s:enc_euc
-        else
-            let &fileencodings = &fileencodings .','. s:enc_euc
-        endif
-    endif
-    " 定数を処分
-    unlet s:enc_euc
-    unlet s:enc_jis
-endif
-
-" 日本語を含まない場合は fileencoding に encoding を使うようにする
-if has('autocmd')
-    function! AU_ReCheck_FENC()
-        if &fileencoding =~# 'iso-2022-jp' && search("[^\x01-\x7e]", 'n') == 0
-            let &fileencoding=&encoding
-        endif
-    endfunction
-    autocmd BufReadPost * call AU_ReCheck_FENC()
-endif
-" 改行コードの自動認識
-set fileformats=unix,dos,mac
-" □とか○の文字があってもカーソル位置がずれないようにする
-if exists('&ambiwidth')
-    set ambiwidth=double
-endif"}}}
-
-" searching
-set ignorecase
-set smartcase
-set wrapscan
-set incsearch
-set hlsearch
-
+" }}}
+" ==============
+"  SECTION: mapping
+" ==============
+" {{{
 noremap ZZ <Nop>
 noremap ZQ <Nop>
 
@@ -650,10 +689,6 @@ noremap <Space>ep [s
 noremap <Space>eg zg
 noremap <Space>ew zw
 noremap <Space>ef z=
-
-" tag
-set tags=tags
-" set tags=./.tags;
 
 " TODO ↓マッチパターンさえ変えればアリ
 " nnoremap <silent> <Space>tt :<C-u>UniteWithCursorWord -immediately tag<CR>
@@ -773,9 +808,6 @@ nnoremap Q q
 nnoremap <Space><Space> o<ESC>
 nnoremap <CR> o<Esc>
 
-" ノーマルモード時にスペース挿入
-" nnoremap <C-Space> i <Esc><Right>
-
 " 行を詰めずに削除
 nnoremap <Space>d cc<ESC>
 
@@ -848,13 +880,12 @@ nnoremap <silent> <Space>op :<C-u>pastetoggle<CR>
 nnoremap <silent> <Space>ou :<C-u>GundoToggle<CR>
 nnoremap <silent> <Space>os :<C-u>SyntasticToggleMode<CR>
 nmap <silent> <Space>oi <Plug>IndentGuidesToggle
-
-
-
-" tab line
-
+" }}}
+" ==============
+"  SECTION: tab line
+" ==============
+" {{{
 " 参考(http://d.hatena.ne.jp/thinca/20111204/1322932585)
-
 " 各タブページのカレントバッファ名+αを表示
 function! s:tabpage_label(n)
     " " カレントタブページかどうかでハイライトを切り替える
@@ -914,10 +945,13 @@ endfunction
 
 " set tabline=%!MakeTabLine()
 autocmd CursorMoved * set tabline=%!MakeTabLine()
+" }}}
+" ==============
+" SECTION: plugin
+" ==============
+" {{{
 
-" ================
-" plugin
-"================
+" TODO プラグイン毎に折り畳みで丁度よい
 
 let g:textobj_parameter_map_key = "c"
 
@@ -929,6 +963,12 @@ vmap <silent> <Leader>O <Plug>MultiTaskToOmniFocus
 " sonictemplate
 let g:sonictemplate_vim_template_dir = $HOME. '/Dropbox/Vim/sonic_template'
 imap <C-t> <space><bs><c-o>:call sonictemplate#select('i')<cr>
+
+" .gitなどのディレクトリをカレントディレクトリに
+autocmd BufEnter * :Rooter
+let g:rooter_use_lcd = 1
+let g:rooter_patterns = ['.git/', '.git']
+
 
 " zencoding
 let g:user_zen_settings = {
@@ -1222,79 +1262,9 @@ nmap <C-s> i<Plug>Isurround
 imap <C-s> <Plug>Isurround
 xmap <C-s> <Plug>VSurround
 
-"------------------------------------
-" indent_guides
-"------------------------------------
 " インデントの深さに色を付ける
-" let g:indent_guides_start_level=2
-" let g:indent_guides_auto_colors=0
-" let g:indent_guides_enable_on_vim_startup=0
-" let g:indent_guides_space_guides=1
-" hi IndentGuidesOdd  ctermbg=235
-" hi IndentGuidesEven ctermbg=237
 let g:indent_guides_color_change_percent=10
 let g:indent_guides_guide_size=1
-
-"  memo_list {{{ 
-function! s:open_memo_file() 
-    let l:category = input('Category: ')
-    let l:title = input('Title: ')
-
-    if l:category == ""
-        let l:category = "other"
-    endif
-
-    let l:memo_dir = $HOME . '/Dropbox/Memo/vim/' . l:category
-    if !isdirectory(l:memo_dir)
-        call mkdir(l:memo_dir, 'p')
-    endif
-
-    let l:filename = l:memo_dir . strftime('/%Y-%m-%d_') . l:title . '.txt'
-
-    let l:template = [
-                \'Category: ' . l:category,
-                \'========================================',
-                \'Title: ' . l:title,
-                \'----------------------------------------',
-                \'date: ' . strftime('%Y/%m/%d %T'),
-                \'- - - - - - - - - - - - - - - - - - - - ',
-                \'',
-                \]
-
-    " ファイル生成
-    execute 'tabnew ' . l:filename
-    call setline(1, l:template)
-    execute '999'
-    execute 'write'
-endfunction augroup END"}}}
-
-
-" メモを作成するコマンド
-command! -nargs=0 MemoNew call s:open_memo_file()
-
-" メモ一覧をUniteで呼び出すコマンド
-command! -nargs=0 MemoList :Unite file_rec:~/Dropbox/Memo/ -buffer-name=memo_list
-
-" メモ一覧をUnite grepするコマンド
-command! -nargs=0 MemoGrep :Unite grep:~/Dropbox/Memo/ -no-quit<CR>
-
-" メモ一覧をVimFilerで呼び出すコマンド
-command! -nargs=0 MemoFiler :VimFiler ~/Dropbox/Memo
-
-" メモ関連マッピング
-nnoremap Mn :MemoNew<CR>
-nnoremap Ml :MemoList<CR>
-nnoremap Mf :MemoFiler<CR>
-nnoremap Mg :MemoGrep<CR>
-
-" シフト押したままでもマッピングが起動するように
-nnoremap MN :MemoNew<CR>
-nnoremap ML :MemoList<CR>
-nnoremap MF :MemoFiler<CR>
-nnoremap MG :MemoGrep<CR>
-
-" TODO 新しいものを上にしたい
-" call unite#set_profile('memo_list', 'filters', ['matcher_default', 'sorter_reverse', 'converter_default'])
 
 " unite
 
@@ -1423,6 +1393,14 @@ if !exists('g:neocomplcache_keyword_patterns')
 endif
 let g:neocomplcache_keyword_patterns['default'] = '\h\w*'
 
+" Enable omni completion.
+autocmd filetype css setlocal omnifunc=csscomplete#completecss
+autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
+autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
+autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
+autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
+autocmd FileType haskell setlocal omnifunc=necoghc#omnifunc
+
 " imap <C-u> <Plug>(neocomplcache_start_unite_complete)
 " imap <C-u> <Plug>(neocomplcache_start_unite_quick_match)
 
@@ -1444,17 +1422,75 @@ let g:neocomplcache_keyword_patterns['default'] = '\h\w*'
 " let g:neosnippet#disable_runtime_snippets = {
 " 		\   'php' : 1,
 " 		\ }
+" }}}
+" ==========
+" SECTION: Memo
+" ==========
+"  function {{{ 
+function! s:open_memo_file() 
+    let l:category = input('Category: ')
+    let l:title = input('Title: ')
 
-" Enable omni completion.
-autocmd filetype css setlocal omnifunc=csscomplete#completecss
-autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
-autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
-autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
-autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
-autocmd FileType haskell setlocal omnifunc=necoghc#omnifunc
+    if l:category == ""
+        let l:category = "other"
+    endif
 
-" user command
+    let l:memo_dir = $HOME . '/Dropbox/Memo/vim/' . l:category
+    if !isdirectory(l:memo_dir)
+        call mkdir(l:memo_dir, 'p')
+    endif
 
+    let l:filename = l:memo_dir . strftime('/%Y-%m-%d_') . l:title . '.txt'
+
+    let l:template = [
+                \'Category: ' . l:category,
+                \'========================================',
+                \'Title: ' . l:title,
+                \'----------------------------------------',
+                \'date: ' . strftime('%Y/%m/%d %T'),
+                \'- - - - - - - - - - - - - - - - - - - - ',
+                \'',
+                \]
+
+    " ファイル生成
+    execute 'tabnew ' . l:filename
+    call setline(1, l:template)
+    execute '999'
+    execute 'write'
+endfunction augroup END"}}}
+" command & mapping {{{
+
+" メモを作成するコマンド
+command! -nargs=0 MemoNew call s:open_memo_file()
+
+" メモ一覧をUniteで呼び出すコマンド
+command! -nargs=0 MemoList :Unite file_rec:~/Dropbox/Memo/ -buffer-name=memo_list
+
+" メモ一覧をUnite grepするコマンド
+command! -nargs=0 MemoGrep :Unite grep:~/Dropbox/Memo/ -no-quit<CR>
+
+" メモ一覧をVimFilerで呼び出すコマンド
+command! -nargs=0 MemoFiler :VimFiler ~/Dropbox/Memo
+
+" メモ関連マッピング
+nnoremap Mn :MemoNew<CR>
+nnoremap Ml :MemoList<CR>
+nnoremap Mf :MemoFiler<CR>
+nnoremap Mg :MemoGrep<CR>
+
+" シフト押したままでもマッピングが起動するように
+nnoremap MN :MemoNew<CR>
+nnoremap ML :MemoList<CR>
+nnoremap MF :MemoFiler<CR>
+nnoremap MG :MemoGrep<CR>
+
+" TODO 新しいものを上にしたい
+" call unite#set_profile('memo_list', 'filters', ['matcher_default', 'sorter_reverse', 'converter_default'])
+" }}}
+" ==========
+" SECTION: command
+" ==========
+" other {{{
 " Ev/Rvでvimrcの編集と反映
 command! Ev edit ~/dotfiles/.vimrc
 command! Rv source ~/dotfiles/.vimrc
@@ -1466,9 +1502,6 @@ command! Rg source ~/dotfiles/.gvimrc
 " RbでNeoBundleの編集と反映
 command! -bang Rb :Unite neobundle/install:<bang>
 
-" jsonデコード(仮)
-command! JsonReformat :r!php -r 'print_r(json_decode(file_get_contents("%",true)));'
-
 " 一時ファイル
 command! -nargs=1 -complete=filetype Tmp edit ~/.vim_tmp/tmp.<args>
 command! -nargs=1 -complete=filetype Temp edit ~/.vim_tmp/tmp.<args>
@@ -1479,7 +1512,7 @@ command! -nargs=1 Encode :e ++enc=<args>
 
 " TODOファイル
 command! Todo edit ~/Dropbox/Memo/todo.txt
-
+" }}}
 " command! DeleteTrail"{{{
 command! -bar DeleteTrail call s:deletetrail()
 function! s:deletetrail()
@@ -1487,20 +1520,17 @@ function! s:deletetrail()
   %s/\s\+$//e
   call setpos('.', save_cursor)
 endfunction"}}}
-
 " command! AllMaps {{{
 command!
             \   -nargs=* -complete=mapping
             \   AllMaps
             \   map <args> | map! <args> | lmap <args>
 " }}}
-
 " 連番 {{{
 nnoremap <silent> co :ContinuousNumber <C-a><CR>
 vnoremap <silent> co :ContinuousNumber <C-a><CR>
 command! -count -nargs=1 ContinuousNumber let c = col('.')|for n in range(1, <count>?<count>-line('.'):1)|exec 'normal! j' . n . <q-args>|call cursor('.', c)|endfor
 " }}}
-
 " sticky shift {{{
 
 inoremap <expr> ;  <SID>sticky_func()
@@ -1531,88 +1561,9 @@ function! s:sticky_func()
 endfunction
 " }}}
 
-" ヤンクしたものをクリップボードにも
-set clipboard=unnamed
-
-" 折り畳み関連
-set foldmethod=marker
-
-" iskeyword変更
-au FileType php setlocal iskeyword+=$
-
-" ファイルタイプ
-au BufNewFile,BufRead *.scala set filetype=scala
-au BufNewFile,BufRead *.js set filetype=javascript
-au BufNewFile,BufRead *.js.shd set filetype=coffee
-au BufNewFile,BufRead *.coffee set filetype=coffee
-au BufNewFile,BufRead *.html set filetype=html
-au BufNewFile,BufRead *.as set filetype=actionscript
-au BufNewFile,BufRead *.txt set filetype=markdown
-au BufNewFile,BufRead */doc/*.txt set filetype=help
-
-autocmd FileType php :set dictionary+=~/.vim/dict/php.dict
-autocmd FileType scala :set dictionary+=~/.vim/dict/scala.dict
-set complete+=k
-
-" 改行文字などの表示
-set list
-set listchars=tab:>-,eol:↴,trail:-,nbsp:%,extends:>,precedes:<
-
-
-" 前回終了したカーソル行に移動
-autocmd BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$") | exe "normal g`\"" | endif
-
-" カレントウィンドウにのみ相対行を表示
-augroup cch
-    autocmd! cch
-    autocmd WinLeave * set norelativenumber
-    autocmd WinEnter,BufRead * set relativenumber
-augroup END
-
-" 必要なときのみ、カーソル行をハイライト
-" http://d.hatena.ne.jp/thinca/20090530/1243615055
-augroup vimrc-auto-cursorline
-    autocmd!
-    autocmd CursorMoved,CursorMovedI * call Auto_cursorline('CursorMoved')
-    autocmd CursorHold,CursorHoldI * call Auto_cursorline('CursorHold')
-    autocmd WinEnter * call Auto_cursorline('WinEnter')
-    autocmd WinLeave * call Auto_cursorline('WinLeave')
-
-    let g:cursorline_lock = 0
-    function! Auto_cursorline(event)
-        if a:event ==# 'WinEnter'
-            setlocal cursorline
-            setlocal cursorcolumn
-            let g:cursorline_lock = 2
-        elseif a:event ==# 'WinLeave'
-            setlocal nocursorline
-            setlocal nocursorcolumn
-        elseif a:event ==# 'CursorMoved'
-            if g:cursorline_lock
-                if 1 < g:cursorline_lock
-                    let g:cursorline_lock = 1
-                else
-                    setlocal nocursorline
-                    setlocal nocursorcolumn
-                    let g:cursorline_lock = 0
-                endif
-            endif
-        elseif a:event ==# 'CursorHold'
-            setlocal cursorline
-            setlocal cursorcolumn
-            let g:cursorline_lock = 1
-        endif
-    endfunction
-augroup END
-
 " last proc {{{
-
 if has("gui_running")
     " gvimrcも読み込む
     source ~/dotfiles/.gvimrc
-else
-    " CUI版Vim用のコード
-    set background=dark
-    colorscheme molokai
 endif
 " }}}
