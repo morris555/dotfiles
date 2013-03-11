@@ -435,20 +435,23 @@ set hlsearch
 " ヤンクしたものをクリップボードにも
 set clipboard=unnamed
 
+set nojoinspaces
+
 " 折り畳み関連
 set foldmethod=marker
 
 " 改行文字などの表示
 set list
 set listchars=tab:>-,eol:↴,trail:-,nbsp:%,extends:>,precedes:<
+set fillchars=vert:\ ,fold:\ ,diff:\ 
 
 " 改行時のコメントと、自動改行を無効化
-" TODO 確認
-set formatoptions-=tcro
-augroup vimrc_group_formatoptions
-	autocmd!
-	autocmd FileType * setlocal formatoptions-=tcro
-augroup END
+set formatoptions-=t
+set formatoptions-=c
+set formatoptions-=r
+set formatoptions-=o
+set formatoptions+=m
+set formatoptions+=M
 
 " 前回終了したカーソル行に移動
 autocmd BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$") | exe "normal g`\"" | endif
@@ -664,6 +667,9 @@ vnoremap * "zy:let @/ = @z<CR>n
 
 " ?では、lineソースを使った検索にする
 nnoremap ? :<C-u>Unite line -buffer-name=search -start-insert<CR>
+
+" 入力中に<C-u>で大文字に
+inoremap <silent> <C-u> <Esc>gUiwea
 
 " folding
 
@@ -1119,8 +1125,12 @@ function! s:vimshell_my_settings()
     call unite#custom_default_action("vimshell/history", "insert")
     call unite#custom_default_action("vimshell/external_history", "insert")
 endfunction
-
+" }}}
+" vimfiler {{{
 noremap <Leader>f :<C-u>VimFilerTab<CR>
+
+let g:vimfiler_as_default_explorer = 1    " explorerとして使用する
+let g:vimfiler_safe_mode_by_default = 0   " セーフモードをオフにする
 
 au FileType vimfiler call s:vimfiler_my_settings()
 function! s:vimfiler_my_settings()
@@ -1129,7 +1139,6 @@ function! s:vimfiler_my_settings()
     nmap <buffer> <space><space> <Plug>(vimfiler_toggle_mark_current_line)
     nnoremap <buffer> <Space> <Space>
 endfunction
-
 " }}}
 " clever-f {{{
 let g:clever_f_across_no_line = 0
