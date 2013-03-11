@@ -531,6 +531,8 @@ function! InitPhp()
     " 「$hoge」をまとめてwordとする
     setlocal iskeyword+=$
 
+    setlocal commentstring=//%s
+
     " {{で<?php }}で?>
     inoremap <buffer><expr> { getline('.')[col('.') - 2] ==# '{' ? "\<BS><?php" : '{'
     inoremap <buffer><expr> } getline('.')[col('.') - 2] ==# '}' ? "\<BS>?>" : '}'
@@ -702,7 +704,11 @@ nnoremap <silent> <Space>tu :<C-u>!ctags -R<CR>
 autocmd FileType php nnoremap <silent><buffer> <Space>tu :<C-u>!ctags --languages=PHP --sort=foldcase -R --php-kinds=cfd<CR>
 autocmd FileType coffee nnoremap <silent><buffer> <Space>tu :<C-u>!ctags --languages=coffee -R<CR>
 
-autocmd FileType php setlocal commentstring=//%s
+" <C-l>でEscする
+vnoremap <C-l> <Esc>
+inoremap <C-l> <Esc>
+cnoremap <C-l> <C-c>
+nnoremap <C-l> <Esc>
 
 " operator object
 
@@ -949,56 +955,25 @@ autocmd CursorMoved * set tabline=%!MakeTabLine()
 " ==============
 " SECTION: plugin
 " ==============
-" {{{
-
-" TODO プラグイン毎に折り畳みで丁度よい
-
+" textobj_parameter {{{
 let g:textobj_parameter_map_key = "c"
-
-" ofaddinbox(omniforcus)
+" }}}
+" ofaddinbox(omniforcus) {{{
 nmap <silent> <Leader>O <Plug>SingleTaskToOmniFocus
 vmap <silent> <Leader>O <Plug>MultiTaskToOmniFocus
 " vmap <silent> <Leader>OT <Plug>SingleNoteTaskToOmniFocus
-
-" sonictemplate
+" }}}
+" sonictemplate {{{
 let g:sonictemplate_vim_template_dir = $HOME. '/Dropbox/Vim/sonic_template'
 imap <C-t> <space><bs><c-o>:call sonictemplate#select('i')<cr>
-
+" }}}
+" rooter.vim {{{
 " .gitなどのディレクトリをカレントディレクトリに
 autocmd BufEnter * :Rooter
 let g:rooter_use_lcd = 1
 let g:rooter_patterns = ['.git/', '.git']
-
-
-" zencoding
-let g:user_zen_settings = {
-           \ 'indentation' : '    ',
-            \ 'lang' : 'ja',
-            \ 'html' : {
-            \   'filters' : 'html',
-            \   'indentation' : ' '
-            \ },
-            \ 'php' : {
-            \   'extends' : 'html',
-            \   'filters' : 'html,c',
-            \   'snippets' : {
-            \     'ar' : "array()",
-            \   },
-            \ },
-            \ 'css' : {
-            \   'filters' : 'fc',
-            \ },
-            \ 'javascript' : {
-            \   'snippets' : {
-            \     'jq' : "$(function() {\n\t${cursor}${child}\n});",
-            \     'jq:each' : "$.each(arr, function(index, item)\n\t${child}\n});",
-            \     'fn' : "(function() {\n\t${cursor}\n})();",
-            \     'tm' : "setTimeout(function() {\n\t${cursor}\n}, 100);",
-            \   },
-            \ },
-            \}
-
-" eskk
+" }}}
+" eskk {{{
 if has('vim_starting')
     let g:eskk#large_dictionary = '~/.vim/skk/skk-jisyo.l'
     let g:eskk#dictionary = '~/Dropbox/SKK/eskk/skk-jisyo.u'
@@ -1007,7 +982,6 @@ if has('vim_starting')
     let g:eskk#show_candidates_count = 5
     let g:eskk#auto_henkan_at_okuri_match = 3
     let g:eskk#fix_extra_okuri = 1
-    " imap <C-j> <Plug>(eskk:enable)
     "
     " <C-j><C-k>でいきなり日本語入力からのインサート
     nmap <C-j> i<C-j>
@@ -1032,29 +1006,24 @@ if has('vim_starting')
         call eskk#register_mode_table('hira', t)
     endfunction
 endif
-
-" lingr
-let g:lingr_vim_user = 'tek_koc'
-
-" poslist.vim
+" }}}
+" poslist.vim {{{
 map <c-o> <Plug>(poslist-prev-pos)
 map <c-i> <Plug>(poslist-next-pos)
 let g:poslist_histsize = 10000
-
-" quickhl
+" }}}
+" quickhl {{{
 nmap <Leader>h <Plug>(quickhl-toggle)
 nmap # <Plug>(quickhl-match)
 nmap <Leader>Hr <Plug>(quickhl-reset)
 xmap <Leader>h <Plug>(quickhl-toggle)
 xmap # <Plug>(quickhl-match)
 xmap <Leader>Hr <Plug>(quickhl-reset)
-
+" }}}
+" quicklearn {{{
 nnoremap <Leader>R :<C-u>Unite quicklearn -immediately<Cr>
-
-" quicklint
-nnoremap <Leader>l :<C-u>QuickRun -exec '%c -l %s'<CR>
-
-" quickrun
+" }}}
+" quickrun {{{
 let g:quickrun_config = {}
 let g:quickrun_config.markdown = {
       \ 'outputter' : 'null',
@@ -1063,28 +1032,20 @@ let g:quickrun_config.markdown = {
       \ 'args'      : 'Marked',
       \ 'exec'      : '%c %o %a %s',
       \ }
-
-" arpeggio(同時押し設定)
+nnoremap <Leader>l :<C-u>QuickRun -exec '%c -l %s'<CR>
+" }}}
+" arpeggio {{{
 let g:arpeggio_timeoutlen = 70
 call arpeggio#load()
-
-" <C-l>でEscする
-vnoremap <C-l> <Esc>
-inoremap <C-l> <Esc>
-cnoremap <C-l> <C-c>
-nnoremap <C-l> <Esc>
-
-" Alignta(仮設定)
-vnoremap <Leader>a :Alignta 
-
+" }}}
+" ambicmd {{{
 " コマンド展開
 if s:has_plugin('ambicmd')
     cnoremap <expr> <Space> ambicmd#expand("\<Space>")
     cnoremap <expr> <CR>    ambicmd#expand("\<CR>")
 endif
-
-" vim-ref
-
+" }}}
+" vim-ref {{{
 let g:ref_source_webdict_sites = {
 \   'alc': {
 \     'url': 'http://eow.alc.co.jp/search?q=%s',
@@ -1108,8 +1069,8 @@ command! -nargs=1 Wiki :Ref wikipedia <args>
 
 " vimref用のphpmanualのパス
 let g:ref_phpmanual_path = $HOME. '/dotfiles/.vim/phpmanual/'
-
-" smartword.vim
+" }}}
+" smartword.vim {{{
 nmap w  <Plug>(smartword-w)
 nmap b  <Plug>(smartword-b)
 nmap ge  <Plug>(smartword-ge)
@@ -1120,20 +1081,17 @@ xmap e  <Plug>(smartword-e)
 omap <Leader>w  <Plug>(smartword-w)
 omap <Leader>b  <Plug>(smartword-b)
 omap <Leader>ge  <Plug>(smartword-ge)
-
-" visualmark設定
+" }}}
+" visualmark {{{
 map <silent> <Leader>vs <Plug>Vm_toggle_sign
 map <silent> <Leader>vv <Plug>Vm_toggle_sign
 map <silent> <Leader>vj <Plug>Vm_goto_next_sign
 map <silent> <Leader>vk <Plug>Vm_goto_prev_sign
-
-" easymotion
+" }}}
+" easymotion {{{
 let g:EasyMotion_leader_key='<Leader>m'
-
-" ホームポジションに近いキーを使う
-let g:EasyMotion_keys = 'hjklasdfgyuiopqwertnmzxcvbHJKLASDFGYUIOPQWERTNMZXCVB'
-
-" vimshell設定
+" }}}
+" vimshell設定 {{{
 
 let g:vimshell_max_command_history = 100000000			" ヒストリの保存数
 let g:vimshell_user_prompt = 'fnamemodify(getcwd(), ":~")'
@@ -1142,11 +1100,6 @@ noremap <Leader>sv :<C-u>VimShell -split<CR>
 noremap <Leader>ss :<C-u>VimShell -popup<CR>
 noremap <Leader>st :<C-u>VimShellTab<CR>
 noremap <Leader>s <Nop>
-
-noremap <Leader>f :<C-u>VimFilerTab<CR>
-
-" clever-f
-let g:clever_f_across_no_line = 0
 
 command! Ghci VimShellInteractive ghci
 command! Php VimShellInteractive php -a
@@ -1167,6 +1120,8 @@ function! s:vimshell_my_settings()
     call unite#custom_default_action("vimshell/external_history", "insert")
 endfunction
 
+noremap <Leader>f :<C-u>VimFilerTab<CR>
+
 au FileType vimfiler call s:vimfiler_my_settings()
 function! s:vimfiler_my_settings()
     " Overwrite settings.
@@ -1175,7 +1130,11 @@ function! s:vimfiler_my_settings()
     nnoremap <buffer> <Space> <Space>
 endfunction
 
-" textmanip
+" }}}
+" clever-f {{{
+let g:clever_f_across_no_line = 0
+" }}}
+" textmanip {{{
 " 選択したテキストの移動
 vmap <C-j> <Plug>(textmanip-move-down)
 vmap <C-k> <Plug>(textmanip-move-up)
@@ -1183,8 +1142,8 @@ vmap <C-k> <Plug>(textmanip-move-up)
 " 行の複製
 vmap <C-d> <Plug>(textmanip-duplicate-down)
 nmap <C-d> <Plug>(textmanip-duplicate-down)
-
-" open-browser.vim
+" }}}
+" open-browser.vim {{{
 nmap <Leader>o <Plug>(openbrowser-smart-search)
 vmap <Leader>o <Plug>(openbrowser-smart-search)
 command! -nargs=1 Google :OpenBrowserSearch <args>
@@ -1192,14 +1151,15 @@ let g:openbrowser_search_engines = {
             \   'phpmanual_all': 'http://jp.php.net/results.php?q={query}&l=ja&p=all',
             \   'phpmanual_func': 'http://jp.php.net/manual-lookup.php?pattern={query}&scope=quickref',
             \}
-
+" }}}
+" w3m {{{
 let g:w3m#search_engine = 
             \ 'https://www.google.co.jp/search?aq=f&ix=seb&sourceid=chrome&ie=' . &encoding . '&q='
 
 autocmd FileType w3m nnoremap <silent><buffer> r :<C-u>W3mReload<CR>
 autocmd FileType w3m nnoremap <silent><buffer> q :<C-u>W3mClose<CR>
-
-" syntastic
+" }}}
+" syntastic {{{
 let g:syntastic_mode_map = {
             \ 'mode': 'active',
             \ 'active_filetypes': ['php', 'coffeescript', 'sh', 'vim'],
@@ -1208,9 +1168,8 @@ let g:syntastic_mode_map = {
 let g:syntastic_auto_loc_list=1
 nnoremap <silent> <Leader>l :<C-u>SyntasticCheck<CR>
 autocmd FileType haskell nnoremap <silent><buffer> <Leader>l :<C-u>GhcModCheckAndLintAsync<CR>
-
-" surround.vim
-
+" }}}
+" surround.vim {{{
 let g:surround_no_mappings = 1
 let g:surround_108 = "\\begin{\1environment: \1}\r\\end{\1\1}"
 let g:surround_custom_mapping = {}
@@ -1261,12 +1220,12 @@ xmap gS  <Plug>VgSurround
 nmap <C-s> i<Plug>Isurround
 imap <C-s> <Plug>Isurround
 xmap <C-s> <Plug>VSurround
-
-" インデントの深さに色を付ける
+" }}}
+" indent_guides {{{
 let g:indent_guides_color_change_percent=10
 let g:indent_guides_guide_size=1
-
-" unite
+" }}}
+" unite {{{
 
 " 入力モードで開始する
 let g:unite_enable_start_insert=0
@@ -1362,8 +1321,8 @@ function! s:unite_my_settings()
     nnoremap <buffer> p p
     nnoremap <buffer> <Space> <Space>
 endfunction
-
-" neocomplcache
+" }}}
+" neocomplcache {{{
 
 " haskell補完用に、cabalのパスを追加
 let $PATH=$PATH . ":" . $HOME . "/.cabal/bin"
