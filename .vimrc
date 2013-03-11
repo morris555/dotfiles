@@ -666,7 +666,10 @@ noremap ZQ <Nop>
 vnoremap * "zy:let @/ = @z<CR>n
 
 " ?では、lineソースを使った検索にする
-nnoremap ? :<C-u>Unite line -buffer-name=search -start-insert<CR>
+nnoremap <silent> ? :<C-u>Unite line -buffer-name=search -start-insert<CR>
+
+" #では、カーソル下の文字をlineソースを使って検索する
+nnoremap <silent> # :<C-U>UniteWithCursorWord -buffer-name=search line<CR>
 
 " 入力中に<C-u>で大文字に
 inoremap <silent> <C-u> <Esc>gUiwea
@@ -1020,10 +1023,8 @@ let g:poslist_histsize = 10000
 " }}}
 " quickhl {{{
 nmap <Leader>h <Plug>(quickhl-toggle)
-nmap # <Plug>(quickhl-match)
 nmap <Leader>Hr <Plug>(quickhl-reset)
 xmap <Leader>h <Plug>(quickhl-toggle)
-xmap # <Plug>(quickhl-match)
 xmap <Leader>Hr <Plug>(quickhl-reset)
 " }}}
 " quicklearn {{{
