@@ -223,6 +223,9 @@ NeoBundle 'git://github.com/mattn/learn-vimscript.git'
 " statusline
 NeoBundle 'git://github.com/Lokaltog/vim-powerline.git'
 
+" unicodeエスケープシーケンス
+NeoBundle "osyo-manga/vim-hideout"
+
 " Game
 NeoBundle 'mattn/invader-vim'
 NeoBundle 'mfumi/snake.vim'
@@ -1261,6 +1264,8 @@ call unite#custom_source('grep', 'filters', ['matcher_regexp', 'sorter_default',
 if has('migemo')
     call unite#custom_source('line,advent_calendar', 'filters', ['matcher_migemo', 'sorter_default', 'converter_default'])
 endif
+
+nnoremap <silent> <Leader>u<space> :<C-u>UniteResume<CR>
 
 " ファイル一覧
 nnoremap <silent> <Leader>uf :<C-u>Unite file_rec/async -profile-name=file -start-insert<CR>
