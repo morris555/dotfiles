@@ -1,0 +1,44 @@
+" [~/.vimperatorrc]
+" source! $HOME/dotfiles/.vimperatorrc
+
+set titlestring=Firefox
+
+" 詳細表示レベル？ 内容確認中、左下のステータス状況か？
+" →「:javascript! 」で表示される内容レベル
+set verbose=9
+
+set hintchars="HJKLASDFGYUIOPQWERTNMZXCVB"
+
+" ビープ音を消す
+set nobeep
+set visualbell
+highlight Bell display:none
+
+" 選択文字列ののコピーを <C-c> に割り当て
+map <C-c> :echo Yank!<CR>Y
+
+" j/k でのスクロール幅を増加
+map j 5<C-e>
+map k 5<C-y>
+map J 20<C-e>
+map K 20<C-y>
+
+" Backspace に戻るを割り当て
+map <BS> <A-Left>
+
+" H/L や ← → でタブ移動
+map sn gT
+map sp gt
+
+" Shift + ← → で現在のタブの位置変更
+map <S-Right> :tabmove! +1<CR>
+map <S-Left> :tabmove! -1<CR>
+
+" 読み込んだ事を出力
+echo .vimperatorrc sourced
+
+" Migemoなおまじない
+" set hintmatching=custom
+
+"ldrize_cooperation.jsのおまじない
+" let g:ldrc_intelligence_bind = "true"

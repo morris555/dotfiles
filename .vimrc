@@ -445,7 +445,9 @@ set foldmethod=marker
 
 " 改行文字などの表示
 set list
-set listchars=tab:>-,eol:↴,trail:-,nbsp:%,extends:>,precedes:<
+" set listchars=tab:>-,eol:↴,trail:-,nbsp:%,extends:>,precedes:<
+set listchars=tab:▸\ ,eol:↴,trail:-,nbsp:%,extends:>,precedes:<
+" set listchars=tab:▸\,eol:↴,trail:-,extends:»,precedes:«,nbsp:%
 set fillchars=vert:\ ,fold:\ ,diff:\ 
 
 " 改行時のコメントと、自動改行を無効化
@@ -515,6 +517,7 @@ au BufNewFile,BufRead *.html set filetype=html
 au BufNewFile,BufRead *.as set filetype=actionscript
 au BufNewFile,BufRead *.txt set filetype=markdown
 au BufNewFile,BufRead */doc/*.txt set filetype=help
+au BufNewFile,BufRead *.vimperatorrc set filetype=vimperator
 
 autocmd FileType php :set dictionary+=~/.vim/dict/php.dict
 autocmd FileType scala :set dictionary+=~/.vim/dict/scala.dict
@@ -585,6 +588,20 @@ function! InitVim()
     IndentGuidesEnable
 endfunction
 autocmd BufEnter * if &filetype == "vim" | call InitVim() | endif
+" }}}
+" vimp {{{
+function! InitVimp()
+    " vimperatorrcはタブ幅4でスペースを使う
+    setlocal shiftwidth=4
+    setlocal tabstop=4
+    setlocal softtabstop=4
+    setlocal expandtab
+
+    setlocal commentstring=\"%s
+
+    IndentGuidesEnable
+endfunction
+autocmd BufEnter * if &filetype == "vimperator" | call InitVimp() | endif
 " }}}
 " haskell {{{
 function! InitHaskell()
