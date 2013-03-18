@@ -26,9 +26,11 @@ map K 20<C-y>
 " Backspace に戻るを割り当て
 map <BS> <A-Left>
 
-" H/L や ← → でタブ移動
-map sn gT
-map sp gt
+" タブ移動、操作
+map sn gt
+map sp gT
+map st :tabnew<CR>
+map sq :q<CR>
 
 " Shift + ← → で現在のタブの位置変更
 map <S-Right> :tabmove! +1<CR>
@@ -42,3 +44,6 @@ echo .vimperatorrc sourced
 
 "ldrize_cooperation.jsのおまじない
 " let g:ldrc_intelligence_bind = "true"
+
+"ヒントのスタイルを指定
+" hi Hint z-index:5000; font-family:Menlo; font-size:14px; color:white; background-color:red; border-color:ButtonShadow; border-width:0px; border-style:solid; padding:0px 2px 0px 2px; position:absolute;
