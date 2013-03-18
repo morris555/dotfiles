@@ -35,11 +35,28 @@ map sq :q<CR>
 map <S-Right> :tabmove! +1<CR>
 map <S-Left> :tabmove! -1<CR>
 
+" :と;を入れ替える
+noremap ; :
+noremap : ;
+
+" 入力欄にフォーカスを奪われるのを防ぐ？
+set focuscontent
+
+" .vimperatorrcを再読み込み(:restartしなくてもいい)
+map <silent> <Leader>R :mapc<CR>:cmapc<CR>:imapc<CR>:so ~/.vimperatorrc<CR>
+
+" 補完リストの選択をC-n,C-pで
+cmap <C-n> <TAB>
+cmap <C-p> <S-TAB>
+
+" ブックマークや履歴を補完候補に
+set complete=sl
+
 " " Migemoなおまじない
 " " set hintmatching=custom
 "
 " "ldrize_cooperation.jsのおまじない
 " " let g:ldrc_intelligence_bind = "true"
 "
-" "ヒントのスタイルを指定
-" " hi Hint z-index:5000; font-family:Menlo; font-size:14px; color:white; background-color:red; border-color:ButtonShadow; border-width:0px; border-style:solid; padding:0px 2px 0px 2px; position:absolute;
+" ヒントのスタイルを指定
+hi Hint z-index:5000; font-family:Menlo; font-size:14px; color:white; background-color:red; border-color:ButtonShadow; border-width:0px; border-style:solid; padding:0px 2px 0px 2px; position:absolute;
