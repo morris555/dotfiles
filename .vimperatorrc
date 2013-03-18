@@ -10,7 +10,6 @@ set verbose=9
 set hintchars="HJKLASDFGYUIOPQWERTNMZXCVB"
 
 " ビープ音を消す
-set nobeep
 set visualbell
 highlight Bell display:none
 
@@ -36,14 +35,11 @@ map sq :q<CR>
 map <S-Right> :tabmove! +1<CR>
 map <S-Left> :tabmove! -1<CR>
 
-" 読み込んだ事を出力
-echo .vimperatorrc sourced
-
-" Migemoなおまじない
-" set hintmatching=custom
-
-"ldrize_cooperation.jsのおまじない
-" let g:ldrc_intelligence_bind = "true"
-
-"ヒントのスタイルを指定
-" hi Hint z-index:5000; font-family:Menlo; font-size:14px; color:white; background-color:red; border-color:ButtonShadow; border-width:0px; border-style:solid; padding:0px 2px 0px 2px; position:absolute;
+" " Migemoなおまじない
+" " set hintmatching=custom
+"
+" "ldrize_cooperation.jsのおまじない
+" " let g:ldrc_intelligence_bind = "true"
+"
+" "ヒントのスタイルを指定
+" " hi Hint z-index:5000; font-family:Menlo; font-size:14px; color:white; background-color:red; border-color:ButtonShadow; border-width:0px; border-style:solid; padding:0px 2px 0px 2px; position:absolute;
