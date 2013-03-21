@@ -85,6 +85,9 @@ NeoBundle 'thinca/vim-ambicmd'
 " coffeescriptなどに使う
 NeoBundle 'ujihisa/shadow.vim'
 
+" thumbnail.vim
+NeoBundle 'https://github.com/itchyny/thumbnail.vim.git'
+
 " gitディレクトリのあるところをカレントディレクトリに
 NeoBundle 'git://github.com/airblade/vim-rooter.git'
 
@@ -1551,7 +1554,6 @@ function! s:sticky_func()
     endif
 endfunction
 " }}}
-
 " last proc {{{
 if has("gui_running")
     " gvimrcも読み込む
