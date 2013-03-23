@@ -67,9 +67,6 @@ NeoBundle 'git://github.com/mattn/sonictemplate-vim.git'
 NeoBundle 'Shougo/neocomplcache'
 NeoBundle 'git://github.com/ujihisa/neco-look.git'
 
-" snippet
-NeoBundle 'git://github.com/Shougo/neosnippet.git'
-
 " easymotion
 NeoBundle 'Lokaltog/vim-easymotion'
 
