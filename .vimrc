@@ -408,7 +408,9 @@ set noshowmatch
 set hidden
 
 " MacでOptionキーをMetaキーに
-set macmeta
+if s:isgui
+    set macmeta
+endif
 
 " ビープを消す
 set visualbell t_vb=
@@ -1551,9 +1553,23 @@ function! s:sticky_func()
     endif
 endfunction
 " }}}
-" last proc {{{
+" ==========
+" SECTION: gui
+" ==========
+" {{{
 if has("gui_running")
     " gvimrcも読み込む
     source ~/dotfiles/.gvimrc
+else
+    colorscheme hybrid
+    set background=dark
+
+    " visualmark
+    if &bg == "dark"
+        " highlight SignColor ctermfg=white ctermbg=blue guibg=#073672
+        highlight SignColor ctermfg=white ctermbg=darkblue guibg=darkblue
+    else
+        highlight SignColor ctermbg=grey ctermfg=RoyalBlue3 guibg=grey guifg=RoyalBlue3
+    endif
 endif
 " }}}
