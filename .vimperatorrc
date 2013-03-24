@@ -13,8 +13,18 @@ set hintchars="HJKLASDFGYUIOPQWERTNMZXCVB"
 set visualbell
 highlight Bell display:none
 
+"アドオン/ナビゲーションを非表示
+set toolbars=noaddons
+
 " 選択文字列ののコピーを <C-c> に割り当て
 map <C-c> :echo Yank!<CR>Y
+
+"リンク関係はf(find)
+"新しいタブをデフォルトに
+nnoremap f F
+nnoremap F f
+"連続オープン
+nnoremap <C-f> ;F
 
 " j/k でのスクロール幅を増加
 noremap j 5<C-e>
@@ -29,6 +39,7 @@ noremap <BS> <A-Left>
 noremap sn gt
 noremap sp gT
 noremap st :tabnew<CR>
+noremap sT :tabduplicate<CR>
 noremap sq :quit<CR>
 
 " Shift + ← → で現在のタブの位置変更
@@ -60,3 +71,19 @@ set complete=sl
 "
 " ヒントのスタイルを指定
 hi Hint z-index:5000; font-family:Menlo; font-size:14px; color:white; background-color:red; border-color:ButtonShadow; border-width:0px; border-style:solid; padding:0px 2px 0px 2px; position:absolute;
+
+"======================================================================
+""コマンド
+"サイト内検索 (:ss)
+"参考: http://vimperator.g.hatena.ne.jp/snaka72/20090102/1230901273
+javascript <<EOM
+commands.addUserCommand(
+  ['sitesearch','ss'],'Search in this site',
+  function(word) {
+	liberator.open("http://www.google.co.jp/search?hl=ja&q="+encodeURIComponent(word)+"+site%3A"+window.content.location.hostname);
+  }
+);
+EOM
+
+
+echo "vimperator: Welcome back."
