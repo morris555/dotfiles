@@ -913,6 +913,7 @@ endfunction
 
 nnoremap <silent> <Space>on :<C-u>call <SID>toggle_nu()<CR>
 nnoremap <silent> <Space>ol :<C-u>call <SID>toggle_option('cursorline', 'cursorcolumn')<CR>
+nnoremap <silent> <Space>or :<C-u>call <SID>toggle_option('rightlefto)<CR>
 nnoremap <silent> <Space>op :<C-u>pastetoggle<CR>
 nnoremap <silent> <Space>ou :<C-u>GundoToggle<CR>
 nnoremap <silent> <Space>os :<C-u>SyntasticToggleMode<CR>
@@ -1308,9 +1309,10 @@ nnoremap <C-p> :<C-u>Unite history/yank<CR>
 " source(sourceが増えてきたので、sourceのsourceを経由する方針にしてみる)
 nnoremap <Leader>uu :<C-u>Unite source<CR>
 " giti
-nnoremap <Leader>uvs :<C-u>Unite giti/status <CR>
-nnoremap <Leader>uvl :<C-u>Unite giti/log <CR>
-nnoremap <Leader>uvb :<C-u>Unite giti/branch <CR>
+nnoremap <Leader>uv :<C-u>Unite giti <CR>
+" nnoremap <Leader>uvs :<C-u>Unite giti/status <CR>
+" nnoremap <Leader>uvl :<C-u>Unite giti/log <CR>
+" nnoremap <Leader>uvb :<C-u>Unite giti/branch <CR>
 
 " カラースキーム用コマンド
 command! UniteColorScheme :Unite colorscheme -auto-preview
