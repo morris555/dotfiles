@@ -153,6 +153,9 @@ NeoBundle 't9md/vim-textmanip'
 " wやeを賢く
 NeoBundle 'kana/vim-smartword'
 
+" iTunes
+NeoBundle 'ryutorion/vim-itunes'
+
 " 複数ハイライト
 NeoBundle 't9md/vim-quickhl'
 
@@ -1028,7 +1031,7 @@ if has('vim_starting')
         call t.add_map('h-', '-')
         call t.add_map('h!', '!')
         call t.add_map('h/', '/')
-        call t.add_map('h ', '　')
+        call t.add_map('h\ ', '　')
         call t.add_map('h:', ':')
         call t.add_map('h;', ';')
         call t.add_map('h[', '[')
@@ -1218,7 +1221,6 @@ let g:surround_custom_mapping.php= {
             \'f': "\1name: \r..*\r&\1(\r)",
             \'F': "fb('\1name: \1');\nfb(\r);",
             \'a': "['\r']",
-            \'A': "array(\r);",
             \'v': "v(\r)",
             \'s': "self::\r",
             \'p': "<?php \r ?>"

@@ -89,40 +89,40 @@ key_binds['return:'+pre_fullscreen] = slate.operation('corner', {
 });
 
 var pre_half = 'alt';
-key_binds['h:'+pre_half] = slate.operation("push", {
+key_binds['left:'+pre_half] = slate.operation("push", {
   "direction" : "left",
   "style" : "bar-resize:screenSizeX/2"
 });
-key_binds['l:'+pre_half] = slate.operation("push", {
+key_binds['right:'+pre_half] = slate.operation("push", {
   "direction" : "right",
   "style" : "bar-resize:screenSizeX/2"
 });
-key_binds['k:'+pre_half] = slate.operation("push", {
+key_binds['up:'+pre_half] = slate.operation("push", {
   "direction" : "up",
   "style" : "bar-resize:screenSizeY/2"
 });
-key_binds['j:'+pre_half] = slate.operation("push", {
+key_binds['down:'+pre_half] = slate.operation("push", {
   "direction" : "down",
   "style" : "bar-resize:screenSizeY/2"
 });
 
 var pre_quarter = 'alt,shift';
-key_binds['h:'+pre_quarter] = slate.operation("corner", {
+key_binds['left:'+pre_quarter] = slate.operation("corner", {
     "direction" : "top-left",
     'width' : 'screenSizeX/2',
     'height' : 'screenSizeY/2'
 });
-key_binds['l:'+pre_quarter] = slate.operation("corner", {
+key_binds['right:'+pre_quarter] = slate.operation("corner", {
     "direction" : "bottom-right",
     'width' : 'screenSizeX/2',
     'height' : 'screenSizeY/2'
 });
-key_binds['k:'+pre_quarter] = slate.operation("corner", {
+key_binds['up:'+pre_quarter] = slate.operation("corner", {
     "direction" : "top-right",
     'width' : 'screenSizeX/2',
     'height' : 'screenSizeY/2'
 });
-key_binds['j:'+pre_quarter] = slate.operation("corner", {
+key_binds['down:'+pre_quarter] = slate.operation("corner", {
     "direction" : "bottom-left",
     'width' : 'screenSizeX/2',
     'height' : 'screenSizeY/2'
@@ -131,12 +131,10 @@ key_binds['j:'+pre_quarter] = slate.operation("corner", {
 // Undo
 // key_binds['`:alt'] = slate.operation('undo');
 
-// // Forcus
-// key_binds['1:alt'] = focus('Google Chrome');
-// key_binds['2:alt'] = focus('iTerm');
-// key_binds['3:alt'] = focus('Emacs');
-// key_binds['4:alt'] = focus('Skype');
-// key_binds['5:alt'] = focus('Things');
+// Forcus
+key_binds['j:alt'] = focus('Firefox');
+key_binds['k:alt'] = focus('MacVim');
+key_binds['l:alt'] = focus('ターミナル');
 
 key_binds['space:alt'] = slate.operation("hint", {
   "characters" : "ASDFGHJKLQWERTYUIOPCVBN"
