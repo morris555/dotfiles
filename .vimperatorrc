@@ -19,10 +19,6 @@ set toolbars=noaddons
 " 選択文字列ののコピーを <C-c> に割り当て
 map <C-c> :echo Yank!<CR>Y
 
-"リンク関係はf(find)
-"新しいタブをデフォルトに
-nnoremap f F
-nnoremap F f
 "連続オープン
 nnoremap <C-f> ;F
 
@@ -49,6 +45,11 @@ noremap <S-Left> :tabmove! -1<CR>
 " :と;を入れ替える
 noremap ; :
 noremap : ;
+
+noremap , <Leader>
+
+" firebugの切り替え
+noremap <Leader>f <F12>
 
 " 入力欄にフォーカスを奪われるのを防ぐ？
 set focuscontent
