@@ -70,9 +70,6 @@ NeoBundle 'git://github.com/ujihisa/neco-look.git'
 " easymotion
 NeoBundle 'Lokaltog/vim-easymotion'
 
-" clever-f
-NeoBundle 'git://github.com/rhysd/clever-f.vim.git'
-
 " ブラウザで開く
 NeoBundle 'tyru/open-browser.vim'
 
@@ -81,9 +78,6 @@ NeoBundle 'thinca/vim-ambicmd'
 
 " coffeescriptなどに使う
 NeoBundle 'ujihisa/shadow.vim'
-
-" thumbnail.vim
-NeoBundle 'https://github.com/itchyny/thumbnail.vim.git'
 
 " gitディレクトリのあるところをカレントディレクトリに
 NeoBundle 'git://github.com/airblade/vim-rooter.git'
@@ -1166,9 +1160,6 @@ function! s:vimfiler_my_settings()
     nmap <buffer> <space><space> <Plug>(vimfiler_toggle_mark_current_line)
     nnoremap <buffer> <Space> <Space>
 endfunction
-" }}}
-" clever-f {{{
-let g:clever_f_across_no_line = 0
 " }}}
 " textmanip {{{
 " 選択したテキストの移動
