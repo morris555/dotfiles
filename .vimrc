@@ -8,6 +8,21 @@
 "
 " _/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
 
+"  TODO VACで指摘されたもの
+" NeoBudleを省略記法で統一
+" http://d.hatena.ne.jp/thinca/20101029/1288287636
+" http://d.hatena.ne.jp/thinca/20121202/1354379902
+" MapHTMLKeysをsmartinputかsmartchrで置き換え
+" eskkの必要プラグインは本体に内蔵されたからいらないはず
+" if has('gui_macvim')
+" 分割画面移動形マッピングにsilentいらない
+" L652のコメントを直す
+" fileencodingのデフォルトを指定
+" L461 augroup
+" L685 プラグインがある。vim-visualstar
+" :Unite file_mru -start-insert -input=!fugitive
+" 日付でソート http://ideone.com/Tvylar
+
 " ==============
 "  SECTION: Neoundle
 " ==============
@@ -385,9 +400,9 @@ set relativenumber
 
 set conceallevel=2
 
-" モードラインは一行
+" モードラインは三行
 set modeline
-set modelines=1
+set modelines=3
 
 " バックアップはとらない
 set nobackup
@@ -1190,7 +1205,7 @@ autocmd FileType w3m nnoremap <silent><buffer> q :<C-u>W3mClose<CR>
 let g:syntastic_mode_map = {
             \ 'mode': 'active',
             \ 'active_filetypes': ['php', 'coffeescript', 'sh', 'vim'],
-            \ 'passive_filetypes': ['html', 'haskell', 'python']
+            \ 'passive_filetypes': ['html', 'haskell', 'python', 'ruby']
             \}
 let g:syntastic_auto_loc_list=1
 nnoremap <silent> <Leader>l :<C-u>SyntasticCheck<CR>
