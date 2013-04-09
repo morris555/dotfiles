@@ -8,21 +8,20 @@
 "
 " _/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
 
+" ==============
+"  SECTION: TODO
+" ==============
 "  TODO VACで指摘されたもの
-" NeoBudleを省略記法で統一
 " http://d.hatena.ne.jp/thinca/20101029/1288287636
 " http://d.hatena.ne.jp/thinca/20121202/1354379902
 " MapHTMLKeysをsmartinputかsmartchrで置き換え
-" eskkの必要プラグインは本体に内蔵されたからいらないはず
 " if has('gui_macvim')
 " 分割画面移動形マッピングにsilentいらない
-" L652のコメントを直す
 " fileencodingのデフォルトを指定
 " L461 augroup
 " L685 プラグインがある。vim-visualstar
 " :Unite file_mru -start-insert -input=!fugitive
 " 日付でソート http://ideone.com/Tvylar
-
 " ==============
 "  SECTION: Neoundle
 " ==============
@@ -40,27 +39,27 @@ endif
 " plugin_list {{{
 " color-scheme
 NeoBundle 'altercation/vim-colors-solarized'
-NeoBundle 'w0ng/vim-hybrid.git'
-NeoBundle 'git://github.com/vol2223/vim-colorblind-colorscheme.git'
+NeoBundle 'w0ng/vim-hybrid'
+NeoBundle 'vol2223/vim-colorblind-colorscheme'
 
 " singleton
-NeoBundle 'git://github.com/thinca/vim-singleton.git'
+NeoBundle 'thinca/vim-singleton'
 
 " lib
 NeoBundle 'mattn/webapi-vim'
 NeoBundle 'thinca/vim-openbuf'
-NeoBundle 'git://github.com/basyura/twibill.vim.git'
-NeoBundle 'git://github.com/basyura/bitly.vim.git'
+NeoBundle 'basyura/twibill.vim'
+NeoBundle 'basyura/bitly.vim'
 
 " textobj-user
 NeoBundle 'kana/vim-textobj-user'
 NeoBundle 'kana/vim-textobj-entire'
 NeoBundle 'kana/vim-textobj-indent'
-NeoBundle 'git://github.com/thinca/vim-textobj-plugins.git'
-NeoBundle 'git://github.com/h1mesuke/textobj-wiw.git'
+NeoBundle 'thinca/vim-textobj-plugins'
+NeoBundle 'h1mesuke/textobj-wiw'
 NeoBundle 'kana/vim-textobj-function'
-NeoBundle 'git://github.com/kana/vim-textobj-line.git'
-NeoBundle 'https://github.com/tekkoc/vim-textobj-parameter.git'
+NeoBundle 'kana/vim-textobj-line'
+NeoBundle 'tekkoc/vim-textobj-parameter'
 
 " operator-user
 NeoBundle 'kana/vim-operator-user'
@@ -69,18 +68,18 @@ NeoBundle 'kana/vim-operator-replace'
 NeoBundle 'emonkak/vim-operator-comment'
 
 " omniforcus
-NeoBundle 'git://github.com/fifnel/ofaddinbox.vim.git'
+NeoBundle 'fifnel/ofaddinbox.vim'
 
 " ghc
-NeoBundle 'git://github.com/ujihisa/neco-ghc.git'
-NeoBundle 'git://github.com/eagletmt/ghcmod-vim.git'
+NeoBundle 'ujihisa/neco-ghc'
+NeoBundle 'eagletmt/ghcmod-vim'
 
 " template
-NeoBundle 'git://github.com/mattn/sonictemplate-vim.git'
+NeoBundle 'mattn/sonictemplate-vim'
 
 " 補完
 NeoBundle 'Shougo/neocomplcache'
-NeoBundle 'git://github.com/ujihisa/neco-look.git'
+NeoBundle 'ujihisa/neco-look'
 
 " easymotion
 NeoBundle 'Lokaltog/vim-easymotion'
@@ -95,7 +94,7 @@ NeoBundle 'thinca/vim-ambicmd'
 NeoBundle 'ujihisa/shadow.vim'
 
 " gitディレクトリのあるところをカレントディレクトリに
-NeoBundle 'git://github.com/airblade/vim-rooter.git'
+NeoBundle 'airblade/vim-rooter'
 
 " unite
 NeoBundle 'Shougo/unite.vim'
@@ -103,14 +102,14 @@ NeoBundle 'h1mesuke/unite-outline'
 NeoBundle 'tsukkee/unite-help'
 NeoBundle 'thinca/vim-unite-history'
 NeoBundle 'ujihisa/unite-colorscheme'
-NeoBundle 'git://github.com/ujihisa/unite-font.git'
+NeoBundle 'ujihisa/unite-font'
 NeoBundle 'tsukkee/unite-tag'
-NeoBundle 'git://github.com/mattn/unite-advent_calendar.git'
-NeoBundle 'git://github.com/kmnk/vim-unite-giti.git'
-NeoBundle 'git://github.com/ujihisa/unite-haskellimport.git'
-NeoBundle 'git://github.com/sgur/unite-qf.git'
-NeoBundle 'git://github.com/tekkoc/unite-decorate-border.git'
-NeoBundle 'git://github.com/tekkoc/unite-decorate-text.git'
+NeoBundle 'mattn/unite-advent_calendar'
+NeoBundle 'kmnk/vim-unite-giti'
+NeoBundle 'ujihisa/unite-haskellimport'
+NeoBundle 'sgur/unite-qf'
+NeoBundle 'tekkoc/unite-decorate-border'
+NeoBundle 'tekkoc/unite-decorate-text'
 
 " 整形
 NeoBundle 'h1mesuke/vim-alignta'
@@ -119,38 +118,38 @@ NeoBundle 'h1mesuke/vim-alignta'
 NeoBundle 'nathanaelkane/vim-indent-guides'
 
 " syntax
-NeoBundle 'git://github.com/scrooloose/syntastic.git'
+NeoBundle 'scrooloose/syntastic'
 
 " 言語別
 NeoBundle 'kchmck/vim-coffee-script'
-NeoBundle 'git://github.com/vim-scripts/JavaScript-syntax.git'
-NeoBundle 'git://github.com/vim-scripts/actionscript.vim--Leider.git'
+NeoBundle 'vim-scripts/JavaScript-syntax'
+NeoBundle 'vim-scripts/actionscript.vim--Leider'
 
 " haskell
-NeoBundle 'git://github.com/wlangstroth/vim-haskell.git'
-NeoBundle 'git://github.com/Twinside/vim-haskellConceal.git'
-NeoBundle 'git://github.com/ujihisa/ref-hoogle.git'
+NeoBundle 'wlangstroth/vim-haskell'
+NeoBundle 'Twinside/vim-haskellConceal'
+NeoBundle 'ujihisa/ref-hoogle'
 
 " php
-NeoBundle 'git://github.com/pasela/unite-fuel.git'
-NeoBundle 'git://github.com/shawncplus/php.vim.git'
-NeoBundle 'git://github.com/iakio/smarty3.vim.git'
+NeoBundle 'pasela/unite-fuel'
+NeoBundle 'shawncplus/php.vim'
+NeoBundle 'iakio/smarty3.vim'
 
 " python
-NeoBundle 'git://github.com/davidhalter/jedi-vim.git'
-NeoBundle 'git://github.com/kevinw/pyflakes-vim.git'
-NeoBundle 'git://github.com/nvie/vim-flake8.git'
-NeoBundle 'git://github.com/jmcantrell/vim-virtualenv.git'
+NeoBundle 'davidhalter/jedi-vim'
+NeoBundle 'kevinw/pyflakes-vim'
+NeoBundle 'nvie/vim-flake8'
+NeoBundle 'jmcantrell/vim-virtualenv'
 
 " 即座に実行
 NeoBundle 'thinca/vim-quickrun'
-NeoBundle 'git://github.com/ujihisa/quicklearn.git'
+NeoBundle 'ujihisa/quicklearn'
 
 " リファレンスを開く
 NeoBundle 'thinca/vim-ref'
 NeoBundle 'mojako/ref-sources.vim'
 
-NeoBundle 'git://github.com/yuratomo/w3m.vim.git'
+NeoBundle 'yuratomo/w3m.vim'
 
 " 外側テキストオブジェクト
 NeoBundle 'tpope/vim-surround'
@@ -184,10 +183,10 @@ NeoBundle 'ujihisa/vimshell-ssh'
 NeoBundle 'chikatoike/concealedyank.vim'
 
 " 移動
-NeoBundle 'git://github.com/vim-scripts/Visual-Mark.git'
+NeoBundle 'vim-scripts/Visual-Mark'
 
 " 喋る
-NeoBundle 'git://github.com/supermomonga/shaberu.vim.git'
+NeoBundle 'supermomonga/shaberu.vim'
 
 " html高速入力
 NeoBundle 'mattn/zencoding-vim'
@@ -208,17 +207,15 @@ NeoBundle 'tpope/vim-markdown'
 NeoBundle 'thinca/vim-localrc'
 
 " eskk.vim
-NeoBundle 'git://github.com/tyru/eskk.vim.git'
-NeoBundle 'tyru/savemap.vim'
-NeoBundle 'tyru/vice.vim'
-NeoBundle 'tyru/skkdict.vim'
-NeoBundle 'git://github.com/vim-scripts/matrix.vim.git'
+NeoBundle 'tyru/eskk.vim'
+
+NeoBundle 'vim-scripts/matrix.vim'
 
 " gundo
 NeoBundle 'sjl/gundo.vim'
 
 " zoomwin
-NeoBundle 'git://github.com/vim-scripts/ZoomWin.git'
+NeoBundle 'vim-scripts/ZoomWin'
 
 " 移動を細かく記録する
 NeoBundle 'thinca/vim-poslist'
@@ -230,10 +227,10 @@ NeoBundle 'houtsnip/vim-emacscommandline'
 NeoBundle 'tpope/vim-abolish'
 
 " Vim script doc
-NeoBundle 'git://github.com/mattn/learn-vimscript.git'
+NeoBundle 'mattn/learn-vimscript'
 
 " statusline
-NeoBundle 'git://github.com/Lokaltog/vim-powerline.git'
+NeoBundle 'Lokaltog/vim-powerline'
 
 " unicodeエスケープシーケンス
 NeoBundle "osyo-manga/vim-hideout"
@@ -243,7 +240,7 @@ NeoBundle 'mattn/invader-vim'
 NeoBundle 'mfumi/snake.vim'
 NeoBundle 'mfumi/viminesweeper'
 NeoBundle 'mfumi/lightsout.vim'
-NeoBundle 'git://github.com/vim-scripts/vim-game-of-life.git'
+NeoBundle 'vim-scripts/vim-game-of-life'
 NeoBundle 'tyru/pacman.vim'
 " }}}
 " ==============
@@ -664,7 +661,7 @@ function! InitPython()
     " rename用のマッピングを無効にしたため、代わりにコマンドを定義
     command! -nargs=0 JediRename :call jedi#rename()
 
-    " markdownはインベント幅4,タブ幅8でスペースを使う
+    " pythonはインベント幅4,タブ幅8でスペースを使う
     " http://d.hatena.ne.jp/over80/20090305/1236264851
     setlocal shiftwidth=4
     setlocal tabstop=8
