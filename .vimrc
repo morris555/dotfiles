@@ -20,7 +20,6 @@
 " fileencodingのデフォルトを指定
 " L461 augroup
 " L685 プラグインがある。vim-visualstar
-" :Unite file_mru -start-insert -input=!fugitive
 " 日付でソート http://ideone.com/Tvylar
 " ==============
 "  SECTION: Neoundle
@@ -457,6 +456,7 @@ set foldmethod=marker
 " 改行文字などの表示
 set list
 " set listchars=tab:>-,eol:↴,trail:-,nbsp:%,extends:>,precedes:<
+set listchars=tab:▸\ ,eol:↴,trail:-,extends:>,precedes:<
 set listchars=tab:▸\ ,eol:↴,trail:-,nbsp:%,extends:>,precedes:<
 " set listchars=tab:▸\,eol:↴,trail:-,extends:»,precedes:«,nbsp:%
 set fillchars=vert:\ ,fold:\ ,diff:\ 
@@ -1298,7 +1298,7 @@ nnoremap <silent> <Leader>uF :<C-u>Unite file_rec/async -profile-name=file -star
 " お気に入り
 nnoremap <Leader>ub :<C-u>Unite bookmark directory_mru -default-action=lcd<CR>
 " 最近使ったファイルの一覧
-nnoremap <Leader>um :<C-u>Unite file_mru -start-insert<CR>!fugitive 
+nnoremap <Leader>um :<C-u>Unite file_mru -start-insert<CR>
 " grep
 nnoremap <Leader>ug :<C-u>Unite grep -no-quit -buffer-name=grep<CR><CR>
 nnoremap <Leader>uG :<C-u>Unite grep -no-quit -buffer-name=grep<CR><CR><C-r><C-w><CR>
@@ -1467,7 +1467,7 @@ command! -nargs=0 MemoNew call s:open_memo_file()
 command! -nargs=0 MemoList :Unite file_rec:~/Dropbox/Memo/ -buffer-name=memo_list
 
 " メモ一覧をUnite grepするコマンド
-command! -nargs=0 MemoGrep :Unite grep:~/Dropbox/Memo/ -no-quit<CR>
+command! -nargs=0 MemoGrep :Unite grep:~/Dropbox/Memo/ -no-quit
 
 " メモ一覧をVimFilerで呼び出すコマンド
 command! -nargs=0 MemoFiler :VimFiler ~/Dropbox/Memo
