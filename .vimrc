@@ -11,7 +11,9 @@
 " ==============
 "  SECTION: TODO
 " ==============
-"  TODO VACで指摘されたもの
+"  TODO
+" vim-refで開くとき、split
+"  TODO ↓VACで指摘されたもの
 " http://d.hatena.ne.jp/thinca/20101029/1288287636
 " http://d.hatena.ne.jp/thinca/20121202/1354379902
 " MapHTMLKeysをsmartinputかsmartchrで置き換え
@@ -233,6 +235,9 @@ NeoBundle 'Lokaltog/vim-powerline'
 
 " unicodeエスケープシーケンス
 NeoBundle "osyo-manga/vim-hideout"
+
+" ネタ
+NeoBundle "mattn/httpstatus-vim"
 
 " Game
 NeoBundle 'mattn/invader-vim'
