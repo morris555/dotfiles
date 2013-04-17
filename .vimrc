@@ -81,7 +81,7 @@ NeoBundle 'mattn/sonictemplate-vim'
 " 補完
 NeoBundle 'Shougo/neocomplcache'
 NeoBundle 'ujihisa/neco-look'
-
+NeoBundle 'Shougo/neosnippet'
 " easymotion
 NeoBundle 'Lokaltog/vim-easymotion'
 
@@ -96,6 +96,9 @@ NeoBundle 'ujihisa/shadow.vim'
 
 " gitディレクトリのあるところをカレントディレクトリに
 NeoBundle 'airblade/vim-rooter'
+
+" sublimetext2のマルチカーソル
+" NeoBundle 'terryma/vim-multiple-cursors'
 
 " unite
 NeoBundle 'Shougo/unite.vim'
@@ -128,7 +131,6 @@ NeoBundle 'vim-scripts/actionscript.vim--Leider'
 
 " haskell
 NeoBundle 'wlangstroth/vim-haskell'
-NeoBundle 'Twinside/vim-haskellConceal'
 NeoBundle 'ujihisa/ref-hoogle'
 
 " php
@@ -399,7 +401,7 @@ set autoread
 set scrolloff=999
 set relativenumber
 
-set conceallevel=2
+set conceallevel=2 concealcursor=i
 
 " モードラインは三行
 set modeline
@@ -562,13 +564,13 @@ function! InitPhp()
     inoremap <buffer><expr> { getline('.')[col('.') - 2] ==# '{' ? "\<BS><?php" : '{'
     inoremap <buffer><expr> } getline('.')[col('.') - 2] ==# '}' ? "\<BS>?>" : '}'
 
-    syntax keyword phpDefine function contained conceal cchar=𝑓
-    syntax keyword phpDefine array contained conceal cchar=𝒂
-
-    highlight! link Conceal phpDefine
-    highlight! link Conceal phpRelation
-    highlight! link Conceal phpMemberSelector
-    highlight! link Conceal phpOperator
+    " syntax keyword phpDefine function contained conceal cchar=𝑓
+    " syntax keyword phpDefine array contained conceal cchar=𝒂
+    "
+    " highlight! link Conceal phpDefine
+    " highlight! link Conceal phpRelation
+    " highlight! link Conceal phpMemberSelector
+    " highlight! link Conceal phpOperator
 
     " PHPではHTMLも書く
     call MapHTMLKeys()
@@ -849,7 +851,7 @@ inoremap <C-f> <Right>
 inoremap <C-b> <Left>
 inoremap <C-e> <End>
 inoremap <C-a> <Home>
-inoremap <expr> <C-k> col('.')==col('$')?"":"\<C-o>D"
+" inoremap <expr> <C-k> col('.')==col('$')?"":"\<C-o>D"
 
 " キーボードマクロをQに降格
 nnoremap q <Nop>
@@ -867,19 +869,6 @@ nnoremap <Space>i oX<C-h><ESC>kdd
 
 " 段落の最後から挿入
 nnoremap <Space>I /^\n<CR>oX<C-h><ESC>kdd
-
-" インサートモードで数字入力
-inoremap <M-n> 0
-inoremap <M-Space> 0
-inoremap <M-m> 1
-inoremap <M-,> 2
-inoremap <M-.> 3
-inoremap <M-j> 4
-inoremap <M-k> 5
-inoremap <M-l> 6
-inoremap <M-u> 7
-inoremap <M-i> 8
-inoremap <M-o> 9
 
 " 行マージ
 vnoremap <C-m> J
@@ -1031,7 +1020,7 @@ if has('vim_starting')
     "
     " <C-j><C-k>でいきなり日本語入力からのインサート
     nmap <C-j> i<C-j>
-    nmap <C-k> a<C-j>
+    " nmap <C-k> a<C-j>
 
     autocmd User eskk-initialize-pre call s:eskk_initial_pre()
     function! s:eskk_initial_pre()
@@ -1124,7 +1113,8 @@ xmap e  <Plug>(smartword-e)
 " Operator pending mode.
 omap <Leader>w  <Plug>(smartword-w)
 omap <Leader>b  <Plug>(smartword-b)
-omap <Leader>ge  <Plug>(smartword-ge)
+" TODO <Leader>gを他で使いたいため、一時的に無効に
+" omap <Leader>ge  <Plug>(smartword-ge)
 " }}}
 " visualmark {{{
 map <silent> <Leader>vs <Plug>Vm_toggle_sign
@@ -1181,7 +1171,7 @@ endfunction
 " textmanip {{{
 " 選択したテキストの移動
 vmap <C-j> <Plug>(textmanip-move-down)
-vmap <C-k> <Plug>(textmanip-move-up)
+" vmap <C-k> <Plug>(textmanip-move-up)
 
 " 行の複製
 vmap <C-d> <Plug>(textmanip-duplicate-down)
@@ -1273,9 +1263,9 @@ let g:indent_guides_guide_size=1
 " 入力モードで開始する
 let g:unite_enable_start_insert=0
 
-" yankソースを有効にする
-let g:unite_source_history_yank_enable = 0
-let g:unite_source_history_yank_limit = 1000
+" TODO yankソースを有効にする
+" let g:unite_source_history_yank_enable = 0
+" let g:unite_source_history_yank_limit = 1000
 
 " grepソース
 " let g:unite_source_grep_default_opts = '-Hn --include="*.vim" --include="*.txt" --include="*.php" --include="*.xml" --include="*.mkd" --include="*.hs" --include="*.js" --include="*.log" --include="*.sql" --include="*.coffee"'
@@ -1313,16 +1303,16 @@ au FileType vim nnoremap <buffer> <Leader>ur :<C-u>Unite help<CR>
 " outline
 nnoremap <Leader>uo :<C-u>Unite outline  -vertical -winwidth=60 -buffer-name=side<CR>
 " tag
-nnoremap <Leader>ut :<C-u>Unite tag -buffer-name=file <CR>
-" yank
-nnoremap <C-p> :<C-u>Unite history/yank<CR>
+nnoremap <Leader>ut :<C-u>Unite buffer_tab -buffer-name=file <CR>
+nnoremap <Leader>uT :<C-u>Unite tag -buffer-name=file <CR>
 " source(sourceが増えてきたので、sourceのsourceを経由する方針にしてみる)
 nnoremap <Leader>uu :<C-u>Unite source<CR>
 " giti
-nnoremap <Leader>uv :<C-u>Unite giti <CR>
-" nnoremap <Leader>uvs :<C-u>Unite giti/status <CR>
-" nnoremap <Leader>uvl :<C-u>Unite giti/log <CR>
-" nnoremap <Leader>uvb :<C-u>Unite giti/branch <CR>
+" TODO <Leader>gで直接呼び出せるようにしてみた
+" nnoremap <Leader>uv :<C-u>Unite giti <CR>
+nnoremap <Leader>gs :<C-u>Unite giti/status <CR>
+nnoremap <Leader>gl :<C-u>Unite giti/log <CR>
+nnoremap <Leader>gb :<C-u>Unite giti/branch <CR>
 
 " カラースキーム用コマンド
 command! UniteColorScheme :Unite colorscheme -auto-preview
@@ -1370,7 +1360,6 @@ endfunction
 " }}}
 " neocomplcache {{{
 
-" haskell補完用に、cabalのパスを追加
 let $PATH=$PATH . ":" . $HOME . "/.cabal/bin"
 let $PATH=$PATH . ":" . $HOME . "/.virtualenvs"
 
@@ -1420,13 +1409,15 @@ autocmd FileType haskell setlocal omnifunc=necoghc#omnifunc
 " g:neocomplcache_source_rank
 
 " neosnippet
-" TODO あまり使ってないので、一時的に解除
-" imap <C-g>     <Plug>(neosnippet_expand_or_jump)
-" smap <C-g>     <Plug>(neosnippet_expand_or_jump)
-" let g:neosnippet#snippets_directory='~/Dropbox/vim/snippet'
-" let g:neosnippet#disable_runtime_snippets = {
-" 		\   'php' : 1,
-" 		\ }
+imap <C-k>     <Plug>(neosnippet_expand_or_jump)
+smap <C-k>     <Plug>(neosnippet_expand_or_jump)
+" imap <expr><C-k> neosnippet#expandable() <Bar><bar> neosnippet#jumpable() ? "\<Plug>(neosnippet_expand_or_jump)" : pumvisible() ? "\<C-n>" : "\<TAB>"
+" smap <expr><C-k> neosnippet#expandable() <Bar><bar> neosnippet#jumpable() ? "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
+
+let g:neosnippet#snippets_directory='~/Dropbox/vim/snippet'
+let g:neosnippet#disable_runtime_snippets = {
+		\   'php' : 1,
+		\ }
 " }}}
 " ==========
 " SECTION: Memo
