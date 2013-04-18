@@ -121,13 +121,20 @@ NeoBundle 'h1mesuke/vim-alignta'
 " インデントの可視化
 NeoBundle 'nathanaelkane/vim-indent-guides'
 
-" syntax
+" syntaxチェック
 NeoBundle 'scrooloose/syntastic'
+
+" ctags
+NeoBundle 'majutsushi/tagbar'
 
 " 言語別
 NeoBundle 'kchmck/vim-coffee-script'
-NeoBundle 'vim-scripts/JavaScript-syntax'
 NeoBundle 'vim-scripts/actionscript.vim--Leider'
+
+" js
+NeoBundle 'jiangmiao/simple-javascript-indenter'
+NeoBundle 'jelera/vim-javascript-syntax'
+NeoBundle 'teramako/jscomplete-vim'
 
 " haskell
 NeoBundle 'wlangstroth/vim-haskell'
@@ -693,6 +700,18 @@ let g:jedi#popup_on_dot = 0
 
 let g:flake8_builtins="_,apply"
 " }}}
+" javascript {{{
+function! InitJavaScript()
+    IndentGuidesEnable
+endfunction
+autocmd BufEnter * if &filetype == "javascript" | call InitJavaScript() | endif
+" DOMとMozilla関連とES6のメソッドを補完
+let g:jscomplete_use = ['dom', 'moz', 'es6th']
+" shiftwidthを1にしてインデント
+let g:SimpleJsIndenter_BriefMode = 1
+" switchのインデントをマシに
+let g:SimpleJsIndenter_CaseIndentLevel = -1
+" }}}
 " ==============
 "  SECTION: mapping
 " ==============
@@ -743,6 +762,7 @@ noremap <Space>ef z=
 " nnoremap <silent> <Space>tt :<C-u>UniteWithCursorWord -immediately tag<CR>
 nnoremap <silent> <Space>tt g<C-]>
 nnoremap <silent> <space>tT :<C-u>tab stj <C-R>=expand('<cword>')<CR><CR>
+nnoremap <silent> <space>tl :TagbarToggle<CR>
 nnoremap <silent> <Space>tn :tn<CR>
 nnoremap <silent> <Space>tp :tp<CR>
 nnoremap <silent> <Space>tj <C-]>:<C-u>split<CR><C-o><C-o><C-w>j
@@ -1018,9 +1038,8 @@ if has('vim_starting')
     let g:eskk#auto_henkan_at_okuri_match = 3
     let g:eskk#fix_extra_okuri = 1
     "
-    " <C-j><C-k>でいきなり日本語入力からのインサート
+    " <C-j>でいきなり日本語入力からのインサート
     nmap <C-j> i<C-j>
-    " nmap <C-k> a<C-j>
 
     autocmd User eskk-initialize-pre call s:eskk_initial_pre()
     function! s:eskk_initial_pre()
@@ -1170,8 +1189,8 @@ endfunction
 " }}}
 " textmanip {{{
 " 選択したテキストの移動
-vmap <C-j> <Plug>(textmanip-move-down)
-" vmap <C-k> <Plug>(textmanip-move-up)
+xmap <C-j> <Plug>(textmanip-move-down)
+xmap <C-k> <Plug>(textmanip-move-up)
 
 " 行の複製
 vmap <C-d> <Plug>(textmanip-duplicate-down)
@@ -1257,6 +1276,12 @@ xmap <C-s> <Plug>VSurround
 " indent_guides {{{
 let g:indent_guides_color_change_percent=10
 let g:indent_guides_guide_size=1
+" }}}
+" indent_guides {{{
+" let g:tagbar_ctags_bin = '/usr/bin/ctags'
+let g:tagbar_type_javascript = {
+    \ 'ctagsbin' : '/usr/local/share/npm/bin/jsctags'
+\ }
 " }}}
 " unite {{{
 
