@@ -1215,7 +1215,7 @@ autocmd FileType w3m nnoremap <silent><buffer> q :<C-u>W3mClose<CR>
 " syntastic {{{
 let g:syntastic_mode_map = {
             \ 'mode': 'active',
-            \ 'active_filetypes': ['php', 'coffeescript', 'sh', 'vim'],
+            \ 'active_filetypes': ['php', 'coffeescript', 'sh', 'vim', 'javascript'],
             \ 'passive_filetypes': ['html', 'haskell', 'python', 'ruby']
             \}
 let g:syntastic_auto_loc_list=1
@@ -1277,7 +1277,7 @@ xmap <C-s> <Plug>VSurround
 let g:indent_guides_color_change_percent=10
 let g:indent_guides_guide_size=1
 " }}}
-" indent_guides {{{
+" tagbar {{{
 " let g:tagbar_ctags_bin = '/usr/bin/ctags'
 let g:tagbar_type_javascript = {
     \ 'ctagsbin' : '/usr/local/share/npm/bin/jsctags'
