@@ -18,7 +18,6 @@
 " http://d.hatena.ne.jp/thinca/20121202/1354379902
 " MapHTMLKeysをsmartinputかsmartchrで置き換え
 " if has('gui_macvim')
-" 分割画面移動形マッピングにsilentいらない
 " fileencodingのデフォルトを指定
 " L461 augroup
 " L685 プラグインがある。vim-visualstar
@@ -68,6 +67,8 @@ NeoBundle 'tyru/operator-camelize.vim'
 NeoBundle 'kana/vim-operator-replace'
 NeoBundle 'emonkak/vim-operator-comment'
 
+NeoBundle 'nishigori/vim-sunday'
+
 " omniforcus
 NeoBundle 'fifnel/ofaddinbox.vim'
 
@@ -102,7 +103,7 @@ NeoBundle 'airblade/vim-rooter'
 
 " unite
 NeoBundle 'Shougo/unite.vim'
-NeoBundle 'h1mesuke/unite-outline'
+NeoBundle 'Shougo/unite-outline'
 NeoBundle 'tsukkee/unite-help'
 NeoBundle 'thinca/vim-unite-history'
 NeoBundle 'ujihisa/unite-colorscheme'
@@ -809,36 +810,36 @@ nnoremap <space>w :<C-u>w<CR>
 nnoremap <space>W :<C-u>wa<CR>
 
 " 分割画面移動
-nnoremap <silent> s <Nop>
-nnoremap <silent> sj <C-w>j
-nnoremap <silent> sk <C-w>k
-nnoremap <silent> sl <C-w>l
-nnoremap <silent> sh <C-w>h
-nnoremap <silent> sJ <C-w>J
-nnoremap <silent> sK <C-w>K
-nnoremap <silent> sL <C-w>L
-nnoremap <silent> sH <C-w>H
-nnoremap <silent> sr <C-w>r
-nnoremap <silent> s= <C-w>=
-nnoremap <silent> s_ <C-w>_
-nnoremap <silent> sw <C-w>w
-nnoremap <silent> so <C-w>_<C-w>|
-nnoremap <silent> sO <C-w>=
-nnoremap <silent> sn gt
-nnoremap <silent> sp gT
-nnoremap <silent> sN :<C-u>bn<CR>
-nnoremap <silent> sP :<C-u>bp<CR>
-nnoremap <silent> st :<C-u>tabnew<CR>
-nnoremap <silent> sT :<C-u>Unite tab<CR>
-nnoremap <silent> ss :<C-u>sp<CR>
-nnoremap <silent> sv :<C-u>vs<CR>
-nnoremap <silent> sq :<C-u>q<CR>
-nnoremap <silent> sQ :<C-u>bd<CR>
-nnoremap <silent> sb :<C-u>Unite buffer -buffer-name=file<CR>
-nnoremap <silent> <S-Right> <C-w>>
-nnoremap <silent> <S-Left> <C-w><
-nnoremap <silent> <S-Up> <C-w>+
-nnoremap <silent> <S-Down> <C-w>-
+nnoremap s <Nop>
+nnoremap sj <C-w>j
+nnoremap sk <C-w>k
+nnoremap sl <C-w>l
+nnoremap sh <C-w>h
+nnoremap sJ <C-w>J
+nnoremap sK <C-w>K
+nnoremap sL <C-w>L
+nnoremap sH <C-w>H
+nnoremap sr <C-w>r
+nnoremap s= <C-w>=
+nnoremap s_ <C-w>_
+nnoremap sw <C-w>w
+nnoremap so <C-w>_<C-w>|
+nnoremap sO <C-w>=
+nnoremap sn gt
+nnoremap sp gT
+nnoremap sN :<C-u>bn<CR>
+nnoremap sP :<C-u>bp<CR>
+nnoremap st :<C-u>tabnew<CR>
+nnoremap sT :<C-u>Unite tab<CR>
+nnoremap ss :<C-u>sp<CR>
+nnoremap sv :<C-u>vs<CR>
+nnoremap sq :<C-u>q<CR>
+nnoremap sQ :<C-u>bd<CR>
+nnoremap sb :<C-u>Unite buffer -buffer-name=file<CR>
+nnoremap <S-Right> <C-w>>
+nnoremap <S-Left> <C-w><
+nnoremap <S-Up> <C-w>+
+nnoremap <S-Down> <C-w>-
 
 " 表示行移動
 nnoremap j gj
@@ -863,8 +864,8 @@ noremap L 10l
 noremap H 10h
 
 " Ctrlで最後まで移動
-noremap <C-e> g$
-noremap <C-a> g^
+" noremap <C-e> g$
+" noremap <C-a> g^
 
 " insert mode
 inoremap <C-f> <Right>
