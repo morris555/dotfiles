@@ -1087,7 +1087,10 @@ let g:quickrun_config.markdown = {
       \ 'args'      : 'Marked',
       \ 'exec'      : '%c %o %a %s',
       \ }
-nnoremap <Leader>l :<C-u>QuickRun -exec '%c -l %s'<CR>
+let g:quickrun_config['javascript.mocha'] = {
+      \ 'exec'      : 'npm test',
+      \ }
+nnoremap <expr><silent> <C-c> quickrun#is_running() ? quickrun#sweep_sessions() : "\<C-c>"
 " }}}
 " arpeggio {{{
 let g:arpeggio_timeoutlen = 70
