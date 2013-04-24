@@ -241,7 +241,9 @@ NeoBundle 'tpope/vim-abolish'
 NeoBundle 'mattn/learn-vimscript'
 
 " statusline
-NeoBundle 'Lokaltog/vim-powerline'
+" NeoBundle 'Lokaltog/vim-powerline'
+" NeoBundle 'taichouchou2/alpaca_powertabline'
+NeoBundle 'Lokaltog/powerline', { 'rtp' : 'powerline/bindings/vim'}
 
 " unicodeエスケープシーケンス
 NeoBundle "osyo-manga/vim-hideout"
@@ -1005,8 +1007,8 @@ function! MakeTabLine()
     return s:tabpages . '%=' . s:info  " タブリストを左に、情報を右に表示
 endfunction
 
-" set tabline=%!MakeTabLine()
-autocmd CursorMoved * set tabline=%!MakeTabLine()
+set tabline=%!MakeTabLine()
+" autocmd CursorMoved * set tabline=%!MakeTabLine()
 " }}}
 " ==============
 " SECTION: plugin
@@ -1283,6 +1285,9 @@ let g:indent_guides_guide_size=1
 let g:tagbar_type_javascript = {
     \ 'ctagsbin' : '/usr/local/share/npm/bin/jsctags'
 \ }
+" }}}
+" powerline {{{
+" g:alpaca_powertabline_enable = 1
 " }}}
 " unite {{{
 
