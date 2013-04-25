@@ -13,7 +13,7 @@
 " ==============
 "  TODO
 " vim-refで開くとき、split
-"  TODO ↓VACで指摘されたもの
+"  TODO ↓指摘されたもの
 " http://d.hatena.ne.jp/thinca/20101029/1288287636
 " http://d.hatena.ne.jp/thinca/20121202/1354379902
 " MapHTMLKeysをsmartinputかsmartchrで置き換え
@@ -248,6 +248,9 @@ NeoBundle "osyo-manga/vim-hideout"
 
 " ネタ
 NeoBundle "mattn/httpstatus-vim"
+
+" toggle
+NeoBundle "taku-o/vim-toggle"
 
 " Game
 NeoBundle 'mattn/invader-vim'
@@ -1294,8 +1297,13 @@ let g:tagbar_type_javascript = {
     \ 'ctagsbin' : '/usr/local/share/npm/bin/jsctags'
 \ }
 " }}}
-" powerline {{{
-" g:alpaca_powertabline_enable = 1
+" vim-toggle {{{
+let g:toggle_pairs = {
+            \ 'or':'and',
+            \ 'and':'or',
+            \ }
+nmap <C-T> <Plug>ToggleN
+vmap <C-T> <Plug>ToggleV
 " }}}
 " unite {{{
 
