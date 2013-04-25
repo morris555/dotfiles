@@ -67,8 +67,6 @@ NeoBundle 'tyru/operator-camelize.vim'
 NeoBundle 'kana/vim-operator-replace'
 NeoBundle 'emonkak/vim-operator-comment'
 
-NeoBundle 'nishigori/vim-sunday'
-
 " omniforcus
 NeoBundle 'fifnel/ofaddinbox.vim'
 
@@ -866,8 +864,8 @@ noremap L 10l
 noremap H 10h
 
 " Ctrlで最後まで移動
-" noremap <C-e> g$
-" noremap <C-a> g^
+noremap <C-e> g$
+noremap <C-a> g^
 
 " insert mode
 inoremap <C-f> <Right>
