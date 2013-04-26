@@ -124,7 +124,7 @@ NeoBundle 'nathanaelkane/vim-indent-guides'
 NeoBundle 'scrooloose/syntastic'
 
 " ctags
-NeoBundle 'majutsushi/tagbar'
+" NeoBundle 'majutsushi/tagbar'
 
 " 言語別
 NeoBundle 'kchmck/vim-coffee-script'
@@ -766,7 +766,7 @@ noremap <Space>ef z=
 " nnoremap <silent> <Space>tt :<C-u>UniteWithCursorWord -immediately tag<CR>
 nnoremap <silent> <Space>tt g<C-]>
 nnoremap <silent> <space>tT :<C-u>tab stj <C-R>=expand('<cword>')<CR><CR>
-nnoremap <silent> <space>tl :TagbarToggle<CR>
+" nnoremap <silent> <space>tl :TagbarToggle<CR>
 nnoremap <silent> <Space>tn :tn<CR>
 nnoremap <silent> <Space>tp :tp<CR>
 nnoremap <silent> <Space>tj <C-]>:<C-u>split<CR><C-o><C-o><C-w>j
@@ -1292,10 +1292,10 @@ let g:indent_guides_color_change_percent=10
 let g:indent_guides_guide_size=1
 " }}}
 " tagbar {{{
-" let g:tagbar_ctags_bin = '/usr/bin/ctags'
-let g:tagbar_type_javascript = {
-    \ 'ctagsbin' : '/usr/local/share/npm/bin/jsctags'
-\ }
+" " let g:tagbar_ctags_bin = '/usr/bin/ctags'
+" let g:tagbar_type_javascript = {
+"     \ 'ctagsbin' : '/usr/local/share/npm/bin/jsctags'
+" \ }
 " }}}
 " vim-toggle {{{
 let g:toggle_pairs = {
