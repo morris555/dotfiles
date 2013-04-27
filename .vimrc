@@ -152,7 +152,6 @@ NeoBundle 'jmcantrell/vim-virtualenv'
 
 " 即座に実行
 NeoBundle 'thinca/vim-quickrun'
-NeoBundle 'ujihisa/quicklearn'
 
 " リファレンスを開く
 NeoBundle 'thinca/vim-ref'
@@ -225,9 +224,6 @@ NeoBundle 'sjl/gundo.vim'
 
 " zoomwin
 NeoBundle 'vim-scripts/ZoomWin'
-
-" 折り畳み
-NeoBundle 'LeafCage/foldCC'
 
 " 移動を細かく記録する
 NeoBundle 'thinca/vim-poslist'
@@ -1067,9 +1063,6 @@ nmap <Leader>Hr <Plug>(quickhl-reset)
 xmap <Leader>h <Plug>(quickhl-toggle)
 xmap <Leader>Hr <Plug>(quickhl-reset)
 " }}}
-" quicklearn {{{
-nnoremap <Leader>R :<C-u>Unite quicklearn -immediately<Cr>
-" }}}
 " quickrun {{{
 let g:quickrun_config = {}
 let g:quickrun_config._ = {
@@ -1291,9 +1284,6 @@ let g:toggle_pairs = {
             \ }
 nmap <C-T> <Plug>ToggleN
 vmap <C-T> <Plug>ToggleV
-" }}}
-" foldCC {{{
-set foldtext=foldCC#foldtext()
 " }}}
 " unite {{{
 
