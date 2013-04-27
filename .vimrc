@@ -226,6 +226,9 @@ NeoBundle 'sjl/gundo.vim'
 " zoomwin
 NeoBundle 'vim-scripts/ZoomWin'
 
+" 折り畳み
+NeoBundle 'LeafCage/foldCC'
+
 " 移動を細かく記録する
 NeoBundle 'thinca/vim-poslist'
 
@@ -1202,10 +1205,6 @@ nmap <C-d> <Plug>(textmanip-duplicate-down)
 nmap <Leader>o <Plug>(openbrowser-smart-search)
 vmap <Leader>o <Plug>(openbrowser-smart-search)
 command! -nargs=1 Google :OpenBrowserSearch <args>
-let g:openbrowser_search_engines = {
-            \   'phpmanual_all': 'http://jp.php.net/results.php?q={query}&l=ja&p=all',
-            \   'phpmanual_func': 'http://jp.php.net/manual-lookup.php?pattern={query}&scope=quickref',
-            \}
 " }}}
 " w3m {{{
 let g:w3m#search_engine = 
@@ -1292,6 +1291,9 @@ let g:toggle_pairs = {
             \ }
 nmap <C-T> <Plug>ToggleN
 vmap <C-T> <Plug>ToggleV
+" }}}
+" foldCC {{{
+set foldtext=foldCC#foldtext()
 " }}}
 " unite {{{
 
