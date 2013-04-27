@@ -984,23 +984,12 @@ function! s:tabpage_label(n)
 endfunction
 command! -nargs=1 SetTitle :let t:title="<args>"
 
-" タグがあるかどうかの文字列を返す関数
-function! s:tags_text()
-    if s:has_tags()
-        return ''
-    else
-        return '【no tags!!!】'
-    endif
-endfunction
-
 function! MakeTabLine()
     let s:titles = map(range(1, tabpagenr('$')), 's:tabpage_label(v:val)')
     let s:sep = '    '  " タブ間の区切り
     let s:tabpages = join(s:titles, s:sep) . s:sep . '%#TabLineFill#%T'
     let s:info = ''
-    let s:info .= '[%F]'
-    let s:info .= '   '
-    let s:info .= s:tags_text()
+ let s:info .= '[%F]'
     let s:info .= '   '
 
     let s:info .= fnamemodify(getcwd(), ":~") . ' '
@@ -1009,7 +998,6 @@ function! MakeTabLine()
 endfunction
 
 set tabline=%!MakeTabLine()
-" autocmd CursorMoved * set tabline=%!MakeTabLine()
 " }}}
 " ==============
 " SECTION: plugin
