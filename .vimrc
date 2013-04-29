@@ -729,7 +729,7 @@ noremap ZZ <Nop>
 noremap ZQ <Nop>
 
 " *でビジュアルモードで選んでる文字を検索
-vnoremap * "zy:let @/ = @z<CR>n
+" vnoremap * "zy:let @/ = @z<CR>n
 
 " ?では、lineソースを使った検索にする
 nnoremap <silent> ? :<C-u>Unite line -buffer-name=search -start-insert<CR>
@@ -738,7 +738,7 @@ nnoremap <silent> ? :<C-u>Unite line -buffer-name=search -start-insert<CR>
 nnoremap <silent> # :<C-U>UniteWithCursorWord -buffer-name=search line<CR>
 
 " 入力中に<C-u>で大文字に
-inoremap <silent> <C-u> <Esc>gUiwea
+inoremap <silent> <C-u> <Esc>gUiWea
 
 " folding
 
@@ -1296,15 +1296,12 @@ vmap <C-T> <Plug>ToggleV
 " 入力モードで開始する
 let g:unite_enable_start_insert=0
 
-" TODO yankソースを有効にする
-" let g:unite_source_history_yank_enable = 0
-" let g:unite_source_history_yank_limit = 1000
-
 " grepソース
-" let g:unite_source_grep_default_opts = '-Hn --include="*.vim" --include="*.txt" --include="*.php" --include="*.xml" --include="*.mkd" --include="*.hs" --include="*.js" --include="*.log" --include="*.sql" --include="*.coffee"'
 let g:unite_source_grep_command = "ag"
 let g:unite_source_grep_recursive_opt = ""
 let g:unite_source_grep_default_opts = "--nogroup --nocolor"
+
+let g:unite_winheight = 10
 
 let g:unite_source_grep_max_candidates = 100
 let g:unite_source_session_enable_auto_save = 1     " セッション保存
