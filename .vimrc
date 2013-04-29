@@ -77,6 +77,9 @@ NeoBundle 'eagletmt/ghcmod-vim'
 " template
 NeoBundle 'mattn/sonictemplate-vim'
 
+" db
+NeoBundle 'git://github.com/vim-scripts/dbext.vim.git'
+
 " 補完
 NeoBundle 'Shougo/neocomplcache'
 NeoBundle 'ujihisa/neco-look'
@@ -113,6 +116,9 @@ NeoBundle 'ujihisa/unite-haskellimport'
 NeoBundle 'sgur/unite-qf'
 NeoBundle 'tekkoc/unite-decorate-border'
 NeoBundle 'tekkoc/unite-decorate-text'
+
+" Unite powerline
+NeoBundle 'osyo-manga/vim-powerline-unite-theme'
 
 " 整形
 NeoBundle 'h1mesuke/vim-alignta'
