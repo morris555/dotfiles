@@ -599,11 +599,10 @@ autocmd BufEnter * if &filetype == "php" | call InitPhp() | endif
 " }}}
 " HTML {{{
 function! InitHtml()
-    " htmlはタブ幅4でタブ文字を使う
-    setlocal shiftwidth=4
-    setlocal tabstop=4
-    setlocal softtabstop=4
-    setlocal noexpandtab
+    setlocal shiftwidth=2
+    setlocal tabstop=2
+    setlocal softtabstop=2
+    setlocal expandtab
 
     call MapHTMLKeys()
 
