@@ -196,6 +196,9 @@ NeoBundle 'Shougo/vimshell'
 NeoBundle 'ujihisa/vimshell-ssh'
 NeoBundle 'chikatoike/concealedyank.vim'
 
+" 検索で件数を表示
+NeoBundle 'osyo-manga/vim-anzu'
+
 " 移動
 NeoBundle 'vim-scripts/Visual-Mark'
 
@@ -843,10 +846,22 @@ nnoremap sv :<C-u>vs<CR>
 nnoremap sq :<C-u>q<CR>
 nnoremap sQ :<C-u>bd<CR>
 nnoremap sb :<C-u>Unite buffer -buffer-name=file<CR>
-nnoremap <S-Right> <C-w>>
-nnoremap <S-Left> <C-w><
-nnoremap <S-Up> <C-w>+
-nnoremap <S-Down> <C-w>-
+" nnoremap <Right> <C-w><
+" nnoremap <Left> <C-w>>
+" nnoremap <Up> <C-w>-
+" nnoremap <Down> <C-w>+
+" nnoremap <S-Right> 5<C-w><
+" nnoremap <S-Left> 5<C-w>>
+" nnoremap <S-Up> 5<C-w>-
+" nnoremap <S-Down> 5<C-w>+
+nnoremap <Right> <C-w>>
+nnoremap <Left> <C-w><
+nnoremap <Up> <C-w>+
+nnoremap <Down> <C-w>-
+nnoremap <S-Right> 5<C-w>>
+nnoremap <S-Left> 5<C-w><
+nnoremap <S-Up> 5<C-w>+
+nnoremap <S-Down> 5<C-w>-
 
 " 表示行移動
 nnoremap j gj
@@ -1290,6 +1305,12 @@ let g:toggle_pairs = {
 nmap <C-T> <Plug>ToggleN
 vmap <C-T> <Plug>ToggleV
 " }}}
+" vim-anzu {{{
+nmap n <Plug>(anzu-n-with-echo)
+nmap N <Plug>(anzu-N-with-echo)
+nmap * <Plug>(anzu-star-with-echo)
+nmap # <Plug>(anzu-sharp-with-echo)
+" }}}
 " unite {{{
 
 " 入力モードで開始する
@@ -1603,5 +1624,10 @@ else
     else
         highlight SignColor ctermbg=grey ctermfg=RoyalBlue3 guibg=grey guifg=RoyalBlue3
     endif
+endif
+" }}}
+" 非公開vimrc {{{
+if filereadable(expand('~/Dropbox/Vim/secret.vimrc'))
+  source ~/Dropbox/Vim/secret.vimrc
 endif
 " }}}
