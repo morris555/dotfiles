@@ -1647,3 +1647,4 @@ if filereadable(expand('~/Dropbox/Vim/secret.vimrc'))
   source ~/Dropbox/Vim/secret.vimrc
 endif
 " }}}
+let g:gitgutter_enabled = 0
