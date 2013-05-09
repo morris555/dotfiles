@@ -1092,7 +1092,7 @@ let g:quickrun_config = {}
 let g:quickrun_config._ = {
             \ "runner" : "vimproc",
             \ "runner/vimproc/updatetime" : 10,
-            \ "outputter/buffer/split" : ":botright 5sp",
+            \ "outputter/buffer/split" : ":botright 10sp",
             \ "outputter/buffer/close_on_empty" : 1,
             \ "hook/time/enable" : 1,
             \ }
@@ -1327,10 +1327,10 @@ let g:unite_source_grep_default_opts = "--nogroup --nocolor"
 
 let g:unite_winheight = 10
 
-let g:unite_source_grep_max_candidates = 100
+let g:unite_source_grep_max_candidates = 100000
 let g:unite_source_session_enable_auto_save = 1     " セッション保存
-let g:unite_source_file_mru_limit = 1000
-call unite#custom_max_candidates("file_mru", 1000)
+let g:unite_source_file_mru_limit = 100000
+call unite#custom_max_candidates("file_mru", 100000)
 
 call unite#custom_source('file,file_rec/async', 'filters', ['converter_relative_word', 'matcher_glob', 'sorter_rank', 'converter_relative_abbr'])
 call unite#custom_source('grep', 'filters', ['matcher_regexp', 'sorter_default', 'converter_default'])
