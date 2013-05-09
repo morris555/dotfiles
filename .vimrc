@@ -254,6 +254,9 @@ NeoBundle 'Lokaltog/powerline', { 'rtp' : 'powerline/bindings/vim'}
 " unicodeエスケープシーケンス
 NeoBundle "osyo-manga/vim-hideout"
 
+" NeoBundle "akiomik/git-gutter-vim"
+NeoBundle "airblade/vim-gitgutter"
+
 " ネタ
 NeoBundle "mattn/httpstatus-vim"
 
@@ -289,7 +292,7 @@ let s:iswin = has('win32') || has('win64')
 let s:isgui = has("gui_running")
 let s:ismacunix = has("macunix")
 " }}}
-" {{{ utility function 
+" {{{ utility function
 function! s:has_plugin(name)
     return globpath(&runtimepath, 'plugin/' . a:name . '.vim') !=# ''
                 \   || globpath(&runtimepath, 'autoload/' . a:name . '.vim') !=# ''
@@ -389,7 +392,7 @@ syntax on
 " koriya版に同梱されているプラグインを無効化する
 let plugin_dicwin_disable = 1
 
-" オプション指定 
+" オプション指定
 
 filetype plugin indent on
 " }}}
@@ -485,7 +488,7 @@ set list
 set listchars=tab:▸\ ,eol:↴,trail:-,extends:>,precedes:<
 set listchars=tab:▸\ ,eol:↴,trail:-,nbsp:%,extends:>,precedes:<
 " set listchars=tab:▸\,eol:↴,trail:-,extends:»,precedes:«,nbsp:%
-set fillchars=vert:\ ,fold:\ ,diff:\ 
+set fillchars=vert:\ ,fold:\ ,diff:\
 
 " 改行時のコメントと、自動改行を無効化
 set formatoptions-=t
@@ -564,6 +567,7 @@ set complete+=k
 set shiftwidth=4
 set tabstop=4
 set softtabstop=4
+set textwidth=0
 set expandtab
 " }}}
 " {{{ PHP
@@ -1220,7 +1224,7 @@ vmap <Leader>o <Plug>(openbrowser-smart-search)
 command! -nargs=1 Google :OpenBrowserSearch <args>
 " }}}
 " w3m {{{
-let g:w3m#search_engine = 
+let g:w3m#search_engine =
             \ 'https://www.google.co.jp/search?aq=f&ix=seb&sourceid=chrome&ie=' . &encoding . '&q='
 
 autocmd FileType w3m nnoremap <silent><buffer> r :<C-u>W3mReload<CR>
@@ -1306,10 +1310,10 @@ nmap <C-T> <Plug>ToggleN
 vmap <C-T> <Plug>ToggleV
 " }}}
 " vim-anzu {{{
-nmap n <Plug>(anzu-n-with-echo)
-nmap N <Plug>(anzu-N-with-echo)
-nmap * <Plug>(anzu-star-with-echo)
-nmap # <Plug>(anzu-sharp-with-echo)
+nmap n <Plug>(anzu-n-with-echo)zO
+nmap N <Plug>(anzu-N-with-echo)zO
+nmap * <Plug>(anzu-star-with-echo)zO
+nmap # <Plug>(anzu-sharp-with-echo)zO
 " }}}
 " unite {{{
 
@@ -1359,7 +1363,7 @@ nnoremap <Leader>uT :<C-u>Unite tag -buffer-name=file <CR>
 nnoremap <Leader>uu :<C-u>Unite source<CR>
 " giti
 " TODO <Leader>gで直接呼び出せるようにしてみた
-" nnoremap <Leader>uv :<C-u>Unite giti <CR>
+nnoremap <Leader>gg :<C-u>Unite giti <CR>
 nnoremap <Leader>gs :<C-u>Unite giti/status <CR>
 nnoremap <Leader>gl :<C-u>Unite giti/log <CR>
 nnoremap <Leader>gb :<C-u>Unite giti/branch <CR>
@@ -1472,8 +1476,8 @@ let g:neosnippet#disable_runtime_snippets = {
 " ==========
 " SECTION: Memo
 " ==========
-"  function {{{ 
-function! s:open_memo_file() 
+"  function {{{
+function! s:open_memo_file()
     let l:category = input('Category: ')
     let l:title = input('Title: ')
 
@@ -1571,6 +1575,18 @@ command!
             \   -nargs=* -complete=mapping
             \   AllMaps
             \   map <args> | map! <args> | lmap <args>
+" }}}
+" special git log viewer {{{
+" bv VAC2012 143
+function! s:git_log_viewer()
+  vnew
+  "VimProcRead git log -u 'HEAD@{1}..HEAD' --reverse
+  VimProcRead git log -u 'ORIG_HEAD..HEAD'
+  set filetype=git-log.git-diff
+  setl foldmethod=expr
+  setl foldexpr=getline(v:lnum)!~'^commit'
+endfunction
+command! GitLogViewer call s:git_log_viewer()
 " }}}
 " 連番 {{{
 nnoremap <silent> co :ContinuousNumber <C-a><CR>
