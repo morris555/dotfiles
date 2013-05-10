@@ -78,7 +78,7 @@ NeoBundle 'eagletmt/ghcmod-vim'
 NeoBundle 'mattn/sonictemplate-vim'
 
 " db
-NeoBundle 'git://github.com/vim-scripts/dbext.vim.git'
+NeoBundle 'vim-scripts/dbext.vim'
 
 " 補完
 NeoBundle 'Shougo/neocomplcache'
@@ -216,6 +216,7 @@ NeoBundle 'tyru/restart.vim'
 
 " git
 NeoBundle 'tpope/vim-fugitive'
+NeoBundle 'motemen/git-vim'
 
 " markdown
 NeoBundle 'tpope/vim-markdown'
@@ -1158,10 +1159,11 @@ omap <Leader>b  <Plug>(smartword-b)
 " omap <Leader>ge  <Plug>(smartword-ge)
 " }}}
 " visualmark {{{
-map <silent> <Leader>vs <Plug>Vm_toggle_sign
-map <silent> <Leader>vv <Plug>Vm_toggle_sign
-map <silent> <Leader>vj <Plug>Vm_goto_next_sign
-map <silent> <Leader>vk <Plug>Vm_goto_prev_sign
+" TODO 一時的に無効
+" map <silent> <Leader>vs <Plug>Vm_toggle_sign
+" map <silent> <Leader>vv <Plug>Vm_toggle_sign
+" map <silent> <Leader>vj <Plug>Vm_goto_next_sign
+" map <silent> <Leader>vk <Plug>Vm_goto_prev_sign
 " }}}
 " easymotion {{{
 let g:EasyMotion_leader_key='<Leader>m'
@@ -1315,6 +1317,12 @@ nmap N <Plug>(anzu-N-with-echo)zO
 nmap * <Plug>(anzu-star-with-echo)zO
 nmap # <Plug>(anzu-sharp-with-echo)zO
 " }}}
+" gitgutter {{{
+let g:gitgutter_enabled = 0
+nnoremap <leader>vv :<C-u>GitGutterToggle<CR>
+nnoremap <leader>vk :<C-u>GitGutterPrevHunk<CR>
+nnoremap <leader>vj :<C-u>GitGutterNextHunk<CR>
+" }}}
 " unite {{{
 
 " 入力モードで開始する
@@ -1362,7 +1370,6 @@ nnoremap <Leader>uT :<C-u>Unite tag -buffer-name=file <CR>
 " source(sourceが増えてきたので、sourceのsourceを経由する方針にしてみる)
 nnoremap <Leader>uu :<C-u>Unite source<CR>
 " giti
-" TODO <Leader>gで直接呼び出せるようにしてみた
 nnoremap <Leader>gg :<C-u>Unite giti <CR>
 nnoremap <Leader>gs :<C-u>Unite giti/status <CR>
 nnoremap <Leader>gl :<C-u>Unite giti/log <CR>
@@ -1576,17 +1583,67 @@ command!
             \   AllMaps
             \   map <args> | map! <args> | lmap <args>
 " }}}
-" special git log viewer {{{
-" bv VAC2012 143
-function! s:git_log_viewer()
-  vnew
-  "VimProcRead git log -u 'HEAD@{1}..HEAD' --reverse
+" GitLogViewer {{{
+" bv VAC2012 144
+" Inspired by ujihisa's vimrc
+function! s:GitLogViewer()
+  " vnewだとコミットメッセージが切れてしまうのでnew
+  new
   VimProcRead git log -u 'ORIG_HEAD..HEAD'
   set filetype=git-log.git-diff
-  setl foldmethod=expr
-  setl foldexpr=getline(v:lnum)!~'^commit'
+  setlocal foldmethod=expr
+  setlocal foldexpr=getline(v:lnum)=~'^commit'?'>1':getline(v:lnum+1)=~'^commit'?'<1':'='
+  setlocal foldtext=FoldTextOfGitLog()
 endfunction
-command! GitLogViewer call s:git_log_viewer()
+command! GitLogViewer call s:GitLogViewer()
+
+" git log表示時の折りたたみ用
+function! FoldTextOfGitLog()
+  let month_map = {
+    \ 'Jan' : '01',
+    \ 'Feb' : '02',
+    \ 'Mar' : '03',
+    \ 'Apr' : '04',
+    \ 'May' : '05',
+    \ 'Jun' : '06',
+    \ 'Jul' : '07',
+    \ 'Aug' : '08',
+    \ 'Sep' : '09',
+    \ 'Oct' : '10',
+    \ 'Nov' : '11',
+    \ 'Dec' : '12',
+    \ }
+
+  if getline(v:foldstart) !~ '^commit'
+    return getline(v:foldstart)
+  endif
+
+  if getline(v:foldstart + 1) =~ '^Author:'
+    let author_lnum = v:foldstart + 1
+  elseif getline(v:foldstart + 2) =~ '^Author:'
+    " commitの次の行がMerge:の場合があるので
+    let author_lnum = v:foldstart + 2
+  else
+    " commitの下2行がどちらもAuthor:で始まらなければ諦めて終了
+    return getline(v:foldstart)
+  endif
+
+  let date_lnum = author_lnum + 1
+  let message_lnum = date_lnum + 2
+
+  let author = matchstr(getline(author_lnum), '^Author: \zs.*\ze <.\{-}>')
+  let date = matchlist(getline(date_lnum), ' \(\a\{3}\) \(\d\{1,2}\) \(\d\{2}:\d\{2}:\d\{2}\) \(\d\{4}\)')
+  let message = getline(message_lnum)
+
+  let month = date[1]
+  let day = printf('%02s', date[2])
+  let time = date[3]
+  let year = date[4]
+
+  let datestr = join([year, month_map[month], day], '-')
+
+  return join([datestr, time, author, message], ' ')
+endfunction
 " }}}
 " 連番 {{{
 nnoremap <silent> co :ContinuousNumber <C-a><CR>
@@ -1647,4 +1704,3 @@ if filereadable(expand('~/Dropbox/Vim/secret.vimrc'))
   source ~/Dropbox/Vim/secret.vimrc
 endif
 " }}}
-let g:gitgutter_enabled = 0
