@@ -1703,8 +1703,16 @@ function! s:sticky_func()
     endif
 endfunction
 " }}}
-" JsonFormat {{{
-command! JsonFormat :%! cat % | jq .
+" Jq {{{
+command! -nargs=? Jq call s:Jq(<f-args>)
+function! s:Jq(...)
+    if 0 == a:0
+        let l:arg = "."
+    else
+        let l:arg = a:1
+    endif
+    execute "%! cat % | jq \"" . l:arg . "\""
+endfunction
 " }}}
 " ==========
 " SECTION: gui
