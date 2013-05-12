@@ -140,6 +140,7 @@ NeoBundle 'vim-scripts/actionscript.vim--Leider'
 NeoBundle 'jiangmiao/simple-javascript-indenter'
 NeoBundle 'jelera/vim-javascript-syntax'
 NeoBundle 'teramako/jscomplete-vim'
+NeoBundle 'elzr/vim-json'
 
 " haskell
 NeoBundle 'wlangstroth/vim-haskell'
@@ -728,6 +729,16 @@ let g:jscomplete_use = ['dom', 'moz', 'es6th']
 let g:SimpleJsIndenter_BriefMode = 1
 " switchのインデントをマシに
 let g:SimpleJsIndenter_CaseIndentLevel = -1
+" }}}
+" json {{{
+function! InitJson()
+    set shiftwidth=2
+    set tabstop=2
+    set softtabstop=2
+    set expandtab
+    IndentGuidesEnable
+endfunction
+autocmd BufEnter * if &filetype == "json" | call InitJson() | endif
 " }}}
 " ==============
 "  SECTION: mapping
@@ -1450,11 +1461,11 @@ endif
 let g:neocomplcache_keyword_patterns['default'] = '\h\w*'
 
 " Enable omni completion.
-autocmd filetype css setlocal omnifunc=csscomplete#completecss
-autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
-autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
-autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
-autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
+" autocmd filetype css setlocal omnifunc=csscomplete#completecss
+" autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
+" autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
+" autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
+" autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
 autocmd FileType haskell setlocal omnifunc=necoghc#omnifunc
 
 " imap <C-u> <Plug>(neocomplcache_start_unite_complete)
@@ -1691,6 +1702,9 @@ function! s:sticky_func()
         return ''
     endif
 endfunction
+" }}}
+" JsonFormat {{{
+command! JsonFormat :%! cat % | jq .
 " }}}
 " ==========
 " SECTION: gui
