@@ -1248,7 +1248,7 @@ autocmd FileType w3m nnoremap <silent><buffer> q :<C-u>W3mClose<CR>
 let g:syntastic_mode_map = {
             \ 'mode': 'active',
             \ 'active_filetypes': ['php', 'coffeescript', 'sh', 'vim', 'javascript'],
-            \ 'passive_filetypes': ['html', 'haskell', 'python', 'ruby']
+            \ 'passive_filetypes': ['html', 'haskell', 'python', 'ruby', 'json']
             \}
 let g:syntastic_auto_loc_list=1
 nnoremap <silent> <Leader>l :<C-u>SyntasticCheck<CR>
