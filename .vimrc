@@ -1335,6 +1335,9 @@ nnoremap <leader>vv :<C-u>GitGutterToggle<CR>
 nnoremap <leader>vk :<C-u>GitGutterPrevHunk<CR>
 nnoremap <leader>vj :<C-u>GitGutterNextHunk<CR>
 " }}}
+" git-vim {{{
+let g:git_no_map_default = 1
+" }}}
 " unite {{{
 
 " 入力モードで開始する
