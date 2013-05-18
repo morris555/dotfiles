@@ -13,15 +13,7 @@
 " ==============
 "  TODO
 " vim-refで開くとき、split
-"  TODO ↓指摘されたもの
-" http://d.hatena.ne.jp/thinca/20101029/1288287636
-" http://d.hatena.ne.jp/thinca/20121202/1354379902
-" MapHTMLKeysをsmartinputかsmartchrで置き換え
-" if has('gui_macvim')
-" fileencodingのデフォルトを指定
 " L461 augroup
-" L685 プラグインがある。vim-visualstar
-" 日付でソート http://ideone.com/Tvylar
 " ==============
 "  SECTION: Neoundle
 " ==============
@@ -55,7 +47,6 @@ NeoBundle 'basyura/bitly.vim'
 NeoBundle 'kana/vim-textobj-user'
 NeoBundle 'kana/vim-textobj-entire'
 NeoBundle 'kana/vim-textobj-indent'
-NeoBundle 'thinca/vim-textobj-plugins'
 NeoBundle 'h1mesuke/textobj-wiw'
 NeoBundle 'kana/vim-textobj-function'
 NeoBundle 'kana/vim-textobj-line'
@@ -99,9 +90,6 @@ NeoBundle 'ujihisa/shadow.vim'
 " gitディレクトリのあるところをカレントディレクトリに
 NeoBundle 'airblade/vim-rooter'
 
-" sublimetext2のマルチカーソル
-" NeoBundle 'terryma/vim-multiple-cursors'
-
 " unite
 NeoBundle 'Shougo/unite.vim'
 NeoBundle 'Shougo/unite-outline'
@@ -129,8 +117,8 @@ NeoBundle 'nathanaelkane/vim-indent-guides'
 " syntaxチェック
 NeoBundle 'scrooloose/syntastic'
 
-" ctags
-" NeoBundle 'majutsushi/tagbar'
+" 選択テキストの検索
+NeoBundle 'thinca/vim-visualstar'
 
 " 言語別
 NeoBundle 'kchmck/vim-coffee-script'
@@ -291,70 +279,11 @@ command!
 \   MyAutocmd
 \   autocmd<bang> vimrc <args>
 " }}}
-" featureの状態を取得 {{{
-let s:iswin32 = has('win32')
-let s:iswin64 = has('win64')
-let s:iswin = has('win32') || has('win64')
-let s:isgui = has("gui_running")
-let s:ismacunix = has("macunix")
-" }}}
 " {{{ utility function
 function! s:has_plugin(name)
     return globpath(&runtimepath, 'plugin/' . a:name . '.vim') !=# ''
                 \   || globpath(&runtimepath, 'autoload/' . a:name . '.vim') !=# ''
 endfunction
-
-" Call a script local function.
-" Usage:
-" - S('local_func')
-"   -> call s:local_func() in current file.
-" - S('plugin/hoge.vim:local_func', 'string', 10)
-"   -> call s:local_func('string', 10) in *plugin/hoge.vim.
-" - S('plugin/hoge:local_func("string", 10)')
-"   -> call s:local_func("string", 10) in *plugin/hoge(.vim)?.
-function! S(f, ...)
-    let [file, func] =a:f =~# ':' ?  split(a:f, ':') : [expand('%:p'), a:f]
-    let fname = matchstr(func, '^\w*')
-
-    " Get sourced scripts.
-    redir =>slist
-    scriptnames
-    redir END
-
-    let filepat = '\V' . substitute(file, '\\', '/', 'g') . '\v%(\.vim)?$'
-    for s in split(slist, "\n")
-        let p = matchlist(s, '^\s*\(\d\+\):\s*\(.*\)$')
-        if empty(p)
-            continue
-        endif
-        let [nr, sfile] = p[1 : 2]
-        let sfile = fnamemodify(sfile, ':p:gs?\\?/?')
-        if sfile =~# filepat &&
-                    \    exists(printf("*\<SNR>%d_%s", nr, fname))
-            let cfunc = printf("\<SNR>%d_%s", nr, func)
-            break
-        endif
-    endfor
-
-    if !exists('nr')
-        echoerr Not sourced: ' . file
-        return
-    elseif !exists('cfunc')
-        let file = fnamemodify(file, ':p')
-        echoerr printf(
-                    \    'File found, but function is not defined: %s: %s()', file, fname)
-        return
-    endif
-
-    return 0 <= match(func, '^\w*\s*(.*)\s*$')
-                \      ? eval(cfunc) : call(cfunc, a:000)
-endfunction
-
-
-function! s:has_tags()
-    return glob('tags') !=# ''
-endfunction
-
 
 " singleton
 if has('gui_running')
@@ -367,21 +296,6 @@ endif
 
 " }}}
 " 入力補助 {{{
-" HTMLの実態参照文字入力用マッピング
-function! MapHTMLKeys()
-    inoremap <buffer> \\ \
-    inoremap <buffer> \& &amp;
-    inoremap <buffer> \< &lt;
-    inoremap <buffer> \> &gt;
-    inoremap <buffer> \. ・
-    inoremap <buffer> \- &#8212;
-    inoremap <buffer> \<Space> &nbsp;
-    inoremap <buffer> \` &#8216;
-    inoremap <buffer> \' &#8217;
-    inoremap <buffer> \2 &#8220;
-    inoremap <buffer> \" &#8221;
-endfunction " MapHTMLKeys()
-
 " 押したキーの変わりに「$this->」を代入
 function! s:at()
     let syntax = synstack(line('.'), col('.'))
@@ -406,16 +320,10 @@ filetype plugin indent on
 "  SECTION: Encoding
 " ==============
 " {{{
-set fileencodings=iso-2022-jp-3,iso-2022-jp,euc-jisx0213,euc-jp,utf-8,ucs-bom,euc-jp,eucjp-ms,cp932
 set encoding=utf-8
+set fileencodings=iso-2022-jp-3,iso-2022-jp,euc-jisx0213,euc-jp,ucs-bom,euc-jp,eucjp-ms,cp932
 set fileformats=unix,dos,mac
 set ambiwidth=double
-
-" マルチバイト文字が含まれていない場合はencodingの値を使用する
-MyAutocmd BufReadPost *
-\   if &modifiable && !search('[^\x00-\x7F]', 'cnw')
-\ |   setlocal fileencoding=
-\ | endif
 
 " }}}
 " ==============
@@ -451,9 +359,7 @@ set noshowmatch
 set hidden
 
 " MacでOptionキーをMetaキーに
-if s:isgui
-    set macmeta
-endif
+set macmeta
 
 " ビープを消す
 set visualbell t_vb=
@@ -593,17 +499,6 @@ function! InitPhp()
     inoremap <buffer><expr> { getline('.')[col('.') - 2] ==# '{' ? "\<BS><?php" : '{'
     inoremap <buffer><expr> } getline('.')[col('.') - 2] ==# '}' ? "\<BS>?>" : '}'
 
-    " syntax keyword phpDefine function contained conceal cchar=𝑓
-    " syntax keyword phpDefine array contained conceal cchar=𝒂
-    "
-    " highlight! link Conceal phpDefine
-    " highlight! link Conceal phpRelation
-    " highlight! link Conceal phpMemberSelector
-    " highlight! link Conceal phpOperator
-
-    " PHPではHTMLも書く
-    call MapHTMLKeys()
-
     inoremap <expr> <buffer> @ <SID>at()
 
     IndentGuidesEnable
@@ -616,8 +511,6 @@ function! InitHtml()
     setlocal tabstop=2
     setlocal softtabstop=2
     setlocal expandtab
-
-    call MapHTMLKeys()
 
     IndentGuidesEnable
 endfunction
@@ -750,9 +643,6 @@ autocmd BufEnter * if &filetype == "json" | call InitJson() | endif
 noremap ZZ <Nop>
 noremap ZQ <Nop>
 
-" *でビジュアルモードで選んでる文字を検索
-" vnoremap * "zy:let @/ = @z<CR>n
-
 " ?では、lineソースを使った検索にする
 nnoremap <silent> ? :<C-u>Unite line -buffer-name=search -start-insert<CR>
 
@@ -825,6 +715,9 @@ noremap ; :
 
 " ペーストしたテキストを再選択
 nnoremap <expr> gp '`[' . strpart(getregtype(), 0, 1) . '`]'
+
+" 検索でvery magcjを有効に
+nnoremap /  /\v
 
 " ESC2度押しで検索ハイライトを消す
 nnoremap <Esc><Esc> :<C-u>nohlsearch<CR>
@@ -906,6 +799,8 @@ let g:ac_smooth_scroll_enable_accelerating = 0
 " シフトで多めに移動
 nmap <silent> J <Plug>(ac-smooth-scroll-c-d)
 nmap <silent> K <Plug>(ac-smooth-scroll-c-u)
+vnoremap J 10j
+vnoremap K 10k
 noremap L 10l
 noremap H 10h
 
