@@ -11,7 +11,6 @@
 " ==============
 "  SECTION: TODO
 " ==============
-"  TODO
 " vim-refで開くとき、split
 " L461 augroup
 " ==============
