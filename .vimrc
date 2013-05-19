@@ -853,7 +853,7 @@ endfunction
 
 nnoremap <silent> <Space>on :<C-u>call <SID>toggle_nu()<CR>
 nnoremap <silent> <Space>ol :<C-u>call <SID>toggle_option('cursorline', 'cursorcolumn')<CR>
-nnoremap <silent> <Space>or :<C-u>call <SID>toggle_option('rightlefto')<CR>
+nnoremap <silent> <Space>or :<C-u>call <SID>toggle_option('rightleft')<CR>
 nnoremap <silent> <Space>ou :<C-u>GundoToggle<CR>
 nnoremap <silent> <Space>os :<C-u>SyntasticToggleMode<CR>
 nmap <silent> <Space>oi <Plug>IndentGuidesToggle
