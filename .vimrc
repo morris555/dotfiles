@@ -321,7 +321,7 @@ filetype plugin indent on
 " ==============
 " {{{
 set encoding=utf-8
-set fileencodings=iso-2022-jp-3,iso-2022-jp,euc-jisx0213,euc-jp,ucs-bom,euc-jp,eucjp-ms,cp932
+" set fileencodings=iso-2022-jp-3,iso-2022-jp,euc-jisx0213,euc-jp,ucs-bom,euc-jp,eucjp-ms,cp932
 set fileformats=unix,dos,mac
 set ambiwidth=double
 
@@ -503,7 +503,7 @@ function! InitPhp()
 
     IndentGuidesEnable
 endfunction
-autocmd BufEnter * if &filetype == "php" | call InitPhp() | endif
+autocmd FileType php call InitPhp()
 " }}}
 " HTML {{{
 function! InitHtml()
@@ -514,7 +514,7 @@ function! InitHtml()
 
     IndentGuidesEnable
 endfunction
-autocmd BufEnter * if &filetype == "html" | call InitHtml() | endif
+autocmd FileType html call InitHtml()
 " }}}
 " vim {{{
 function! InitVim()
@@ -526,7 +526,7 @@ function! InitVim()
 
     IndentGuidesEnable
 endfunction
-autocmd BufEnter * if &filetype == "vim" | call InitVim() | endif
+autocmd FileType vim call InitVim()
 " }}}
 " vimp {{{
 function! InitVimp()
@@ -540,7 +540,7 @@ function! InitVimp()
 
     IndentGuidesEnable
 endfunction
-autocmd BufEnter * if &filetype == "vimperator" | call InitVimp() | endif
+autocmd FileType vimperator call InitVimp()
 " }}}
 " haskell {{{
 function! InitHaskell()
@@ -552,7 +552,7 @@ function! InitHaskell()
 
     IndentGuidesEnable
 endfunction
-autocmd BufEnter * if &filetype == "haskell" | call InitHaskell() | endif
+autocmd FileType haskell call InitHaskell()
 " }}}
 " cofee script {{{
 function! InitCoffee()
@@ -564,7 +564,7 @@ function! InitCoffee()
 
     IndentGuidesEnable
 endfunction
-autocmd BufEnter * if &filetype == "coffee" | call InitCoffee() | endif
+autocmd FileType coffee call InitCoffee()
 " }}}
 " markdown {{{
 function! InitMarkdown()
@@ -576,7 +576,7 @@ function! InitMarkdown()
 
     IndentGuidesEnable
 endfunction
-autocmd BufEnter * if &filetype == "markdown" | call InitMarkdown() | endif
+autocmd FileType markdown call InitMarkdown()
 " }}}
 " python {{{
 function! InitPython()
@@ -604,7 +604,7 @@ function! InitPython()
 
     IndentGuidesEnable
 endfunction
-autocmd BufEnter * if &filetype == "python" | call InitPython() | endif
+autocmd FileType python call InitPython()
 
 " pythonのrename用のマッピングがquickrunとかぶるため回避させる
 let g:jedi#rename_command = "<Leader><C-r><C-r>"
@@ -618,7 +618,7 @@ let g:flake8_builtins="_,apply"
 function! InitJavaScript()
     IndentGuidesEnable
 endfunction
-autocmd BufEnter * if &filetype == "javascript" | call InitJavaScript() | endif
+autocmd FileType javascript call InitVim()
 " DOMとMozilla関連とES6のメソッドを補完
 let g:jscomplete_use = ['dom', 'moz', 'es6th']
 " shiftwidthを1にしてインデント
@@ -634,7 +634,7 @@ function! InitJson()
     set expandtab
     IndentGuidesEnable
 endfunction
-autocmd BufEnter * if &filetype == "json" | call InitJson() | endif
+autocmd FileType json call InitJson()
 " }}}
 " ==============
 "  SECTION: mapping
