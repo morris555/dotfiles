@@ -159,9 +159,6 @@ NeoBundle 't9md/vim-surround_custom_mapping'
 " テキスト移動
 NeoBundle 't9md/vim-textmanip'
 
-" スクロールをスムーズ&加速
-NeoBundle 'yonchu/accelerated-smooth-scroll'
-
 " wやeを賢く
 NeoBundle 'kana/vim-smartword'
 
@@ -785,15 +782,9 @@ nnoremap g$ $
 nnoremap [ %
 nnoremap ] %
 
-" デフォルトマッピングを無効にする (必要なら)
-let g:ac_smooth_scroll_no_default_key_mappings = 1
-let g:ac_smooth_scroll_enable_accelerating = 0
-
 " シフトで多めに移動
-nmap <silent> J <Plug>(ac-smooth-scroll-c-d)
-nmap <silent> K <Plug>(ac-smooth-scroll-c-u)
-vnoremap J 10j
-vnoremap K 10k
+noremap J 20j
+noremap K 20k
 noremap L 10l
 noremap H 10h
 
