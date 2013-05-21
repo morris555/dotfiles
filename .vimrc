@@ -149,6 +149,7 @@ NeoBundle 'thinca/vim-quickrun'
 " リファレンスを開く
 NeoBundle 'thinca/vim-ref'
 NeoBundle 'mojako/ref-sources.vim'
+NeoBundle 'Shougo/echodoc'
 
 NeoBundle 'yuratomo/w3m.vim'
 
@@ -368,6 +369,8 @@ set wildchar=<tab>
 set wildmode=list:full
 set history=1000
 set complete+=k
+
+set noshowmode
 
 " searching
 set ignorecase
