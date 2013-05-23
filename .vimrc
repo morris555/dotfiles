@@ -1202,7 +1202,7 @@ nmap # <Plug>(anzu-sharp-with-echo)zO
 " git-gutter-vim {{{
 let g:no_auto_gitgutter = 1
 augroup gitgutter
-    autocmd CursorHold  * :GitGutter
+    autocmd CursorHold  * if "" == &buftype && "" != expand("%") | execute "GitGutter" | endif
 augroup END
 " }}}
 " unite {{{
