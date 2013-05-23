@@ -205,6 +205,7 @@ NeoBundle 'tyru/restart.vim'
 " git
 NeoBundle 'tpope/vim-fugitive'
 NeoBundle 'gregsexton/gitv'
+NeoBundle "tekkoc/git-gutter-vim"
 
 " markdown
 NeoBundle 'tpope/vim-markdown'
@@ -1197,6 +1198,12 @@ nmap n <Plug>(anzu-n-with-echo)zO
 nmap N <Plug>(anzu-N-with-echo)zO
 nmap * <Plug>(anzu-star-with-echo)zO
 nmap # <Plug>(anzu-sharp-with-echo)zO
+" }}}
+" git-gutter-vim {{{
+let g:no_auto_gitgutter = 1
+augroup gitgutter
+    autocmd CursorHold  * :GitGutter
+augroup END
 " }}}
 " unite {{{
 
