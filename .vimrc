@@ -1201,9 +1201,9 @@ nmap # <Plug>(anzu-sharp-with-echo)zO
 " }}}
 " git-gutter-vim {{{
 let g:no_auto_gitgutter = 1
-augroup gitgutter
-    autocmd CursorHold  * if "" == &buftype && "" != expand("%") | execute "GitGutter" | endif
-augroup END
+nnoremap <leader>ge <Nop>
+nnoremap <silent> <leader>gg :<C-u>GitGutter<CR>
+nnoremap <silent> <leader>gd :<C-u>execute ":sign unplace * file=" . expand("%:p")<Cr>
 " }}}
 " unite {{{
 
