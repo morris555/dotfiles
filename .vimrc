@@ -1312,8 +1312,8 @@ let g:neocomplcache_member_prefix_patterns['php'] = '->\|::'
 let g:neocomplcache_tags_caching_limit_file_size = 5000000
 
 " neocomplcache#start_manual_complete([{sources}])
-" inoremap <expr> <C-n> neocomplcache#start_manual_complete(['tags_complete'])
-inoremap <expr> <C-n> neocomplcache#start_manual_complete(['buffer_complete'])
+" inoremap <expr> <C-n> <C-x><C-f>
+" inoremap  <C-n> <C-x><C-]>
 
 let g:neocomplcache_enable_at_startup = 1
 let g:neocomplcache_min_syntax_length = 3
@@ -1329,9 +1329,6 @@ let g:neocomplcache_dictionary_filetype_lists = {
 let g:neocomplcache_release_cache_time = 7200
 
 let g:use_zen_complete_tag = 1
-
-" vim標準のキーワード補完を置き換える
-" inoremap <expr><C-n> neocomplcache#manual_keyword_complete()
 
 " Define keyword.
 if !exists('g:neocomplcache_keyword_patterns')
