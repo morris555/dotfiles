@@ -465,9 +465,9 @@ au BufNewFile,BufRead *.txt set filetype=markdown
 au BufNewFile,BufRead */doc/*.txt set filetype=help
 au BufNewFile,BufRead *.vimperatorrc set filetype=vimperator
 
-autocmd FileType php :set dictionary+=~/.vim/dict/php.dict
 autocmd FileType scala :set dictionary+=~/.vim/dict/scala.dict
 set complete+=k
+
 " }}}
 " {{{ デフォルト
 set shiftwidth=4
@@ -489,11 +489,15 @@ function! InitPhp()
 
     setlocal commentstring=//%s
 
+    setlocal dictionary+=~/.vim/dict/php.dict
+
     " {{で<?php }}で?>
     inoremap <buffer><expr> { getline('.')[col('.') - 2] ==# '{' ? "\<BS><?php" : '{'
     inoremap <buffer><expr> } getline('.')[col('.') - 2] ==# '}' ? "\<BS>?>" : '}'
 
     inoremap <expr> <buffer> @ <SID>at()
+
+    nnoremap <silent><buffer> <Space>tu :<C-u>!ctags --languages=PHP --sort=foldcase -R --php-kinds=cifd<CR>
 
     IndentGuidesEnable
 endfunction
@@ -644,6 +648,7 @@ nnoremap <silent> ? :<C-u>Unite line -buffer-name=search -start-insert<CR>
 nnoremap <silent> # :<C-U>UniteWithCursorWord -buffer-name=search line<CR>
 
 " 入力中に<C-u>で大文字に
+" TODO neocomplcache#smart_close_popup()を使わないと駄目かも
 inoremap <silent> <C-u> <Esc>gUiWea
 
 " folding
@@ -682,8 +687,6 @@ nnoremap <silent> <Space>tn :tn<CR>
 nnoremap <silent> <Space>tp :tp<CR>
 nnoremap <silent> <Space>tj <C-]>:<C-u>split<CR><C-o><C-o><C-w>j
 nnoremap <silent> <Space>tk <C-]>:<C-u>vsplit<CR><C-o><C-o><C-w>l
-nnoremap <silent> <Space>tu :<C-u>!ctags -R<CR>
-autocmd FileType php nnoremap <silent><buffer> <Space>tu :<C-u>!ctags --languages=PHP --sort=foldcase -R --php-kinds=cfd<CR>
 autocmd FileType coffee nnoremap <silent><buffer> <Space>tu :<C-u>!ctags --languages=coffee -R<CR>
 
 " <C-l>でEscする
@@ -1301,16 +1304,22 @@ endfunction
 let $PATH=$PATH . ":" . $HOME . "/.cabal/bin"
 let $PATH=$PATH . ":" . $HOME . "/.virtualenvs"
 
-" ファイル名補完
-inoremap <expr><C-x><C-f>  neocomplcache#manual_filename_complete()
+"タグ補完の呼び出しパターン
+if !exists('g:neocomplcache_member_prefix_patterns')
+  let g:neocomplcache_member_prefix_patterns = {}
+endif
+let g:neocomplcache_member_prefix_patterns['php'] = '->\|::'
+let g:neocomplcache_tags_caching_limit_file_size = 5000000
+
+" neocomplcache#start_manual_complete([{sources}])
+" inoremap <expr> <C-n> neocomplcache#start_manual_complete(['tags_complete'])
+inoremap <expr> <C-n> neocomplcache#start_manual_complete(['buffer_complete'])
 
 let g:neocomplcache_enable_at_startup = 1
-let g:neocomplcache_enable_smart_case = 'ignorecase'
-let g:neocomplcache_max_menu_width = 30
 let g:neocomplcache_min_syntax_length = 3
 let g:neocomplcache_min_keyword_length = 3
 let g:neocomplcache_caching_limit_file_size = 5000000
-let g:neocomplcache_dictionary_file_type_lists = {
+let g:neocomplcache_dictionary_filetype_lists = {
             \'default' : '',
             \'php' : $HOME.'/.vim/dict/php.dict',
             \'scala' : $HOME.'/.vim/dict/scala.dict',
@@ -1319,6 +1328,11 @@ let g:neocomplcache_dictionary_file_type_lists = {
 
 let g:neocomplcache_release_cache_time = 7200
 
+let g:use_zen_complete_tag = 1
+
+" vim標準のキーワード補完を置き換える
+" inoremap <expr><C-n> neocomplcache#manual_keyword_complete()
+
 " Define keyword.
 if !exists('g:neocomplcache_keyword_patterns')
     let g:neocomplcache_keyword_patterns = {}
@@ -1326,31 +1340,16 @@ endif
 let g:neocomplcache_keyword_patterns['default'] = '\h\w*'
 
 " Enable omni completion.
-" autocmd filetype css setlocal omnifunc=csscomplete#completecss
-" autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
-" autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
-" autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
-" autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
 autocmd FileType haskell setlocal omnifunc=necoghc#omnifunc
 
+" TODO
 " imap <C-u> <Plug>(neocomplcache_start_unite_complete)
 " imap <C-u> <Plug>(neocomplcache_start_unite_quick_match)
 
-" todo
-" g:neocomplcache_same_filetype_lists
-" g:neocomplcache_context_filetype_lists
-" g:neocomplcache_text_mode_filetypes
-" g:neocomplcache_ctags_arguments_list
-" g:neocomplcache_filename_include_exprs
-" g:neocomplcache_filename_include_exts
-" g:neocomplcache_delimiter_patterns
-" g:neocomplcache_source_rank
-
 " neosnippet
-imap <C-k>     <Plug>(neosnippet_expand_or_jump)
-smap <C-k>     <Plug>(neosnippet_expand_or_jump)
-" imap <expr><C-k> neosnippet#expandable() <Bar><bar> neosnippet#jumpable() ? "\<Plug>(neosnippet_expand_or_jump)" : pumvisible() ? "\<C-n>" : "\<TAB>"
-" smap <expr><C-k> neosnippet#expandable() <Bar><bar> neosnippet#jumpable() ? "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
+" スニペットを展開する。スニペットが関係しないところでは行末まで削除
+imap <expr><C-k> neosnippet#expandable() <Bar><bar> neosnippet#jumpable() ? "\<Plug>(neosnippet_expand_or_jump)" : "\<C-o>D"
+smap <expr><C-k> neosnippet#expandable() <Bar><bar> neosnippet#jumpable() ? "\<Plug>(neosnippet_expand_or_jump)" : "\<C-o>D"
 
 let g:neosnippet#snippets_directory='~/Dropbox/vim/snippet'
 let g:neosnippet#disable_runtime_snippets = {
