@@ -1208,6 +1208,30 @@ nnoremap <leader>ge <Nop>
 nnoremap <silent> <leader>gg :<C-u>GitGutter<CR>
 nnoremap <silent> <leader>gd :<C-u>execute ":sign unplace * file=" . expand("%:p")<Cr>
 " }}}
+" gitv {{{
+autocmd FileType git setlocal nofoldenable foldlevel=0
+function! s:gitv_get_current_hash()
+  return matchstr(getline('.'), '\[\zs.\{7\}\ze\]$')
+endfunction
+function! s:toggle_git_folding()
+  if &filetype ==# 'git'
+    setlocal foldenable!
+  endif
+endfunction
+function! InitGitv()
+    setlocal iskeyword+=/,-,.
+    nnoremap <silent><buffer> C :<C-u>Git checkout <C-r><C-w><CR>
+
+    nnoremap <silent><buffer> t :<C-u>windo call <SID>toggle_git_folding()<CR>1<C-w>w
+
+    " TODO マッピングを考える
+    " nnoremap <buffer> <Space>rb :<C-u>Git rebase <C-r>=GitvGetCurrentHash()<CR><Space>
+    " nnoremap <buffer> <Space>R :<C-u>Git revert <C-r>=GitvGetCurrentHash()<CR><CR>
+    " nnoremap <buffer> <Space>h :<C-u>Git cherry-pick <C-r>=GitvGetCurrentHash()<CR><CR>
+    " nnoremap <buffer> <Space>rh :<C-u>Git reset --hard <C-r>=GitvGetCurrentHash()<CR>
+endfunction
+autocmd FileType gitv call InitGitv()
+" }}}
 " unite {{{
 
 " 入力モードで開始する
