@@ -112,6 +112,7 @@ NeoBundle 'osyo-manga/vim-powerline-unite-theme'
 
 " 整形
 NeoBundle 'h1mesuke/vim-alignta'
+NeoBundle 'vim-scripts/DrawIt'
 
 " インデントの可視化
 NeoBundle 'nathanaelkane/vim-indent-guides'
