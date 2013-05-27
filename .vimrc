@@ -1485,18 +1485,6 @@ command!
             \   AllMaps
             \   map <args> | map! <args> | lmap <args>
 " }}}
-" EasyPHP {{{
-function! EasyPHP()
-    let [l, m] = [getline('.'), expand('<cWORD>')]
-    let [pos, t, mx] = [strridx(l, m, col('.')), split(m, '\.'), '^\(\$\|\d\|["'']\)']
-    if len(t) == 0 | return | endif
-    let newline = t[0] . '[' . join(map(t[1:], "v:val!~mx?''''.v:val.'''':v:val"),'][') . ']'
-    call setline('.', strpart(l, 0, pos) . newline . strpart(l, pos+len(m)))
-endfunction
-command! -nargs=0 -range -complete=command EasyPHP call EasyPHP()
-" nnoremap <leader>ep :<c-u>%EasyPHP<cr>
-inoremap <c-y>p <esc>:<c-u>%EasyPHP<cr>
-" }}}
 " 連番 {{{
 nnoremap <silent> co :ContinuousNumber <C-a><CR>
 vnoremap <silent> co :ContinuousNumber <C-a><CR>
