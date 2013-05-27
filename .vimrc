@@ -74,6 +74,10 @@ NeoBundle 'vim-scripts/dbext.vim'
 NeoBundle 'Shougo/neocomplcache'
 NeoBundle 'ujihisa/neco-look'
 NeoBundle 'Shougo/neosnippet'
+
+" 自動入力
+NeoBundle 'kana/vim-smartinput'
+
 " easymotion
 NeoBundle 'Lokaltog/vim-easymotion'
 
@@ -492,8 +496,8 @@ function! InitPhp()
     setlocal dictionary+=~/.vim/dict/php.dict
 
     " {{で<?php }}で?>
-    inoremap <buffer><expr> { getline('.')[col('.') - 2] ==# '{' ? "\<BS><?php" : '{'
-    inoremap <buffer><expr> } getline('.')[col('.') - 2] ==# '}' ? "\<BS>?>" : '}'
+    " inoremap <buffer><expr> { getline('.')[col('.') - 2] ==# '{' ? "\<BS><?php" : '{'
+    " inoremap <buffer><expr> } getline('.')[col('.') - 2] ==# '}' ? "\<BS>?>" : '}'
 
     inoremap <expr> <buffer> @ <SID>at()
 
