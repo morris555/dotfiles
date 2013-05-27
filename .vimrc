@@ -252,7 +252,7 @@ NeoBundle "osyo-manga/vim-hideout"
 NeoBundle "mattn/httpstatus-vim"
 
 " toggle
-NeoBundle "taku-o/vim-toggle"
+NeoBundle "tekkoc/vim-toggle"
 
 " Game
 NeoBundle 'mattn/invader-vim'
