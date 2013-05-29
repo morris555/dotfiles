@@ -77,6 +77,7 @@ NeoBundle 'Shougo/neosnippet'
 
 " 自動入力
 NeoBundle 'kana/vim-smartinput'
+NeoBundle 'kana/vim-smartchr'
 
 " easymotion
 NeoBundle 'Lokaltog/vim-easymotion'
@@ -499,10 +500,18 @@ function! InitPhp()
     " {{で<?php }}で?>
     " inoremap <buffer><expr> { getline('.')[col('.') - 2] ==# '{' ? "\<BS><?php" : '{'
     " inoremap <buffer><expr> } getline('.')[col('.') - 2] ==# '}' ? "\<BS>?>" : '}'
+    "
 
     inoremap <expr> <buffer> @ <SID>at()
 
+    nnoremap <buffer><expr> <space>; getline('.')[col('$') - 2] == ';' ? "" : 'A;<Esc>'
+
     nnoremap <silent><buffer> <Space>tu :<C-u>!ctags --languages=PHP --sort=foldcase -R --php-kinds=cifd<CR>
+
+    inoremap <buffer><expr> = smartchr#one_of(' = ', ' == ', ' === ', '=')
+    inoremap <buffer><expr> . smartchr#one_of('.', '->', '=>', '..')
+    inoremap <buffer><expr> , smartchr#one_of(', ', ',')
+    " 末尾で,を打つとスペースが残ってしまうが、smartinputの設定で改行時に末尾スペースを消している
 
     IndentGuidesEnable
 endfunction
@@ -719,7 +728,7 @@ noremap ; :
 nnoremap <expr> gp '`[' . strpart(getregtype(), 0, 1) . '`]'
 
 " 検索でvery magcjを有効に
-nnoremap /  /\v
+" nnoremap /  /\v
 
 " ESC2度押しで検索ハイライトを消す
 nnoremap <Esc><Esc> :<C-u>nohlsearch<CR>
@@ -903,8 +912,6 @@ function! MakeTabLine()
     let s:sep = '    '  " タブ間の区切り
     let s:tabpages = join(s:titles, s:sep) . s:sep . '%#TabLineFill#%T'
     let s:info = ''
- let s:info .= '[%F]'
-    let s:info .= '   '
 
     let s:info .= fnamemodify(getcwd(), ":~") . ' '
 
@@ -1212,6 +1219,14 @@ let g:no_auto_gitgutter = 1
 nnoremap <leader>ge <Nop>
 nnoremap <silent> <leader>gg :<C-u>GitGutter<CR>
 nnoremap <silent> <leader>gd :<C-u>execute ":sign unplace * file=" . expand("%:p")<Cr>
+" }}}
+" smartinput {{{
+" call smartinput#define_rule({
+" \   'at': '\s\+\%#',
+" \   'char': '<CR>',
+" \   'input': "<C-o>:call setline('.', substitute(getline('.'), '\\s\\+$', '', ''))<CR><CR>",
+" \   'filetype': ['php'],
+" \   })
 " }}}
 " gitv {{{
 autocmd FileType git setlocal nofoldenable foldlevel=0
