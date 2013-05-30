@@ -510,6 +510,7 @@ function! InitPhp()
 
     inoremap <buffer><expr> = smartchr#one_of(' = ', ' == ', ' === ', '=')
     inoremap <buffer><expr> . smartchr#one_of('.', '->', '=>', '..')
+    inoremap <buffer><expr> ! smartchr#one_of('!', ' != ', '!!')
     inoremap <buffer><expr> , smartchr#one_of(', ', ',')
     " 末尾で,を打つとスペースが残ってしまうが、smartinputの設定で改行時に末尾スペースを消している
 
