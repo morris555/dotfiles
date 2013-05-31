@@ -111,6 +111,8 @@ NeoBundle 'tekkoc/unite-decorate-text'
 " Unite powerline
 NeoBundle 'osyo-manga/vim-powerline-unite-theme'
 
+NeoBundle 'git@github.com:tekkoc/rmine.vim.git'
+
 " 整形
 NeoBundle 'h1mesuke/vim-alignta'
 NeoBundle 'vim-scripts/DrawIt'
@@ -1057,11 +1059,10 @@ omap <Leader>b  <Plug>(smartword-b)
 " omap <Leader>ge  <Plug>(smartword-ge)
 " }}}
 " visualmark {{{
-" TODO 一時的に無効
-" map <silent> <Leader>vs <Plug>Vm_toggle_sign
-" map <silent> <Leader>vv <Plug>Vm_toggle_sign
-" map <silent> <Leader>vj <Plug>Vm_goto_next_sign
-" map <silent> <Leader>vk <Plug>Vm_goto_prev_sign
+nmap <silent> <Leader>vs <Plug>Vm_toggle_sign
+nmap <silent> <Leader>vv <Plug>Vm_toggle_sign
+nmap <silent> <Leader>vj <Plug>Vm_goto_next_sign
+nmap <silent> <Leader>vk <Plug>Vm_goto_prev_sign
 " }}}
 " easymotion {{{
 let g:EasyMotion_leader_key='<Leader>m'
