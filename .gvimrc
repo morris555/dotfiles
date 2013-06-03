@@ -28,10 +28,13 @@ if has('gui_macvim')
     " visualmark
     if &bg == "dark"
         " highlight SignColor ctermfg=white ctermbg=blue guibg=#073672
-        " highlight SignColor ctermfg=white ctermbg=blue guibg=darkblue
+        highlight SignColor ctermfg=white ctermbg=blue guibg=darkblue
     else
-        " highlight SignColor ctermbg=white ctermfg=blue guibg=grey guifg=RoyalBlue3
+        highlight SignColor ctermbg=white ctermfg=blue guibg=grey guifg=RoyalBlue3
     endif
+
+    " highlight MatchParen cterm=underline ctermbg=0
+    " highlight MatchParen gui=underline guifg=red guibg=bg
 
     " Hack #120: gVim でウィンドウの位置とサイズを記憶する
     " http://vim-users.jp/2010/01/hack120/

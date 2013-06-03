@@ -169,7 +169,7 @@ NeoBundle 't9md/vim-surround_custom_mapping'
 NeoBundle 't9md/vim-textmanip'
 
 " wやeを賢く
-NeoBundle 'kana/vim-smartword'
+" NeoBundle 'kana/vim-smartword'
 
 " iTunes
 NeoBundle 'ryutorion/vim-itunes'
@@ -264,6 +264,7 @@ NeoBundle 'mfumi/viminesweeper'
 NeoBundle 'mfumi/lightsout.vim'
 NeoBundle 'vim-scripts/vim-game-of-life'
 NeoBundle 'tyru/pacman.vim'
+NeoBundle 'deris/vim-duzzle'
 " }}}
 " ==============
 "  SECTION: define
@@ -503,6 +504,8 @@ function! InitPhp()
     " inoremap <buffer><expr> { getline('.')[col('.') - 2] ==# '{' ? "\<BS><?php" : '{'
     " inoremap <buffer><expr> } getline('.')[col('.') - 2] ==# '}' ? "\<BS>?>" : '}'
     "
+
+    set matchpairs+==:;
 
     inoremap <expr> <buffer> @ <SID>at()
 
@@ -1046,15 +1049,15 @@ command! -nargs=1 Wiki :Ref wikipedia <args>
 let g:ref_phpmanual_path = $HOME. '/dotfiles/.vim/phpmanual/'
 " }}}
 " smartword.vim {{{
-nmap w  <Plug>(smartword-w)
-nmap b  <Plug>(smartword-b)
-nmap ge  <Plug>(smartword-ge)
-xmap w  <Plug>(smartword-w)
-xmap b  <Plug>(smartword-b)
-xmap e  <Plug>(smartword-e)
+" nmap w  <Plug>(smartword-w)
+" nmap b  <Plug>(smartword-b)
+" nmap ge  <Plug>(smartword-ge)
+" xmap w  <Plug>(smartword-w)
+" xmap b  <Plug>(smartword-b)
+" xmap e  <Plug>(smartword-e)
 " Operator pending mode.
-omap <Leader>w  <Plug>(smartword-w)
-omap <Leader>b  <Plug>(smartword-b)
+" omap <Leader>w  <Plug>(smartword-w)
+" omap <Leader>b  <Plug>(smartword-b)
 " TODO <Leader>gを他で使いたいため、一時的に無効に
 " omap <Leader>ge  <Plug>(smartword-ge)
 " }}}
