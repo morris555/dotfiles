@@ -395,6 +395,8 @@ set clipboard=unnamed
 
 set nojoinspaces
 
+set imdisable
+
 " 折り畳み関連
 set foldmethod=marker
 
@@ -1550,6 +1552,11 @@ function! s:Jq(...)
     endif
     execute "%! cat % | jq \"" . l:arg . "\""
 endfunction
+" }}}
+" skype {{{
+" vimからskypeウィンドウを開く
+command! -nargs=0 Skype :Unite file_rec/async:~/skype_link -buffer-name=file -start-insert -default-action=start
+nnoremap <Space>s :Skype<CR>
 " }}}
 " ==========
 " SECTION: gui
