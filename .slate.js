@@ -135,6 +135,7 @@ key_binds['down:'+pre_quarter] = slate.operation("corner", {
 key_binds['j:alt'] = focus('Firefox');
 key_binds['k:alt'] = focus('MacVim');
 key_binds['l:alt'] = focus('ターミナル');
+key_binds[';:alt'] = focus('Skype');
 
 key_binds['space:alt'] = slate.operation("hint", {
   "characters" : "ASDFGHJKLQWERTYUIOPCVBN"

@@ -88,6 +88,9 @@ NeoBundle 'tyru/open-browser.vim'
 " ambicmd
 NeoBundle 'thinca/vim-ambicmd'
 
+" lingr
+NeoBundle 'basyura/J6uil.vim'
+
 " coffeescriptなどに使う
 NeoBundle 'ujihisa/shadow.vim'
 
