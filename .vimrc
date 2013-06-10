@@ -122,6 +122,7 @@ NeoBundle 'vim-scripts/DrawIt'
 
 " インデントの可視化
 NeoBundle 'nathanaelkane/vim-indent-guides'
+NeoBundle 'Yggdroot/indentLine'
 
 " syntaxチェック
 NeoBundle 'scrooloose/syntastic'
@@ -406,8 +407,9 @@ set foldmethod=marker
 " 改行文字などの表示
 set list
 " set listchars=tab:>-,eol:↴,trail:-,nbsp:%,extends:>,precedes:<
-set listchars=tab:▸\ ,eol:↴,trail:-,extends:>,precedes:<
-set listchars=tab:▸\ ,eol:↴,trail:-,nbsp:%,extends:>,precedes:<
+" set listchars=tab:▸\ ,eol:↴,trail:-,extends:>,precedes:<
+" set listchars=tab:▸\ ,eol:↴,trail:-,nbsp:%,extends:>,precedes:<
+set listchars=tab:¦\ ,eol:↴,trail:-,nbsp:%,extends:>,precedes:<
 " set listchars=tab:▸\,eol:↴,trail:-,extends:»,precedes:«,nbsp:%
 set fillchars=vert:\ ,fold:\ ,diff:\
 
@@ -494,9 +496,10 @@ set expandtab
 " {{{ PHP
 function! InitPhp()
     " phpはタブ幅4でタブ文字を使う
-    setlocal shiftwidth=4
-    setlocal tabstop=4
-    setlocal softtabstop=4
+    setlocal nomodeline
+    setlocal shiftwidth=2
+    setlocal tabstop=2
+    setlocal softtabstop=2
     setlocal noexpandtab
 
     " 「$hoge」をまとめてwordとする
@@ -506,11 +509,6 @@ function! InitPhp()
 
     setlocal dictionary+=~/.vim/dict/php.dict
 
-    " {{で<?php }}で?>
-    " inoremap <buffer><expr> { getline('.')[col('.') - 2] ==# '{' ? "\<BS><?php" : '{'
-    " inoremap <buffer><expr> } getline('.')[col('.') - 2] ==# '}' ? "\<BS>?>" : '}'
-    "
-
     set matchpairs+==:;
 
     inoremap <expr> <buffer> @ <SID>at()
@@ -519,13 +517,11 @@ function! InitPhp()
 
     nnoremap <silent><buffer> <Space>tu :<C-u>!ctags --languages=PHP --sort=foldcase -R --php-kinds=cifd<CR>
 
-    inoremap <buffer><expr> = smartchr#one_of(' = ', ' == ', ' === ', '=')
+    inoremap <buffer><expr> = smartchr#one_of('=', ' = ', ' == ', ' === ', '==')
     inoremap <buffer><expr> . smartchr#one_of('.', '->', '=>', '..')
     inoremap <buffer><expr> ! smartchr#one_of('!', ' != ', '!!')
     inoremap <buffer><expr> , smartchr#one_of(', ', ',')
     " 末尾で,を打つとスペースが残ってしまうが、smartinputの設定で改行時に末尾スペースを消している
-
-    IndentGuidesEnable
 endfunction
 autocmd FileType php call InitPhp()
 " }}}
@@ -536,7 +532,7 @@ function! InitHtml()
     setlocal softtabstop=2
     setlocal expandtab
 
-    IndentGuidesEnable
+    " IndentGuidesEnable
 endfunction
 autocmd FileType html call InitHtml()
 " }}}
@@ -548,7 +544,7 @@ function! InitVim()
     setlocal softtabstop=4
     setlocal expandtab
 
-    IndentGuidesEnable
+    " IndentGuidesEnable
 endfunction
 autocmd FileType vim call InitVim()
 " }}}
@@ -562,9 +558,15 @@ function! InitVimp()
 
     setlocal commentstring=\"%s
 
-    IndentGuidesEnable
+    " IndentGuidesEnable
 endfunction
 autocmd FileType vimperator call InitVimp()
+" }}}
+" sql {{{
+function! InitSql()
+    setlocal commentstring=\--%s
+endfunction
+autocmd FileType sql call InitSql()
 " }}}
 " haskell {{{
 function! InitHaskell()
@@ -574,7 +576,7 @@ function! InitHaskell()
     setlocal softtabstop=4
     setlocal expandtab
 
-    IndentGuidesEnable
+    " IndentGuidesEnable
 endfunction
 autocmd FileType haskell call InitHaskell()
 " }}}
@@ -586,7 +588,7 @@ function! InitCoffee()
     setlocal softtabstop=2
     setlocal expandtab
 
-    IndentGuidesEnable
+    " IndentGuidesEnable
 endfunction
 autocmd FileType coffee call InitCoffee()
 " }}}
@@ -598,7 +600,7 @@ function! InitMarkdown()
     setlocal softtabstop=4
     setlocal expandtab
 
-    IndentGuidesEnable
+    " IndentGuidesEnable
 endfunction
 autocmd FileType markdown call InitMarkdown()
 " }}}
@@ -626,7 +628,7 @@ function! InitPython()
 
     nnoremap <buffer> <leader>l :<C-u>call Flake8()<CR>
 
-    IndentGuidesEnable
+    " IndentGuidesEnable
 endfunction
 autocmd FileType python call InitPython()
 
@@ -640,7 +642,7 @@ let g:flake8_builtins="_,apply"
 " }}}
 " javascript {{{
 function! InitJavaScript()
-    IndentGuidesEnable
+    " IndentGuidesEnable
 endfunction
 autocmd FileType javascript call InitVim()
 " DOMとMozilla関連とES6のメソッドを補完
@@ -656,7 +658,7 @@ function! InitJson()
     set tabstop=2
     set softtabstop=2
     set expandtab
-    IndentGuidesEnable
+    " IndentGuidesEnable
 endfunction
 autocmd FileType json call InitJson()
 " }}}
@@ -860,25 +862,24 @@ function! s:toggle_option(...)
     endfor
 endfunction
 
-function! s:toggle_nu()
-    if !&number && !&relativenumber
-        set number
-        set norelativenumber
-    elseif &number
-        set nonumber
-        set relativenumber
-    elseif &relativenumber
-        set nonumber
-        set norelativenumber
+function! s:toggle_indent()
+    if &tabstop == 2
+        setlocal shiftwidth=4
+        setlocal tabstop=4
+        setlocal softtabstop=4
+    else
+        setlocal shiftwidth=2
+        setlocal tabstop=2
+        setlocal softtabstop=2
     endif
 endfunction
 " }}}
 
-nnoremap <silent> <Space>on :<C-u>call <SID>toggle_nu()<CR>
 nnoremap <silent> <Space>ol :<C-u>call <SID>toggle_option('cursorline', 'cursorcolumn')<CR>
 nnoremap <silent> <Space>or :<C-u>call <SID>toggle_option('rightleft')<CR>
 nnoremap <silent> <Space>ou :<C-u>GundoToggle<CR>
 nnoremap <silent> <Space>os :<C-u>SyntasticToggleMode<CR>
+nnoremap <silent> <Space>ot :<C-u>call <SID>toggle_indent()<CR>
 nmap <silent> <Space>oi <Plug>IndentGuidesToggle
 " }}}
 " ==============
