@@ -11,7 +11,6 @@
 " ==============
 "  SECTION: TODO
 " ==============
-" vim-refで開くとき、split
 " L461 augroup
 " ==============
 "  SECTION: Neoundle
@@ -122,7 +121,6 @@ NeoBundle 'vim-scripts/DrawIt'
 
 " インデントの可視化
 NeoBundle 'nathanaelkane/vim-indent-guides'
-NeoBundle 'Yggdroot/indentLine'
 
 " syntaxチェック
 NeoBundle 'scrooloose/syntastic'
@@ -495,7 +493,6 @@ set expandtab
 " }}}
 " {{{ PHP
 function! InitPhp()
-    " phpはタブ幅4でタブ文字を使う
     setlocal nomodeline
     setlocal shiftwidth=2
     setlocal tabstop=2
@@ -509,7 +506,7 @@ function! InitPhp()
 
     setlocal dictionary+=~/.vim/dict/php.dict
 
-    set matchpairs+==:;
+    setlocal matchpairs+==:;
 
     inoremap <expr> <buffer> @ <SID>at()
 
@@ -521,6 +518,8 @@ function! InitPhp()
     inoremap <buffer><expr> . smartchr#one_of('.', '->', '=>', '..')
     inoremap <buffer><expr> ! smartchr#one_of('!', ' != ', '!!')
     inoremap <buffer><expr> , smartchr#one_of(', ', ',')
+
+    " TODO ↓紆余曲折あって消してない
     " 末尾で,を打つとスペースが残ってしまうが、smartinputの設定で改行時に末尾スペースを消している
 endfunction
 autocmd FileType php call InitPhp()
@@ -918,7 +917,6 @@ function! s:tabpage_label(n)
 
     return '%' . a:n . 'T' . hi . label . '%T%#TabLineFill#'
 endfunction
-command! -nargs=1 SetTitle :let t:title="<args>"
 
 function! MakeTabLine()
     let s:titles = map(range(1, tabpagenr('$')), 's:tabpage_label(v:val)')
@@ -1221,10 +1219,14 @@ nmap <C-T> <Plug>ToggleN
 vmap <C-T> <Plug>ToggleV
 " }}}
 " vim-anzu {{{
-nmap n <Plug>(anzu-n-with-echo)zO
-nmap N <Plug>(anzu-N-with-echo)zO
-nmap * <Plug>(anzu-star-with-echo)zO
-nmap # <Plug>(anzu-sharp-with-echo)zO
+nmap n <Plug>(anzu-n-with-echo)
+nmap N <Plug>(anzu-N-with-echo)
+nmap * <Plug>(anzu-star-with-echo)
+nmap # <Plug>(anzu-sharp-with-echo)
+" nmap n <Plug>(anzu-n-with-echo)zO
+" nmap N <Plug>(anzu-N-with-echo)zO
+" nmap * <Plug>(anzu-star-with-echo)zO
+" nmap # <Plug>(anzu-sharp-with-echo)zO
 " }}}
 " git-gutter-vim {{{
 let g:no_auto_gitgutter = 1
@@ -1481,6 +1483,10 @@ nnoremap MG :MemoGrep<CR>
 command! Ev edit ~/dotfiles/.vimrc
 command! Rv source ~/dotfiles/.vimrc
 
+" Es/Rsでsecret.vimrcの編集と反映
+command! Es edit ~/Dropbox/Vim/secret.vimrc
+command! Rs source ~/Dropbox/Vim/secret.vimrc
+
 " Eg/Rgでgvimrcの編集と反映
 command! Eg edit ~/dotfiles/.gvimrc
 command! Rg source ~/dotfiles/.gvimrc
@@ -1495,6 +1501,8 @@ command! -nargs=1 -complete=filetype Temp edit ~/.vim_tmp/tmp.<args>
 " ファイルタイプのショートカットコマンド
 command! -nargs=1 Type :set filetype=<args>
 command! -nargs=1 Encode :e ++enc=<args>
+
+command! -nargs=1 Title :let t:title="<args>"
 
 " TODOファイル
 command! Todo edit ~/Dropbox/Memo/todo.txt
