@@ -856,7 +856,7 @@ nnoremap <Space>I /^\n<CR>oX<C-h><ESC>kdd
 
 " 行マージ
 vnoremap <C-m> J
-
+" }}}
 " {{{ Toggle options
 function! s:toggle_option(...)
     for option_name in a:000
@@ -876,7 +876,6 @@ function! s:toggle_indent()
         setlocal softtabstop=2
     endif
 endfunction
-" }}}
 
 nnoremap <silent> <Space>ol :<C-u>call <SID>toggle_option('cursorline', 'cursorcolumn')<CR>
 nnoremap <silent> <Space>or :<C-u>call <SID>toggle_option('rightleft')<CR>
@@ -884,7 +883,6 @@ nnoremap <silent> <Space>ou :<C-u>GundoToggle<CR>
 nnoremap <silent> <Space>os :<C-u>SyntasticToggleMode<CR>
 nnoremap <silent> <Space>ot :<C-u>call <SID>toggle_indent()<CR>
 nmap <silent> <Space>oi <Plug>IndentGuidesToggle
-" }}}
 " ==============
 "  SECTION: tab line
 " ==============
