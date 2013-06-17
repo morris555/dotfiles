@@ -150,6 +150,7 @@ NeoBundle 'ujihisa/ref-hoogle'
 NeoBundle 'pasela/unite-fuel'
 NeoBundle 'shawncplus/php.vim'
 NeoBundle 'iakio/smarty3.vim'
+NeoBundle 'xsbeats/vim-blade'
 
 " python
 NeoBundle 'davidhalter/jedi-vim'
@@ -483,6 +484,7 @@ au BufNewFile,BufRead *.as set filetype=actionscript
 au BufNewFile,BufRead *.txt set filetype=markdown
 au BufNewFile,BufRead */doc/*.txt set filetype=help
 au BufNewFile,BufRead *.vimperatorrc set filetype=vimperator
+au BufNewFile,BufRead *.blade.php set filetype=blade
 
 autocmd FileType scala :set dictionary+=~/.vim/dict/scala.dict
 set complete+=k
@@ -512,7 +514,8 @@ function! InitPhp()
 
     setlocal matchpairs+==:;
 
-    inoremap <expr> <buffer> @ <SID>at()
+    " inoremap <expr> <buffer> @ <SID>at()
+    inoremap <expr> <buffer> @ &filetype == 'blade' ? "@" : <SID>at()
 
     nnoremap <buffer><expr> <space>; getline('.')[col('$') - 2] == ';' ? "" : 'A;<Esc>'
 
