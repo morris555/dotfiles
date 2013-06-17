@@ -69,6 +69,9 @@ NeoBundle 'mattn/sonictemplate-vim'
 " db
 NeoBundle 'vim-scripts/dbext.vim'
 
+" debug
+NeoBundle 'joonty/vdebug'
+
 " 補完
 NeoBundle 'Shougo/neocomplcache'
 NeoBundle 'ujihisa/neco-look'
@@ -89,6 +92,7 @@ NeoBundle 'thinca/vim-ambicmd'
 
 " lingr
 NeoBundle 'basyura/J6uil.vim'
+NeoBundle 'basyura/TweetVim'
 
 " coffeescriptなどに使う
 NeoBundle 'ujihisa/shadow.vim'
