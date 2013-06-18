@@ -514,7 +514,6 @@ function! InitPhp()
 
     setlocal matchpairs+==:;
 
-    " inoremap <expr> <buffer> @ <SID>at()
     inoremap <expr> <buffer> @ &filetype == 'blade' ? "@" : <SID>at()
 
     nnoremap <buffer><expr> <space>; getline('.')[col('$') - 2] == ';' ? "" : 'A;<Esc>'
@@ -536,7 +535,7 @@ function! InitHtml()
     setlocal shiftwidth=2
     setlocal tabstop=2
     setlocal softtabstop=2
-    setlocal expandtab
+    setlocal noexpandtab
 
     " IndentGuidesEnable
 endfunction
