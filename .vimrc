@@ -711,11 +711,9 @@ noremap <Space>eg zg
 noremap <Space>ew zw
 noremap <Space>ef z=
 
-" TODO ↓マッチパターンさえ変えればアリ
-" nnoremap <silent> <Space>tt :<C-u>UniteWithCursorWord -immediately tag<CR>
-nnoremap <silent> <Space>tt g<C-]>
+nnoremap <silent> <Space>tt <C-]>
 nnoremap <silent> <space>tT :<C-u>tab stj <C-R>=expand('<cword>')<CR><CR>
-" nnoremap <silent> <space>tl :TagbarToggle<CR>
+nnoremap <silent> <Space>tl :<C-u>UniteWithCursorWord tag<CR>
 nnoremap <silent> <Space>tn :tn<CR>
 nnoremap <silent> <Space>tp :tp<CR>
 nnoremap <silent> <Space>tj <C-]>:<C-u>split<CR><C-o><C-o><C-w>j
