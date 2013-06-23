@@ -1107,7 +1107,8 @@ function! s:vimshell_my_settings()
 endfunction
 " }}}
 " vimfiler {{{
-noremap <Leader>f :<C-u>VimFilerTab<CR>
+noremap <Leader>ff :<C-u>VimFilerExplorer<CR>
+noremap <Leader>fF :<C-u>VimFilerTab<CR>
 
 let g:vimfiler_as_default_explorer = 1    " explorerとして使用する
 let g:vimfiler_safe_mode_by_default = 0   " セーフモードをオフにする
