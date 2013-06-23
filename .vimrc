@@ -1225,11 +1225,6 @@ vmap <C-T> <Plug>ToggleV
 nmap n <Plug>(anzu-n-with-echo)
 nmap N <Plug>(anzu-N-with-echo)
 nmap * <Plug>(anzu-star-with-echo)
-nmap # <Plug>(anzu-sharp-with-echo)
-" nmap n <Plug>(anzu-n-with-echo)zO
-" nmap N <Plug>(anzu-N-with-echo)zO
-" nmap * <Plug>(anzu-star-with-echo)zO
-" nmap # <Plug>(anzu-sharp-with-echo)zO
 " }}}
 " git-gutter-vim {{{
 let g:no_auto_gitgutter = 1
