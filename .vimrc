@@ -372,8 +372,7 @@ set hidden
 set macmeta
 
 " ビープを消す
-set t_vb=
-set novisualbell
+set vb t_vb=
 
 " CursorHoldまでの時間
 set updatetime=1000
@@ -668,22 +667,7 @@ autocmd FileType json call InitJson()
 " ==============
 "  SECTION: mapping
 " ==============
-" {{{
-noremap ZZ <Nop>
-noremap ZQ <Nop>
-
-" ?では、lineソースを使った検索にする
-nnoremap <silent> ? :<C-u>Unite line -buffer-name=search -start-insert<CR>
-
-" #では、カーソル下の文字をlineソースを使って検索する
-nnoremap <silent> # :<C-U>UniteWithCursorWord -buffer-name=search line<CR>
-
-" 入力中に<C-u>で大文字に
-" TODO neocomplcache#smart_close_popup()を使わないと駄目かも
-inoremap <silent> <C-u> <Esc>gUiWea
-
-" folding
-
+" folding {{{
 " 作成
 noremap <Space>fm zf
 " 削除
@@ -700,6 +684,17 @@ noremap <Space>fk zk
 noremap <Space>fn ]z
 noremap <Space>fp [z
 noremap <Space>fi zMzv
+" }}}
+" {{{
+noremap ZZ <Nop>
+noremap ZQ <Nop>
+
+" ?では、lineソースを使った検索にする
+nnoremap <silent> ? :<C-u>Unite line -buffer-name=search -start-insert<CR>
+
+" #では、カーソル下の文字をlineソースを使って検索する
+nnoremap <silent> # :<C-U>UniteWithCursorWord -buffer-name=search line<CR>
+
 
 " spell
 noremap <Space>ee :<C-u>set spell!<CR>
@@ -709,6 +704,7 @@ noremap <Space>eg zg
 noremap <Space>ew zw
 noremap <Space>ef z=
 
+" ctags
 nnoremap <silent> <Space>tt <C-]>
 nnoremap <silent> <space>tT :<C-u>tab stj <C-R>=expand('<cword>')<CR><CR>
 nnoremap <silent> <Space>tl :<C-u>UniteWithCursorWord tag<CR>
@@ -741,9 +737,6 @@ noremap ; :
 
 " ペーストしたテキストを再選択
 nnoremap <expr> gp '`[' . strpart(getregtype(), 0, 1) . '`]'
-
-" 検索でvery magcjを有効に
-" nnoremap /  /\v
 
 " ESC2度押しで検索ハイライトを消す
 nnoremap <Esc><Esc> :<C-u>nohlsearch<CR>
@@ -785,14 +778,6 @@ nnoremap sv :<C-u>vs<CR>
 nnoremap sq :<C-u>q<CR>
 nnoremap sQ :<C-u>bd<CR>
 nnoremap sb :<C-u>Unite buffer -buffer-name=file<CR>
-" nnoremap <Right> <C-w><
-" nnoremap <Left> <C-w>>
-" nnoremap <Up> <C-w>-
-" nnoremap <Down> <C-w>+
-" nnoremap <S-Right> 5<C-w><
-" nnoremap <S-Left> 5<C-w>>
-" nnoremap <S-Up> 5<C-w>-
-" nnoremap <S-Down> 5<C-w>+
 nnoremap <Right> <C-w>>
 nnoremap <Left> <C-w><
 nnoremap <Up> <C-w>+
@@ -803,16 +788,23 @@ nnoremap <S-Up> 5<C-w>+
 nnoremap <S-Down> 5<C-w>-
 
 " 表示行移動
-nnoremap j gj
-nnoremap k gk
-nnoremap gj j
-nnoremap gk k
-nnoremap 0 g0
-nnoremap g0 0
-nnoremap ^ g^
-nnoremap g^ ^
-nnoremap $ g$
-nnoremap g$ $
+" nnoremap j gj
+" nnoremap k gk
+" nnoremap gj j
+" nnoremap gk k
+" nnoremap 0 g0
+" nnoremap g0 0
+" nnoremap ^ g^
+" nnoremap g^ ^
+" nnoremap $ g$
+" nnoremap g$ $
+
+
+" Ctrlで最後まで移動
+noremap <C-e> $
+noremap <C-a> ^
+" noremap <C-e> g$
+" noremap <C-a> g^
 
 " 対応する括弧に移動
 nnoremap [ %
@@ -823,10 +815,6 @@ noremap J 20j
 noremap K 20k
 noremap L 10l
 noremap H 10h
-
-" Ctrlで最後まで移動
-noremap <C-e> g$
-noremap <C-a> g^
 
 " insert mode
 inoremap <C-f> <Right>
@@ -881,6 +869,7 @@ nnoremap <silent> <Space>ou :<C-u>GundoToggle<CR>
 nnoremap <silent> <Space>os :<C-u>SyntasticToggleMode<CR>
 nnoremap <silent> <Space>ot :<C-u>call <SID>toggle_indent()<CR>
 nmap <silent> <Space>oi <Plug>IndentGuidesToggle
+" }}}
 " ==============
 "  SECTION: tab line
 " ==============
@@ -1312,6 +1301,8 @@ nnoremap <Leader>uu :<C-u>Unite source<CR>
 " カラースキーム用コマンド
 command! UniteColorScheme :Unite colorscheme -auto-preview
 command! UniteFont :Unite font -auto-preview
+
+inoremap <C-u> <C-o>:Unite tag -start-insert -default-action=insert<CR>a
 
 " ウィンドウを横に分割して開く
 au FileType unite nnoremap <silent> <buffer> <expr> <C-S> unite#do_action('split')
