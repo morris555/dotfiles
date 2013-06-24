@@ -348,6 +348,8 @@ set relativenumber
 
 set conceallevel=2 concealcursor=i
 
+" set virtualedit=all
+
 " モードラインは三行
 set modeline
 set modelines=3
@@ -355,7 +357,6 @@ set modelines=3
 " バックアップはとらない
 set nobackup
 set noswapfile
-set directory=~/.vim/swp
 
 " バックスペースで何でも消せるように
 set backspace=indent,eol,start
@@ -371,7 +372,8 @@ set hidden
 set macmeta
 
 " ビープを消す
-set visualbell t_vb=
+set t_vb=
+set novisualbell
 
 " CursorHoldまでの時間
 set updatetime=1000
@@ -409,11 +411,7 @@ set foldmethod=marker
 
 " 改行文字などの表示
 set list
-" set listchars=tab:>-,eol:↴,trail:-,nbsp:%,extends:>,precedes:<
-" set listchars=tab:▸\ ,eol:↴,trail:-,extends:>,precedes:<
-" set listchars=tab:▸\ ,eol:↴,trail:-,nbsp:%,extends:>,precedes:<
 set listchars=tab:¦\ ,eol:↴,trail:-,nbsp:%,extends:>,precedes:<
-" set listchars=tab:▸\,eol:↴,trail:-,extends:»,precedes:«,nbsp:%
 set fillchars=vert:\ ,fold:\ ,diff:\
 
 " 改行時のコメントと、自動改行を無効化
