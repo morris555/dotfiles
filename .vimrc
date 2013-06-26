@@ -132,6 +132,9 @@ NeoBundle 'scrooloose/syntastic'
 " 選択テキストの検索
 NeoBundle 'thinca/vim-visualstar'
 
+" 行結合
+NeoBundle "osyo-manga/vim-jplus"
+
 " 言語別
 NeoBundle 'kchmck/vim-coffee-script'
 NeoBundle 'vim-scripts/actionscript.vim--Leider'
@@ -841,7 +844,9 @@ nnoremap <Space>i oX<C-h><ESC>kdd
 nnoremap <Space>I /^\n<CR>oX<C-h><ESC>kdd
 
 " 行マージ
-vnoremap <C-m> J
+nmap <C-m> <Plug>(jplus-input)
+vmap <C-m> <Plug>(jplus-input)
+" vnoremap <C-m> J
 " }}}
 " {{{ Toggle options
 function! s:toggle_option(...)
