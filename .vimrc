@@ -809,10 +809,6 @@ noremap <C-a> ^
 " noremap <C-e> g$
 " noremap <C-a> g^
 
-" 対応する括弧に移動
-nnoremap [ %
-nnoremap ] %
-
 " シフトで多めに移動
 noremap J 20j
 noremap K 20k
@@ -824,7 +820,6 @@ inoremap <C-f> <Right>
 inoremap <C-b> <Left>
 inoremap <C-e> <End>
 inoremap <C-a> <Home>
-" inoremap <expr> <C-k> col('.')==col('$')?"":"\<C-o>D"
 
 " キーボードマクロをQに降格
 nnoremap q <Nop>
@@ -838,15 +833,10 @@ nnoremap <CR> o<Esc>
 nnoremap <Space>d cc<ESC>
 
 " その行を消して挿入
-nnoremap <Space>i oX<C-h><ESC>kdd
-
-" 段落の最後から挿入
-nnoremap <Space>I /^\n<CR>oX<C-h><ESC>kdd
+nnoremap <Space>i oX<C-h><ESC>kddi
 
 " 行マージ
-nmap <C-m> <Plug>(jplus-input)
 vmap <C-m> <Plug>(jplus-input)
-" vnoremap <C-m> J
 " }}}
 " {{{ Toggle options
 function! s:toggle_option(...)
