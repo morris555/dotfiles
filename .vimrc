@@ -201,6 +201,7 @@ NeoBundle 'Shougo/vimproc', {
 NeoBundle 'Shougo/vimshell'
 NeoBundle 'ujihisa/vimshell-ssh'
 NeoBundle 'chikatoike/concealedyank.vim'
+NeoBundle 'supermomonga/vimshell-pure.vim', {'depends' : 'Shougo/vimshell.vim'}
 
 " 検索で件数を表示
 NeoBundle 'osyo-manga/vim-anzu'
