@@ -192,9 +192,9 @@ NeoBundle 'Shougo/vimfiler'
 
 " vimproc
 NeoBundle 'Shougo/vimproc', {
-    \ 'build' : {
-    \       'mac' : 'make -f make_mac.mak'
-    \   }
+     \ 'build' : {
+     \       'mac' : 'make -f make_mac.mak'
+     \   }
     \ }
 
 " shell
@@ -348,6 +348,7 @@ let mapleader = ","
 set autoread
 
 set scrolloff=999
+set number
 set relativenumber
 
 set conceallevel=2 concealcursor=i
@@ -431,7 +432,9 @@ autocmd BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$") | exe "norm
 " カレントウィンドウにのみ相対行を表示
 augroup cch
     autocmd! cch
+    autocmd WinLeave * set nonumber
     autocmd WinLeave * set norelativenumber
+    autocmd WinEnter,BufRead * set number
     autocmd WinEnter,BufRead * set relativenumber
 augroup END
 
@@ -513,7 +516,7 @@ function! InitPhp()
 
     setlocal dictionary+=~/.vim/dict/php.dict
 
-    setlocal matchpairs+==:;
+    " setlocal matchpairs+==:;
 
     inoremap <expr> <buffer> @ &filetype == 'blade' ? "@" : <SID>at()
 
@@ -522,9 +525,10 @@ function! InitPhp()
     nnoremap <silent><buffer> <Space>tu :<C-u>!ctags --languages=PHP --sort=foldcase -R --php-kinds=cifd<CR>
 
     inoremap <buffer><expr> = smartchr#one_of('=', ' = ', ' == ', ' === ', '==')
-    inoremap <buffer><expr> . smartchr#one_of('.', '->', '=>', '..')
+    inoremap <buffer><expr> . smartchr#one_of('.', '->', ' => ', '..')
     inoremap <buffer><expr> ! smartchr#one_of('!', ' != ', '!!')
     inoremap <buffer><expr> , smartchr#one_of(', ', ',')
+    inoremap <buffer><expr> @ smartchr#one_of('$this->', '@')
 
     " TODO ↓紆余曲折あって消してない
     " 末尾で,を打つとスペースが残ってしまうが、smartinputの設定で改行時に末尾スペースを消している
@@ -792,16 +796,16 @@ nnoremap <S-Up> 5<C-w>+
 nnoremap <S-Down> 5<C-w>-
 
 " 表示行移動
-" nnoremap j gj
-" nnoremap k gk
-" nnoremap gj j
-" nnoremap gk k
-" nnoremap 0 g0
-" nnoremap g0 0
-" nnoremap ^ g^
-" nnoremap g^ ^
-" nnoremap $ g$
-" nnoremap g$ $
+nnoremap j gj
+nnoremap k gk
+nnoremap gj j
+nnoremap gk k
+nnoremap 0 g0
+nnoremap g0 0
+nnoremap ^ g^
+nnoremap g^ ^
+nnoremap $ g$
+nnoremap g$ $
 
 
 " Ctrlで最後まで移動
