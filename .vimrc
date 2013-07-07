@@ -534,6 +534,14 @@ function! InitPhp()
     " 末尾で,を打つとスペースが残ってしまうが、smartinputの設定で改行時に末尾スペースを消している
 endfunction
 autocmd FileType php call InitPhp()
+
+let php_sql_query = 1 " 文字列の中のSQLをハイライト
+let php_baselib = 1 " Baselibメソッドのハイライト
+let php_htmlInStrings = 1 " HTMLもハイライト
+
+" ] や ) の対応エラーをハイライト
+let php_parent_error_close = 1 
+let php_parent_error_open = 1
 " }}}
 " HTML {{{
 function! InitHtml()

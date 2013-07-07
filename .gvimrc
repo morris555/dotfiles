@@ -10,7 +10,7 @@ if has('gui_macvim')
     set antialias        " アンチエイリアス
 
     " set gfn=Ricty\ Regular:h20
-    set gfn=Ricty\ Regular\ for\ Powerline:h18
+    set gfn=Ricty\ Regular\ for\ Powerline:h16
     set gfw=
 
     set linespace=4
