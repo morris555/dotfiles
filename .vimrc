@@ -871,11 +871,20 @@ function! s:toggle_indent()
     endif
 endfunction
 
+function! s:toggle_transparence()
+    if &transparency == 5
+        set transparency=0
+    else
+        set transparency=5
+    endif
+endfunction
+
 nnoremap <silent> <Space>ol :<C-u>call <SID>toggle_option('cursorline', 'cursorcolumn')<CR>
 nnoremap <silent> <Space>or :<C-u>call <SID>toggle_option('rightleft')<CR>
 nnoremap <silent> <Space>ou :<C-u>GundoToggle<CR>
 nnoremap <silent> <Space>os :<C-u>SyntasticToggleMode<CR>
 nnoremap <silent> <Space>ot :<C-u>call <SID>toggle_indent()<CR>
+nnoremap <silent> <Space>oT :<C-u>call <SID>toggle_transparence()<CR>
 nmap <silent> <Space>oi <Plug>IndentGuidesToggle
 " }}}
 " ==============
