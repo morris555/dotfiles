@@ -113,6 +113,7 @@ NeoBundle 'ujihisa/unite-haskellimport'
 NeoBundle 'sgur/unite-qf'
 NeoBundle 'tekkoc/unite-decorate-border'
 NeoBundle 'tekkoc/unite-decorate-text'
+NeoBundle 'Shougo/unite-session'
 
 " Unite powerline
 NeoBundle 'osyo-manga/vim-powerline-unite-theme'
@@ -138,6 +139,7 @@ NeoBundle "osyo-manga/vim-jplus"
 " 言語別
 NeoBundle 'kchmck/vim-coffee-script'
 NeoBundle 'vim-scripts/actionscript.vim--Leider'
+NeoBundle 'leafgarland/typescript-vim'
 
 " js
 NeoBundle 'jiangmiao/simple-javascript-indenter'
@@ -224,7 +226,8 @@ NeoBundle 'tyru/restart.vim'
 " git
 NeoBundle 'tpope/vim-fugitive'
 NeoBundle 'gregsexton/gitv'
-NeoBundle "tekkoc/git-gutter-vim"
+" NeoBundle "tekkoc/git-gutter-vim"
+NeoBundle "mhinz/vim-signify"
 
 " markdown
 NeoBundle 'tpope/vim-markdown'
@@ -485,6 +488,7 @@ au BufNewFile,BufRead *.js.shd set filetype=coffee
 au BufNewFile,BufRead *.coffee set filetype=coffee
 au BufNewFile,BufRead *.html set filetype=html
 au BufNewFile,BufRead *.as set filetype=actionscript
+au BufNewFile,BufRead *.ts set filetype=typescript
 au BufNewFile,BufRead *.txt set filetype=markdown
 au BufNewFile,BufRead */doc/*.txt set filetype=help
 au BufNewFile,BufRead *.vimperatorrc set filetype=vimperator
@@ -660,9 +664,14 @@ let g:flake8_builtins="_,apply"
 " }}}
 " javascript {{{
 function! InitJavaScript()
-    " IndentGuidesEnable
+    setlocal shiftwidth=2
+    setlocal tabstop=2
+    setlocal softtabstop=2
+    setlocal expandtab
+
+    IndentGuidesEnable
 endfunction
-autocmd FileType javascript call InitVim()
+autocmd FileType javascript call InitJavaScript()
 " DOMとMozilla関連とES6のメソッドを補完
 let g:jscomplete_use = ['dom', 'moz', 'es6th']
 " shiftwidthを1にしてインデント
@@ -793,7 +802,8 @@ nnoremap ss :<C-u>sp<CR>
 nnoremap sv :<C-u>vs<CR>
 nnoremap sq :<C-u>q<CR>
 nnoremap sQ :<C-u>bd<CR>
-nnoremap sb :<C-u>Unite buffer -buffer-name=file<CR>
+nnoremap sb :<C-u>Unite buffer_tab -buffer-name=file<CR>
+nnoremap sB :<C-u>Unite buffer -buffer-name=file<CR>
 nnoremap <Right> <C-w>>
 nnoremap <Left> <C-w><
 nnoremap <Up> <C-w>+
@@ -1149,8 +1159,8 @@ autocmd FileType w3m nnoremap <silent><buffer> q :<C-u>W3mClose<CR>
 " syntastic {{{
 let g:syntastic_mode_map = {
             \ 'mode': 'active',
-            \ 'active_filetypes': ['php', 'coffeescript', 'sh', 'vim', 'javascript'],
-            \ 'passive_filetypes': ['html', 'haskell', 'python', 'ruby', 'json']
+            \ 'active_filetypes': ['php', 'coffeescript', 'sh', 'vim'],
+            \ 'passive_filetypes': ['html', 'haskell', 'python', 'ruby', 'json', 'javascript']
             \}
 let g:syntastic_auto_loc_list=1
 nnoremap <silent> <Leader>l :<C-u>SyntasticCheck<CR>
@@ -1231,10 +1241,15 @@ nmap N <Plug>(anzu-N-with-echo)
 nmap * <Plug>(anzu-star-with-echo)
 " }}}
 " git-gutter-vim {{{
-let g:no_auto_gitgutter = 1
-nnoremap <leader>ge <Nop>
-nnoremap <silent> <leader>gg :<C-u>GitGutter<CR>
-nnoremap <silent> <leader>gd :<C-u>execute ":sign unplace * file=" . expand("%:p")<Cr>
+" TODO signifyに切り替えたら削除する
+" let g:no_auto_gitgutter = 1
+" nnoremap <leader>ge <Nop>
+" nnoremap <silent> <leader>gg :<C-u>GitGutter<CR>
+" nnoremap <silent> <leader>gd :<C-u>execute ":sign unplace * file=" . expand("%:p")<Cr>
+" }}}
+" signigy {{{
+let g:signify_mapping_next_hunk = '<leader>gj'
+let g:signify_mapping_prev_hunk = '<leader>gk'
 " }}}
 " smartinput {{{
 " call smartinput#define_rule({
@@ -1281,7 +1296,6 @@ let g:unite_source_grep_default_opts = "--nogroup --nocolor"
 let g:unite_winheight = 10
 
 let g:unite_source_grep_max_candidates = 100000
-let g:unite_source_session_enable_auto_save = 1     " セッション保存
 let g:unite_source_file_mru_limit = 100000
 call unite#custom_max_candidates("file_mru", 100000)
 
@@ -1310,7 +1324,7 @@ au FileType vim nnoremap <buffer> <Leader>ur :<C-u>Unite help<CR>
 " outline
 nnoremap <Leader>uo :<C-u>Unite outline  -vertical -winwidth=60 -buffer-name=side<CR>
 " tag
-nnoremap <Leader>ut :<C-u>Unite buffer_tab -buffer-name=file <CR>
+nnoremap <Leader>ut :<C-u>Unite tab:no-current<CR>
 nnoremap <Leader>uT :<C-u>Unite tag -buffer-name=file <CR>
 " source(sourceが増えてきたので、sourceのsourceを経由する方針にしてみる)
 nnoremap <Leader>uu :<C-u>Unite source<CR>
