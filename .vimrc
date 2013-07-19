@@ -1248,8 +1248,10 @@ nmap * <Plug>(anzu-star-with-echo)
 " nnoremap <silent> <leader>gd :<C-u>execute ":sign unplace * file=" . expand("%:p")<Cr>
 " }}}
 " signigy {{{
+let g:signify_vcs_list = ['git']
 let g:signify_mapping_next_hunk = '<leader>gj'
 let g:signify_mapping_prev_hunk = '<leader>gk'
+let g:signify_mapping_toggle = '<leader>gt'
 " }}}
 " smartinput {{{
 " call smartinput#define_rule({
@@ -1588,6 +1590,9 @@ endfunction
 " vimからskypeウィンドウを開く
 command! -nargs=0 Skype :Unite file_rec/async:~/skype_link -buffer-name=file -start-insert -default-action=start
 nnoremap <Space>s :Skype<CR>
+" }}}
+" homekotoba {{{
+command! -nargs=0 Homeru :Unite homekotoba -default-action=yank
 " }}}
 " ==========
 " SECTION: gui
