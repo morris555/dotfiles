@@ -51,7 +51,8 @@ NeoBundle 'kana/vim-textobj-indent'
 NeoBundle 'h1mesuke/textobj-wiw'
 NeoBundle 'kana/vim-textobj-function'
 NeoBundle 'kana/vim-textobj-line'
-NeoBundle 'tekkoc/vim-textobj-parameter'
+NeoBundle 'sgur/vim-textobj-parameter'
+NeoBundle 'thinca/vim-textobj-plugins'
 
 " operator-user
 NeoBundle 'kana/vim-operator-user'
@@ -613,7 +614,7 @@ function! InitCoffee()
     setlocal softtabstop=2
     setlocal expandtab
 
-    " IndentGuidesEnable
+    IndentGuidesEnable
 endfunction
 autocmd FileType coffee call InitCoffee()
 " }}}
@@ -640,9 +641,6 @@ function! InitPython()
     " rename用のマッピングを無効にしたため、代わりにコマンドを定義
     command! -nargs=0 JediRename :call jedi#rename()
 
-    " pythonはインベント幅4,タブ幅8でスペースを使う
-    " http://d.hatena.ne.jp/over80/20090305/1236264851
-    " todo 好みに変更
     setlocal shiftwidth=2
     setlocal tabstop=2
     setlocal softtabstop=2
@@ -672,7 +670,6 @@ function! InitJavaScript()
     setlocal tabstop=2
     setlocal softtabstop=2
     setlocal expandtab
-
     IndentGuidesEnable
 endfunction
 autocmd FileType javascript call InitJavaScript()
@@ -757,6 +754,12 @@ map C <Plug>(operator-comment)
 map X <Plug>(operator-uncomment)
 map <Leader>c <Plug>(operator-camelize)
 map <Leader>C <Plug>(operator-decamelize)
+
+omap iF <Plug>(textobj-function-i)
+omap aF <Plug>(textobj-function-a)
+vmap iF <Plug>(textobj-function-i)
+vmap aF <Plug>(textobj-function-a)
+
 
 " other mapping
 
@@ -1626,6 +1629,7 @@ endif
 "
 function! s:tate(str)
    let words = join(split(a:str, '\zs'), "\n")
+   let @0 = words
    echo 'yank!'
 endfunction
 command! -nargs=1 Tate call s:tate("<args>")
