@@ -35,6 +35,9 @@ NeoBundle 'vol2223/vim-colorblind-colorscheme'
 " singleton
 NeoBundle 'thinca/vim-singleton'
 
+" vital
+NeoBundle 'vim-jp/vital.vim'
+
 " lib
 NeoBundle 'mattn/webapi-vim'
 NeoBundle 'thinca/vim-openbuf'
@@ -639,9 +642,10 @@ function! InitPython()
 
     " pythonはインベント幅4,タブ幅8でスペースを使う
     " http://d.hatena.ne.jp/over80/20090305/1236264851
-    setlocal shiftwidth=4
-    setlocal tabstop=8
-    setlocal softtabstop=4
+    " todo 好みに変更
+    setlocal shiftwidth=2
+    setlocal tabstop=2
+    setlocal softtabstop=2
     setlocal expandtab
 
     setlocal autoindent
@@ -1619,3 +1623,9 @@ if filereadable(expand('~/Dropbox/Vim/secret.vimrc'))
   source ~/Dropbox/Vim/secret.vimrc
 endif
 " }}}
+"
+function! s:tate(str)
+   let words = join(split(a:str, '\zs'), "\n")
+   echo 'yank!'
+endfunction
+command! -nargs=1 Tate call s:tate("<args>")
