@@ -488,7 +488,7 @@ augroup END
 " ファイルタイプ判定 {{{
 au BufNewFile,BufRead *.scala set filetype=scala
 au BufNewFile,BufRead *.js set filetype=javascript
-au BufNewFile,BufRead *.js.shd set filetype=coffee
+au BufNewFile,BufRead *.js.shd set filetype=typescript
 au BufNewFile,BufRead *.coffee set filetype=coffee
 au BufNewFile,BufRead *.html set filetype=html
 au BufNewFile,BufRead *.as set filetype=actionscript
