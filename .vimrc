@@ -1627,9 +1627,21 @@ if filereadable(expand('~/Dropbox/Vim/secret.vimrc'))
 endif
 " }}}
 "
-function! s:tate(str)
-   let words = join(split(a:str, '\zs'), "\n")
-   let @0 = words
-   echo 'yank!'
+function! s:uc_yank()
+    let words = input("words? ", "")
+    let mode = input("mode? ", "")
+
+    if mode == "tate"
+        let words = s:tate(mode)
+    endif
+
+    let @+ = words
+    echo 'yank!'
 endfunction
-command! -nargs=1 Tate call s:tate("<args>")
+
+function! s:tate(words)
+    a:words
+
+endfunction
+
+command! -nargs=0 Yank call s:uc_yank()

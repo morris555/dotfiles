@@ -1,9 +1,8 @@
 if has('gui_macvim')
     " カラースキーム
 
-    set background=dark
-
     colorscheme hybrid
+    set background=dark
 
     set showtabline=2    " タブを常に表示
     set imdisable        " IME OFF
