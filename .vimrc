@@ -144,6 +144,7 @@ NeoBundle "osyo-manga/vim-jplus"
 NeoBundle 'kchmck/vim-coffee-script'
 NeoBundle 'vim-scripts/actionscript.vim--Leider'
 NeoBundle 'leafgarland/typescript-vim'
+NeoBundle 'digitaltoad/vim-jade'
 
 " js
 NeoBundle 'jiangmiao/simple-javascript-indenter'
