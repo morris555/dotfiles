@@ -275,6 +275,9 @@ NeoBundle "mattn/httpstatus-vim"
 " toggle
 NeoBundle "tekkoc/vim-toggle"
 
+" toggle
+NeoBundle "thinca/vim-portal"
+
 " Game
 NeoBundle 'mattn/invader-vim'
 NeoBundle 'mfumi/snake.vim'
@@ -1667,5 +1670,16 @@ function! s:str_to_list(str)
     return split(a:str, '\zs')
 endfunction
 
-command! -nargs=0 Yank call s:yank()
+function! s:naname2(str)
+    " TODO
+    let str = s:str_to_list(a:str)
+    let map[0][0] = str[0]
+    echo map
+endfunction
+
+function! s:str_to_list(str)
+    return split(a:str, '\zs')
+endfunction
+
+command! -nargs=0 UcYank call s:yank()
 " }}}
