@@ -145,6 +145,7 @@ NeoBundle 'kchmck/vim-coffee-script'
 NeoBundle 'vim-scripts/actionscript.vim--Leider'
 NeoBundle 'leafgarland/typescript-vim'
 NeoBundle 'digitaltoad/vim-jade'
+NeoBundle 'esehara/Vim-Roy'
 
 " js
 NeoBundle 'jiangmiao/simple-javascript-indenter'
@@ -501,6 +502,7 @@ au BufNewFile,BufRead *.txt set filetype=markdown
 au BufNewFile,BufRead */doc/*.txt set filetype=help
 au BufNewFile,BufRead *.vimperatorrc set filetype=vimperator
 au BufNewFile,BufRead *.blade.php set filetype=blade
+au BufNewFile,BufRead *.roy set filetype=roy
 
 autocmd FileType scala :set dictionary+=~/.vim/dict/scala.dict
 set complete+=k
