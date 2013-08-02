@@ -1452,6 +1452,7 @@ smap <C-k> <Plug>(neosnippet_expand_or_jump)
 let g:neosnippet#snippets_directory='~/Dropbox/vim/snippet'
 let g:neosnippet#disable_runtime_snippets = {
 		\   'php' : 1,
+		\   'sql' : 1,
 		\ }
 " }}}
 " ==========
