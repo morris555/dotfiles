@@ -146,6 +146,7 @@ NeoBundle 'vim-scripts/actionscript.vim--Leider'
 NeoBundle 'leafgarland/typescript-vim'
 NeoBundle 'digitaltoad/vim-jade'
 NeoBundle 'esehara/Vim-Roy'
+NeoBundle 'derekwyatt/vim-scala'
 
 " js
 NeoBundle 'jiangmiao/simple-javascript-indenter'
@@ -232,7 +233,6 @@ NeoBundle 'tyru/restart.vim'
 " git
 NeoBundle 'tpope/vim-fugitive'
 NeoBundle 'gregsexton/gitv'
-" NeoBundle "tekkoc/git-gutter-vim"
 NeoBundle "mhinz/vim-signify"
 
 " markdown
