@@ -1244,7 +1244,17 @@ let g:indent_guides_guide_size=1
 let g:toggle_pairs = {
             \ 'or':'and',
             \ 'and':'or',
+            \ 'DESC':'ASC',
+            \ 'ASC':'DESC',
+            \ 'int':'string',
+            \ 'string':'bool',
+            \ 'bool':'array',
+            \ 'array':'mixed',
+            \ 'mixed':'int',
+            \ 'if':'unless',
+            \ 'unless':'if',
             \ }
+
 nmap <C-T> <Plug>ToggleN
 vmap <C-T> <Plug>ToggleV
 " }}}
