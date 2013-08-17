@@ -160,7 +160,6 @@ NeoBundle 'ujihisa/ref-hoogle'
 
 " php
 NeoBundle 'pasela/unite-fuel'
-NeoBundle 'shawncplus/php.vim'
 NeoBundle 'iakio/smarty3.vim'
 NeoBundle 'xsbeats/vim-blade'
 
