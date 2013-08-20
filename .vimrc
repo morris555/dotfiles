@@ -119,9 +119,6 @@ NeoBundle 'tekkoc/unite-decorate-border'
 NeoBundle 'tekkoc/unite-decorate-text'
 NeoBundle 'Shougo/unite-session'
 
-" Unite powerline
-NeoBundle 'osyo-manga/vim-powerline-unite-theme'
-
 NeoBundle 'git@github.com:tekkoc/rmine.vim.git'
 
 " 整形
@@ -264,9 +261,8 @@ NeoBundle 'tpope/vim-abolish'
 NeoBundle 'mattn/learn-vimscript'
 
 " statusline
-" NeoBundle 'Lokaltog/vim-powerline'
-" NeoBundle 'taichouchou2/alpaca_powertabline'
-NeoBundle 'Lokaltog/powerline', { 'rtp' : 'powerline/bindings/vim'}
+NeoBundle 'bling/vim-airline'
+NeoBundle 'cohama/vim-insert-linenr'
 
 " unicodeエスケープシーケンス
 NeoBundle "osyo-manga/vim-hideout"
@@ -1103,8 +1099,7 @@ nmap <silent> <Leader>vk <Plug>Vm_goto_prev_sign
 " easymotion {{{
 let g:EasyMotion_leader_key='<Leader>m'
 " }}}
-" vimshell設定 {{{
-
+" vimshell {{{
 let g:vimshell_max_command_history = 100000000			" ヒストリの保存数
 let g:vimshell_user_prompt = 'fnamemodify(getcwd(), ":~")'
 noremap <Leader>sS :<C-u>VimShell<CR>
@@ -1196,7 +1191,9 @@ let g:surround_custom_mapping.php= {
             \'a': "['\r']",
             \'v': "v(\r)",
             \'s': "self::\r",
-            \'p': "<?php \r ?>"
+            \'p': "<?php \r ?>",
+            \'d': "Kint::dump(\r);",
+            \'t': "Kint::trace(\r);"
             \}
 let g:surround_custom_mapping.smarty= {
             \'S': "{{\r}}",
@@ -1274,6 +1271,10 @@ let g:signify_vcs_list = ['git']
 let g:signify_mapping_next_hunk = '<leader>gj'
 let g:signify_mapping_prev_hunk = '<leader>gk'
 let g:signify_mapping_toggle = '<leader>gt'
+" }}}
+" airline {{{
+let g:airline_powerline_fonts=1
+let g:airline_detect_whitespace=0
 " }}}
 " smartinput {{{
 " call smartinput#define_rule({
