@@ -691,6 +691,16 @@ function! InitJson()
 endfunction
 autocmd FileType json call InitJson()
 " }}}
+" scala {{{
+function! InitScala()
+    setlocal shiftwidth=2
+    setlocal tabstop=2
+    setlocal softtabstop=2
+    setlocal expandtab
+    IndentGuidesEnable
+endfunction
+autocmd FileType scala call InitScala()
+" }}}
 " ==============
 "  SECTION: mapping
 " ==============
