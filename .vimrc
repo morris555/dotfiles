@@ -782,8 +782,8 @@ noremap ; :
 nnoremap <expr> gp '`[' . strpart(getregtype(), 0, 1) . '`]'
 
 " ESC2度押しで検索ハイライトを消す
-nnoremap <Esc><Esc> :<C-u>nohlsearch<CR>
-nnoremap <C-l><C-l> :<C-u>nohlsearch<CR>
+nnoremap <silent> <Esc><Esc> :<C-u>AnzuClearSearchStatus<CR>:nohlsearch<CR>
+nnoremap <silent> <C-l><C-l> :<C-u>AnzuClearSearchStatus<CR>:nohlsearch<CR>
 
 nmap ( ,mf(
 nmap ) ,mF(
@@ -1265,9 +1265,9 @@ nmap <C-T> <Plug>ToggleN
 vmap <C-T> <Plug>ToggleV
 " }}}
 " vim-anzu {{{
-nmap n <Plug>(anzu-n-with-echo)
-nmap N <Plug>(anzu-N-with-echo)
-nmap * <Plug>(anzu-star-with-echo)
+nmap n <Plug>(anzu-n)
+nmap N <Plug>(anzu-N)
+nmap * <Plug>(anzu-star)
 " }}}
 " git-gutter-vim {{{
 " TODO signifyに切り替えたら削除する
