@@ -1001,6 +1001,7 @@ if has('vim_starting')
     let g:eskk#fix_extra_okuri = 1
     "
     " <C-j>でいきなり日本語入力からのインサート
+    imap <C-j> <Plug>(eskk:toggle)
     nmap <C-j> i<C-j>
 
     autocmd User eskk-initialize-pre call s:eskk_initial_pre()
