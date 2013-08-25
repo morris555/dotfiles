@@ -63,6 +63,10 @@ NeoBundle 'emonkak/vim-operator-comment'
 " omniforcus
 NeoBundle 'fifnel/ofaddinbox.vim'
 
+" automatic
+NeoBundle 'osyo-manga/vim-automatic'
+NeoBundle 'osyo-manga/vim-gift'
+
 " ghc
 NeoBundle 'ujihisa/neco-ghc'
 NeoBundle 'eagletmt/ghcmod-vim'
@@ -1293,6 +1297,31 @@ let g:airline_detect_whitespace=0
 " \   'input': "<C-o>:call setline('.', substitute(getline('.'), '\\s\\+$', '', ''))<CR><CR>",
 " \   'filetype': ['php'],
 " \   })
+" }}}
+" automatic {{{
+nnoremap <silent> <plug>(quit) :<c-u>q<cr>
+function! s:my_temporary_window_init(config, context)
+  nmap <buffer> q <plug>(quit)
+endfunction
+ 
+let g:automatic_default_match_config = {
+      \   'is_open_other_window' : 1,
+      \ }
+let g:automatic_default_set_config = {
+      \   'height' : '30%',
+      \   'move' : 'bottom',
+      \   'apply' : function('s:my_temporary_window_init')
+      \ }
+let g:automatic_config = [
+      \ {
+      \   'match' : {
+      \     'buftype' : 'help'
+      \   },
+      \   'set' : {
+      \     'is_close_focus_out' : 1
+      \   }
+      \ }
+      \ ]
 " }}}
 " gitv {{{
 autocmd FileType git setlocal nofoldenable foldlevel=0
