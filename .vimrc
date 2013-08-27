@@ -1306,6 +1306,8 @@ let g:airline_detect_whitespace=0
 " pronamachang {{{
 let g:pronamachang_voice_root = "~/Dropbox/Vim/pronamachang"
 
+let g:pronamachang_say_startup_enable = 0
+let g:pronamachang_say_goodbye_enable = 0
 " }}}
 " automatic {{{
 nnoremap <silent> <plug>(quit) :<c-u>q<cr>
