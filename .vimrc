@@ -63,6 +63,10 @@ NeoBundle 'emonkak/vim-operator-comment'
 " omniforcus
 NeoBundle 'fifnel/ofaddinbox.vim'
 
+" pronama
+NeoBundle 'osyo-manga/vim-pronamachang'
+NeoBundle 'osyo-manga/vim-sound'
+
 " automatic
 NeoBundle 'osyo-manga/vim-automatic'
 NeoBundle 'osyo-manga/vim-gift'
@@ -1298,6 +1302,10 @@ let g:airline_detect_whitespace=0
 " \   'input': "<C-o>:call setline('.', substitute(getline('.'), '\\s\\+$', '', ''))<CR><CR>",
 " \   'filetype': ['php'],
 " \   })
+" }}}
+" pronamachang {{{
+let g:pronamachang_voice_root = "~/Dropbox/Vim/pronamachang"
+
 " }}}
 " automatic {{{
 nnoremap <silent> <plug>(quit) :<c-u>q<cr>
