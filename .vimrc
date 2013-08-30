@@ -79,7 +79,7 @@ NeoBundle 'eagletmt/ghcmod-vim'
 NeoBundle 'mattn/sonictemplate-vim'
 
 " db
-NeoBundle 'vim-scripts/dbext.vim'
+" NeoBundle 'vim-scripts/dbext.vim'
 
 " debug
 NeoBundle 'joonty/vdebug'
@@ -104,7 +104,7 @@ NeoBundle 'thinca/vim-ambicmd'
 
 " lingr
 NeoBundle 'basyura/J6uil.vim'
-NeoBundle 'basyura/TweetVim'
+" NeoBundle 'basyura/TweetVim'
 
 " coffeescriptなどに使う
 NeoBundle 'ujihisa/shadow.vim'
@@ -127,7 +127,7 @@ NeoBundle 'tekkoc/unite-decorate-border'
 NeoBundle 'tekkoc/unite-decorate-text'
 NeoBundle 'Shougo/unite-session'
 
-NeoBundle 'git@github.com:tekkoc/rmine.vim.git'
+" NeoBundle 'git@github.com:tekkoc/rmine.vim.git'
 
 " 整形
 NeoBundle 'h1mesuke/vim-alignta'
@@ -271,9 +271,6 @@ NeoBundle 'mattn/learn-vimscript'
 " statusline
 NeoBundle 'bling/vim-airline'
 NeoBundle 'cohama/vim-insert-linenr'
-
-" unicodeエスケープシーケンス
-NeoBundle "osyo-manga/vim-hideout"
 
 NeoBundle "mattn/httpstatus-vim"
 

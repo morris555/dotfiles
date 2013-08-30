@@ -4,6 +4,8 @@ export LANG=ja_JP.UTF-8
 # screen
 export SCREENDIR="$HOME/.screen"
 
+export JAVA_OPTS="-Dfile.encoding=UTF-8"
+
 # プロンプト
 local GREEN=$'%{\e[1;32m%}'
 local YELLOW=$'%{\e[1;33m%}'

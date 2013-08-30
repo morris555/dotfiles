@@ -9,6 +9,8 @@ set verbose=9
 
 set hintchars="HJKLASDFGYUIOPQWERTNMZXCVB"
 
+set editor='/usr/local/bin/mvim -f'
+
 " ビープ音を消す
 set visualbell
 highlight Bell display:none
