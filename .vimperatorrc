@@ -7,9 +7,9 @@ set titlestring=Firefox
 " →「:javascript! 」で表示される内容レベル
 set verbose=9
 
-set hintchars="HJKLASDFGYUIOPQWERTNMZXCVB"
+set hintchars="hjklasdfgyuiopqwertnmzxcvb"
 
-set editor='/usr/local/bin/mvim -f'
+set editor="/Applications/MacVim.app/Contents/MacOS/mvim -f"
 
 " ビープ音を消す
 set visualbell
