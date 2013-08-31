@@ -23,6 +23,19 @@ var util = {
     return slate.screenForRef(String( (screen.id()+1)%slate.screenCount() ));
   }
 };
+
+var forcus_list = {
+  "1": "MacVim",
+  "2": "Firefox",
+  "3": "ターミナル",
+  "4": "Skype",
+};
+
+for (var i in forcus_list) {
+  slate.bind(util.key(i), slate.operation('focus', {
+    'app' : forcus_list[i]
+  }));
+}
  
 // return     .. macvim
 slate.bind(util.key('return'), slate.operation('focus', {
