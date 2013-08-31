@@ -121,4 +121,3 @@ slate.bind(util.key('m'), function(win) {
   var bounds = win.screen().visibleRect();
   win.doOperation('move', bounds);
 });
-

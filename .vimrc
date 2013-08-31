@@ -54,6 +54,9 @@ NeoBundle 'kana/vim-textobj-line'
 NeoBundle 'sgur/vim-textobj-parameter'
 NeoBundle 'thinca/vim-textobj-plugins'
 
+" submode
+NeoBundle 'kana/vim-submode'
+
 " operator-user
 NeoBundle 'kana/vim-operator-user'
 NeoBundle 'tyru/operator-camelize.vim'
@@ -827,14 +830,15 @@ nnoremap sq :<C-u>q<CR>
 nnoremap sQ :<C-u>bd<CR>
 nnoremap sb :<C-u>Unite buffer_tab -buffer-name=file<CR>
 nnoremap sB :<C-u>Unite buffer -buffer-name=file<CR>
-nnoremap <Right> <C-w>>
-nnoremap <Left> <C-w><
-nnoremap <Up> <C-w>+
-nnoremap <Down> <C-w>-
-nnoremap <S-Right> 5<C-w>>
-nnoremap <S-Left> 5<C-w><
-nnoremap <S-Up> 5<C-w>+
-nnoremap <S-Down> 5<C-w>-
+
+call submode#enter_with('winsize', 'n', '', 's>', '<C-w>>')
+call submode#enter_with('winsize', 'n', '', 's<', '<C-w><')
+call submode#enter_with('winsize', 'n', '', 's+', '<C-w>+')
+call submode#enter_with('winsize', 'n', '', 's-', '<C-w>-')
+call submode#map('winsize', 'n', '', '>', '<C-w>>')
+call submode#map('winsize', 'n', '', '<', '<C-w><')
+call submode#map('winsize', 'n', '', '+', '<C-w>+')
+call submode#map('winsize', 'n', '', '-', '<C-w>-')
 
 " 表示行移動
 nnoremap j gj
