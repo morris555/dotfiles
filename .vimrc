@@ -817,8 +817,6 @@ nnoremap s_ <C-w>_
 nnoremap sw <C-w>w
 nnoremap so <C-w>_<C-w>|
 nnoremap sO <C-w>=
-nnoremap sn gt
-nnoremap sp gT
 nnoremap sN :<C-u>bn<CR>
 nnoremap sP :<C-u>bp<CR>
 nnoremap st :<C-u>tabnew<CR>
@@ -838,6 +836,11 @@ call submode#map('winsize', 'n', '', '>', '<C-w>>')
 call submode#map('winsize', 'n', '', '<', '<C-w><')
 call submode#map('winsize', 'n', '', '+', '<C-w>+')
 call submode#map('winsize', 'n', '', '-', '<C-w>-')
+
+call submode#enter_with('tabchange', 'n', '', 'sn', 'gt')
+call submode#enter_with('tabchange', 'n', '', 'sp', 'gT')
+call submode#map('tabchange', 'n', '', 'n', 'gt')
+call submode#map('tabchange', 'n', '', 'p', 'gT')
 
 " 表示行移動
 nnoremap j gj
