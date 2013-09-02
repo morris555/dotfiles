@@ -156,6 +156,14 @@ NeoBundle 'leafgarland/typescript-vim'
 NeoBundle 'digitaltoad/vim-jade'
 NeoBundle 'esehara/Vim-Roy'
 NeoBundle 'derekwyatt/vim-scala'
+NeoBundle 'nosami/Omnisharp', {
+\   'build': {
+\     'mac': 'xbuild server/OmniSharp.sln',
+\   }
+\ }
+
+
+NeoBundle 'tpope/vim-dispatch'
 
 " js
 NeoBundle 'jiangmiao/simple-javascript-indenter'
@@ -1494,6 +1502,11 @@ let g:neocomplcache_keyword_patterns['default'] = '\h\w*'
 
 " Enable omni completion.
 autocmd FileType haskell setlocal omnifunc=necoghc#omnifunc
+
+if !exists('g:neocomplcache_force_omni_patterns')
+  let g:neocomplcache_force_omni_patterns = {}
+endif
+let g:neocomplcache_force_omni_patterns.cs = '[^.]\.\%(\u\{2,}\)\?'
 
 " TODO
 " imap <C-u> <Plug>(neocomplcache_start_unite_complete)
