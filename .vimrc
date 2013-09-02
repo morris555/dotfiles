@@ -129,6 +129,7 @@ NeoBundle 'ujihisa/unite-haskellimport'
 NeoBundle 'sgur/unite-qf'
 NeoBundle 'tekkoc/unite-decorate-border'
 NeoBundle 'tekkoc/unite-decorate-text'
+NeoBundle 'tekkoc/unite-twitter_timeline'
 NeoBundle 'Shougo/unite-session'
 
 " NeoBundle 'git@github.com:tekkoc/rmine.vim.git'
