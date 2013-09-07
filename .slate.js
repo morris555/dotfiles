@@ -42,7 +42,7 @@ slate.bind(util.key('return'), slate.operation('focus', {
 
 // space      .. hint
 slate.bind(util.key('space'), slate.operation("hint", {
-  "characters" : "ASDFGHJKLQWERTYUIOPCVBN"
+  "characters" : "asdfghjklqwertyuiopcvbn"
 }));
  
 // r+ctrl     .. Slateの再起動
@@ -76,7 +76,7 @@ slate.bind(util.key('o', 'shift'), function(win) {
   win.move(next.visibleRect());
 });
  
-// j+shift    .. 4隅に飛ばす
+// j+shift    .. 1/4サイズ
 var corners = slate.bind(util.key('j', 'shift'), slate.operation('chain', {
   operations: _.map(['top-right', 'bottom-right', 'bottom-left', 'top-left'], function(d) {
     return slate.operation('corner', {
@@ -87,15 +87,46 @@ var corners = slate.bind(util.key('j', 'shift'), slate.operation('chain', {
   })
 }));
  
-// k+shift    .. 左右に飛ばす
+// k+shift    .. 1/2サイズ
 slate.bind(util.key('k', 'shift'), slate.operation('chain', {
-  operations: _.map(['left', 'right'], function(d) {
+  operations: _.map(['right', 'down', 'left', 'up'], function(d) {
+    if (d == 'up' || d == 'down') {
+      var style =  'bar-resize:screenSizeY/2';
+    } else {
+      var style =  'bar-resize:screenSizeX/2';
+    }
     return slate.operation('push', {
       direction: d,
-      style: 'bar-resize:screenSizeX/2'
+      style: style
     });
   })
 }));
+// slate.bind(util.key('k', 'shift'), slate.operation('chain', {
+//   operations: _.map(['left', 'right'], function(d) {
+//     return slate.operation('push', {
+//       direction: d,
+//       style: 'bar-resize:screenSizeX/2'
+//     });
+//   })
+// }));
+// var pre_half = 'alt';
+// key_binds['left:'+pre_half] = slate.operation("push", {
+//   "direction" : "left",
+//   "style" : "bar-resize:screenSizeX/2"
+// });
+// key_binds['right:'+pre_half] = slate.operation("push", {
+//   "direction" : "right",
+//   "style" : "bar-resize:screenSizeX/2"
+// });
+// key_binds['up:'+pre_half] = slate.operation("push", {
+//   "direction" : "up",
+//   "style" : "bar-resize:screenSizeY/2"
+// });
+// key_binds['down:'+pre_half] = slate.operation("push", {
+//   "direction" : "down",
+//   "style" : "bar-resize:screenSizeY/2"
+// });
+
  
 // h+shift   .. ウィンドウが左にあるなら縮小, 右にあるなら拡大
 slate.bind(util.key('h', 'shift'), function(win) {
