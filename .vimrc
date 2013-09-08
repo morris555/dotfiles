@@ -19,11 +19,11 @@
 set nocompatible
 filetype off
 if has('vim_starting')
-    set runtimepath+=~/.vim/neobundle.git/
+  set runtimepath+=~/.vim/neobundle.git/
 
-    call neobundle#rc(expand('~/.vim/bundle'))
+  call neobundle#rc(expand('~/.vim/bundle'))
 
-    NeoBundleLocal ~/.vim/my_bundle
+  NeoBundleLocal ~/.vim/my_bundle
 endif
 " }}}
 " plugin_list {{{
@@ -158,10 +158,10 @@ NeoBundle 'digitaltoad/vim-jade'
 NeoBundle 'esehara/Vim-Roy'
 NeoBundle 'derekwyatt/vim-scala'
 NeoBundle 'nosami/Omnisharp', {
-\   'build': {
-\     'mac': 'xbuild server/OmniSharp.sln',
-\   }
-\ }
+      \   'build': {
+      \     'mac': 'xbuild server/OmniSharp.sln',
+      \   }
+      \ }
 
 
 NeoBundle 'tpope/vim-dispatch'
@@ -218,10 +218,10 @@ NeoBundle 'Shougo/vimfiler'
 
 " vimproc
 NeoBundle 'Shougo/vimproc', {
-     \ 'build' : {
-     \       'mac' : 'make -f make_mac.mak'
-     \   }
-    \ }
+      \ 'build' : {
+      \       'mac' : 'make -f make_mac.mak'
+      \   }
+      \ }
 
 " shell
 NeoBundle 'Shougo/vimshell'
@@ -313,32 +313,32 @@ augroup vimrc
 augroup END
 
 command!
-\   -bang -nargs=*
-\   MyAutocmd
-\   autocmd<bang> vimrc <args>
+      \   -bang -nargs=*
+      \   MyAutocmd
+      \   autocmd<bang> vimrc <args>
 " }}}
 " {{{ utility function
 function! s:has_plugin(name)
-    return globpath(&runtimepath, 'plugin/' . a:name . '.vim') !=# ''
-                \   || globpath(&runtimepath, 'autoload/' . a:name . '.vim') !=# ''
+  return globpath(&runtimepath, 'plugin/' . a:name . '.vim') !=# ''
+        \   || globpath(&runtimepath, 'autoload/' . a:name . '.vim') !=# ''
 endfunction
 
 " singleton
 if has('gui_running')
-    if has('clientserver')
-        if s:has_plugin('singleton')
-            call singleton#enable()
-        endif
+  if has('clientserver')
+    if s:has_plugin('singleton')
+      call singleton#enable()
     endif
+  endif
 endif
 
 " }}}
 " 入力補助 {{{
 " 押したキーの変わりに「$this->」を代入
 function! s:at()
-    let syntax = synstack(line('.'), col('.'))
-    let name = empty(syntax) ? '' : synIDattr(syntax[-1], "name")
-    return name =~# 'String\|Comment\|None' ? '@' : '$this->'
+  let syntax = synstack(line('.'), col('.'))
+  let name = empty(syntax) ? '' : synIDattr(syntax[-1], "name")
+  return name =~# 'String\|Comment\|None' ? '@' : '$this->'
 endfunction
 " }}}
 " ==============
@@ -456,47 +456,47 @@ autocmd BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$") | exe "norm
 
 " カレントウィンドウにのみ相対行を表示
 augroup cch
-    autocmd! cch
-    autocmd WinLeave * set nonumber
-    autocmd WinLeave * set norelativenumber
-    autocmd WinEnter,BufRead * set number
-    autocmd WinEnter,BufRead * set relativenumber
+  autocmd! cch
+  autocmd WinLeave * set nonumber
+  autocmd WinLeave * set norelativenumber
+  autocmd WinEnter,BufRead * set number
+  autocmd WinEnter,BufRead * set relativenumber
 augroup END
 
 " 必要なときのみ、カーソル行をハイライト
 " http://d.hatena.ne.jp/thinca/20090530/1243615055
 augroup vimrc-auto-cursorline
-    autocmd!
-    autocmd CursorMoved,CursorMovedI * call Auto_cursorline('CursorMoved')
-    autocmd CursorHold,CursorHoldI * call Auto_cursorline('CursorHold')
-    autocmd WinEnter * call Auto_cursorline('WinEnter')
-    autocmd WinLeave * call Auto_cursorline('WinLeave')
+  autocmd!
+  autocmd CursorMoved,CursorMovedI * call Auto_cursorline('CursorMoved')
+  autocmd CursorHold,CursorHoldI * call Auto_cursorline('CursorHold')
+  autocmd WinEnter * call Auto_cursorline('WinEnter')
+  autocmd WinLeave * call Auto_cursorline('WinLeave')
 
-    let g:cursorline_lock = 0
-    function! Auto_cursorline(event)
-        if a:event ==# 'WinEnter'
-            setlocal cursorline
-            setlocal cursorcolumn
-            let g:cursorline_lock = 2
-        elseif a:event ==# 'WinLeave'
-            setlocal nocursorline
-            setlocal nocursorcolumn
-        elseif a:event ==# 'CursorMoved'
-            if g:cursorline_lock
-                if 1 < g:cursorline_lock
-                    let g:cursorline_lock = 1
-                else
-                    setlocal nocursorline
-                    setlocal nocursorcolumn
-                    let g:cursorline_lock = 0
-                endif
-            endif
-        elseif a:event ==# 'CursorHold'
-            setlocal cursorline
-            setlocal cursorcolumn
-            let g:cursorline_lock = 1
+  let g:cursorline_lock = 0
+  function! Auto_cursorline(event)
+    if a:event ==# 'WinEnter'
+      setlocal cursorline
+      setlocal cursorcolumn
+      let g:cursorline_lock = 2
+    elseif a:event ==# 'WinLeave'
+      setlocal nocursorline
+      setlocal nocursorcolumn
+    elseif a:event ==# 'CursorMoved'
+      if g:cursorline_lock
+        if 1 < g:cursorline_lock
+          let g:cursorline_lock = 1
+        else
+          setlocal nocursorline
+          setlocal nocursorcolumn
+          let g:cursorline_lock = 0
         endif
-    endfunction
+      endif
+    elseif a:event ==# 'CursorHold'
+      setlocal cursorline
+      setlocal cursorcolumn
+      let g:cursorline_lock = 1
+    endif
+  endfunction
 augroup END
 
 " }}}
@@ -530,35 +530,32 @@ set expandtab
 " }}}
 " {{{ PHP
 function! InitPhp()
-    setlocal nomodeline
-    setlocal shiftwidth=2
-    setlocal tabstop=2
-    setlocal softtabstop=2
-    setlocal noexpandtab
+  setlocal nomodeline
+  setlocal shiftwidth=2
+  setlocal tabstop=2
+  setlocal softtabstop=2
+  setlocal noexpandtab
 
-    " 「$hoge」をまとめてwordとする
-    setlocal iskeyword+=$
+  " 「$hoge」をまとめてwordとする
+  setlocal iskeyword+=$
 
-    setlocal commentstring=//%s
+  setlocal commentstring=//%s
 
-    setlocal dictionary+=~/.vim/dict/php.dict
+  setlocal dictionary+=~/.vim/dict/php.dict
 
-    " setlocal matchpairs+==:;
+  " setlocal matchpairs+==:;
 
-    inoremap <expr> <buffer> @ &filetype == 'blade' ? "@" : <SID>at()
+  inoremap <expr> <buffer> @ &filetype == 'blade' ? "@" : <SID>at()
 
-    nnoremap <buffer><expr> <space>; getline('.')[col('$') - 2] == ';' ? "" : 'A;<Esc>'
+  nnoremap <buffer><expr> <space>; getline('.')[col('$') - 2] == ';' ? "" : 'A;<Esc>'
 
-    nnoremap <silent><buffer> <Space>tu :<C-u>!ctags --languages=PHP --sort=foldcase -R --php-kinds=cifd<CR>
+  nnoremap <silent><buffer> <Space>tu :<C-u>!ctags --languages=PHP --sort=foldcase -R --php-kinds=cifd<CR>
 
-    inoremap <buffer><expr> = smartchr#one_of('=', ' = ', ' == ', ' === ', '==')
-    inoremap <buffer><expr> . smartchr#one_of('.', '->', ' => ', '..')
-    inoremap <buffer><expr> ! smartchr#one_of('!', ' != ', '!!')
-    inoremap <buffer><expr> , smartchr#one_of(', ', ',')
-    inoremap <buffer><expr> @ smartchr#one_of('$this->', '@')
-
-    " TODO ↓紆余曲折あって消してない
-    " 末尾で,を打つとスペースが残ってしまうが、smartinputの設定で改行時に末尾スペースを消している
+  inoremap <buffer><expr> = smartchr#one_of('=', ' = ', ' == ', ' === ', '==')
+  inoremap <buffer><expr> . smartchr#one_of('.', '->', ' => ', '..')
+  inoremap <buffer><expr> ! smartchr#one_of('!', ' != ', '!!')
+  inoremap <buffer><expr> , smartchr#one_of(', ', ',')
+  inoremap <buffer><expr> @ smartchr#one_of('$this->', '@')
 endfunction
 autocmd FileType php call InitPhp()
 
@@ -570,106 +567,123 @@ let php_htmlInStrings = 1 " HTMLもハイライト
 let php_parent_error_close = 1 
 let php_parent_error_open = 1
 " }}}
+" cs {{{
+function! InitCs()
+  setlocal shiftwidth=2
+  setlocal tabstop=2
+  setlocal softtabstop=2
+  setlocal expandtab
+  setlocal nomodeline
+
+  setlocal commentstring=//%s
+
+  nnoremap <buffer><expr> <space>; getline('.')[col('$') - 2] == ';' ? "" : 'A;<Esc>'
+
+  inoremap <buffer><expr> = smartchr#one_of('=', ' = ', ' == ', ' === ', '==')
+  inoremap <buffer><expr> ! smartchr#one_of('!', ' != ', '!!')
+  inoremap <buffer><expr> , smartchr#one_of(', ', ',')
+endfunction
+autocmd FileType cs call InitCs()
+" }}}
 " HTML {{{
 function! InitHtml()
-    setlocal shiftwidth=2
-    setlocal tabstop=2
-    setlocal softtabstop=2
-    setlocal noexpandtab
+  setlocal shiftwidth=2
+  setlocal tabstop=2
+  setlocal softtabstop=2
+  setlocal noexpandtab
 
-    " IndentGuidesEnable
+  " IndentGuidesEnable
 endfunction
 autocmd FileType html call InitHtml()
 " }}}
 " vim {{{
 function! InitVim()
-    " vim scriptはタブ幅4でスペースを使う
-    setlocal shiftwidth=2
-    setlocal tabstop=2
-    setlocal softtabstop=2
-    setlocal expandtab
+  setlocal shiftwidth=2
+  setlocal tabstop=2
+  setlocal softtabstop=2
+  setlocal expandtab
 endfunction
 autocmd FileType vim call InitVim()
 " }}}
 " vimp {{{
 function! InitVimp()
-    " vimperatorrcはタブ幅4でスペースを使う
-    setlocal shiftwidth=4
-    setlocal tabstop=4
-    setlocal softtabstop=4
-    setlocal expandtab
+  " vimperatorrcはタブ幅4でスペースを使う
+  setlocal shiftwidth=4
+  setlocal tabstop=4
+  setlocal softtabstop=4
+  setlocal expandtab
 
-    setlocal commentstring=\"%s
+  setlocal commentstring=\"%s
 
-    " IndentGuidesEnable
+  " IndentGuidesEnable
 endfunction
 autocmd FileType vimperator call InitVimp()
 " }}}
 " sql {{{
 function! InitSql()
-    setlocal commentstring=\--%s
+  setlocal commentstring=\--%s
 endfunction
 autocmd FileType sql call InitSql()
 " }}}
 " haskell {{{
 function! InitHaskell()
-    " haskellはタブ幅4でスペースを使う
-    setlocal shiftwidth=4
-    setlocal tabstop=4
-    setlocal softtabstop=4
-    setlocal expandtab
+  " haskellはタブ幅4でスペースを使う
+  setlocal shiftwidth=4
+  setlocal tabstop=4
+  setlocal softtabstop=4
+  setlocal expandtab
 
-    " IndentGuidesEnable
+  " IndentGuidesEnable
 endfunction
 autocmd FileType haskell call InitHaskell()
 " }}}
 " cofee script {{{
 function! InitCoffee()
-    " coffeescriptはタブ幅2でスペースを使う
-    setlocal shiftwidth=2
-    setlocal tabstop=2
-    setlocal softtabstop=2
-    setlocal expandtab
+  " coffeescriptはタブ幅2でスペースを使う
+  setlocal shiftwidth=2
+  setlocal tabstop=2
+  setlocal softtabstop=2
+  setlocal expandtab
 
-    IndentGuidesEnable
+  IndentGuidesEnable
 endfunction
 autocmd FileType coffee call InitCoffee()
 " }}}
 " markdown {{{
 function! InitMarkdown()
-    " markdownはタブ幅4でスペースを使う
-    setlocal shiftwidth=4
-    setlocal tabstop=4
-    setlocal softtabstop=4
-    setlocal expandtab
+  " markdownはタブ幅4でスペースを使う
+  setlocal shiftwidth=4
+  setlocal tabstop=4
+  setlocal softtabstop=4
+  setlocal expandtab
 
-    " IndentGuidesEnable
+  " IndentGuidesEnable
 endfunction
 autocmd FileType markdown call InitMarkdown()
 " }}}
 " python {{{
 function! InitPython()
-    " jedi.vimとpyhoncompleteがバッティングし得るらしいので
-    " http://mattn.kaoriya.net/software/vim/20121018212621.htm
-    let b:did_ftplugin = 1
+  " jedi.vimとpyhoncompleteがバッティングし得るらしいので
+  " http://mattn.kaoriya.net/software/vim/20121018212621.htm
+  let b:did_ftplugin = 1
 
-    setlocal commentstring=#%s
+  setlocal commentstring=#%s
 
-    " rename用のマッピングを無効にしたため、代わりにコマンドを定義
-    command! -nargs=0 JediRename :call jedi#rename()
+  " rename用のマッピングを無効にしたため、代わりにコマンドを定義
+  command! -nargs=0 JediRename :call jedi#rename()
 
-    setlocal shiftwidth=2
-    setlocal tabstop=2
-    setlocal softtabstop=2
-    setlocal expandtab
+  setlocal shiftwidth=2
+  setlocal tabstop=2
+  setlocal softtabstop=2
+  setlocal expandtab
 
-    setlocal autoindent
-    setlocal smartindent
-    setlocal cinwords=if,elif,else,for,while,try,except,finally,def,class
+  setlocal autoindent
+  setlocal smartindent
+  setlocal cinwords=if,elif,else,for,while,try,except,finally,def,class
 
-    nnoremap <buffer> <leader>l :<C-u>call Flake8()<CR>
+  nnoremap <buffer> <leader>l :<C-u>call Flake8()<CR>
 
-    " IndentGuidesEnable
+  " IndentGuidesEnable
 endfunction
 autocmd FileType python call InitPython()
 
@@ -683,11 +697,11 @@ let g:flake8_builtins="_,apply"
 " }}}
 " javascript {{{
 function! InitJavaScript()
-    setlocal shiftwidth=2
-    setlocal tabstop=2
-    setlocal softtabstop=2
-    setlocal expandtab
-    IndentGuidesEnable
+  setlocal shiftwidth=2
+  setlocal tabstop=2
+  setlocal softtabstop=2
+  setlocal expandtab
+  IndentGuidesEnable
 endfunction
 autocmd FileType javascript call InitJavaScript()
 " DOMとMozilla関連とES6のメソッドを補完
@@ -699,21 +713,21 @@ let g:SimpleJsIndenter_CaseIndentLevel = -1
 " }}}
 " json {{{
 function! InitJson()
-    set shiftwidth=2
-    set tabstop=2
-    set softtabstop=2
-    set expandtab
-    " IndentGuidesEnable
+  set shiftwidth=2
+  set tabstop=2
+  set softtabstop=2
+  set expandtab
+  " IndentGuidesEnable
 endfunction
 autocmd FileType json call InitJson()
 " }}}
 " scala {{{
 function! InitScala()
-    setlocal shiftwidth=2
-    setlocal tabstop=2
-    setlocal softtabstop=2
-    setlocal expandtab
-    IndentGuidesEnable
+  setlocal shiftwidth=2
+  setlocal tabstop=2
+  setlocal softtabstop=2
+  setlocal expandtab
+  IndentGuidesEnable
 endfunction
 autocmd FileType scala call InitScala()
 " }}}
@@ -901,30 +915,30 @@ vmap <C-m> <Plug>(jplus-input)
 " }}}
 " {{{ Toggle options
 function! s:toggle_option(...)
-    for option_name in a:000
-        execute 'set' option_name.'!'
-        execute 'set' option_name.'?'
-    endfor
+  for option_name in a:000
+    execute 'set' option_name.'!'
+    execute 'set' option_name.'?'
+  endfor
 endfunction
 
 function! s:toggle_indent()
-    if &tabstop == 2
-        setlocal shiftwidth=4
-        setlocal tabstop=4
-        setlocal softtabstop=4
-    else
-        setlocal shiftwidth=2
-        setlocal tabstop=2
-        setlocal softtabstop=2
-    endif
+  if &tabstop == 2
+    setlocal shiftwidth=4
+    setlocal tabstop=4
+    setlocal softtabstop=4
+  else
+    setlocal shiftwidth=2
+    setlocal tabstop=2
+    setlocal softtabstop=2
+  endif
 endfunction
 
 function! s:toggle_transparence()
-    if &transparency == 5
-        set transparency=0
-    else
-        set transparency=5
-    endif
+  if &transparency == 5
+    set transparency=0
+  else
+    set transparency=5
+  endif
 endfunction
 
 nnoremap <silent> <Space>ol :<C-u>call <SID>toggle_option('cursorline', 'cursorcolumn')<CR>
@@ -942,45 +956,45 @@ nmap <silent> <Space>oi <Plug>IndentGuidesToggle
 " 参考(http://d.hatena.ne.jp/thinca/20111204/1322932585)
 " 各タブページのカレントバッファ名+αを表示
 function! s:tabpage_label(n)
-    " " カレントタブページかどうかでハイライトを切り替える
-    let hi = a:n is tabpagenr() ? '%#TabLineSel#' : '%#TabLine#'
+  " " カレントタブページかどうかでハイライトを切り替える
+  let hi = a:n is tabpagenr() ? '%#TabLineSel#' : '%#TabLine#'
 
-    " t:title と言う変数があったらそれを使う
-    let title = gettabvar(a:n, 'title')
-    if title !=# ''
-        return hi . title
-    endif
+  " t:title と言う変数があったらそれを使う
+  let title = gettabvar(a:n, 'title')
+  if title !=# ''
+    return hi . title
+  endif
 
-    " タブページ内のバッファのリスト
-    let bufnrs = tabpagebuflist(a:n)
+  " タブページ内のバッファのリスト
+  let bufnrs = tabpagebuflist(a:n)
 
-    " バッファが複数あったらバッファ数を表示
-    let no = len(bufnrs)
-    if no is 1
-        let no = ''
-    endif
-    " タブページ内に変更ありのバッファがあったら '+' を付ける
-    let mod = len(filter(copy(bufnrs), 'getbufvar(v:val, "&modified")')) ? '+' : ''
-    let sp = (no . mod) ==# '' ? '' : ' '  " 隙間空ける
+  " バッファが複数あったらバッファ数を表示
+  let no = len(bufnrs)
+  if no is 1
+    let no = ''
+  endif
+  " タブページ内に変更ありのバッファがあったら '+' を付ける
+  let mod = len(filter(copy(bufnrs), 'getbufvar(v:val, "&modified")')) ? '+' : ''
+  let sp = (no . mod) ==# '' ? '' : ' '  " 隙間空ける
 
-    " カレントバッファ
-    let curbufnr = bufnrs[tabpagewinnr(a:n) - 1]  " tabpagewinnr() は 1 origin
-    let fname = pathshorten(bufname(curbufnr))
+  " カレントバッファ
+  let curbufnr = bufnrs[tabpagewinnr(a:n) - 1]  " tabpagewinnr() は 1 origin
+  let fname = pathshorten(bufname(curbufnr))
 
-    let label = no . mod . sp . fname
+  let label = no . mod . sp . fname
 
-    return '%' . a:n . 'T' . hi . label . '%T%#TabLineFill#'
+  return '%' . a:n . 'T' . hi . label . '%T%#TabLineFill#'
 endfunction
 
 function! MakeTabLine()
-    let s:titles = map(range(1, tabpagenr('$')), 's:tabpage_label(v:val)')
-    let s:sep = '    '  " タブ間の区切り
-    let s:tabpages = join(s:titles, s:sep) . s:sep . '%#TabLineFill#%T'
-    let s:info = ''
+  let s:titles = map(range(1, tabpagenr('$')), 's:tabpage_label(v:val)')
+  let s:sep = '    '  " タブ間の区切り
+  let s:tabpages = join(s:titles, s:sep) . s:sep . '%#TabLineFill#%T'
+  let s:info = ''
 
-    let s:info .= fnamemodify(getcwd(), ":~") . ' '
+  let s:info .= fnamemodify(getcwd(), ":~") . ' '
 
-    return s:tabpages . '%=' . s:info  " タブリストを左に、情報を右に表示
+  return s:tabpages . '%=' . s:info  " タブリストを左に、情報を右に表示
 endfunction
 
 set tabline=%!MakeTabLine()
@@ -1008,36 +1022,36 @@ let g:rooter_patterns = ['.git/', '.git']
 " }}}
 " eskk {{{
 if has('vim_starting')
-    let g:eskk#large_dictionary = '~/.vim/skk/skk-jisyo.l'
-    let g:eskk#dictionary = '~/Dropbox/SKK/eskk/skk-jisyo.u'
-    let g:eskk#egg_like_newline = 1
-    let g:eskk#egg_like_newline_completion = 1
-    let g:eskk#show_candidates_count = 5
-    let g:eskk#auto_henkan_at_okuri_match = 3
-    let g:eskk#fix_extra_okuri = 1
-    "
-    " <C-j>でいきなり日本語入力からのインサート
-    imap <C-j> <Plug>(eskk:toggle)
-    nmap <C-j> i<C-j>
+  let g:eskk#large_dictionary = '~/.vim/skk/skk-jisyo.l'
+  let g:eskk#dictionary = '~/Dropbox/SKK/eskk/skk-jisyo.u'
+  let g:eskk#egg_like_newline = 1
+  let g:eskk#egg_like_newline_completion = 1
+  let g:eskk#show_candidates_count = 5
+  let g:eskk#auto_henkan_at_okuri_match = 3
+  let g:eskk#fix_extra_okuri = 1
+  "
+  " <C-j>でいきなり日本語入力からのインサート
+  imap <C-j> <Plug>(eskk:toggle)
+  nmap <C-j> i<C-j>
 
-    autocmd User eskk-initialize-pre call s:eskk_initial_pre()
-    function! s:eskk_initial_pre()
-        let t = eskk#table#new('rom_to_hira*', 'rom_to_hira')
-        " zenkaku
-        call t.add_map('hg', '　')
-        " Input hankaku characters.
-        call t.add_map('h-', '-')
-        call t.add_map('h!', '!')
-        call t.add_map('h/', '/')
-        call t.add_map('h\ ', '　')
-        call t.add_map('h:', ':')
-        call t.add_map('h;', ';')
-        call t.add_map('h[', '[')
-        call t.add_map('h]', ']')
-        call t.add_map('(', '(')
-        call t.add_map(')', ')')
-        call eskk#register_mode_table('hira', t)
-    endfunction
+  autocmd User eskk-initialize-pre call s:eskk_initial_pre()
+  function! s:eskk_initial_pre()
+    let t = eskk#table#new('rom_to_hira*', 'rom_to_hira')
+    " zenkaku
+    call t.add_map('hg', '　')
+    " Input hankaku characters.
+    call t.add_map('h-', '-')
+    call t.add_map('h!', '!')
+    call t.add_map('h/', '/')
+    call t.add_map('h\ ', '　')
+    call t.add_map('h:', ':')
+    call t.add_map('h;', ';')
+    call t.add_map('h[', '[')
+    call t.add_map('h]', ']')
+    call t.add_map('(', '(')
+    call t.add_map(')', ')')
+    call eskk#register_mode_table('hira', t)
+  endfunction
 endif
 " }}}
 " poslist.vim {{{
@@ -1054,22 +1068,22 @@ xmap <Leader>Hr <Plug>(quickhl-reset)
 " quickrun {{{
 let g:quickrun_config = {}
 let g:quickrun_config._ = {
-            \ "runner" : "vimproc",
-            \ "runner/vimproc/updatetime" : 10,
-            \ "outputter/buffer/split" : ":botright 10sp",
-            \ "outputter/buffer/close_on_empty" : 1,
-            \ "hook/time/enable" : 1,
-            \ }
+      \ "runner" : "vimproc",
+      \ "runner/vimproc/updatetime" : 10,
+      \ "outputter/buffer/split" : ":botright 10sp",
+      \ "outputter/buffer/close_on_empty" : 1,
+      \ "hook/time/enable" : 1,
+      \ }
 let g:quickrun_config.markdown = {
-            \ 'outputter' : 'null',
-            \ 'command'   : 'open',
-            \ 'cmdopt'    : '-a',
-            \ 'args'      : 'Marked',
-            \ 'exec'      : '%c %o %a %s',
-            \ }
+      \ 'outputter' : 'null',
+      \ 'command'   : 'open',
+      \ 'cmdopt'    : '-a',
+      \ 'args'      : 'Marked',
+      \ 'exec'      : '%c %o %a %s',
+      \ }
 let g:quickrun_config['javascript.mocha'] = {
-            \ 'exec'      : 'npm test',
-            \ }
+      \ 'exec'      : 'npm test',
+      \ }
 nnoremap <expr><silent> <C-c> quickrun#is_running() ? quickrun#sweep_sessions() : "\<C-c>"
 " }}}
 " arpeggio {{{
@@ -1079,16 +1093,16 @@ call arpeggio#load()
 " ambicmd {{{
 " コマンド展開
 if s:has_plugin('ambicmd')
-    cnoremap <expr> <Space> ambicmd#expand("\<Space>")
-    cnoremap <expr> <CR>    ambicmd#expand("\<CR>")
+  cnoremap <expr> <Space> ambicmd#expand("\<Space>")
+  cnoremap <expr> <CR>    ambicmd#expand("\<CR>")
 endif
 " }}}
 " vim-ref {{{
 let g:ref_source_webdict_sites = {
-\   'alc': {
-\     'url': 'http://eow.alc.co.jp/search?q=%s',
-\   },
-\ }
+      \   'alc': {
+      \     'url': 'http://eow.alc.co.jp/search?q=%s',
+      \   },
+      \ }
 let g:ref_source_webdict_sites.default = 'alc'
 
 "出力に対するフィルタ。最初の数行を削除
@@ -1145,17 +1159,17 @@ command! Python VimShellInteractive python
 
 au FileType vimshell call s:vimshell_my_settings()
 function! s:vimshell_my_settings()
-    " Overwrite settings.
-    inoremap <buffer> <expr><silent> <C-g>
-                \ unite#sources#vimshell_history#start_complete(!0)
-    imap <buffer> <C-l> <Esc>
+  " Overwrite settings.
+  inoremap <buffer> <expr><silent> <C-g>
+        \ unite#sources#vimshell_history#start_complete(!0)
+  imap <buffer> <C-l> <Esc>
 
-    nmap <buffer> <C-a> <Plug>(vimshell_move_head)
+  nmap <buffer> <C-a> <Plug>(vimshell_move_head)
 
-    xmap <buffer> Y <Plug>(operator-concealedyank)
+  xmap <buffer> Y <Plug>(operator-concealedyank)
 
-    call unite#custom_default_action("vimshell/history", "insert")
-    call unite#custom_default_action("vimshell/external_history", "insert")
+  call unite#custom_default_action("vimshell/history", "insert")
+  call unite#custom_default_action("vimshell/external_history", "insert")
 endfunction
 " }}}
 " vimfiler {{{
@@ -1167,10 +1181,10 @@ let g:vimfiler_safe_mode_by_default = 0   " セーフモードをオフにする
 
 au FileType vimfiler call s:vimfiler_my_settings()
 function! s:vimfiler_my_settings()
-    " Overwrite settings.
-    nmap <buffer> <C-g> <Plug>(vimfiler_redraw_screen)
-    nmap <buffer> <space><space> <Plug>(vimfiler_toggle_mark_current_line)
-    nnoremap <buffer> <Space> <Space>
+  " Overwrite settings.
+  nmap <buffer> <C-g> <Plug>(vimfiler_redraw_screen)
+  nmap <buffer> <space><space> <Plug>(vimfiler_toggle_mark_current_line)
+  nnoremap <buffer> <Space> <Space>
 endfunction
 " }}}
 " textmanip {{{
@@ -1189,17 +1203,17 @@ command! -nargs=1 Google :OpenBrowserSearch <args>
 " }}}
 " w3m {{{
 let g:w3m#search_engine =
-            \ 'https://www.google.co.jp/search?aq=f&ix=seb&sourceid=chrome&ie=' . &encoding . '&q='
+      \ 'https://www.google.co.jp/search?aq=f&ix=seb&sourceid=chrome&ie=' . &encoding . '&q='
 
 autocmd FileType w3m nnoremap <silent><buffer> r :<C-u>W3mReload<CR>
 autocmd FileType w3m nnoremap <silent><buffer> q :<C-u>W3mClose<CR>
 " }}}
 " syntastic {{{
 let g:syntastic_mode_map = {
-            \ 'mode': 'active',
-            \ 'active_filetypes': ['php', 'coffeescript', 'sh', 'vim'],
-            \ 'passive_filetypes': ['html', 'haskell', 'python', 'ruby', 'json', 'javascript', 'scala']
-            \}
+      \ 'mode': 'active',
+      \ 'active_filetypes': ['php', 'coffeescript', 'sh', 'vim'],
+      \ 'passive_filetypes': ['html', 'haskell', 'python', 'ruby', 'json', 'javascript', 'scala']
+      \}
 let g:syntastic_auto_loc_list=1
 nnoremap <silent> <Leader>l :<C-u>SyntasticCheck<CR>
 autocmd FileType haskell nnoremap <silent><buffer> <Leader>l :<C-u>GhcModCheckAndLintAsync<CR>
@@ -1209,41 +1223,41 @@ let g:surround_no_mappings = 1
 let g:surround_108 = "\\begin{\1environment: \1}\r\\end{\1\1}"
 let g:surround_custom_mapping = {}
 let g:surround_custom_mapping._ = {
-            \'[': "[\r]",
-            \'(': "(\r)",
-            \'{': "{\r}",
-            \'k': "「\r」",
-            \'K': "【\r】",
-            \'T': "＿人人 人人＿\n＞ \r ＜\n￣Y^Y^Y^Y￣",
-            \}
+      \'[': "[\r]",
+      \'(': "(\r)",
+      \'{': "{\r}",
+      \'k': "「\r」",
+      \'K': "【\r】",
+      \'T': "＿人人 人人＿\n＞ \r ＜\n￣Y^Y^Y^Y￣",
+      \}
 let g:surround_custom_mapping.php= {
-            \'f': "\1name: \r..*\r&\1(\r)",
-            \'F': "fb('\1name: \1');\nfb(\r);",
-            \'a': "['\r']",
-            \'v': "v(\r)",
-            \'s': "self::\r",
-            \'p': "<?php \r ?>",
-            \'d': "Kint::dump(\r);",
-            \'t': "Kint::trace(\r);"
-            \}
+      \'f': "\1name: \r..*\r&\1(\r)",
+      \'F': "fb('\1name: \1');\nfb(\r);",
+      \'a': "['\r']",
+      \'v': "v(\r)",
+      \'s': "self::\r",
+      \'p': "<?php \r ?>",
+      \'d': "Kint::dump(\r);",
+      \'t': "Kint::trace(\r);"
+      \}
 let g:surround_custom_mapping.smarty= {
-            \'S': "{{\r}}",
-            \'s': "{{\1name: \r..*\r&\1}}\r{{/\1\1}}",
-            \}
+      \'S': "{{\r}}",
+      \'s': "{{\1name: \r..*\r&\1}}\r{{/\1\1}}",
+      \}
 let g:surround_custom_mapping.javascript= {
-            \'{': "{\r}",
-            \'l': "console.log(\r);"
-            \}
+      \'{': "{\r}",
+      \'l': "console.log(\r);"
+      \}
 let g:surround_custom_mapping.coffee= {
-            \'{': "{\r}",
-            \'$': '$ "\r"'
-            \}
+      \'{': "{\r}",
+      \'$': '$ "\r"'
+      \}
 let g:surround_custom_mapping.vim= {
-            \'v': "echomsg printf('%s: %s','\1name: \1',string(\r));"
-            \}
+      \'v': "echomsg printf('%s: %s','\1name: \1',string(\r));"
+      \}
 let g:surround_custom_mapping.markdown= {
-            \'*': "**\r**"
-            \}
+      \'*': "**\r**"
+      \}
 nmap ds  <Plug>Dsurround
 nmap cs  <Plug>Csurround
 nmap ys  <Plug>Ysurround
@@ -1269,18 +1283,18 @@ let g:indent_guides_guide_size=1
 " }}}
 " vim-toggle {{{
 let g:toggle_pairs = {
-            \ 'or':'and',
-            \ 'and':'or',
-            \ 'DESC':'ASC',
-            \ 'ASC':'DESC',
-            \ 'int':'string',
-            \ 'string':'bool',
-            \ 'bool':'array',
-            \ 'array':'mixed',
-            \ 'mixed':'int',
-            \ 'if':'unless',
-            \ 'unless':'if',
-            \ }
+      \ 'or':'and',
+      \ 'and':'or',
+      \ 'DESC':'ASC',
+      \ 'ASC':'DESC',
+      \ 'int':'string',
+      \ 'string':'bool',
+      \ 'bool':'array',
+      \ 'array':'mixed',
+      \ 'mixed':'int',
+      \ 'if':'unless',
+      \ 'unless':'if',
+      \ }
 
 nmap <C-T> <Plug>ToggleN
 vmap <C-T> <Plug>ToggleV
@@ -1326,7 +1340,7 @@ nnoremap <silent> <plug>(quit) :<c-u>q<cr>
 function! s:my_temporary_window_init(config, context)
   nmap <buffer> q <plug>(quit)
 endfunction
- 
+
 let g:automatic_default_match_config = {
       \   'is_open_other_window' : 1,
       \ }
@@ -1359,16 +1373,16 @@ function! s:toggle_git_folding()
   endif
 endfunction
 function! InitGitv()
-    setlocal iskeyword+=/,-,.
-    nnoremap <silent><buffer> C :<C-u>Git checkout <C-r><C-w><CR>
+  setlocal iskeyword+=/,-,.
+  nnoremap <silent><buffer> C :<C-u>Git checkout <C-r><C-w><CR>
 
-    nnoremap <silent><buffer> t :<C-u>windo call <SID>toggle_git_folding()<CR>1<C-w>w
+  nnoremap <silent><buffer> t :<C-u>windo call <SID>toggle_git_folding()<CR>1<C-w>w
 
-    " TODO マッピングを考える
-    " nnoremap <buffer> <Space>rb :<C-u>Git rebase <C-r>=GitvGetCurrentHash()<CR><Space>
-    " nnoremap <buffer> <Space>R :<C-u>Git revert <C-r>=GitvGetCurrentHash()<CR><CR>
-    " nnoremap <buffer> <Space>h :<C-u>Git cherry-pick <C-r>=GitvGetCurrentHash()<CR><CR>
-    " nnoremap <buffer> <Space>rh :<C-u>Git reset --hard <C-r>=GitvGetCurrentHash()<CR>
+  " TODO マッピングを考える
+  " nnoremap <buffer> <Space>rb :<C-u>Git rebase <C-r>=GitvGetCurrentHash()<CR><Space>
+  " nnoremap <buffer> <Space>R :<C-u>Git revert <C-r>=GitvGetCurrentHash()<CR><CR>
+  " nnoremap <buffer> <Space>h :<C-u>Git cherry-pick <C-r>=GitvGetCurrentHash()<CR><CR>
+  " nnoremap <buffer> <Space>rh :<C-u>Git reset --hard <C-r>=GitvGetCurrentHash()<CR>
 endfunction
 autocmd FileType gitv call InitGitv()
 " }}}
@@ -1392,7 +1406,7 @@ call unite#custom_source('file,file_rec/async', 'filters', ['converter_relative_
 call unite#custom_source('grep', 'filters', ['matcher_regexp', 'sorter_default', 'converter_default'])
 
 if has('migemo')
-    call unite#custom_source('line,advent_calendar', 'filters', ['matcher_migemo', 'sorter_default', 'converter_default'])
+  call unite#custom_source('line,advent_calendar', 'filters', ['matcher_migemo', 'sorter_default', 'converter_default'])
 endif
 
 nnoremap <silent> <Leader>u<space> :<C-u>UniteResume<CR>
@@ -1438,30 +1452,30 @@ au FileType unite nnoremap <silent> <buffer> <expr> dd unite#do_action('delete')
 " 初期設定関数を起動する
 au FileType unite call s:unite_my_settings()
 function! s:unite_my_settings()
-    imap <buffer> <silent> <C-n> <Plug>(unite_insert_leave)<Plug>(unite_loop_cursor_down)
-    imap <buffer> <silent> <C-p> <Plug>(unite_insert_leave)<Plug>(unite_loop_cursor_up)
-    nmap <buffer> <silent> <C-n> <Plug>(unite_loop_cursor_down)
-    nmap <buffer> <silent> <C-p> <Plug>(unite_loop_cursor_up)
+  imap <buffer> <silent> <C-n> <Plug>(unite_insert_leave)<Plug>(unite_loop_cursor_down)
+  imap <buffer> <silent> <C-p> <Plug>(unite_insert_leave)<Plug>(unite_loop_cursor_up)
+  nmap <buffer> <silent> <C-n> <Plug>(unite_loop_cursor_down)
+  nmap <buffer> <silent> <C-p> <Plug>(unite_loop_cursor_up)
 
-    imap <buffer> <silent> <C-w> <Plug>(unite_delete_backward_path)
+  imap <buffer> <silent> <C-w> <Plug>(unite_delete_backward_path)
 
-    " ?
-    nmap <buffer> <silent> <expr> / unite#do_action("narrow")
+  " ?
+  nmap <buffer> <silent> <expr> / unite#do_action("narrow")
 
-    " <C-l>でEscの代わりに
-    imap <buffer> <silent> <C-l> <Esc>
+  " <C-l>でEscの代わりに
+  imap <buffer> <silent> <C-l> <Esc>
 
-    " <C-l>を潰したため、元々あったredrawを<C-g>に移動
-    nmap <buffer> <silent> <C-g> <Plug>(unite_redraw)
-    imap <buffer> <silent> <C-g> <Plug>(unite_redraw)
+  " <C-l>を潰したため、元々あったredrawを<C-g>に移動
+  nmap <buffer> <silent> <C-g> <Plug>(unite_redraw)
+  imap <buffer> <silent> <C-g> <Plug>(unite_redraw)
 
-    nmap <buffer> <silent> <space><space> <Plug>(unite_toggle_mark_current_candidate)
+  nmap <buffer> <silent> <space><space> <Plug>(unite_toggle_mark_current_candidate)
 
-    " ddでリストから削除
-    nmap <buffer> <silent> d <Nop>
+  " ddでリストから削除
+  nmap <buffer> <silent> d <Nop>
 
-    nnoremap <buffer> p p
-    nnoremap <buffer> <Space> <Space>
+  nnoremap <buffer> p p
+  nnoremap <buffer> <Space> <Space>
 endfunction
 " }}}
 " neocomplcache {{{
@@ -1485,11 +1499,11 @@ let g:neocomplcache_min_syntax_length = 3
 let g:neocomplcache_min_keyword_length = 3
 let g:neocomplcache_caching_limit_file_size = 5000000
 let g:neocomplcache_dictionary_filetype_lists = {
-            \'default' : '',
-            \'php' : $HOME.'/.vim/dict/php.dict',
-            \'scala' : $HOME.'/.vim/dict/scala.dict',
-            \'vimshell' : $HOME.'/.vim/.vimshell_hist'
-            \}
+      \'default' : '',
+      \'php' : $HOME.'/.vim/dict/php.dict',
+      \'scala' : $HOME.'/.vim/dict/scala.dict',
+      \'vimshell' : $HOME.'/.vim/.vimshell_hist'
+      \}
 
 let g:neocomplcache_release_cache_time = 7200
 
@@ -1497,7 +1511,7 @@ let g:use_zen_complete_tag = 1
 
 " Define keyword.
 if !exists('g:neocomplcache_keyword_patterns')
-    let g:neocomplcache_keyword_patterns = {}
+  let g:neocomplcache_keyword_patterns = {}
 endif
 let g:neocomplcache_keyword_patterns['default'] = '\h\w*'
 
@@ -1521,44 +1535,44 @@ smap <C-k> <Plug>(neosnippet_expand_or_jump)
 
 let g:neosnippet#snippets_directory='~/Dropbox/vim/snippet'
 let g:neosnippet#disable_runtime_snippets = {
-		\   'php' : 1,
-		\   'sql' : 1,
-		\ }
+      \   'php' : 1,
+      \   'sql' : 1,
+      \ }
 " }}}
 " ==========
 " SECTION: Memo
 " ==========
 "  function {{{
 function! s:open_memo_file()
-    let l:category = input('Category: ')
-    let l:title = input('Title: ')
+  let l:category = input('Category: ')
+  let l:title = input('Title: ')
 
-    if l:category == ""
-        let l:category = "other"
-    endif
+  if l:category == ""
+    let l:category = "other"
+  endif
 
-    let l:memo_dir = $HOME . '/Dropbox/Memo/vim/' . l:category
-    if !isdirectory(l:memo_dir)
-        call mkdir(l:memo_dir, 'p')
-    endif
+  let l:memo_dir = $HOME . '/Dropbox/Memo/vim/' . l:category
+  if !isdirectory(l:memo_dir)
+    call mkdir(l:memo_dir, 'p')
+  endif
 
-    let l:filename = l:memo_dir . strftime('/%Y-%m-%d_') . l:title . '.txt'
+  let l:filename = l:memo_dir . strftime('/%Y-%m-%d_') . l:title . '.txt'
 
-    let l:template = [
-                \'Category: ' . l:category,
-                \'========================================',
-                \'Title: ' . l:title,
-                \'----------------------------------------',
-                \'date: ' . strftime('%Y/%m/%d %T'),
-                \'- - - - - - - - - - - - - - - - - - - - ',
-                \'',
-                \]
+  let l:template = [
+        \'Category: ' . l:category,
+        \'========================================',
+        \'Title: ' . l:title,
+        \'----------------------------------------',
+        \'date: ' . strftime('%Y/%m/%d %T'),
+        \'- - - - - - - - - - - - - - - - - - - - ',
+        \'',
+        \]
 
-    " ファイル生成
-    execute 'tabnew ' . l:filename
-    call setline(1, l:template)
-    execute '999'
-    execute 'write'
+  " ファイル生成
+  execute 'tabnew ' . l:filename
+  call setline(1, l:template)
+  execute '999'
+  execute 'write'
 endfunction augroup END"}}}
 " command & mapping {{{
 
@@ -1630,9 +1644,9 @@ function! s:deletetrail()
 endfunction"}}}
 " command! AllMaps {{{
 command!
-            \   -nargs=* -complete=mapping
-            \   AllMaps
-            \   map <args> | map! <args> | lmap <args>
+      \   -nargs=* -complete=mapping
+      \   AllMaps
+      \   map <args> | map! <args> | lmap <args>
 " }}}
 " 連番 {{{
 nnoremap <silent> co :ContinuousNumber <C-a><CR>
@@ -1646,37 +1660,37 @@ cnoremap <expr> ;  <SID>sticky_func()
 snoremap <expr> ;  <SID>sticky_func()
 
 function! s:sticky_func()
-    let l:sticky_table = {
-                \',' : '<', '.' : '>', '/' : '?',
-                \'1' : '!', '2' : '@', '3' : '#', '4' : '$', '5' : '%',
-                \'6' : '^', '7' : '&', '8' : '*', '9' : '(', '0' : ')', '-' : '_', '=' : '+',
-                \';' : ':', '[' : '{', ']' : '}', '`' : '~', "'" : "\"", '\' : '|',
-                \}
-    let l:special_table = {
-                \"\<ESC>" : "\<ESC>", "\<Space>" : ';', "\<CR>" : ";\<CR>"
-                \}
+  let l:sticky_table = {
+        \',' : '<', '.' : '>', '/' : '?',
+        \'1' : '!', '2' : '@', '3' : '#', '4' : '$', '5' : '%',
+        \'6' : '^', '7' : '&', '8' : '*', '9' : '(', '0' : ')', '-' : '_', '=' : '+',
+        \';' : ':', '[' : '{', ']' : '}', '`' : '~', "'" : "\"", '\' : '|',
+        \}
+  let l:special_table = {
+        \"\<ESC>" : "\<ESC>", "\<Space>" : ';', "\<CR>" : ";\<CR>"
+        \}
 
-    let l:key = getchar()
-    if nr2char(l:key) =~ '\l'
-        return toupper(nr2char(l:key))
-    elseif has_key(l:sticky_table, nr2char(l:key))
-        return l:sticky_table[nr2char(l:key)]
-    elseif has_key(l:special_table, nr2char(l:key))
-        return l:special_table[nr2char(l:key)]
-    else
-        return ''
-    endif
+  let l:key = getchar()
+  if nr2char(l:key) =~ '\l'
+    return toupper(nr2char(l:key))
+  elseif has_key(l:sticky_table, nr2char(l:key))
+    return l:sticky_table[nr2char(l:key)]
+  elseif has_key(l:special_table, nr2char(l:key))
+    return l:special_table[nr2char(l:key)]
+  else
+    return ''
+  endif
 endfunction
 " }}}
 " Jq {{{
 command! -nargs=? Jq call s:Jq(<f-args>)
 function! s:Jq(...)
-    if 0 == a:0
-        let l:arg = "."
-    else
-        let l:arg = a:1
-    endif
-    execute "%! cat % | jq \"" . l:arg . "\""
+  if 0 == a:0
+    let l:arg = "."
+  else
+    let l:arg = a:1
+  endif
+  execute "%! cat % | jq \"" . l:arg . "\""
 endfunction
 " }}}
 " skype {{{
@@ -1692,19 +1706,19 @@ command! -nargs=0 Homeru :Unite homekotoba -default-action=yank
 " ==========
 " {{{
 if has("gui_running")
-    " gvimrcも読み込む
-    source ~/dotfiles/.gvimrc
+  " gvimrcも読み込む
+  source ~/dotfiles/.gvimrc
 else
-    colorscheme hybrid
-    set background=dark
+  colorscheme hybrid
+  set background=dark
 
-    " visualmark
-    if &bg == "dark"
-        " highlight SignColor ctermfg=white ctermbg=blue guibg=#073672
-        highlight SignColor ctermfg=white ctermbg=darkblue guibg=darkblue
-    else
-        highlight SignColor ctermbg=grey ctermfg=RoyalBlue3 guibg=grey guifg=RoyalBlue3
-    endif
+  " visualmark
+  if &bg == "dark"
+    " highlight SignColor ctermfg=white ctermbg=blue guibg=#073672
+    highlight SignColor ctermfg=white ctermbg=darkblue guibg=darkblue
+  else
+    highlight SignColor ctermbg=grey ctermfg=RoyalBlue3 guibg=grey guifg=RoyalBlue3
+  endif
 endif
 " }}}
 " 非公開vimrc {{{
@@ -1717,51 +1731,51 @@ endif
 " ==========
 " yank {{{
 function! s:yank()
-    let words = input("words? ", "")
-    let mode = input("mode? ", "")
+  let words = input("words? ", "")
+  let mode = input("mode? ", "")
 
-    if mode == "tate"
-        let words = s:tate(words)
-    elseif mode == "naname"
-        let words = s:naname(words)
-    endif
+  if mode == "tate"
+    let words = s:tate(words)
+  elseif mode == "naname"
+    let words = s:naname(words)
+  endif
 
-    let @+ = words
-    echo 'yank!'
+  let @+ = words
+  echo 'yank!'
 endfunction
 
 function! s:tate(str)
-    let list = s:str_to_list(a:str)
-    return join(list, "\n")
+  let list = s:str_to_list(a:str)
+  return join(list, "\n")
 endfunction
 
 function! s:naname(str)
-    let str = s:str_to_list(a:str)
-    let result = []
-    let i = 0
-    for c in str
-        let pad = ""
-        for j in range(i)
-            let pad = pad . "　"
-        endfor
-        call add(result, pad . c)
-        let i += 1
+  let str = s:str_to_list(a:str)
+  let result = []
+  let i = 0
+  for c in str
+    let pad = ""
+    for j in range(i)
+      let pad = pad . "　"
     endfor
-    return join(result, "\n")
+    call add(result, pad . c)
+    let i += 1
+  endfor
+  return join(result, "\n")
 endfunction
 function! s:str_to_list(str)
-    return split(a:str, '\zs')
+  return split(a:str, '\zs')
 endfunction
 
 function! s:naname2(str)
-    " TODO
-    let str = s:str_to_list(a:str)
-    let map[0][0] = str[0]
-    echo map
+  " TODO
+  let str = s:str_to_list(a:str)
+  let map[0][0] = str[0]
+  echo map
 endfunction
 
 function! s:str_to_list(str)
-    return split(a:str, '\zs')
+  return split(a:str, '\zs')
 endfunction
 
 command! -nargs=0 UcYank call s:yank()
