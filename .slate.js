@@ -101,32 +101,20 @@ slate.bind(util.key('k', 'shift'), slate.operation('chain', {
     });
   })
 }));
-// slate.bind(util.key('k', 'shift'), slate.operation('chain', {
-//   operations: _.map(['left', 'right'], function(d) {
-//     return slate.operation('push', {
-//       direction: d,
-//       style: 'bar-resize:screenSizeX/2'
-//     });
-//   })
-// }));
-// var pre_half = 'alt';
-// key_binds['left:'+pre_half] = slate.operation("push", {
-//   "direction" : "left",
-//   "style" : "bar-resize:screenSizeX/2"
-// });
-// key_binds['right:'+pre_half] = slate.operation("push", {
-//   "direction" : "right",
-//   "style" : "bar-resize:screenSizeX/2"
-// });
-// key_binds['up:'+pre_half] = slate.operation("push", {
-//   "direction" : "up",
-//   "style" : "bar-resize:screenSizeY/2"
-// });
-// key_binds['down:'+pre_half] = slate.operation("push", {
-//   "direction" : "down",
-//   "style" : "bar-resize:screenSizeY/2"
-// });
 
+// q          .. フォーカスしているアプリを終了
+slate.bind(util.key('q'), function(win) {
+  var pid = win.app().pid();
+  slate.log('Kill process ' + pid);
+  win.doOperation(
+    slate.operation('shell', {
+      'command' : '/bin/kill '+ pid
+    })
+  );
+});
+
+// u          .. Undo
+slate.bind(util.key('u'), slate.operation('undo'));
  
 // h+shift   .. ウィンドウが左にあるなら縮小, 右にあるなら拡大
 slate.bind(util.key('h', 'shift'), function(win) {
