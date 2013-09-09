@@ -129,7 +129,6 @@ NeoBundle 'ujihisa/unite-haskellimport'
 NeoBundle 'sgur/unite-qf'
 NeoBundle 'tekkoc/unite-decorate-border'
 NeoBundle 'tekkoc/unite-decorate-text'
-NeoBundle 'tekkoc/unite-twitter_timeline'
 NeoBundle 'Shougo/unite-session'
 
 " NeoBundle 'git@github.com:tekkoc/rmine.vim.git'
@@ -157,6 +156,7 @@ NeoBundle 'leafgarland/typescript-vim'
 NeoBundle 'digitaltoad/vim-jade'
 NeoBundle 'esehara/Vim-Roy'
 NeoBundle 'derekwyatt/vim-scala'
+NeoBundle 'jdonaldson/vaxe'
 NeoBundle 'nosami/Omnisharp', {
       \   'build': {
       \     'mac': 'xbuild server/OmniSharp.sln',
@@ -851,19 +851,18 @@ nnoremap sQ :<C-u>bd<CR>
 nnoremap sb :<C-u>Unite buffer_tab -buffer-name=file<CR>
 nnoremap sB :<C-u>Unite buffer -buffer-name=file<CR>
 
-call submode#enter_with('winsize', 'n', '', 's>', '<C-w>>')
-call submode#enter_with('winsize', 'n', '', 's<', '<C-w><')
-call submode#enter_with('winsize', 'n', '', 's+', '<C-w>+')
-call submode#enter_with('winsize', 'n', '', 's-', '<C-w>-')
-call submode#map('winsize', 'n', '', '>', '<C-w>>')
-call submode#map('winsize', 'n', '', '<', '<C-w><')
-call submode#map('winsize', 'n', '', '+', '<C-w>+')
-call submode#map('winsize', 'n', '', '-', '<C-w>-')
-
-call submode#enter_with('tabchange', 'n', '', 'sn', 'gt')
-call submode#enter_with('tabchange', 'n', '', 'sp', 'gT')
-call submode#map('tabchange', 'n', '', 'n', 'gt')
-call submode#map('tabchange', 'n', '', 'p', 'gT')
+call submode#enter_with('bufmove', 'n', '', 's>', '<C-w>>')
+call submode#enter_with('bufmove', 'n', '', 's<', '<C-w><')
+call submode#enter_with('bufmove', 'n', '', 's+', '<C-w>+')
+call submode#enter_with('bufmove', 'n', '', 's-', '<C-w>-')
+call submode#enter_with('bufmove', 'n', '', 'sn', 'gt')
+call submode#enter_with('bufmove', 'n', '', 'sp', 'gT')
+call submode#map('bufmove', 'n', '', '>', '<C-w>>')
+call submode#map('bufmove', 'n', '', '<', '<C-w><')
+call submode#map('bufmove', 'n', '', '+', '<C-w>+')
+call submode#map('bufmove', 'n', '', '-', '<C-w>-')
+call submode#map('bufmove', 'n', '', 'n', 'gt')
+call submode#map('bufmove', 'n', '', 'p', 'gT')
 
 " 表示行移動
 nnoremap j gj
@@ -1697,9 +1696,6 @@ endfunction
 " vimからskypeウィンドウを開く
 command! -nargs=0 Skype :Unite file_rec/async:~/skype_link -buffer-name=file -start-insert -default-action=start
 nnoremap <Space>s :Skype<CR>
-" }}}
-" homekotoba {{{
-command! -nargs=0 Homeru :Unite homekotoba -default-action=yank
 " }}}
 " ==========
 " SECTION: gui
