@@ -156,7 +156,6 @@ NeoBundle 'leafgarland/typescript-vim'
 NeoBundle 'digitaltoad/vim-jade'
 NeoBundle 'esehara/Vim-Roy'
 NeoBundle 'derekwyatt/vim-scala'
-NeoBundle 'jdonaldson/vaxe'
 NeoBundle 'nosami/Omnisharp', {
       \   'build': {
       \     'mac': 'xbuild server/OmniSharp.sln',
