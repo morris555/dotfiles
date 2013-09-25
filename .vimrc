@@ -25,6 +25,7 @@ if has('vim_starting')
 
   NeoBundleLocal ~/.vim/my_bundle
 endif
+let g:neobundle#types#git#default_protocol = "git"
 " }}}
 " plugin_list {{{
 " color-scheme
@@ -131,8 +132,6 @@ NeoBundle 'tekkoc/unite-decorate-border'
 NeoBundle 'tekkoc/unite-decorate-text'
 NeoBundle 'Shougo/unite-session'
 
-" NeoBundle 'git@github.com:tekkoc/rmine.vim.git'
-
 " 整形
 NeoBundle 'h1mesuke/vim-alignta'
 NeoBundle 'vim-scripts/DrawIt'
@@ -148,6 +147,9 @@ NeoBundle 'thinca/vim-visualstar'
 
 " 行結合
 NeoBundle "osyo-manga/vim-jplus"
+
+" f強化
+NeoBundle "git@github.com:rhysd/clever-f.vim.git"
 
 " 言語別
 NeoBundle 'kchmck/vim-coffee-script'
@@ -798,10 +800,10 @@ noremap ZZ <Nop>
 noremap ZQ <Nop>
 
 " ?では、lineソースを使った検索にする
-nnoremap <silent> ? :<C-u>Unite line -buffer-name=search -start-insert<CR>
+" nnoremap <silent> ? :<C-u>Unite line -buffer-name=search -start-insert<CR>
 
 " #では、カーソル下の文字をlineソースを使って検索する
-nnoremap <silent> # :<C-U>UniteWithCursorWord -buffer-name=search line<CR>
+" nnoremap <silent> # :<C-U>UniteWithCursorWord -buffer-name=search line<CR>
 
 
 " spell
@@ -1374,6 +1376,12 @@ let g:pronamachang_voice_root = "~/Dropbox/Vim/pronamachang"
 
 let g:pronamachang_say_startup_enable = 0
 let g:pronamachang_say_goodbye_enable = 0
+" }}}
+" clever-f {{{
+let g:clever_f_smart_case = 1
+let g:clever_f_use_migemo = 1
+let g:clever_f_across_no_line = 1
+let g:clever_f_fix_key_direction= 1
 " }}}
 " automatic {{{
 nnoremap <silent> <plug>(quit) :<c-u>q<cr>
