@@ -72,6 +72,10 @@ NeoBundle 'fifnel/ofaddinbox.vim'
 NeoBundle 'osyo-manga/vim-pronamachang'
 NeoBundle 'osyo-manga/vim-sound'
 
+" nyancat.vim
+NeoBundle 'koron/nyancat-vim'
+
+
 " automatic
 NeoBundle 'osyo-manga/vim-automatic'
 NeoBundle 'osyo-manga/vim-gift'
@@ -597,6 +601,12 @@ function! InitHtml()
 endfunction
 autocmd FileType html call InitHtml()
 " }}}
+" HTML {{{
+function! InitJade()
+  IndentGuidesEnable
+endfunction
+autocmd FileType jade call InitJade()
+" }}}
 " vim {{{
 function! InitVim()
   setlocal shiftwidth=2
@@ -921,8 +931,8 @@ nnoremap g$ $
 
 
 " Ctrlで最後まで移動
-noremap <C-e> $
-noremap <C-a> ^
+" noremap <C-e> $
+" noremap <C-a> ^
 " noremap <C-e> g$
 " noremap <C-a> g^
 
@@ -945,6 +955,7 @@ nnoremap Q q
 " ノーマルモード時に改行
 nnoremap <Space><Space> o<ESC>
 nnoremap <CR> o<Esc>
+nnoremap <S-CR> O<Esc>
 
 " 行を詰めずに削除
 nnoremap <Space>d cc<ESC>
