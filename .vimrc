@@ -121,6 +121,9 @@ NeoBundle 'ujihisa/shadow.vim'
 " gitディレクトリのあるところをカレントディレクトリに
 NeoBundle 'airblade/vim-rooter'
 
+" ctrlP
+NeoBundle 'kien/ctrlp.vim'
+
 " unite
 NeoBundle 'Shougo/unite.vim'
 NeoBundle 'Shougo/unite-outline'
@@ -1785,54 +1788,3 @@ endif
 " ==========
 " SECTION: other
 " ==========
-" yank {{{
-function! s:yank()
-  let words = input("words? ", "")
-  let mode = input("mode? ", "")
-
-  if mode == "tate"
-    let words = s:tate(words)
-  elseif mode == "naname"
-    let words = s:naname(words)
-  endif
-
-  let @+ = words
-  echo 'yank!'
-endfunction
-
-function! s:tate(str)
-  let list = s:str_to_list(a:str)
-  return join(list, "\n")
-endfunction
-
-function! s:naname(str)
-  let str = s:str_to_list(a:str)
-  let result = []
-  let i = 0
-  for c in str
-    let pad = ""
-    for j in range(i)
-      let pad = pad . "　"
-    endfor
-    call add(result, pad . c)
-    let i += 1
-  endfor
-  return join(result, "\n")
-endfunction
-function! s:str_to_list(str)
-  return split(a:str, '\zs')
-endfunction
-
-function! s:naname2(str)
-  " TODO
-  let str = s:str_to_list(a:str)
-  let map[0][0] = str[0]
-  echo map
-endfunction
-
-function! s:str_to_list(str)
-  return split(a:str, '\zs')
-endfunction
-
-command! -nargs=0 UcYank call s:yank()
-" }}}
