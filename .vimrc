@@ -940,10 +940,14 @@ nnoremap g$ $
 " noremap <C-a> g^
 
 " シフトで多めに移動
-noremap J 20j:<C-u>call PlaySE("portal2")<CR>
-noremap K 20k:<C-u>call PlaySE("portal2")<CR>
-noremap L 10l:<C-u>call PlaySE("portal2")<CR>
-noremap H 10h:<C-u>call PlaySE("portal2")<CR>
+nnoremap J 20j:<C-u>call PlaySE("portal2")<CR>
+nnoremap K 20k:<C-u>call PlaySE("portal2")<CR>
+nnoremap L 10l:<C-u>call PlaySE("portal2")<CR>
+nnoremap H 10h:<C-u>call PlaySE("portal2")<CR>
+vnoremap J 20j
+vnoremap K 20k
+vnoremap L 10l
+vnoremap H 10h
 
 " insert mode
 inoremap <C-f> <Right>
