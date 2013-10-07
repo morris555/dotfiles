@@ -868,8 +868,8 @@ noremap ; :
 nnoremap <expr> gp '`[' . strpart(getregtype(), 0, 1) . '`]'
 
 " ESC2度押しで検索ハイライトを消す
-nnoremap <silent> <Esc><Esc> :<C-u>AnzuClearSearchStatus<CR>:nohlsearch<CR>
-nnoremap <silent> <C-l><C-l> :<C-u>AnzuClearSearchStatus<CR>:nohlsearch<CR>
+nnoremap <silent> <Esc><Esc> :<C-u>AnzuClearSearchStatus<CR>:nohlsearch<CR>:call PlaySE("splash")<CR>
+nnoremap <silent> <C-l><C-l> :<C-u>AnzuClearSearchStatus<CR>:nohlsearch<CR>:call PlaySE("splash")<CR>
 
 nmap ( ,mf(
 nmap ) ,mF(
@@ -940,10 +940,10 @@ nnoremap g$ $
 " noremap <C-a> g^
 
 " シフトで多めに移動
-noremap J 20j
-noremap K 20k
-noremap L 10l
-noremap H 10h
+noremap J 20j:<C-u>call PlaySE("portal2")<CR>
+noremap K 20k:<C-u>call PlaySE("portal2")<CR>
+noremap L 10l:<C-u>call PlaySE("portal2")<CR>
+noremap H 10h:<C-u>call PlaySE("portal2")<CR>
 
 " insert mode
 inoremap <C-f> <Right>
@@ -1788,3 +1788,39 @@ endif
 " ==========
 " SECTION: other
 " ==========
+
+" minecraft sound {{{
+let s:se_path = "~/Dropbox/Vim/MinecraftSound/"
+let s:se_ext = ".wav"
+function! s:change_sound_name(base_name)
+  return expand(s:se_path . a:base_name . s:se_ext)
+endfunction
+
+command! -nargs=1 Play :call PlaySE("<args>")
+
+" テスト用
+" nnoremap <Leader><Leader> :<C-u>Play <C-r><C-w><CR>
+
+function! PlaySE(name)
+  call sound#play_wav(s:change_sound_name(a:name))
+endfunction
+
+" 補完を閉じるときに、弓矢ヒット
+autocmd CompleteDone * call PlaySE("bowhit1")
+
+" バッファ移動時に、ドア音
+autocmd BufEnter * call PlaySE("door_open")
+
+" 入力時に、石を掘る音
+autocmd InsertCharPre * call PlaySE("stone3")
+
+" 保存時に爆発
+autocmd BufWrite * call PlaySE("explode")
+
+" インサートモードに入る時、抜けるときにピストン音
+autocmd InsertEnter * call PlaySE("in")
+autocmd InsertLeave * call PlaySE("out")
+
+" タブページ移動時にポータル音
+autocmd TabEnter * call PlaySE("portal")
+" }}}
