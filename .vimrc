@@ -940,10 +940,10 @@ nnoremap g$ $
 " noremap <C-a> g^
 
 " シフトで多めに移動
-nnoremap J 20j:<C-u>call PlaySE("portal2")<CR>
-nnoremap K 20k:<C-u>call PlaySE("portal2")<CR>
-nnoremap L 10l:<C-u>call PlaySE("portal2")<CR>
-nnoremap H 10h:<C-u>call PlaySE("portal2")<CR>
+nnoremap <silent> J 20j:<C-u>call PlaySE("portal2")<CR>
+nnoremap <silent> K 20k:<C-u>call PlaySE("portal2")<CR>
+nnoremap <silent> L 10l:<C-u>call PlaySE("portal2")<CR>
+nnoremap <silent> H 10h:<C-u>call PlaySE("portal2")<CR>
 vnoremap J 20j
 vnoremap K 20k
 vnoremap L 10l
@@ -1008,56 +1008,6 @@ nnoremap <silent> <Space>os :<C-u>SyntasticToggleMode<CR>
 nnoremap <silent> <Space>ot :<C-u>call <SID>toggle_indent()<CR>
 nnoremap <silent> <Space>oT :<C-u>call <SID>toggle_transparence()<CR>
 nmap <silent> <Space>oi <Plug>IndentGuidesToggle
-" }}}
-" ==============
-"  SECTION: tab line
-" ==============
-" {{{
-" 参考(http://d.hatena.ne.jp/thinca/20111204/1322932585)
-" 各タブページのカレントバッファ名+αを表示
-function! s:tabpage_label(n)
-  " " カレントタブページかどうかでハイライトを切り替える
-  let hi = a:n is tabpagenr() ? '%#TabLineSel#' : '%#TabLine#'
-
-  " t:title と言う変数があったらそれを使う
-  let title = gettabvar(a:n, 'title')
-  if title !=# ''
-    return hi . title
-  endif
-
-  " タブページ内のバッファのリスト
-  let bufnrs = tabpagebuflist(a:n)
-
-  " バッファが複数あったらバッファ数を表示
-  let no = len(bufnrs)
-  if no is 1
-    let no = ''
-  endif
-  " タブページ内に変更ありのバッファがあったら '+' を付ける
-  let mod = len(filter(copy(bufnrs), 'getbufvar(v:val, "&modified")')) ? '+' : ''
-  let sp = (no . mod) ==# '' ? '' : ' '  " 隙間空ける
-
-  " カレントバッファ
-  let curbufnr = bufnrs[tabpagewinnr(a:n) - 1]  " tabpagewinnr() は 1 origin
-  let fname = pathshorten(bufname(curbufnr))
-
-  let label = no . mod . sp . fname
-
-  return '%' . a:n . 'T' . hi . label . '%T%#TabLineFill#'
-endfunction
-
-function! MakeTabLine()
-  let s:titles = map(range(1, tabpagenr('$')), 's:tabpage_label(v:val)')
-  let s:sep = '    '  " タブ間の区切り
-  let s:tabpages = join(s:titles, s:sep) . s:sep . '%#TabLineFill#%T'
-  let s:info = ''
-
-  let s:info .= fnamemodify(getcwd(), ":~") . ' '
-
-  return s:tabpages . '%=' . s:info  " タブリストを左に、情報を右に表示
-endfunction
-
-set tabline=%!MakeTabLine()
 " }}}
 " ==============
 " SECTION: plugin
@@ -1380,7 +1330,9 @@ let g:signify_mapping_toggle = '<leader>gt'
 " airline {{{
 let g:airline_powerline_fonts=1
 let g:airline_detect_whitespace=0
+let g:airline#extensions#tabline#enabled = 1
 " }}}
+"
 " smartinput {{{
 " call smartinput#define_rule({
 " \   'at': '\s\+\%#',
@@ -1696,8 +1648,6 @@ command! -nargs=1 -complete=filetype Temp edit ~/.vim_tmp/tmp.<args>
 command! -nargs=1 Type :set filetype=<args>
 command! -nargs=1 Encode :e ++enc=<args>
 
-command! -nargs=1 Title :let t:title="<args>"
-
 " TODOファイル
 command! Todo edit ~/Dropbox/Memo/todo.txt
 " }}}
@@ -1794,17 +1744,19 @@ endif
 " ==========
 
 " minecraft sound {{{
+
+" 効果音ディレクトリと拡張子の指定。効果音名を元にフルパスに変換出来るように。
 let s:se_path = "~/Dropbox/Vim/MinecraftSound/"
 let s:se_ext = ".wav"
 function! s:change_sound_name(base_name)
   return expand(s:se_path . a:base_name . s:se_ext)
 endfunction
 
-command! -nargs=1 Play :call PlaySE("<args>")
-
-" テスト用
+" テスト用。効果音名の上で<Leader><Leader>を押すと再生出来るように
+" command! -nargs=1 Play :call PlaySE("<args>")
 " nnoremap <Leader><Leader> :<C-u>Play <C-r><C-w><CR>
 
+" sound#play_wavのラッパ
 function! PlaySE(name)
   call sound#play_wav(s:change_sound_name(a:name))
 endfunction
@@ -1825,6 +1777,21 @@ autocmd BufWrite * call PlaySE("explode")
 autocmd InsertEnter * call PlaySE("in")
 autocmd InsertLeave * call PlaySE("out")
 
-" タブページ移動時にポータル音
+" タブページ移動時にエンダーマンの移動音
 autocmd TabEnter * call PlaySE("portal")
+
+
+" シフトで多めに移動。かつ効果音をエンダーマンの移動音を再生。
+nnoremap <silent> J 20j:<C-u>call PlaySE("portal2")<CR>
+nnoremap <silent> K 20k:<C-u>call PlaySE("portal2")<CR>
+nnoremap <silent> L 10l:<C-u>call PlaySE("portal2")<CR>
+nnoremap <silent> H 10h:<C-u>call PlaySE("portal2")<CR>
+vnoremap J 20j
+vnoremap K 20k
+vnoremap L 10l
+vnoremap H 10h
+
+" ESC2度押しで検索ハイライトを消すと共に、水に飛び込む
+nnoremap <silent> <Esc><Esc> :<C-u>AnzuClearSearchStatus<CR>:nohlsearch<CR>:call PlaySE("splash")<CR>
+nnoremap <silent> <C-l><C-l> :<C-u>AnzuClearSearchStatus<CR>:nohlsearch<CR>:call PlaySE("splash")<CR>
 " }}}
