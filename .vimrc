@@ -963,6 +963,7 @@ nnoremap Q q
 nnoremap <Space><Space> o<ESC>
 nnoremap <CR> o<Esc>
 nnoremap <S-CR> O<Esc>
+nmap <C-CR> yyCCp
 
 " 行を詰めずに削除
 nnoremap <Space>d cc<ESC>
@@ -1742,6 +1743,7 @@ endif
 " ==========
 " SECTION: other
 " ==========
+
 
 " minecraft sound {{{
 
