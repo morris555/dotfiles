@@ -158,6 +158,9 @@ NeoBundle "osyo-manga/vim-jplus"
 " f強化
 NeoBundle "git@github.com:rhysd/clever-f.vim.git"
 
+" 括弧
+NeoBundle "kien/rainbow_parentheses.vim"
+
 " 言語別
 NeoBundle 'kchmck/vim-coffee-script'
 NeoBundle 'vim-scripts/actionscript.vim--Leider'
@@ -165,6 +168,7 @@ NeoBundle 'leafgarland/typescript-vim'
 NeoBundle 'digitaltoad/vim-jade'
 NeoBundle 'esehara/Vim-Roy'
 NeoBundle 'derekwyatt/vim-scala'
+NeoBundle 'JesseKPhillips/d.vim'
 NeoBundle 'nosami/Omnisharp', {
       \   'build': {
       \     'mac': 'xbuild server/OmniSharp.sln',
