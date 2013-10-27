@@ -161,6 +161,9 @@ NeoBundle "git@github.com:rhysd/clever-f.vim.git"
 " 括弧
 NeoBundle "kien/rainbow_parentheses.vim"
 
+" 虹
+NeoBundle "osyo-manga/vim-fancy"
+
 " 言語別
 NeoBundle 'kchmck/vim-coffee-script'
 NeoBundle 'vim-scripts/actionscript.vim--Leider'
