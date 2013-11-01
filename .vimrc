@@ -72,10 +72,6 @@ NeoBundle 'fifnel/ofaddinbox.vim'
 NeoBundle 'osyo-manga/vim-pronamachang'
 NeoBundle 'osyo-manga/vim-sound'
 
-" nyancat.vim
-NeoBundle 'koron/nyancat-vim'
-
-
 " automatic
 NeoBundle 'osyo-manga/vim-automatic'
 NeoBundle 'osyo-manga/vim-gift'
@@ -103,7 +99,8 @@ NeoBundle 'kana/vim-smartinput'
 NeoBundle 'kana/vim-smartchr'
 
 " easymotion
-NeoBundle 'Lokaltog/vim-easymotion'
+" NeoBundle 'Lokaltog/vim-easymotion'
+NeoBundle 'haya14busa/vim-easymotion'
 
 " ブラウザで開く
 NeoBundle 'tyru/open-browser.vim'
@@ -122,7 +119,7 @@ NeoBundle 'ujihisa/shadow.vim'
 NeoBundle 'airblade/vim-rooter'
 
 " ctrlP
-NeoBundle 'kien/ctrlp.vim'
+" NeoBundle 'kien/ctrlp.vim'
 
 " unite
 NeoBundle 'Shougo/unite.vim'
@@ -157,6 +154,9 @@ NeoBundle "osyo-manga/vim-jplus"
 
 " f強化
 NeoBundle "git@github.com:rhysd/clever-f.vim.git"
+
+" yankround
+NeoBundle 'LeafCage/yankround.vim'
 
 " 括弧
 NeoBundle "kien/rainbow_parentheses.vim"
@@ -226,7 +226,8 @@ NeoBundle 'kana/vim-smartword'
 NeoBundle 'ryutorion/vim-itunes'
 
 " 複数ハイライト
-NeoBundle 't9md/vim-quickhl'
+NeoBundle 't9md/vim-quickhl', {'ref' : '1031a81fd10c3d8be7470ae3c8179c1aa8cdcbef'}
+" NeoBundle 't9md/vim-quickhl'
 
 " ファイラ
 NeoBundle 'Shougo/vimfiler'
@@ -304,19 +305,6 @@ NeoBundle "mattn/httpstatus-vim"
 
 " toggle
 NeoBundle "tekkoc/vim-toggle"
-
-" toggle
-NeoBundle "thinca/vim-portal"
-
-" Game
-NeoBundle 'mattn/invader-vim'
-NeoBundle 'mfumi/snake.vim'
-NeoBundle 'mfumi/viminesweeper'
-NeoBundle 'mfumi/lightsout.vim'
-NeoBundle 'vim-scripts/vim-game-of-life'
-NeoBundle 'tyru/pacman.vim'
-NeoBundle 'deris/vim-duzzle'
-NeoBundle 'mattn/habatobi-vim'
 " }}}
 " ==============
 "  SECTION: define
@@ -1353,6 +1341,12 @@ let g:pronamachang_voice_root = "~/Dropbox/Vim/pronamachang"
 
 let g:pronamachang_say_startup_enable = 0
 let g:pronamachang_say_goodbye_enable = 0
+" }}}
+" yankround {{{
+nmap p <Plug>(yankround-p)
+nmap P <Plug>(yankround-P)
+nmap <C-p> <Plug>(yankround-prev)
+nmap <C-n> <Plug>(yankround-next)
 " }}}
 " clever-f {{{
 let g:clever_f_smart_case = 1
