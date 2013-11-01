@@ -470,13 +470,13 @@ set formatoptions+=M
 autocmd BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$") | exe "normal g`\"" | endif
 
 " カレントウィンドウにのみ相対行を表示
-augroup cch
-  autocmd! cch
-  autocmd WinLeave * set nonumber
-  autocmd WinLeave * set norelativenumber
-  autocmd WinEnter,BufRead * set number
-  autocmd WinEnter,BufRead * set relativenumber
-augroup END
+" augroup cch
+"   autocmd! cch
+"   autocmd WinLeave * set nonumber
+"   autocmd WinLeave * set norelativenumber
+"   autocmd WinEnter,BufRead * set number
+"   autocmd WinEnter,BufRead * set relativenumber
+" augroup END
 
 " 必要なときのみ、カーソル行をハイライト
 " http://d.hatena.ne.jp/thinca/20090530/1243615055
@@ -1340,7 +1340,6 @@ let g:airline_powerline_fonts=1
 let g:airline_detect_whitespace=0
 let g:airline#extensions#tabline#enabled = 1
 " }}}
-"
 " smartinput {{{
 " call smartinput#define_rule({
 " \   'at': '\s\+\%#',
