@@ -158,12 +158,6 @@ NeoBundle "git@github.com:rhysd/clever-f.vim.git"
 " yankround
 NeoBundle 'LeafCage/yankround.vim'
 
-" 括弧
-NeoBundle "kien/rainbow_parentheses.vim"
-
-" 虹
-NeoBundle "osyo-manga/vim-fancy"
-
 " 言語別
 NeoBundle 'kchmck/vim-coffee-script'
 NeoBundle 'vim-scripts/actionscript.vim--Leider'
@@ -177,9 +171,6 @@ NeoBundle 'nosami/Omnisharp', {
       \     'mac': 'xbuild server/OmniSharp.sln',
       \   }
       \ }
-
-
-NeoBundle 'tpope/vim-dispatch'
 
 " js
 NeoBundle 'jiangmiao/simple-javascript-indenter'
@@ -226,8 +217,7 @@ NeoBundle 'kana/vim-smartword'
 NeoBundle 'ryutorion/vim-itunes'
 
 " 複数ハイライト
-NeoBundle 't9md/vim-quickhl', {'ref' : '1031a81fd10c3d8be7470ae3c8179c1aa8cdcbef'}
-" NeoBundle 't9md/vim-quickhl'
+NeoBundle 't9md/vim-quickhl'
 
 " ファイラ
 NeoBundle 'Shougo/vimfiler'
@@ -276,8 +266,6 @@ NeoBundle 'thinca/vim-localrc'
 
 " eskk.vim
 NeoBundle 'tyru/eskk.vim'
-
-NeoBundle 'vim-scripts/matrix.vim'
 
 " gundo
 NeoBundle 'sjl/gundo.vim'
@@ -599,7 +587,7 @@ function! InitHtml()
 endfunction
 autocmd FileType html call InitHtml()
 " }}}
-" HTML {{{
+" Jade {{{
 function! InitJade()
   IndentGuidesEnable
 endfunction
@@ -657,6 +645,24 @@ function! InitCoffee()
   IndentGuidesEnable
 endfunction
 autocmd FileType coffee call InitCoffee()
+" }}}
+" dlang {{{
+function! InitDlang()
+  " coffeescriptはタブ幅2でスペースを使う
+  setlocal shiftwidth=2
+  setlocal tabstop=2
+  setlocal softtabstop=2
+  setlocal expandtab
+
+  setlocal commentstring=//%s
+
+  nnoremap <buffer><expr> <space>; getline('.')[col('$') - 2] == ';' ? "" : 'A;<Esc>'
+
+  nnoremap <buffer> <leader>R :<C-u>QuickRun d_unittest<CR>
+
+  IndentGuidesEnable
+endfunction
+autocmd FileType d call InitDlang()
 " }}}
 " markdown {{{
 function! InitMarkdown()
@@ -1090,6 +1096,12 @@ let g:quickrun_config.markdown = {
 let g:quickrun_config['javascript.mocha'] = {
       \ 'exec'      : 'npm test',
       \ }
+let g:quickrun_config['d_unittest'] = {
+      \ 'command': 'rdmd',
+      \ 'cmdopt' : '-unittest',
+      \ 'tempfile': '%{tempname()}.d',
+      \ }
+
 nnoremap <expr><silent> <C-c> quickrun#is_running() ? quickrun#sweep_sessions() : "\<C-c>"
 " }}}
 " arpeggio {{{
@@ -1249,6 +1261,9 @@ let g:surround_custom_mapping.php= {
 let g:surround_custom_mapping.smarty= {
       \'S': "{{\r}}",
       \'s': "{{\1name: \r..*\r&\1}}\r{{/\1\1}}",
+      \}
+let g:surround_custom_mapping.d= {
+      \'w': "writeln(\r);",
       \}
 let g:surround_custom_mapping.javascript= {
       \'{': "{\r}",
@@ -1760,7 +1775,7 @@ endfunction
 
 " sound#play_wavのラッパ
 function! PlaySE(name)
-  call sound#play_wav(s:change_sound_name(a:name))
+  " call sound#play_wav(s:change_sound_name(a:name))
 endfunction
 
 " 補完を閉じるときに、弓矢ヒット
