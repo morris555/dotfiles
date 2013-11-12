@@ -1161,6 +1161,8 @@ nmap <silent> <Leader>vk <Plug>Vm_goto_prev_sign
 " }}}
 " easymotion {{{
 let g:EasyMotion_leader_key='<Leader>m'
+nmap <leader>mm <leader>mS
+vmap <leader>mm <leader>mS
 " }}}
 " vimshell {{{
 let g:vimshell_max_command_history = 100000000			" ヒストリの保存数
