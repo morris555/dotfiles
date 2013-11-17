@@ -1661,7 +1661,6 @@ command! -bang Rb :Unite neobundle/install:<bang>
 
 " 一時ファイル
 command! -nargs=1 -complete=filetype Tmp edit ~/.vim_tmp/tmp.<args>
-command! -nargs=1 -complete=filetype Temp edit ~/.vim_tmp/tmp.<args>
 
 " ファイルタイプのショートカットコマンド
 command! -nargs=1 Type :set filetype=<args>
