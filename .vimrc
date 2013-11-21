@@ -834,8 +834,10 @@ nnoremap <silent> <space>tT :<C-u>tab stj <C-R>=expand('<cword>')<CR><CR>
 nnoremap <silent> <Space>tl :<C-u>UniteWithCursorWord tag<CR>
 nnoremap <silent> <Space>tn :tn<CR>
 nnoremap <silent> <Space>tp :tp<CR>
-nnoremap <silent> <Space>tj <C-]>:<C-u>split<CR><C-o><C-o><C-w>j
-nnoremap <silent> <Space>tk <C-]>:<C-u>vsplit<CR><C-o><C-o><C-w>l
+" nnoremap <silent> <Space>tj <C-]>:<C-u>split<CR><C-o><C-o><C-w>j
+" nnoremap <silent> <Space>tk <C-]>:<C-u>vsplit<CR><C-o><C-o><C-w>l
+nnoremap <silent> <Space>ts :<C-u>split<CR><C-]>
+nnoremap <silent> <Space>tv :<C-u>vsplit<CR><C-]>
 autocmd FileType coffee nnoremap <silent><buffer> <Space>tu :<C-u>!ctags --languages=coffee -R<CR>
 
 " <C-l>でEscする
@@ -1660,7 +1662,7 @@ command! Rg source ~/dotfiles/.gvimrc
 command! -bang Rb :Unite neobundle/install:<bang>
 
 " 一時ファイル
-command! -nargs=1 -complete=filetype Tmp edit ~/.vim_tmp/tmp.<args>
+command! -nargs=1 -complete=filetype Temp edit ~/.vim_tmp/tmp.<args>
 
 " ファイルタイプのショートカットコマンド
 command! -nargs=1 Type :set filetype=<args>

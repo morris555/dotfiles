@@ -18,7 +18,7 @@ if has('gui_macvim')
     set guioptions-=T
     set guioptions-=m
 
-    set transparency=5
+    set transparency=15
 
     set nomousefocus
     set mouse=
