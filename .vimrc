@@ -89,6 +89,9 @@ NeoBundle 'mattn/sonictemplate-vim'
 " debug
 NeoBundle 'joonty/vdebug'
 
+" over
+NeoBundle 'osyo-manga/vim-over'
+
 " 補完
 NeoBundle 'Shougo/neocomplcache'
 NeoBundle 'ujihisa/neco-look'
@@ -1763,6 +1766,40 @@ endif
 " SECTION: other
 " ==========
 
+" TODO 変更したい値が増えたらプラグイン化
+function! g:up_value()
+  let &transparency+=5
+endfunction
+function! g:down_value()
+  let value = &transparency - 5
+  if (value < 0)
+    let value = 0
+  endif
+  let &transparency=value
+endfunction
+
+" guifont size + 1
+function! g:ZoomIn()
+  let l:fsize = substitute(&guifont, '^.*:h\([^:]*\).*$', '\1', '')
+  let l:fsize += 1
+  let l:guifont = substitute(&guifont, ':h\([^:]*\)', ':h' . l:fsize, '')
+  echo l:guifont
+  let &guifont = l:guifont
+endfunction
+
+" guifont size - 1
+function! g:ZoomOut()
+  let l:fsize = substitute(&guifont, '^.*:h\([^:]*\).*$', '\1', '')
+  let l:fsize -= 1
+  let l:guifont = substitute(&guifont, ':h\([^:]*\)', ':h' . l:fsize, '')
+  echo l:guifont
+  let &guifont = l:guifont
+endfunction
+
+nnoremap <Up> :<C-u>call g:up_value()<CR>
+nnoremap <Down> :<C-u>call g:down_value()<CR>
+nnoremap <Left> :<C-u>call g:ZoomIn()<CR>
+nnoremap <Right> :<C-u>call g:ZoomOut()<CR>
 
 " minecraft sound {{{
 
