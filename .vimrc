@@ -32,6 +32,7 @@ let g:neobundle#types#git#default_protocol = "git"
 NeoBundle 'altercation/vim-colors-solarized'
 NeoBundle 'w0ng/vim-hybrid'
 NeoBundle 'vol2223/vim-colorblind-colorscheme'
+NeoBundle 'junegunn/seoul256.vim'
 
 " singleton
 NeoBundle 'thinca/vim-singleton'
@@ -1796,10 +1797,24 @@ function! g:ZoomOut()
   let &guifont = l:guifont
 endfunction
 
+function! g:linespace_up()
+  let &linespace+=1
+endfunction
+
+function! g:linespace_down()
+  let value = &linespace - 1
+  if (value < 0)
+    let value = 0
+  endif
+  let &linespace=value
+endfunction
+
 nnoremap <Up> :<C-u>call g:up_value()<CR>
 nnoremap <Down> :<C-u>call g:down_value()<CR>
 nnoremap <Left> :<C-u>call g:ZoomIn()<CR>
-nnoremap <Right> :<C-u>call g:ZoomOut()<CR>
+nnoremap <Right> :<C-u>call g:ZoomOut()<<CR>
+" nnoremap <Left> :<C-u>call g:linespace_up()<CR>
+" nnoremap <Right> :<C-u>call g:linespace_down()<<CR>
 
 " minecraft sound {{{
 
