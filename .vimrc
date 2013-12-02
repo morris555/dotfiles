@@ -1048,9 +1048,10 @@ if has('vim_starting')
   let g:eskk#auto_henkan_at_okuri_match = 3
   let g:eskk#fix_extra_okuri = 1
   "
-  " <C-j>でいきなり日本語入力からのインサート
   imap <C-j> <Plug>(eskk:toggle)
-  nmap <C-j> i<C-j>
+
+  " <C-j>でいきなり日本語入力からのインサート
+  " nmap <C-j> i<C-j>
 
   autocmd User eskk-initialize-pre call s:eskk_initial_pre()
   function! s:eskk_initial_pre()
@@ -1169,6 +1170,10 @@ nmap <silent> <Leader>vk <Plug>Vm_goto_prev_sign
 let g:EasyMotion_leader_key='<Leader>m'
 nmap <leader>mm <leader>mS
 vmap <leader>mm <leader>mS
+nmap <C-j> <leader>mj
+nmap <C-k> <leader>mk
+vmap <C-j> <leader>mj
+vmap <C-k> <leader>mk
 " }}}
 " vimshell {{{
 let g:vimshell_max_command_history = 100000000			" ヒストリの保存数
