@@ -170,6 +170,7 @@ NeoBundle 'digitaltoad/vim-jade'
 NeoBundle 'esehara/Vim-Roy'
 NeoBundle 'derekwyatt/vim-scala'
 NeoBundle 'JesseKPhillips/d.vim'
+NeoBundle 'timcharper/textile.vim'
 NeoBundle 'nosami/Omnisharp', {
       \   'build': {
       \     'mac': 'xbuild server/OmniSharp.sln',
