@@ -1343,18 +1343,19 @@ nmap n <Plug>(anzu-n)
 nmap N <Plug>(anzu-N)
 nmap * <Plug>(anzu-star)
 " }}}
-" git-gutter-vim {{{
-" TODO signifyに切り替えたら削除する
-" let g:no_auto_gitgutter = 1
-" nnoremap <leader>ge <Nop>
-" nnoremap <silent> <leader>gg :<C-u>GitGutter<CR>
-" nnoremap <silent> <leader>gd :<C-u>execute ":sign unplace * file=" . expand("%:p")<Cr>
-" }}}
 " signigy {{{
 let g:signify_vcs_list = ['git']
-let g:signify_mapping_next_hunk = '<leader>gj'
-let g:signify_mapping_prev_hunk = '<leader>gk'
-let g:signify_mapping_toggle = '<leader>gt'
+" let g:signify_mapping_next_hunk = '<leader>gj'
+" let g:signify_mapping_prev_hunk = '<leader>gk'
+" let g:signify_mapping_toggle = '<leader>gt'
+" 次の差分箇所に移動
+nmap <Leader>gj <Plug>(signify-next-hunk)zz
+" 前の差分箇所に移動
+nmap <Leader>gk <Plug>(signify-prev-hunk)zz
+" 差分箇所をハイライト
+nmap <Leader>gh <Plug>(signify-toggle-highlight)
+" 差分表示をトグルする(:SignifyToggleコマンドと同じ)
+nmap <Leader>gt <Plug>(signify-toggle)
 " }}}
 " airline {{{
 let g:airline_powerline_fonts=1
