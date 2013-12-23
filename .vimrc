@@ -56,6 +56,7 @@ NeoBundle 'kana/vim-textobj-function'
 NeoBundle 'kana/vim-textobj-line'
 NeoBundle 'sgur/vim-textobj-parameter'
 NeoBundle 'thinca/vim-textobj-plugins'
+NeoBundle 'rhysd/vim-textobj-word-column'
 
 " submode
 NeoBundle 'kana/vim-submode'
@@ -1384,6 +1385,10 @@ nmap p <Plug>(yankround-p)
 nmap P <Plug>(yankround-P)
 nmap <C-p> <Plug>(yankround-prev)
 nmap <C-n> <Plug>(yankround-next)
+" }}}
+" linediff.vim {{{
+vnoremap D :Linediff<CR>
+" vnoremap D :'<,'>Linediff<CR>
 " }}}
 " vim-splash {{{
 let g:splash#path  = expand("~/Dropbox/Vim/splash.txt")
