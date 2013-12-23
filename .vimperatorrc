@@ -90,3 +90,12 @@ EOM
 
 
 echo "vimperator: Welcome back."
+
+
+" memo
+" 限定対象     | 文字列
+" 履歴         | ^
+" ブックマーク | *
+" タグ         | +
+" タイトル     | #
+" URL          | @
