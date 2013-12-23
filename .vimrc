@@ -69,6 +69,9 @@ NeoBundle 'emonkak/vim-operator-comment'
 " omniforcus
 NeoBundle 'fifnel/ofaddinbox.vim'
 
+" linediff
+NeoBundle 'AndrewRadev/linediff.vim'
+
 " splash
 NeoBundle 'thinca/vim-splash'
 
