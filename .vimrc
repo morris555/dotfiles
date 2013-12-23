@@ -69,6 +69,9 @@ NeoBundle 'emonkak/vim-operator-comment'
 " omniforcus
 NeoBundle 'fifnel/ofaddinbox.vim'
 
+" splash
+NeoBundle 'thinca/vim-splash'
+
 " pronama
 NeoBundle 'osyo-manga/vim-pronamachang'
 NeoBundle 'osyo-manga/vim-sound'
@@ -1377,6 +1380,9 @@ nmap p <Plug>(yankround-p)
 nmap P <Plug>(yankround-P)
 nmap <C-p> <Plug>(yankround-prev)
 nmap <C-n> <Plug>(yankround-next)
+" }}}
+" vim-splash {{{
+let g:splash#path  = expand("~/Dropbox/Vim/splash.txt")
 " }}}
 " clever-f {{{
 let g:clever_f_smart_case = 1
