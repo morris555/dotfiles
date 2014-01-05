@@ -33,6 +33,7 @@ NeoBundle 'altercation/vim-colors-solarized'
 NeoBundle 'w0ng/vim-hybrid'
 NeoBundle 'vol2223/vim-colorblind-colorscheme'
 NeoBundle 'junegunn/seoul256.vim'
+NeoBundle 'cocopon/iceberg.vim'
 
 " singleton
 NeoBundle 'thinca/vim-singleton'
@@ -646,13 +647,15 @@ function! InitHaskell()
 endfunction
 autocmd FileType haskell call InitHaskell()
 " }}}
-" cofee script {{{
+" Cofeescript {{{
 function! InitCoffee()
-  " coffeescriptはタブ幅2でスペースを使う
   setlocal shiftwidth=2
   setlocal tabstop=2
   setlocal softtabstop=2
   setlocal expandtab
+
+  nnoremap <buffer> <leader>r :<C-u>CoffeeWatch<CR>
+  nnoremap <buffer> <leader>R :<C-u>CoffeeLint<CR>
 
   IndentGuidesEnable
 endfunction
@@ -1087,10 +1090,11 @@ map <c-i> <Plug>(poslist-next-pos)
 let g:poslist_histsize = 10000
 " }}}
 " quickhl {{{
-nmap <Leader>h <Plug>(quickhl-toggle)
-nmap <Leader>Hr <Plug>(quickhl-reset)
-xmap <Leader>h <Plug>(quickhl-toggle)
-xmap <Leader>Hr <Plug>(quickhl-reset)
+nmap <Leader>h <Plug>(quickhl-manual-this)
+nmap <Leader>H <Plug>(quickhl-cword-toggle)
+vmap <Leader>h <Plug>(quickhl-manual-this)
+vmap <Leader>H <Plug>(quickhl-cword-toggle)
+map gh <Plug>(operator-quickhl-manual-this-motion)
 " }}}
 " quickrun {{{
 let g:quickrun_config = {}
@@ -1833,7 +1837,7 @@ endfunction
 nnoremap <Up> :<C-u>call g:up_value()<CR>
 nnoremap <Down> :<C-u>call g:down_value()<CR>
 nnoremap <Left> :<C-u>call g:ZoomIn()<CR>
-nnoremap <Right> :<C-u>call g:ZoomOut()<<CR>
+nnoremap <Right> :<C-u>call g:ZoomOut()<CR>
 " nnoremap <Left> :<C-u>call g:linespace_up()<CR>
 " nnoremap <Right> :<C-u>call g:linespace_down()<<CR>
 
