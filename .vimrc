@@ -525,6 +525,22 @@ autocmd FileType scala :set dictionary+=~/.vim/dict/scala.dict
 set complete+=k
 
 " }}}
+" ファイルタイプ関連関数 {{{
+function! MapHtmlKey()
+  inoremap <buffer> \\ \
+  inoremap <buffer> \& &amp;
+  inoremap <buffer> \< &lt;
+  inoremap <buffer> \> &gt;
+  inoremap <buffer> \. ・
+  inoremap <buffer> \- &#8212;
+  inoremap <buffer> \<Space> &nbsp;
+  inoremap <buffer> \` &#8216;
+  inoremap <buffer> \' &#8217;
+  inoremap <buffer> \2 &#8220;
+  inoremap <buffer> \" &#8221; setlocal noexpandtab
+endfunction
+autocmd FileType html call InitHtml()
+" }}}
 " {{{ デフォルト
 set shiftwidth=2
 set tabstop=2
@@ -546,8 +562,6 @@ function! InitPhp()
   setlocal commentstring=//%s
 
   setlocal dictionary+=~/.vim/dict/php.dict
-
-  " setlocal matchpairs+==:;
 
   inoremap <expr> <buffer> @ &filetype == 'blade' ? "@" : <SID>at()
 
@@ -594,8 +608,8 @@ function! InitHtml()
   setlocal shiftwidth=2
   setlocal tabstop=2
   setlocal softtabstop=2
-  setlocal noexpandtab
 
+  call MapHtmlKey()
   " IndentGuidesEnable
 endfunction
 autocmd FileType html call InitHtml()
@@ -603,6 +617,8 @@ autocmd FileType html call InitHtml()
 " Jade {{{
 function! InitJade()
   IndentGuidesEnable
+
+  call MapHtmlKey()
 endfunction
 autocmd FileType jade call InitJade()
 " }}}
@@ -654,8 +670,15 @@ function! InitCoffee()
   setlocal softtabstop=2
   setlocal expandtab
 
+  setlocal dictionary+=~/.vim/dict/js.dict
+
   nnoremap <buffer> <leader>r :<C-u>CoffeeWatch<CR>
   nnoremap <buffer> <leader>R :<C-u>CoffeeLint<CR>
+
+  inoremap <buffer><expr> = smartchr#one_of('=', ' = ', ' == ', ' === ', '==')
+  inoremap <buffer><expr> . smartchr#one_of('.', '->', ' => ', '..')
+  inoremap <buffer><expr> ! smartchr#one_of('!', ' != ', '!!')
+  inoremap <buffer><expr> , smartchr#one_of(', ', ',')
 
   IndentGuidesEnable
 endfunction
@@ -663,7 +686,6 @@ autocmd FileType coffee call InitCoffee()
 " }}}
 " dlang {{{
 function! InitDlang()
-  " coffeescriptはタブ幅2でスペースを使う
   setlocal shiftwidth=2
   setlocal tabstop=2
   setlocal softtabstop=2
@@ -773,6 +795,9 @@ function! InitJavaScript()
   setlocal tabstop=2
   setlocal softtabstop=2
   setlocal expandtab
+
+  setlocal dictionary+=~/.vim/dict/js.dict
+
   IndentGuidesEnable
 endfunction
 autocmd FileType javascript call InitJavaScript()
@@ -1569,7 +1594,8 @@ let g:neocomplcache_caching_limit_file_size = 5000000
 let g:neocomplcache_dictionary_filetype_lists = {
       \'default' : '',
       \'php' : $HOME.'/.vim/dict/php.dict',
-      \'scala' : $HOME.'/.vim/dict/scala.dict',
+      \'javascript' : $HOME.'/.vim/dict/js.dict',
+      \'coffee' : $HOME.'/.vim/dict/js.dict',
       \'vimshell' : $HOME.'/.vim/.vimshell_hist'
       \}
 
@@ -1585,6 +1611,7 @@ let g:neocomplcache_keyword_patterns['default'] = '\h\w*'
 
 " Enable omni completion.
 autocmd FileType haskell setlocal omnifunc=necoghc#omnifunc
+autocmd FileType coffee setlocal omnifunc=javascriptcomplete#CompleteJS
 
 if !exists('g:neocomplcache_force_omni_patterns')
   let g:neocomplcache_force_omni_patterns = {}
