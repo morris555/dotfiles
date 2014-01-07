@@ -672,6 +672,8 @@ function! InitCoffee()
 
   setlocal dictionary+=~/.vim/dict/js.dict
 
+  nnoremap <silent><buffer> <Space>tu :<C-u>!coffeetags -R -f tags --include-vars<CR>
+
   nnoremap <buffer> <leader>r :<C-u>CoffeeWatch<CR>
   nnoremap <buffer> <leader>R :<C-u>CoffeeLint<CR>
 
@@ -878,7 +880,6 @@ nnoremap <silent> <Space>tp :tp<CR>
 " nnoremap <silent> <Space>tk <C-]>:<C-u>vsplit<CR><C-o><C-o><C-w>l
 nnoremap <silent> <Space>ts :<C-u>split<CR><C-]>
 nnoremap <silent> <Space>tv :<C-u>vsplit<CR><C-]>
-autocmd FileType coffee nnoremap <silent><buffer> <Space>tu :<C-u>!ctags --languages=coffee -R<CR>
 
 " <C-l>でEscする
 vnoremap <C-l> <Esc>
