@@ -856,10 +856,10 @@ noremap ZZ <Nop>
 noremap ZQ <Nop>
 
 " ?では、lineソースを使った検索にする
-" nnoremap <silent> ? :<C-u>Unite line -buffer-name=search -start-insert<CR>
+nnoremap <silent> ? :<C-u>Unite line -buffer-name=search -start-insert<CR>
 
 " #では、カーソル下の文字をlineソースを使って検索する
-" nnoremap <silent> # :<C-U>UniteWithCursorWord -buffer-name=search line<CR>
+nnoremap <silent> # :<C-U>UniteWithCursorWord -buffer-name=search line<CR>
 
 
 " spell
@@ -1208,10 +1208,10 @@ nmap <silent> <Leader>vk <Plug>Vm_goto_prev_sign
 let g:EasyMotion_leader_key='<Leader>m'
 nmap <leader>mm <leader>mS
 vmap <leader>mm <leader>mS
-nmap <C-j> <leader>mj
-nmap <C-k> <leader>mk
-vmap <C-j> <leader>mj
-vmap <C-k> <leader>mk
+nmap <C-j> <leader>mw
+nmap <C-k> <leader>mb
+vmap <C-j> <leader>mm
+vmap <C-k> <leader>mb
 " }}}
 " vimshell {{{
 let g:vimshell_max_command_history = 100000000			" ヒストリの保存数
