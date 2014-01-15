@@ -608,6 +608,7 @@ function! InitHtml()
   setlocal shiftwidth=2
   setlocal tabstop=2
   setlocal softtabstop=2
+  setlocal noexpandtab
 
   call MapHtmlKey()
   " IndentGuidesEnable
@@ -1301,8 +1302,6 @@ let g:surround_custom_mapping._ = {
       \'T': "＿人人 人人＿\n＞ \r ＜\n￣Y^Y^Y^Y￣",
       \}
 let g:surround_custom_mapping.php= {
-      \'f': "\1name: \r..*\r&\1(\r)",
-      \'F': "fb('\1name: \1');\nfb(\r);",
       \'a': "['\r']",
       \'v': "v(\r)",
       \'s': "self::\r",
@@ -1322,8 +1321,9 @@ let g:surround_custom_mapping.javascript= {
       \'l': "console.log(\r);"
       \}
 let g:surround_custom_mapping.coffee= {
-      \'{': "{\r}",
-      \'$': '$ "\r"'
+      \'l': "console.log \r",
+      \'d': "console.dir \r",
+      \'t': "console.trace \r",
       \}
 let g:surround_custom_mapping.vim= {
       \'v': "echomsg printf('%s: %s','\1name: \1',string(\r));"
