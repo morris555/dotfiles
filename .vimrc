@@ -675,8 +675,8 @@ function! InitCoffee()
 
   nnoremap <silent><buffer> <Space>tu :<C-u>!coffeetags -R -f tags --include-vars<CR>
 
-  nnoremap <buffer> <leader>r :<C-u>CoffeeWatch<CR>
-  nnoremap <buffer> <leader>R :<C-u>CoffeeLint<CR>
+  nnoremap <buffer> <leader>R :<C-u>CoffeeWatch<CR>
+  " nnoremap <buffer> <leader>R :<C-u>CoffeeLint<CR>
 
   inoremap <buffer><expr> = smartchr#one_of('=', ' = ', ' == ', ' === ', '==')
   inoremap <buffer><expr> . smartchr#one_of('.', '->', ' => ', '..')
