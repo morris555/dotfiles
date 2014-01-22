@@ -188,7 +188,6 @@ NeoBundle 'nosami/Omnisharp', {
 " js
 NeoBundle 'jiangmiao/simple-javascript-indenter'
 NeoBundle 'jelera/vim-javascript-syntax'
-NeoBundle 'teramako/jscomplete-vim'
 NeoBundle 'elzr/vim-json'
 
 " haskell
@@ -258,7 +257,7 @@ NeoBundle 'vim-scripts/Visual-Mark'
 NeoBundle 'supermomonga/shaberu.vim'
 
 " html高速入力
-NeoBundle 'mattn/zencoding-vim'
+NeoBundle 'mattn/emmet-vim'
 
 " 同時押しマッピング
 NeoBundle 'kana/vim-arpeggio'
@@ -611,7 +610,7 @@ function! InitHtml()
   setlocal noexpandtab
 
   call MapHtmlKey()
-  " IndentGuidesEnable
+  IndentGuidesEnable
 endfunction
 autocmd FileType html call InitHtml()
 " }}}
