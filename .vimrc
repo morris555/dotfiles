@@ -102,7 +102,7 @@ NeoBundle 'joonty/vdebug'
 NeoBundle 'osyo-manga/vim-over'
 
 " 補完
-NeoBundle 'Shougo/neocomplcache'
+NeoBundle has('lua') ? 'Shougo/neocomplete' : 'Shougo/neocomplcache' 
 NeoBundle 'ujihisa/neco-look'
 NeoBundle 'Shougo/neosnippet'
 
@@ -111,7 +111,6 @@ NeoBundle 'kana/vim-smartinput'
 NeoBundle 'kana/vim-smartchr'
 
 " easymotion
-" NeoBundle 'Lokaltog/vim-easymotion'
 NeoBundle 'haya14busa/vim-easymotion'
 
 " ブラウザで開く
@@ -572,6 +571,8 @@ function! InitPhp()
   inoremap <buffer><expr> ! smartchr#one_of('!', ' != ', '!!')
   inoremap <buffer><expr> , smartchr#one_of(', ', ',')
   inoremap <buffer><expr> @ smartchr#one_of('$this->', '@')
+
+  IndentGuidesEnable
 endfunction
 autocmd FileType php call InitPhp()
 
@@ -627,6 +628,8 @@ function! InitVim()
   setlocal tabstop=2
   setlocal softtabstop=2
   setlocal expandtab
+
+  IndentGuidesEnable
 endfunction
 autocmd FileType vim call InitVim()
 " }}}
@@ -1518,17 +1521,12 @@ au FileType php nnoremap <buffer> <Leader>ur :<C-u>Unite ref/phpmanual<CR>
 au FileType vim nnoremap <buffer> <Leader>ur :<C-u>Unite help<CR>
 " outline
 nnoremap <Leader>uo :<C-u>Unite outline  -vertical -winwidth=60 -buffer-name=side<CR>
-" tag
-nnoremap <Leader>ut :<C-u>Unite tab:no-current<CR>
-nnoremap <Leader>uT :<C-u>Unite tag -buffer-name=file <CR>
 " source(sourceが増えてきたので、sourceのsourceを経由する方針にしてみる)
 nnoremap <Leader>uu :<C-u>Unite source<CR>
 
 " カラースキーム用コマンド
 command! UniteColorScheme :Unite colorscheme -auto-preview
 command! UniteFont :Unite font -auto-preview
-
-inoremap <C-u> <C-o>:Unite tag -start-insert -default-action=insert<CR>a
 
 " ウィンドウを横に分割して開く
 au FileType unite nnoremap <silent> <buffer> <expr> <C-S> unite#do_action('split')
@@ -1571,62 +1569,82 @@ function! s:unite_my_settings()
 endfunction
 " }}}
 " neocomplcache {{{
+if neobundle#is_installed('neocomplete')
+  let g:neocomplete#enable_at_startup = 1
+  let g:neocomplete#enable_smart_case = 1
+  let g:neocomplete#sources#syntax#min_keyword_length = 3
 
-let $PATH=$PATH . ":" . $HOME . "/.cabal/bin"
-let $PATH=$PATH . ":" . $HOME . "/.virtualenvs"
+  " Define dictionary.
+  let g:neocomplete#sources#dictionary#dictionaries = {
+        \ 'default' : '',
+        \ 'php' : $HOME.'/.vim/dict/php.dict',
+        \ 'javascript' : $HOME.'/.vim/dict/js.dict',
+        \ 'coffee' : $HOME.'/.vim/dict/js.dict',
+        \ 'vimshell' : $HOME.'/.vim/.vimshell_hist'
+        \ }
 
-"タグ補完の呼び出しパターン
-if !exists('g:neocomplcache_member_prefix_patterns')
-  let g:neocomplcache_member_prefix_patterns = {}
+  " Define keyword.
+  if !exists('g:neocomplete#keyword_patterns')
+    let g:neocomplete#keyword_patterns = {}
+  endif
+  let g:neocomplete#keyword_patterns['default'] = '\h\w*'
+
+  let g:neocomplete#enable_cursor_hold_i = 1
+  let g:neocomplete#enable_insert_char_pre = 1
+  let g:neocomplete#enable_auto_select = 1
+
+  " Enable omni completion.
+  autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
+  autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
+  autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
+  autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
+  autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
+
+  " Enable heavy omni completion.
+  if !exists('g:neocomplete#sources#omni#input_patterns')
+    let g:neocomplete#sources#omni#input_patterns = {}
+  endif
+  let g:neocomplete#sources#omni#input_patterns.php = '[^. \t]->\h\w*\|\h\w*::'
+
+  imap <C-m> <Plug>(neocomplete_start_unite_complete)
+elseif neobundle#is_installed('neocomplcache')
+  let g:neocomplcache_enable_at_startup = 1
+  let g:neocomplcache_min_syntax_length = 3
+  let g:neocomplcache_min_keyword_length = 3
+  let g:neocomplcache_caching_limit_file_size = 5000000
+  let g:neocomplcache_release_cache_time = 7200
+  let g:neocomplcache_dictionary_filetype_lists = {
+        \'default' : '',
+        \'php' : $HOME.'/.vim/dict/php.dict',
+        \'javascript' : $HOME.'/.vim/dict/js.dict',
+        \'coffee' : $HOME.'/.vim/dict/js.dict',
+        \'vimshell' : $HOME.'/.vim/.vimshell_hist'
+        \}
+
+  " Define keyword.
+  if !exists('g:neocomplcache_keyword_patterns')
+    let g:neocomplcache_keyword_patterns = {}
+  endif
+  let g:neocomplcache_keyword_patterns['default'] = '\h\w*'
+
+  if !exists('g:neocomplcache_force_omni_patterns')
+    let g:neocomplcache_force_omni_patterns = {}
+  endif
+  let g:neocomplcache_force_omni_patterns.cs = '[^.]\.\%(\u\{2,}\)\?'
+
+  " Enable omni completion.
+  autocmd FileType haskell setlocal omnifunc=necoghc#omnifunc
+  autocmd FileType coffee setlocal omnifunc=javascriptcomplete#CompleteJS
+
+  " Haskell, PythonのためのPATH追加。今、両言語とも使ってないためコメントアウト
+  " let $PATH=$PATH . ":" . $HOME . "/.cabal/bin"
+  " let $PATH=$PATH . ":" . $HOME . "/.virtualenvs"
 endif
-let g:neocomplcache_member_prefix_patterns['php'] = '->\|::'
-let g:neocomplcache_tags_caching_limit_file_size = 5000000
 
-" neocomplcache#start_manual_complete([{sources}])
-" inoremap <expr> <C-n> <C-x><C-f>
-" inoremap  <C-n> <C-x><C-]>
-
-let g:neocomplcache_enable_at_startup = 1
-let g:neocomplcache_min_syntax_length = 3
-let g:neocomplcache_min_keyword_length = 3
-let g:neocomplcache_caching_limit_file_size = 5000000
-let g:neocomplcache_dictionary_filetype_lists = {
-      \'default' : '',
-      \'php' : $HOME.'/.vim/dict/php.dict',
-      \'javascript' : $HOME.'/.vim/dict/js.dict',
-      \'coffee' : $HOME.'/.vim/dict/js.dict',
-      \'vimshell' : $HOME.'/.vim/.vimshell_hist'
-      \}
-
-let g:neocomplcache_release_cache_time = 7200
-
-let g:use_zen_complete_tag = 1
-
-" Define keyword.
-if !exists('g:neocomplcache_keyword_patterns')
-  let g:neocomplcache_keyword_patterns = {}
-endif
-let g:neocomplcache_keyword_patterns['default'] = '\h\w*'
-
-" Enable omni completion.
-autocmd FileType haskell setlocal omnifunc=necoghc#omnifunc
-autocmd FileType coffee setlocal omnifunc=javascriptcomplete#CompleteJS
-
-if !exists('g:neocomplcache_force_omni_patterns')
-  let g:neocomplcache_force_omni_patterns = {}
-endif
-let g:neocomplcache_force_omni_patterns.cs = '[^.]\.\%(\u\{2,}\)\?'
-
-" TODO
-" imap <C-u> <Plug>(neocomplcache_start_unite_complete)
-" imap <C-u> <Plug>(neocomplcache_start_unite_quick_match)
-
-" neosnippet
-" スニペットを展開する。スニペットが関係しないところでは行末まで削除
+" }}}
+" neosnippet {{{
 imap <C-k> <Plug>(neosnippet_expand_or_jump)
 smap <C-k> <Plug>(neosnippet_expand_or_jump)
-" xmap <C-k> <Plug>(neosnippet_expand_target)
-
 let g:neosnippet#snippets_directory='~/Dropbox/vim/snippet'
 let g:neosnippet#disable_runtime_snippets = {
       \   'php' : 1,
