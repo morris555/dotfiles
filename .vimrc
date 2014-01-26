@@ -147,6 +147,7 @@ NeoBundle 'sgur/unite-qf'
 NeoBundle 'tekkoc/unite-decorate-border'
 NeoBundle 'tekkoc/unite-decorate-text'
 NeoBundle 'Shougo/unite-session'
+NeoBundle 'osyo-manga/unite-quickfix'
 
 " 整形
 NeoBundle 'h1mesuke/vim-alignta'
@@ -561,8 +562,6 @@ function! InitPhp()
   setlocal commentstring=//%s
 
   setlocal dictionary+=~/.vim/dict/php.dict
-
-  inoremap <expr> <buffer> @ &filetype == 'blade' ? "@" : <SID>at()
 
   nnoremap <buffer><expr> <space>; getline('.')[col('$') - 2] == ';' ? "" : 'A;<Esc>'
 
