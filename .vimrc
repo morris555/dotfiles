@@ -105,6 +105,7 @@ NeoBundle 'osyo-manga/vim-over'
 NeoBundle has('lua') ? 'Shougo/neocomplete' : 'Shougo/neocomplcache' 
 NeoBundle 'ujihisa/neco-look'
 NeoBundle 'Shougo/neosnippet'
+NeoBundle 'violetyk/neocomplete-php.vim'
 
 " 自動入力
 NeoBundle 'kana/vim-smartinput'
@@ -1577,7 +1578,6 @@ if neobundle#is_installed('neocomplete')
   " Define dictionary.
   let g:neocomplete#sources#dictionary#dictionaries = {
         \ 'default' : '',
-        \ 'php' : $HOME.'/.vim/dict/php.dict',
         \ 'javascript' : $HOME.'/.vim/dict/js.dict',
         \ 'coffee' : $HOME.'/.vim/dict/js.dict',
         \ 'vimshell' : $HOME.'/.vim/.vimshell_hist'
@@ -1604,9 +1604,9 @@ if neobundle#is_installed('neocomplete')
   if !exists('g:neocomplete#sources#omni#input_patterns')
     let g:neocomplete#sources#omni#input_patterns = {}
   endif
-  let g:neocomplete#sources#omni#input_patterns.php = '[^. \t]->\h\w*\|\h\w*::'
+  " let g:neocomplete#sources#omni#input_patterns.php = '[^. \t]->\h\w*\|\h\w*::'
 
-  imap <C-m> <Plug>(neocomplete_start_unite_complete)
+  imap <C-d> <Plug>(neocomplete_start_unite_complete)
 elseif neobundle#is_installed('neocomplcache')
   let g:neocomplcache_enable_at_startup = 1
   let g:neocomplcache_min_syntax_length = 3
