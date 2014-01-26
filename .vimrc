@@ -1149,7 +1149,6 @@ let g:quickrun_config['d_unittest'] = {
       \ 'cmdopt' : '-unittest',
       \ 'tempfile': '%{tempname()}.d',
       \ }
-
 nnoremap <expr><silent> <C-c> quickrun#is_running() ? quickrun#sweep_sessions() : "\<C-c>"
 " }}}
 " arpeggio {{{
@@ -1286,7 +1285,8 @@ let g:syntastic_mode_map = {
       \ 'active_filetypes': ['php', 'coffeescript', 'sh', 'vim'],
       \ 'passive_filetypes': ['html', 'haskell', 'python', 'ruby', 'json', 'javascript', 'scala']
       \}
-let g:syntastic_auto_loc_list=1
+" let g:syntastic_auto_loc_list=1
+let g:syntastic_always_populate_loc_list = 1
 nnoremap <silent> <Leader>l :<C-u>SyntasticCheck<CR>
 autocmd FileType haskell nnoremap <silent><buffer> <Leader>l :<C-u>GhcModCheckAndLintAsync<CR>
 " }}}
@@ -1483,10 +1483,6 @@ endfunction
 autocmd FileType gitv call InitGitv()
 " }}}
 " unite {{{
-
-" 入力モードで開始する
-let g:unite_enable_start_insert=0
-
 " grepソース
 let g:unite_source_grep_command = "ag"
 let g:unite_source_grep_recursive_opt = ""
@@ -1522,6 +1518,10 @@ au FileType php nnoremap <buffer> <Leader>ur :<C-u>Unite ref/phpmanual<CR>
 au FileType vim nnoremap <buffer> <Leader>ur :<C-u>Unite help<CR>
 " outline
 nnoremap <Leader>uo :<C-u>Unite outline  -vertical -winwidth=60 -buffer-name=side<CR>
+" location_list
+"-toggle
+nnoremap <Leader>ul :<C-u>Unite -no-quit -no-empty -immediately -direction=botright location_list<CR>
+nnoremap <Leader>uL :<C-u>Unite -no-quit -no-empty -immediately -direction=botright quickfix<CR>
 " source(sourceが増えてきたので、sourceのsourceを経由する方針にしてみる)
 nnoremap <Leader>uu :<C-u>Unite source<CR>
 
@@ -1574,6 +1574,8 @@ if neobundle#is_installed('neocomplete')
   let g:neocomplete#enable_at_startup = 1
   let g:neocomplete#enable_smart_case = 1
   let g:neocomplete#sources#syntax#min_keyword_length = 3
+
+  let g:neocomplete_php_locale = 'ja'
 
   " Define dictionary.
   let g:neocomplete#sources#dictionary#dictionaries = {
