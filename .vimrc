@@ -937,6 +937,8 @@ nnoremap sJ <C-w>J
 nnoremap sK <C-w>K
 nnoremap sL <C-w>L
 nnoremap sH <C-w>H
+nnoremap sn gt
+nnoremap sp gT
 nnoremap sr <C-w>r
 nnoremap s= <C-w>=
 nnoremap s_ <C-w>_
@@ -958,14 +960,10 @@ call submode#enter_with('bufmove', 'n', '', 's>', '<C-w>>')
 call submode#enter_with('bufmove', 'n', '', 's<', '<C-w><')
 call submode#enter_with('bufmove', 'n', '', 's+', '<C-w>+')
 call submode#enter_with('bufmove', 'n', '', 's-', '<C-w>-')
-call submode#enter_with('bufmove', 'n', '', 'sn', 'gt')
-call submode#enter_with('bufmove', 'n', '', 'sp', 'gT')
 call submode#map('bufmove', 'n', '', '>', '<C-w>>')
 call submode#map('bufmove', 'n', '', '<', '<C-w><')
 call submode#map('bufmove', 'n', '', '+', '<C-w>+')
 call submode#map('bufmove', 'n', '', '-', '<C-w>-')
-call submode#map('bufmove', 'n', '', 'n', 'gt')
-call submode#map('bufmove', 'n', '', 'p', 'gT')
 
 " 表示行移動
 nnoremap j gj
@@ -1315,6 +1313,10 @@ let g:surround_custom_mapping.smarty= {
       \'S': "{{\r}}",
       \'s': "{{\1name: \r..*\r&\1}}\r{{/\1\1}}",
       \}
+let g:surround_custom_mapping.html= {
+      \'S': "{{\r}}",
+      \'s': "{{\1name: \r..*\r&\1}}\r{{/\1\1}}",
+      \}
 let g:surround_custom_mapping.d= {
       \'w': "writeln(\r);",
       \}
@@ -1593,7 +1595,7 @@ if neobundle#is_installed('neocomplete')
 
   let g:neocomplete#enable_cursor_hold_i = 1
   let g:neocomplete#enable_insert_char_pre = 1
-  let g:neocomplete#enable_auto_select = 1
+  " let g:neocomplete#enable_auto_select = 1
 
   " Enable omni completion.
   autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
