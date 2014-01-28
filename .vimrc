@@ -1497,6 +1497,7 @@ let g:unite_source_file_mru_limit = 100000
 call unite#custom_max_candidates("file_mru", 100000)
 
 call unite#custom_source('file,file_rec/async', 'filters', ['converter_relative_word', 'matcher_glob', 'sorter_rank', 'converter_relative_abbr'])
+call unite#custom_source('file_rec/async', 'ignore_pattern', '\(png\|gif\|jpeg\|jpg\)$')
 call unite#custom_source('grep', 'filters', ['matcher_regexp', 'sorter_default', 'converter_default'])
 
 if has('migemo')
@@ -1506,8 +1507,7 @@ endif
 nnoremap <silent> <Leader>u<space> :<C-u>UniteResume<CR>
 
 " ファイル一覧
-nnoremap <silent> <Leader>uf :<C-u>Unite file_rec/async -profile-name=file -start-insert<CR>
-nnoremap <silent> <Leader>uF :<C-u>Unite file_rec/async -profile-name=file -start-insert -no-quit<CR>
+nnoremap <silent> <Leader>uf :<C-u>Unite file_rec/async:! -profile-name=file -start-insert<CR>
 " お気に入り
 nnoremap <Leader>ub :<C-u>Unite bookmark directory_mru -default-action=lcd<CR>
 " 最近使ったファイルの一覧
