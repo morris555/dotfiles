@@ -105,7 +105,6 @@ NeoBundle 'osyo-manga/vim-over'
 NeoBundle has('lua') ? 'Shougo/neocomplete' : 'Shougo/neocomplcache' 
 NeoBundle 'ujihisa/neco-look'
 NeoBundle 'Shougo/neosnippet'
-NeoBundle 'violetyk/neocomplete-php.vim'
 
 " 自動入力
 NeoBundle 'kana/vim-smartinput'
@@ -131,10 +130,11 @@ NeoBundle 'ujihisa/shadow.vim'
 NeoBundle 'airblade/vim-rooter'
 
 " ctrlP
-" NeoBundle 'kien/ctrlp.vim'
+NeoBundle 'kien/ctrlp.vim'
 
 " unite
 NeoBundle 'Shougo/unite.vim'
+NeoBundle 'Shougo/neomru.vim'
 NeoBundle 'Shougo/unite-outline'
 NeoBundle 'tsukkee/unite-help'
 NeoBundle 'thinca/vim-unite-history'
@@ -803,6 +803,8 @@ function! InitJavaScript()
 
   setlocal dictionary+=~/.vim/dict/js.dict
 
+  nnoremap <buffer><expr> <space>; getline('.')[col('$') - 2] == ';' ? "" : 'A;<Esc>'
+
   IndentGuidesEnable
 endfunction
 autocmd FileType javascript call InitJavaScript()
@@ -922,7 +924,6 @@ nmap ( ,mf(
 nmap ) ,mF(
 nmap { ,mf{
 nmap } ,mF{
-nmap <C-f> ,mf
 
 nnoremap <space>w :<C-u>w<CR>
 nnoremap <space>W :<C-u>wa<CR>
@@ -1400,6 +1401,9 @@ let g:airline_powerline_fonts=1
 let g:airline_detect_whitespace=0
 let g:airline#extensions#tabline#enabled = 1
 " }}}
+" ctrlp {{{
+let g:ctrlp_map = '<C-f>'
+" }}}
 " smartinput {{{
 " call smartinput#define_rule({
 " \   'at': '\s\+\%#',
@@ -1494,10 +1498,12 @@ let g:unite_winheight = 10
 
 let g:unite_source_grep_max_candidates = 100000
 let g:unite_source_file_mru_limit = 100000
+let g:unite_source_rec_max_cache_files = 10000
 call unite#custom_max_candidates("file_mru", 100000)
 
 call unite#custom_source('file,file_rec/async', 'filters', ['converter_relative_word', 'matcher_glob', 'sorter_rank', 'converter_relative_abbr'])
-call unite#custom_source('file_rec/async', 'ignore_pattern', '\(png\|gif\|jpeg\|jpg\)$')
+" call unite#custom_source('file_rec/async', 'ignore_pattern', '\(png\|gif\|jpeg\|jpg\)$')
+call unite#custom_source('file_rec/async', 'ignore_pattern', '\(\.git\/\|png\|gif\|jpeg\|jpg\)$')
 call unite#custom_source('grep', 'filters', ['matcher_regexp', 'sorter_default', 'converter_default'])
 
 if has('migemo')
@@ -1522,8 +1528,8 @@ au FileType vim nnoremap <buffer> <Leader>ur :<C-u>Unite help<CR>
 nnoremap <Leader>uo :<C-u>Unite outline  -vertical -winwidth=60 -buffer-name=side<CR>
 " location_list
 "-toggle
-nnoremap <Leader>ul :<C-u>Unite -no-quit -no-empty -immediately -direction=botright location_list<CR>
-nnoremap <Leader>uL :<C-u>Unite -no-quit -no-empty -immediately -direction=botright quickfix<CR>
+nnoremap <Leader>ul :<C-u>Unite -no-quit -no-empty -direction=botright location_list<CR>
+nnoremap <Leader>uL :<C-u>Unite -no-quit -no-empty -direction=botright quickfix<CR>
 " source(sourceが増えてきたので、sourceのsourceを経由する方針にしてみる)
 nnoremap <Leader>uu :<C-u>Unite source<CR>
 
@@ -1576,8 +1582,6 @@ if neobundle#is_installed('neocomplete')
   let g:neocomplete#enable_at_startup = 1
   let g:neocomplete#enable_smart_case = 1
   let g:neocomplete#sources#syntax#min_keyword_length = 3
-
-  let g:neocomplete_php_locale = 'ja'
 
   " Define dictionary.
   let g:neocomplete#sources#dictionary#dictionaries = {
@@ -1904,7 +1908,7 @@ endfunction
 
 " sound#play_wavのラッパ
 function! PlaySE(name)
-  " call sound#play_wav(s:change_sound_name(a:name))
+  call sound#play_wav(s:change_sound_name(a:name))
 endfunction
 
 " 補完を閉じるときに、弓矢ヒット
